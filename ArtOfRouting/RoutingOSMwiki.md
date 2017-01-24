@@ -15,7 +15,7 @@ List offline, embedded, web based routing service based on OSM data.
 
 > Note for **developers**: there are many software in different languages (C++, java, android, python) with different algorithms and options (elevation awareness, alternatives, one or many routes, etc.). In addition, there is a certain number of [frameworks](https://wiki.openstreetmap.org/wiki/Frameworks#Navigation) that can be integrated in our own software.
 
-At te end of the page, there is some general information on some road tags and their effect on routing.
+At the end of the page, there is some general information on some road tags and their effect on routing.
 
 ### [Frameworks wikipage](https://wiki.openstreetmap.org/wiki/Frameworks)
 
