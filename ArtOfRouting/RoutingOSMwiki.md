@@ -32,13 +32,3 @@ List all types of framework (which can be embedded in an application), particula
 
 ### [Map features wikipage](https://wiki.openstreetmap.org/wiki/Map_Features#Highway)
 
-
-# NON TRIE
-
-(https://www.mapbox.com/blog/smart-directions-with-osrm-graph-model/) 
-explication du modele de routing utilisé par mapbox
-
-(http://gis.stackexchange.com/questions/13943/help-choosing-a-suitable-routing-engine)
-
-https://bitbucket.org/maproom/qmapshack/wiki/AdvRoutes
-Creation de routes à la main
