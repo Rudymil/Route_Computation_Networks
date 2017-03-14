@@ -11,19 +11,56 @@ http://github.com/bmander/graphserver/tree/master and is copyright (c)
 import xml.sax
 import copy
 import networkx
+from pathlib import Path
 
-def download_osm(left,bottom,right,top):
+
+
+def download_osm(left,bottom,right,top, proxy = False, proxyHost = "10.0.4.2", proxyPort = "3128", cache = False, cacheTempDir = "./tmpOSM/"):
     """ Return a filehandle to the downloaded data."""
+
     # For Python 3.0 and later
     import urllib.request
+    import copy
 
-    proxy_handler = urllib.request.ProxyHandler({'https': 'https://10.0.4.2:3128', 'http': 'http://10.0.4.2:3128'})
+    filename = "osm_map_" + str(left) + "_" + str(bottom) + "_" + str(right) + "_" + str(top) + ".map"
 
-    opener = urllib.request.build_opener(proxy_handler)
-    urllib.request.install_opener(opener)
+    if (cache):
+        Path(cacheTempDir).mkdir(parents = True, exist_ok = True)
+
+        osmFile = Path(cacheTempDir + filename)
+
+        osmFile = osmFile.resolve()
+        print(cacheTempDir + filename)
+        print(osmFile)
+        if osmFile.is_file():
+            # file exists
+            print("file was in the cache")
+            fp = urllib.request.urlopen("file://"+str(osmFile))
+
+            return fp
 
 
+
+    if (proxy):
+        proxy_handler = urllib.request.ProxyHandler({'https': 'https://' + proxyHost + ":" + proxyPort, 'http': 'http://' + proxyHost + ":" + proxyPort})
+
+        opener = urllib.request.build_opener(proxy_handler)
+        urllib.request.install_opener(opener)
+
+    print("download osm file")
     fp = urllib.request.urlopen( "http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f"%(left,bottom,right,top))
+
+    if (cache):
+        print("save osm file")
+        content = fp.read()
+        with open(osmFile, 'wb') as f:
+            f.write(content)
+        if osmFile.is_file():
+            # file exists
+            print("file was just written in the cache")
+            fp = urllib.request.urlopen("file://"+str(osmFile))
+
+            return fp
     return fp
 
 def read_osm(filename_or_stream, only_roads=True):
@@ -45,6 +82,7 @@ def read_osm(filename_or_stream, only_roads=True):
     for w in osm.ways.values():
         if only_roads and 'highway' not in w.tags:
             continue
+        # print(w.id)
         G.add_path(w.nds, id=w.id)
     for n_id in G.nodes_iter():
         n = osm.nodes[n_id]
