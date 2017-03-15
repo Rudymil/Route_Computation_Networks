@@ -91,6 +91,34 @@ def read_osm(filename_or_stream, only_roads=True):
         G.node[n_id]['id'] = n.id
         # G.node[n_id] = dict(data=n)
 
+    ## TODO : Compute realistic distance of each edges
+
+    #     import math
+    #   from collections import namedtuple
+    # 
+    #   def haversine_distance(origin, destination):
+    #       """ Haversine formula to calculate the distance between two lat/long points on a sphere """
+    # 
+    #       radius = 6371 # FAA approved globe radius in km
+    # 
+    #       dlat = math.radians(destination.lat-origin.lat)
+    #       dlon = math.radians(destination.lng-origin.lng)
+    #       a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(origin.lat)) \
+    #           * math.cos(math.radians(destination.lat)) * math.sin(dlon/2) * math.sin(dlon/2)
+    #       c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    #       d = radius * c
+    #
+    #       # Return distance in km
+    #       return int(math.floor(d))
+    #
+    #   LatLng = namedtuple('LatLng', 'lat, lng')
+    #
+    #   origin = LatLng(51.507222, -0.1275) # London
+    #   destination = LatLng(37.966667, 23.716667) # Athens
+    #
+    #   print "Distance (km): %d" % haversine_distance(origin, destination)
+
+
 
     return G
 
