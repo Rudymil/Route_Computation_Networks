@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="theme-color" content="#000000">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Route calculation</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">
+		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
+		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
+		<link rel="stylesheet" href="css/template.css">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png">
+		<link rel="icon" sizes="196x196" href="img/favicon-196.png">
+		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+	</head>
+	<body onload="init();">
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<div class="navbar-icon-container">
+						<a class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn">
+							<i class="fa fa-bars fa-lg white"></i>
+						</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li class="hidden-xs"><a data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Menu</a></li>
+					</ul>
+				</div>
+				<div class="navbar-collapse collapse">
+					<a class="navbar-brand" href="index.html">Route calculation</a>
+				</div><!--/.navbar-collapse -->
+			</div>
+		</div>
+		<div id="sidebar">
+			<div class="sidebar-wrapper">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204612"><center>Selection of the area</center></a>
+					</div>
+					<div id="panel-element-204612" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-offset-1 col-xs-5"> <!-- -1 +5 -->
+									<center><button type="button" class="btn btn-primary btn-xm" onclick="displaynigeria()">Nigeria</button></center>
+								</div>
+								<div class="col-xs-5"> <!-- + 5 -->
+									<center><button type="button" class="btn btn-primary btn-xm" onclick="displayangola()">Angola</button></center>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204613"><center>Route</center></a>
+					</div>
+					<div id="panel-element-204613" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-12"> <!-- 12 -->
+									<center>
+										<button type="button" class="btn btn-primary btn-xm">Find me !</button>
+									</center>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12"> <!-- 12 -->
+									<center>
+										<input type="text" placeholder="Departure" value=""/>
+										<button type="button" class="btn btn-primary btn-xm">go</button>
+									</center>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12"> <!-- 12 -->
+									<center>
+										<input type="text" placeholder="Destination" value=""/>
+										<button type="button" class="btn btn-primary btn-xm">go</button>
+									</center>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874535"><center>Area editing</center></a>
+					</div>
+					<div id="panel-element-874535" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" id="Navigate" name="draw" value="Navigate" checked>
+										<label for="navigation">Navigate</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" id="Circle" name="draw" value="Circle">
+										<label for="Circle">Circle</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" id="Box" name="draw" value="Box">
+										<label for="Box">Box</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" id="Polygon" name="draw" value="Polygon">
+										<label for="Polygon">Polygon</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12"> <!-- 12 -->
+					<center><button type="button" class="btn btn-primary" margin="auto">Calculate the route</button></center>
+				</div>
+			</div>
+		</div>
+		<div id="map"></div>
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+		<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
+		<script src="js/template.js"></script>
+		<script src="js/menu.js"></script>
+	</body>
+</html>
