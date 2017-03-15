@@ -13,7 +13,26 @@ import copy
 import networkx
 from pathlib import Path
 
+from math import radians, cos, sin, asin, sqrt
 
+def haversine(lon1, lat1, lon2, lat2, unit_m = True):
+    """
+    Calculate the great circle distance between two points
+    on the earth (specified in decimal degrees)
+    default unit : km
+    """
+    # convert decimal degrees to radians
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+    # haversine formula
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    r = 6371 # Radius of earth in kilometers. Use 3956 for miles
+    if (unit_m):
+        r *= 1000
+    return c * r
 
 def download_osm(left,bottom,right,top, proxy = False, proxyHost = "10.0.4.2", proxyPort = "3128", cache = False, cacheTempDir = "./tmpOSM/"):
     """ Return a filehandle to the downloaded data."""
@@ -91,16 +110,22 @@ def read_osm(filename_or_stream, only_roads=True):
         G.node[n_id]['id'] = n.id
         # G.node[n_id] = dict(data=n)
 
+    for u,v,d in G.edges_iter(data=True):
+        distance = haversine(G.node[u]['lon'], G.node[u]['lat'], G.node[v]['lon'], G.node[v]['lat'], unit_m = True)
+        # G.add_weighted_edges_from([ (u, v, length=distance)])
+        G.add_weighted_edges_from([( u, v, distance)], weight='length')
+
+
     ## TODO : Compute realistic distance of each edges
 
     #     import math
     #   from collections import namedtuple
-    # 
+    #
     #   def haversine_distance(origin, destination):
     #       """ Haversine formula to calculate the distance between two lat/long points on a sphere """
-    # 
+    #
     #       radius = 6371 # FAA approved globe radius in km
-    # 
+    #
     #       dlat = math.radians(destination.lat-origin.lat)
     #       dlon = math.radians(destination.lng-origin.lng)
     #       a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(origin.lat)) \

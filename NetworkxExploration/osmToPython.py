@@ -24,19 +24,19 @@ idList = []
 
 
 # print(G.nodes(data=True))
-# print(G.edges(data=True))
+print(G.edges(data=True))
 
 # print([[G.node[p]['lat'], G.node[p]['lon']] for p in idList])
-# plt.plot([G.node[n]['lat'] for n in idList], [G.node[n]['lon'] for n in idList], 'o' , color='b')
-# plt.plot([G.node[n]['lat'] for n in idList], [G.node[n]['lon'] for n in idList], color='b')
+plt.plot([G.node[n]['lat'] for n in idList], [G.node[n]['lon'] for n in idList], 'o' , color='b')
+plt.plot([G.node[n]['lat'] for n in idList], [G.node[n]['lon'] for n in idList], color='b')
 
 
 # print([p for p in netx.all_shortest_paths(G,source="3788313781",target="53195060")])
 
 
-# plt.plot([G.node[source_id]['lat']], [G.node[source_id]['lon']], 'o', color='g')
-# plt.plot([G.node[target_id]['lat']], [G.node[target_id]['lon']], 'o', color='r')
-# plt.show()
+plt.plot([G.node[source_id]['lat']], [G.node[source_id]['lon']], 'o', color='g')
+plt.plot([G.node[target_id]['lat']], [G.node[target_id]['lon']], 'o', color='r')
+plt.show()
 
 
 #
