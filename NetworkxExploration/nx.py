@@ -66,7 +66,8 @@ def download_osm(left,bottom,right,top, proxy = False, proxyHost = "10.0.4.2", p
         opener = urllib.request.build_opener(proxy_handler)
         urllib.request.install_opener(opener)
 
-    print("download osm file")
+    print("download osm file. Request : ","http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f"%(left,bottom,right,top))
+
     fp = urllib.request.urlopen( "http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f"%(left,bottom,right,top))
 
     if (cache):
