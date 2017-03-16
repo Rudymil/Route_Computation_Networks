@@ -1,5 +1,5 @@
 
-import nx
+import OSMParser # OSMParser
 import matplotlib.pyplot as plt
 import networkx as netx
 import json
@@ -13,8 +13,8 @@ def savePath(filename, idList, graph):
         print([[graph.node[p]['lat'], graph.node[p]['lon']] for p in idList], file=f)
 
 
-G=nx.read_osm(nx.download_osm(3.8748,43.5964,3.89,43.6072, cache=True))
-# G=nx.read_osm(nx.download_osm(-122.328,47.608,-122.31,47.61, cache=True))
+G=OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True))
+# G=OSMParser.read_osm(OSMParser.download_osm(-122.328,47.608,-122.31,47.61, cache=True))
 # print(G.node)
 # source_id = "3788313781"
 # target_id = "53195060"
