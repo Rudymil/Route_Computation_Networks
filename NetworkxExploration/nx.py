@@ -97,13 +97,27 @@ def read_osm(filename_or_stream, only_roads=True):
     >>> plot([G.node[n]['data'].lat for n in G], [G.node[n]['data'].lon for n in G], ',')
     """
     osm = OSM(filename_or_stream)
-    G = networkx.Graph()
+    G = networkx.DiGraph()
 
     for w in osm.ways.values():
         if only_roads and 'highway' not in w.tags:
             continue
         # print(w.id)
-        G.add_path(w.nds, id=w.id)
+        if ('oneway' in w.tags):
+            if (w.tags['oneway'] == 'yes'):
+                # ONLY ONE DIRECTION
+                G.add_path(w.nds, id=w.id)
+            else:
+                # BOTH DIRECTION
+                G.add_path(w.nds, id=w.id)
+                G.add_path(w.nds[::-1], id=w.id)
+        else:
+            # BOTH DIRECTION
+            G.add_path(w.nds, id=w.id)
+            G.add_path(w.nds[::-1], id=w.id)
+
+
+
     for n_id in G.nodes_iter():
         n = osm.nodes[n_id]
         G.node[n_id]['lat'] = n.lat

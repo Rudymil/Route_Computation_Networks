@@ -15,7 +15,7 @@ def savePath(filename, idList, graph):
 
 G=nx.read_osm(nx.download_osm(3.8748,43.5964,3.89,43.6072, cache=True))
 # G=nx.read_osm(nx.download_osm(-122.328,47.608,-122.31,47.61, cache=True))
-print(G.node)
+# print(G.node)
 # source_id = "3788313781"
 # target_id = "53195060"
 source_id = "4445471419"
@@ -58,7 +58,7 @@ idList = []
 
 
 # print(G.nodes(data=True))
-print(G.edges(data=True))
+# print(G.edges(data=True))
 
 # print([[G.node[p]['lat'], G.node[p]['lon']] for p in idList])
 # plt.plot([G.node[n]['lat'] for n in idList], [G.node[n]['lon'] for n in idList], 'o' , color='b')
