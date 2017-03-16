@@ -1,19 +1,27 @@
 """
-Read graphs in Open Street Maps osm format
-Based on osm.py from brianw's osmgeocode
-http://github.com/brianw/osmgeocode, which is based on osm.py from
-comes from Graphserver:
-http://github.com/bmander/graphserver/tree/master and is copyright (c)
-2007, Brandon Martin-Anderson under the BSD License
+Read directional graph from Open Street Maps osm format
+
+Based on the osm to networkx tool from aflaxman : https://gist.github.com/aflaxman/287370/
+Use python3.6
+
+
+Copyright (C) 2017 Loïc Messal (github : Tofull)
+
 """
 
-
-import xml.sax
-import copy
-import networkx
-from pathlib import Path
-
+## Modules
+# Elementary modules
 from math import radians, cos, sin, asin, sqrt
+import copy
+
+# Graph module
+import networkx
+
+# Specific modules
+import xml.sax # parse osm file
+from pathlib import Path # manage cached tiles
+
+
 
 def haversine(lon1, lat1, lon2, lat2, unit_m = True):
     """
@@ -34,75 +42,95 @@ def haversine(lon1, lat1, lon2, lat2, unit_m = True):
         r *= 1000
     return c * r
 
-def download_osm(left,bottom,right,top, proxy = False, proxyHost = "10.0.4.2", proxyPort = "3128", cache = False, cacheTempDir = "./tmpOSM/"):
-    """ Return a filehandle to the downloaded data."""
 
-    # For Python 3.0 and later
-    import urllib.request
-    import copy
 
-    filename = "osm_map_" + str(left) + "_" + str(bottom) + "_" + str(right) + "_" + str(top) + ".map"
+def download_osm(left, bottom, right, top, proxy = False, proxyHost = "10.0.4.2", proxyPort = "3128", cache = False, cacheTempDir = "/tmp/tmpOSM/", verbose = True):
+    """ Return a filehandle to the downloaded data from osm api."""
+
+    import urllib.request # To request the web
+
+
 
     if (cache):
-        Path(cacheTempDir).mkdir(parents = True, exist_ok = True)
+        ## cached tile filename
+        cachedTileFilename = "osm_map_{:.8f}_{:.8f}_{:.8f}_{:.8f}.map".format(left, bottom, right, top)
 
-        osmFile = Path(cacheTempDir + filename)
+        if (verbose):
+            print("Cached tile filename :", cachedTileFilename)
 
-        osmFile = osmFile.resolve()
-        print(cacheTempDir + filename)
-        print(osmFile)
+        Path(cacheTempDir).mkdir(parents = True, exist_ok = True) ## Create cache path if not exists
+
+        osmFile = Path(cacheTempDir + cachedTileFilename).resolve() ## Replace the relative cache folder path to absolute path
+
         if osmFile.is_file():
-            # file exists
-            print("file was in the cache")
-            fp = urllib.request.urlopen("file://"+str(osmFile))
+            # download from the cache folder
+            if (verbose):
+                print("Tile loaded from the cache folder.")
 
+            fp = urllib.request.urlopen("file://"+str(osmFile))
             return fp
 
-
-
     if (proxy):
+        # configure the urllib request with the proxy
         proxy_handler = urllib.request.ProxyHandler({'https': 'https://' + proxyHost + ":" + proxyPort, 'http': 'http://' + proxyHost + ":" + proxyPort})
-
         opener = urllib.request.build_opener(proxy_handler)
         urllib.request.install_opener(opener)
 
-    print("download osm file. Request : ","http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f"%(left,bottom,right,top))
 
-    fp = urllib.request.urlopen( "http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f"%(left,bottom,right,top))
+    request = "http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f"%(left,bottom,right,top)
+
+    if (verbose):
+        print("Download the tile from osm web api ... in progress")
+        print("Request :", request)
+
+    fp = urllib.request.urlopen(request)
+
+    if (verbose):
+        print("OSM Tile downloaded")
 
     if (cache):
-        print("save osm file")
+        if (verbose):
+            print("Write osm tile in the cache"
+            )
         content = fp.read()
         with open(osmFile, 'wb') as f:
             f.write(content)
-        if osmFile.is_file():
-            # file exists
-            print("file was just written in the cache")
-            fp = urllib.request.urlopen("file://"+str(osmFile))
 
+        if osmFile.is_file():
+            if (verbose):
+                print("OSM tile written in the cache")
+
+            fp = urllib.request.urlopen("file://"+str(osmFile)) ## Reload the osm tile from the cache (because fp.read moved the cursor)
             return fp
+
     return fp
+
 
 def read_osm(filename_or_stream, only_roads=True):
     """Read graph in OSM format from file specified by name or by stream object.
     Parameters
     ----------
     filename_or_stream : filename or stream object
+
     Returns
     -------
     G : Graph
+
     Examples
     --------
     >>> G=nx.read_osm(nx.download_osm(-122.33,47.60,-122.31,47.61))
-    >>> plot([G.node[n]['data'].lat for n in G], [G.node[n]['data'].lon for n in G], ',')
+    >>> import matplotlib.pyplot as plt
+    >>> plt.plot([G.node[n]['lat']for n in G], [G.node[n]['lon'] for n in G], 'o', color='k')
+    >>> plt.show()
     """
     osm = OSM(filename_or_stream)
     G = networkx.DiGraph()
 
+    ## Add ways
     for w in osm.ways.values():
         if only_roads and 'highway' not in w.tags:
             continue
-        # print(w.id)
+
         if ('oneway' in w.tags):
             if (w.tags['oneway'] == 'yes'):
                 # ONLY ONE DIRECTION
@@ -116,49 +144,18 @@ def read_osm(filename_or_stream, only_roads=True):
             G.add_path(w.nds, id=w.id)
             G.add_path(w.nds[::-1], id=w.id)
 
-
-
+    ## Complete the used nodes' information
     for n_id in G.nodes_iter():
         n = osm.nodes[n_id]
         G.node[n_id]['lat'] = n.lat
         G.node[n_id]['lon'] = n.lon
         G.node[n_id]['id'] = n.id
-        # G.node[n_id] = dict(data=n)
 
+    ## Estimate the length of each way
     for u,v,d in G.edges_iter(data=True):
-        distance = haversine(G.node[u]['lon'], G.node[u]['lat'], G.node[v]['lon'], G.node[v]['lat'], unit_m = True)
-        # G.add_weighted_edges_from([ (u, v, length=distance)])
+        distance = haversine(G.node[u]['lon'], G.node[u]['lat'], G.node[v]['lon'], G.node[v]['lat'], unit_m = True) # Give a realistic distance estimation (neither EPSG nor projection nor reference system are specified)
+
         G.add_weighted_edges_from([( u, v, distance)], weight='length')
-
-
-    ## TODO : Compute realistic distance of each edges
-
-    #     import math
-    #   from collections import namedtuple
-    #
-    #   def haversine_distance(origin, destination):
-    #       """ Haversine formula to calculate the distance between two lat/long points on a sphere """
-    #
-    #       radius = 6371 # FAA approved globe radius in km
-    #
-    #       dlat = math.radians(destination.lat-origin.lat)
-    #       dlon = math.radians(destination.lng-origin.lng)
-    #       a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(origin.lat)) \
-    #           * math.cos(math.radians(destination.lat)) * math.sin(dlon/2) * math.sin(dlon/2)
-    #       c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    #       d = radius * c
-    #
-    #       # Return distance in km
-    #       return int(math.floor(d))
-    #
-    #   LatLng = namedtuple('LatLng', 'lat, lng')
-    #
-    #   origin = LatLng(51.507222, -0.1275) # London
-    #   destination = LatLng(37.966667, 23.716667) # Athens
-    #
-    #   print "Distance (km): %d" % haversine_distance(origin, destination)
-
-
 
     return G
 
@@ -171,8 +168,7 @@ class Node:
         self.tags = {}
 
     def __str__(self):
-        return "Node : id : %s, lon : %s, lat : %s " % (self.id, self.lon, self.lat)
-
+        return "Node (id : %s) lon : %s, lat : %s "%(self.id, self.lon, self.lat)
 
 
 class Way:
@@ -187,7 +183,6 @@ class Way:
         def slice_array(ar, dividers):
             for i in range(1,len(ar)-1):
                 if dividers[ar[i]]>1:
-                    #print "slice at %s"%ar[i]
                     left = ar[:i+1]
                     right = ar[i:]
 
