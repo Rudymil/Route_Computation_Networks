@@ -22,6 +22,6 @@ This king of graph is about 4 times larger than the naive one.
 
 It can take into account a cost associated with road connections. For instance, it can minimise turns, stop signs, traffic signals... (which would be useful for two-wheeled vehicles)
 
-
-
+See : <https://github.com/Project-OSRM/osrm-backend/wiki/Graph-representation>
+and : <https://www.mapbox.com/blog/smart-directions-with-osrm-graph-model/> : explaination of edge expanded graph
 
