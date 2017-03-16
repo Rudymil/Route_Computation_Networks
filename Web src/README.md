@@ -1,18 +1,23 @@
 # Organisation
 
-* [index.html](index.html)
-(*HTML structure of the application*)
+* [index.html](index.html) (*HTML structure of the application*)
 * [css](css) (*folder of style files*)
-  * [template.css](css/template.css)
+  * [template.css](css/template.css) (*basic css*)
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
   * [menu.js](js/menu.js) (*scripts of the menu*)
+* [leaflet-routing-machine-3.2.5](leaflet-routing-machine-3.2.5) (*folder of the Leaflet Routing Machine Framework*)
+  * [dist](leaflet-routing-machine-3.2.5/dist) (*scripts, css and images of the Leaflet Routing Machine Framework*)
+  * [src](leaflet-routing-machine-3.2.5/src) (*js scripts of the Leaflet Routing Machine Framework*)
 
-# API used
+# API/Frameworks used
 
 * [Bootstrap](http://getbootstrap.com/)
 * [Leafletjs](http://leafletjs.com/)
 * [jQuery](https://jquery.com/)
+* [Leaflet Routing Machine](http://www.liedman.net/leaflet-routing-machine/)
+
+# JS functions
 
 # Literature
 
