@@ -33,4 +33,10 @@ $("#map").ready(function(){
 	var osm = new L.TileLayer(osmUrl, {minZoom: 1, maxZoom: 18, attribution: osmAttrib});
 	map.addLayer(osm);
 	map.setView([-1.746248, 11.930503],5);
+	// Mettre le bouton pour se geolocaliser
+	L.control.locate({
+		strings: {
+			title: "Show me where I am, yo!"
+		}
+	}).addTo(map);
 });

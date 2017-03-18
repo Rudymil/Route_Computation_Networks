@@ -13,11 +13,13 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+		<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css" />
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
-		<link rel="stylesheet" href="css/template.css">
 		<link rel="stylesheet" href="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css" />
+		<link rel="stylesheet" href="css/template.css">
+		<link rel="stylesheet" href="css/Er-razki Sibawaih.css">
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png">
 		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png">
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png">
@@ -63,30 +65,42 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204613"><center>Route</center></a>
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204613">
+							<center>Route</center>
+						</a>
 					</div>
 					<div id="panel-element-204613" class="panel-collapse collapse">
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-xs-12"> <!-- 12 -->
 									<center>
-										<button type="button" class="btn btn-primary btn-xm">Find me !</button>
+										<input type="text" placeholder="Departure" value="" id="dep"/>
+										<button id="godep" type="button" class="btn btn-success">go</button>
 									</center>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-xs-12"> <!-- 12 -->
 									<center>
-										<input type="text" placeholder="Departure" value=""/>
-										<button type="button" class="btn btn-primary btn-xm">go</button>
+										<button id="inverse" class="btn btn-default">
+											<img src="img/inverse.png" width="20" />
+										</button>										
+									</center>
+								</div>
+							</div><br>
+							
+							<div class="row">
+								<div class="col-xs-12"> <!-- 12 -->
+									<center>
+										<input type="text" placeholder="Destination" value="" id="dest"/>
+										<button id="godest" type="button" class="btn btn-danger">go</button>
 									</center>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-xs-12"> <!-- 12 -->
 									<center>
-										<input type="text" placeholder="Destination" value=""/>
-										<button type="button" class="btn btn-primary btn-xm">go</button>
+										<button id="remove" type="button" class="btn btn-default">remove</button>
 									</center>
 								</div>
 							</div>
@@ -136,6 +150,12 @@
 			</div>
 		</div>
 		<div id="map"></div>
+		<div id="context_menu">
+			<ul>
+				<li id="cm_debut">Définir comme Début</li>
+				<li id="cm_fin">Définir comme Fin</li>  
+			</ul>  
+		</div>
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
@@ -143,8 +163,10 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 		<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
+		<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.js"></script>
 		<script src="js/template.js"></script>
 		<script src="js/menu.js"></script>
+		<!--script src="js/geolocalisation.js"></script-->
 	</body>
 </html>
