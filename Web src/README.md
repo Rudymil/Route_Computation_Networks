@@ -24,11 +24,11 @@
 ```js
 $("#nigeria").click(function(){...});
 ```
-Reset la view de la carte sur Port Harcourt lorsqu'on clic sur le bouton **Nigeria** dans **Delection of the area**.
+Reset la view de la carte sur Port Harcourt lorsqu'on clic sur le bouton **Nigeria** dans **Selection of the area**.
 ```js
 $("#angola").click(function(){...});
 ```
-Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dans **Delection of the area**.
+Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dans **Selection of the area**.
 ```js
 $("#geo").click(function(){...});
 ```
