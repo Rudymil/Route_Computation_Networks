@@ -2,29 +2,29 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-		<meta name="mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="theme-color" content="#000000">
-		<meta name="description" content="">
-		<meta name="author" content="">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"/>
+		<meta name="mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="theme-color" content="#000000"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
 		<title>Route calculation</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
-		<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css" />
-		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">
-		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
-		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
-		<link rel="stylesheet" href="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css" />
-		<link rel="stylesheet" href="css/template.css">
-		<link rel="stylesheet" href="css/Er-razki Sibawaih.css">
-		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png">
-		<link rel="icon" sizes="196x196" href="img/favicon-196.png">
-		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css"/>
+		<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css"/>
+		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css"/>
+		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css"/>
+		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css"/>
+		<link rel="stylesheet" href="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css"/>
+		<link rel="stylesheet" href="css/template.css"/>
+		<link rel="stylesheet" href="css/Er-razki Sibawaih.css"/>
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png"/>
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
+		<link rel="icon" sizes="196x196" href="img/favicon-196.png"/>
+		<link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
 	</head>
 	<body>
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -116,25 +116,26 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" id="Navigate" name="draw" value="Navigate" checked>
+										<input type="radio" class="radio_button" id="Navigate" name="draw" value="Navigate" checked>
 										<label for="navigation">Navigate</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" id="Circle" name="draw" value="Circle">
+										<input type="radio" class="radio_button" id="Circle" name="draw" value="Circle">
 										<label for="Circle">Circle</label>
+										<input id="radius" type="text" name="radius" placeholder="radius (m)" value="" style="width: 70px;">
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" id="Box" name="draw" value="Box">
+										<input type="radio" class="radio_button" id="Box" name="draw" value="Box">
 										<label for="Box">Box</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" id="Polygon" name="draw" value="Polygon">
+										<input type="radio" class="radio_button" id="Polygon" name="draw" value="Polygon">
 										<label for="Polygon">Polygon</label>
 									</div>
 								</div>
@@ -162,6 +163,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 		<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
 		<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.js"></script>
