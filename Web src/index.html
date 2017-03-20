@@ -19,7 +19,8 @@
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css"/>
 		<link rel="stylesheet" href="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css"/>
 		<link rel="stylesheet" href="css/template.css"/>
-		<link rel="stylesheet" href="css/Er-razki Sibawaih.css"/>
+		<link rel="stylesheet" href="css/context_menu1.css"/>
+		<link rel="stylesheet" href="css/context_menu2.css"/>
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
 		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png"/>
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
@@ -66,11 +67,17 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204613">
-							<center>Route</center>
+							<center>Set the route</center>
 						</a>
 					</div>
 					<div id="panel-element-204613" class="panel-collapse collapse">
 						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+									<input type="radio" class="radio_button" id="Navigate" name="draw" value="set_the_route" checked>
+									<label for="set_the_route">Set the route</label>
+								</div>
+							</div>
 							<div class="row">
 								<div class="col-xs-12"> <!-- 12 -->
 									<center>
@@ -109,34 +116,61 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874535"><center>Area editing</center></a>
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874535"><center>Report a trouble zone</center></a>
 					</div>
 					<div id="panel-element-874535" class="panel-collapse collapse">
 						<div class="panel-body">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" class="radio_button" id="Navigate" name="draw" value="Navigate" checked>
-										<label for="navigation">Navigate</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" class="radio_button" id="Circle" name="draw" value="Circle">
+										<input type="radio" class="radio_button" id="Circle1" name="draw" value="Circle1">
 										<label for="Circle">Circle</label>
-										<input id="radius" type="text" name="radius" placeholder="radius (m)" value="" style="width: 70px;">
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" class="radio_button" id="Box" name="draw" value="Box">
+										<input type="radio" class="radio_button" id="Box1" name="draw" value="Box1">
 										<label for="Box">Box</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-										<input type="radio" class="radio_button" id="Polygon" name="draw" value="Polygon">
+										<input type="radio" class="radio_button" id="Polygon1" name="draw" value="Polygon1">
 										<label for="Polygon">Polygon</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874536"><center>Report a lack of data</center></a>
+					</div>
+					<div id="panel-element-874536" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Circle2" name="draw" value="Circle2">
+										<label for="Circle">Circle</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Circle2" name="draw" value="Circle2">
+										<label for="Box">Box</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Circle2" name="draw" value="Circle2">
+										<label for="Polygon">Polygon</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12"> <!-- 12 -->
+										<center><button id="submit" type="button" class="btn btn-primary" margin="auto">Submit</button></center>
 									</div>
 								</div>
 							</div>
@@ -146,15 +180,20 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12"> <!-- 12 -->
-					<center><button type="button" class="btn btn-primary" margin="auto">Calculate the route</button></center>
+					<center><button id="calculate" type="button" class="btn btn-primary" margin="auto">Calculate the route</button></center>
 				</div>
 			</div>
 		</div>
 		<div id="map"></div>
-		<div id="context_menu">
+		<div id="context_menu1">
 			<ul>
 				<li id="cm_debut">Définir comme Début</li>
 				<li id="cm_fin">Définir comme Fin</li>  
+			</ul>  
+		</div>
+		<div id="context_menu2">
+			<ul>
+				<li id="cm_debut">Suppression</li>
 			</ul>  
 		</div>
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -168,7 +207,10 @@
 		<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 		<script src="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.js"></script>
 		<script src="js/template.js"></script>
-		<script src="js/menu.js"></script>
-		<!--script src="js/geolocalisation.js"></script-->
+		<script src="js/set_the_route.js"></script>
+		<script src="js/menu.js"></script>	
+		<script src="js/selection_of_the_area.js"></script>
+		<script src="js/report_a_trouble_zone.js"></script>
+		<script src="js/report_a_lack_of_data.js"></script>
 	</body>
 </html>

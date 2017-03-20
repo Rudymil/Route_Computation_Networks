@@ -1,21 +1,20 @@
+var markerDeparture=null;
+
 // Define icons
 var greenIcon = new L.Icon({
-	iconUrl: 'img/marker-icon-2x-green.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
-	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
+  iconUrl: 'img/marker-icon-2x-green.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
 });
-
 var redIcon = new L.Icon({
-	iconUrl: 'img/marker-icon-2x-red.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
-	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
+  iconUrl: 'img/marker-icon-2x-red.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
 });
-
-var markerDeparture=null;
 
 // function for geolocation
 map.locate({setView: true, watch: true}).on('locationfound', function(e){
@@ -28,7 +27,7 @@ map.locate({setView: true, watch: true}).on('locationfound', function(e){
               
         })
        .on('locationerror', function(e){
-            console.log(e);
+            //console.log(e);
             alert("Location access denied.");
         });
 
@@ -44,22 +43,25 @@ map.on('dblclick', function(e) {
     };
 	//console.log(e.latlng.lat);
 	var ce=e;
-	showContextMenu( markeraDestination, pos,ce)
+	showContextMenu1( markeraDestination, pos,ce)
 });
 
+map.on("click", function() {
+hideContextMenu1();
+});
 
 //Function to hide the marker state menu
-function hideContextMenu(){
-$("#context_menu").css("display","none");
+function hideContextMenu1(){
+$("#context_menu1").css("display","none");
 }
 
 //Function to vizualize the marker state menu
-function showContextMenu( marker, pos,ep){
+function showContextMenu1( marker, pos,ep){
   // positionne le context menu
-  var oElem = $("#context_menu");    
-   $("#context_menu").css("left",pos.x +'px');
-   $("#context_menu").css("top",pos.y +'px');
-   $("#context_menu").css("display","block");
+  var oElem = $("#context_menu1");    
+   $("#context_menu1").css("left",pos.x +'px');
+   $("#context_menu1").css("top",pos.y +'px');
+   $("#context_menu1").css("display","block");
    
   //affecte les fonctions
  	$("#cm_debut").click(ep,function(){
@@ -69,33 +71,22 @@ function showContextMenu( marker, pos,ep){
  			markerDeparture = L.marker([ep.latlng.lat, ep.latlng.lng],{icon: greenIcon , draggable: true}).bindPopup('Your are here');
             map.addLayer(markerDeparture);
             $("#dep").val(ep.latlng.lat + ", " + ep.latlng.lng);
+            hideContextMenu1();
+
  	 });  
   
-  $("#cm_fin").click(ep,function(){ 
+	$("#cm_fin").click(ep,function(){ 
   			if( markeraDestination != null ) {
 			map.removeLayer(markeraDestination);
 			}
   			markeraDestination= L.marker([ ep.latlng.lat , ep.latlng.lng],{icon: redIcon, draggable: true}).bindPopup('Your destination');
   			map.addLayer(markeraDestination)
   			$("#dest").val(ep.latlng.lat + ", " + ep.latlng.lng);
+  			hideContextMenu1();
   });  
   
 }
 
-// hide the menu
-$("#document").bind("click",function(){
-    hideContextMenu();
-}, false);
-$("#document").bind("click",function (e) {
-    var key = e.keyCode;
-    if (key === 27) {
-        hideContextMenu();
-    }
-});
-
-map.on('mousedown', function (e) {
-    hideContextMenu();
-});
 
 //Function to drag the marker
 map.on('click',
@@ -157,12 +148,15 @@ map.on('click',
   }
 );
 
+
+
+
 // function to remove markers
 $("#remove").click(function(){
-	map.removeLayer(markeraDestination);
-	map.removeLayer(markerDeparture);
 	 $("#dep").val("");
 	 $("#dest").val("");
+	 map.removeLayer(markeraDestination);
+	 map.removeLayer(markerDeparture);
 });
 
 // function to switch departure and destination markers
@@ -191,13 +185,15 @@ $("#inverse").click(function(){
 	
 });
 
-// function to Function to validate the coordinates of the marker and draw it on the map
 
-	function gomarker(marker,value,icon){
-		if( marker !=null) {
-		map.removeLayer(marker);
+ // function to validate the coordinates of the marker departure and draw it on the map
+    
+$("#godep").click(function(){ 
+
+if( markerDeparture !=null) {
+		map.removeLayer(markerDeparture);
 	}
-		
+		var value=$("#dep").val();
 		var lat= value.substring(0, value.indexOf(","));
 		var lng=value.substring(value.indexOf(",") + 1);
         
@@ -227,9 +223,67 @@ $("#inverse").click(function(){
     if(lat > 90 || lat < -90 || lng > 90 || lng < -90)
         alert("coordinates not valid");
     
-    marker= L.marker([lat ,lng],{icon: icon});
-    map.addLayer(marker);
-     }
-$("#godep").click(function(){ gomarker(markerDeparture,$("#dep").val(),greenIcon)});
-	
-$("#godest").click(function(){ gomarker(markeraDestination,$("#dest").val(),redIcon)});
+    markerDeparture= L.marker([lat ,lng],{icon: greenIcon , draggable: true});
+    map.addLayer(markerDeparture);
+
+});  
+
+// function to validate the coordinates of the marker destination and draw it on the map
+$("#godest").click(function(){ 
+
+if( markeraDestination !=null) {
+		map.removeLayer(markeraDestination);
+	}
+		var value=$("#dest").val();
+		var lat= value.substring(0, value.indexOf(","));
+		var lng=value.substring(value.indexOf(",") + 1);
+        
+        if (lat == '' || lng == '' || lat == '.' || lng == '.')
+			alert ("coordinates not valid")
+        
+        var temp=value.split('');
+        var temp1=0;
+         for(var i = 0; i < temp.length; i++)
+        {
+            if(temp[i] == ',')
+                temp1++;
+        }
+        if (temp1>1)
+        
+			alert("coordinates not valid");
+          
+    var floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
+    if (!floatRegex.test(lat) && !floatRegex.test(lng))
+        alert("coordinates not valid");
+
+    //lat = parseFloat(lat);
+    //lng = parseFloat(lng);
+    
+    if (isNaN(lat) && isNaN(lng))
+        alert("coordinates not valid");
+    if(lat > 90 || lat < -90 || lng > 90 || lng < -90)
+        alert("coordinates not valid");
+    
+    markeraDestination= L.marker([lat ,lng],{icon: redIcon , draggable: true});
+    map.addLayer(markeraDestination);
+
+});  
+
+
+var latlng = new Array(2); //  contiendra le debut et la fin de l itineraire
+
+// fonction pour affecter les coordonnées de départ et d'arrivée à la variable latlng
+function affect(){
+var latdep= $("#dep").val().substring(0, $("#dep").val().indexOf(","));
+var lngdep=$("#dep").val().substring($("#dep").val().indexOf(",") + 1);
+var temp= new Array(2);
+//console.log(latdep);
+//console.log(lngdep);
+temp[0]=[latdep,lngdep];
+latlng[0]=temp[0];
+
+var latdes= $("#dest").val().substring(0, $("#dest").val().indexOf(","));
+var lngdes=$("#dest").val().substring($("#dest").val().indexOf(",") + 1);
+temp[1]=[latdes,lngdes];
+latlng[1]=temp[1];
+}
