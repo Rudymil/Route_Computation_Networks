@@ -1,5 +1,20 @@
-
 var markerDeparture=null;
+
+// Define icons
+var greenIcon = new L.Icon({
+  iconUrl: 'img/marker-icon-2x-green.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var redIcon = new L.Icon({
+  iconUrl: 'img/marker-icon-2x-red.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 // function for geolocation
 map.locate({setView: true, watch: true}).on('locationfound', function(e){
@@ -272,4 +287,3 @@ var lngdes=$("#dest").val().substring($("#dest").val().indexOf(",") + 1);
 temp[1]=[latdes,lngdes];
 latlng[1]=temp[1];
 }
-

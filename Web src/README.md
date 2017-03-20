@@ -6,10 +6,11 @@
   * [context_menu2.css](css/context_menu2.css) (*remove shapes*)
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
-  * [menu.js](js/menu.js) (*global variables + submit script*)
-  * [route.js](js/route.js) (*Route section scripts*)
+  * [menu.js](js/menu.js) (*data sending scripts + draw route*)
   * [selection_of_the_area.js](js/selection_of_the_area.js) (*Selection of the area section scripts*)
-  * [area_editing.js](js/geolocalisation.js) (*Area editing section scripts*)
+  * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
+  * [report_a_trouble_zone.js](js/report_a_trouble_zone.js) (*Report a trouble zone section scripts*)
+  * [report_a_lack_of_data.js](js/report_a_lack_of_data.js) (*Report a lack of data section scripts*)
 * [leaflet-routing-machine-3.2.5](leaflet-routing-machine-3.2.5) (*folder of the Leaflet Routing Machine Framework*)
   * [dist](leaflet-routing-machine-3.2.5/dist) (*scripts, css and images of the Leaflet Routing Machine Framework*)
   * [src](leaflet-routing-machine-3.2.5/src) (*js scripts of the Leaflet Routing Machine Framework*)
@@ -26,7 +27,7 @@
 $("#submit").click(function(){...});
 ```
 Envoye le **JSON**.
-## route.js
+## set_the_route.js
 ```js
 map.locate({setView: true, watch: true}).on('locationfound', function(e){...}).on('locationerror', function(e){});
 ```
@@ -84,7 +85,7 @@ Reset la view de la carte sur Port Harcourt lorsqu'on clic sur le bouton **Niger
 $("#angola").click(function(){...});
 ```
 Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dans **Selection of the area**.
-## area_editing.js
+## report_a_trouble_zone.js
 ```js
 $("#radius").change(function(){...});
 ```
@@ -119,6 +120,7 @@ Enregistre tous les points cliqués sur la carte constituant le futur **polygone
 function draw_polygon(e){...});
 ```
 Dessine le **polygone** à partir de tous les points précédemment enregistrés.
+## report_a_lack_of_data.js
 # Literature
 * [Leafler API Reference](http://leafletjs.com/reference.html)
 * [Open Street Map (Partie 2) – Intégration d’une carte avec Leaflet](https://blog.netapsys.fr/open-street-map-partie-2-integration-dune-carte-avec-leaflet/)

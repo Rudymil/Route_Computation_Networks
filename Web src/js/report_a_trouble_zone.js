@@ -4,30 +4,30 @@ $("#radius").change(function(){ // MAJ valeur du rayon
 });
 
 $(".radio_button").change(function (){ // choix de dessin
-	if ($("#Navigate").is(":checked")){
+	if ($("#set_the_route").is(":checked")){
 		//console.log("Navigate");
-		drawing = "Navigate"; // pas de dessin
+		drawing = "set_the_route"; // pas de dessin
 		nb_points = 0;
 		rectangle = [];
 		points = [];
 	}
-	else if ($("#Circle").is(":checked")){
+	else if ($("#Circle1").is(":checked")){
 		//console.log("Circle");
-		drawing = "Circle"; // dessiner un cercle
+		drawing = "Circle1"; // dessiner un cercle
 		nb_points = 0;
 		rectangle = [];
 		points = [];
 	}
-	else if ($("#Box").is(":checked")){
+	else if ($("#Box1").is(":checked")){
 		//console.log("Box");
-		drawing = "Box"; // dessiner une box
+		drawing = "Box1"; // dessiner une box
 		nb_points = 0;
 		rectangle = [];
 		points = [];
 	}
-	else if ($("#Polygon").is(":checked")){
+	else if ($("#Polygon1").is(":checked")){
 		//console.log("Polygon");
-		drawing = "Polygon"; // dessiner un polygone
+		drawing = "Polygon1"; // dessiner un polygone
 		nb_points = 0;
 		rectangle = [];
 		points = [];
@@ -37,22 +37,22 @@ $(".radio_button").change(function (){ // choix de dessin
 //$("#map").click(function (e){ // lorsqu on click sur la carte (jQuery)
 map.addEventListener('click', function(e){ // lorsqu on click sur la carte
 	switch(drawing) {
-		case "Navigate":
+		case "set_the_route":
 			//console.log(drawing);
 			break;
-		case "Circle":
+		case "Circle1":
 			//console.log(drawing);
 			//console.log(e.latlng.lat);
 			//console.log(e.latlng.lng);
 			draw_circle(e); // dessin du cercle
 			break;
-		case "Box":
+		case "Box1":
 			//console.log(drawing);
 			//console.log(e.latlng.lat);
 			//console.log(e.latlng.lng);
 			draw_box(e);
 			break;
-		case "Polygon":
+		case "Polygon1":
 			//console.log(drawing);
 			//console.log(e.latlng.lat);
 			//console.log(e.latlng.lng);
@@ -64,10 +64,10 @@ map.addEventListener('click', function(e){ // lorsqu on click sur la carte
 //$("#map").dblclick(function (e){ // lorsqu on click sur la carte (jQuery)
 map.addEventListener('dblclick', function(e){ // lorsqu on double click sur la carte
 	switch(drawing) {
-		case "Navigate":
+		case "set_the_route":
 			//console.log(drawing);
 			break;
-		case "Polygon":
+		case "Polygon1":
 			//console.log(drawing);
 			//console.log(e.latlng.lat);
 			//console.log(e.latlng.lng);
@@ -147,8 +147,3 @@ function draw_polygon(e){ // dessin du polygon
 	points = [];
 	nb_points = 0;
 }
-
-
-
-
-
