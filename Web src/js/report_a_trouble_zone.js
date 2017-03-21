@@ -4,8 +4,10 @@ $("#radius").change(function(){ // MAJ valeur du rayon
 });
 
 $(".radio_button").change(function (){ // choix de dessin
-	if ($("#set_the_route").is(":checked")){
+	if ($("#Navigate").is(":checked")){
 		//console.log("Navigate");
+		$("#dep").prop('disabled', false);	
+		$("#dest").prop('disabled', false);	
 		drawing = "set_the_route"; // pas de dessin
 		nb_points = 0;
 		rectangle = [];
@@ -13,6 +15,8 @@ $(".radio_button").change(function (){ // choix de dessin
 	}
 	else if ($("#Circle1").is(":checked")){
 		//console.log("Circle");
+		$("#dep").prop('disabled', true);
+		$("#dest").prop('disabled', true);		
 		drawing = "Circle1"; // dessiner un cercle
 		nb_points = 0;
 		rectangle = [];
@@ -20,6 +24,8 @@ $(".radio_button").change(function (){ // choix de dessin
 	}
 	else if ($("#Box1").is(":checked")){
 		//console.log("Box");
+		$("#dep").prop('disabled', true);
+		$("#dest").prop('disabled', true);	
 		drawing = "Box1"; // dessiner une box
 		nb_points = 0;
 		rectangle = [];
@@ -27,10 +33,27 @@ $(".radio_button").change(function (){ // choix de dessin
 	}
 	else if ($("#Polygon1").is(":checked")){
 		//console.log("Polygon");
+		$("#dep").prop('disabled', true);
+		$("#dest").prop('disabled', true);	
 		drawing = "Polygon1"; // dessiner un polygone
 		nb_points = 0;
 		rectangle = [];
 		points = [];
+	}
+	else if ($("#Circle2").is(":checked")){	
+		$("#dep").prop('disabled', true);
+		$("#dest").prop('disabled', true);	
+		
+	}
+	else if ($("#Box2").is(":checked")){	
+		$("#dep").prop('disabled', true);
+		$("#dest").prop('disabled', true);	
+		
+	}
+	else if ($("#Polygon2").is(":checked")){	
+		$("#dep").prop('disabled', true);
+		$("#dest").prop('disabled', true);	
+		
 	}
 });
 
@@ -38,6 +61,7 @@ $(".radio_button").change(function (){ // choix de dessin
 map.addEventListener('click', function(e){ // lorsqu on click sur la carte
 	switch(drawing) {
 		case "set_the_route":
+			hideContextMenu1();
 			//console.log(drawing);
 			break;
 		case "Circle1":
@@ -65,6 +89,7 @@ map.addEventListener('click', function(e){ // lorsqu on click sur la carte
 map.addEventListener('dblclick', function(e){ // lorsqu on double click sur la carte
 	switch(drawing) {
 		case "set_the_route":
+			addmarker(e);
 			//console.log(drawing);
 			break;
 		case "Polygon1":
