@@ -1,11 +1,21 @@
 // variables globales
 var drawing = "set_the_route"; // choix de dessin
+
+var nb_points = 0; // for boxes and polygons
+
+// Json pour le dession et le point de départ et de fin 
+
+// variable pour la saisie de zone de danger 
+var latlng= new Array();
 var circle = new Array(); // tableau de dictionnaire
 var box = new Array(); // tableau de dictionnaire
-var rectangle = new Array();
 var polygon = new Array(); // tableau de dictionnaire
-var points = new Array();
-var nb_points = 0; // for boxes and polygons
+
+// variable pour la saisie de zone de manque de donnees
+var latlngl= new Array();
+var circlel = new Array(); // tableau de dictionnaire
+var boxl = new Array(); // tableau de dictionnaire
+var polygonl = new Array(); // tableau de dictionnaire
 
 $("#submit").click(function(){ // envoie toutes les donnees a l algo pour afficher l itineraire
 	var json = new Array();
