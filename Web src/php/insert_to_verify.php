@@ -4,13 +4,13 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$_POST = '{"circles":[[[2,43],20],[[2.69,48],48]],"boxes":[[[3,44],[4,45]],[[21,54],[63,54]]],"polygons":[[[2,56],[3,57],[3,56],[2,56]],[[1,2],[3,8],[21,4],[1,2]]]}';
-    $request = json_decode($_POST, true);
+		$request = json_decode($_POST, true);
 		//var_dump(json_decode($_POST, true));
-    $request_circle = $request['circles'];
-    $request_box = $request['boxes'];
-    $request_polygon = $request['polygons'];
+		$request_circle = $request['circles'];
+		$request_box = $request['boxes'];
+		$request_polygon = $request['polygons'];
 
-    // Connexion
+		// Connexion
 		$conn_string = "host=localhost port=5432 dbname=projcomm user=postgres";
 		$dbconn = pg_connect($conn_string) or die("Connexion impossible");
 
