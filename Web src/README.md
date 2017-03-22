@@ -6,13 +6,11 @@
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
   * [menu.js](js/menu.js) (*data sending scripts + draw route*)
+  * [notify.js](js/notify.js) (*notify API 0.2.0*)
   * [selection_of_the_area.js](js/selection_of_the_area.js) (*Selection of the area section scripts*)
   * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
   * [report_a_trouble_zone.js](js/report_a_trouble_zone.js) (*Report a trouble zone section scripts*)
   * [report_a_lack_of_data.js](js/report_a_lack_of_data.js) (*Report a lack of data section scripts*)
-* [leaflet-routing-machine-3.2.5](leaflet-routing-machine-3.2.5) (*folder of the Leaflet Routing Machine Framework*)
-  * [dist](leaflet-routing-machine-3.2.5/dist) (*scripts, css and images of the Leaflet Routing Machine Framework*)
-  * [src](leaflet-routing-machine-3.2.5/src) (*js scripts of the Leaflet Routing Machine Framework*)
 * [php](php) (*database access scripts folder*)
 
 # API/Frameworks used

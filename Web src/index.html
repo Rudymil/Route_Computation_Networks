@@ -10,15 +10,16 @@
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>Route calculation</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/> <!--BOOTSTRAP-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css"/>
-		<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css"/> <!--LEAFLET-->
+		<!--link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css"/-->
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css"/>
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css"/>
 		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css"/>
-		<link rel="stylesheet" href="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.5/leaflet-routing-machine.min.css"/> <!--LRM-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.1.0/css/bootstrap-notify.min.css"/> <!--NOTIFY-->
 		<link rel="stylesheet" href="css/template.css"/>
 		<link rel="stylesheet" href="css/context_menu1.css"/>
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
@@ -111,6 +112,13 @@
 									</center>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-xs-12"> <!-- 12 -->
+									<center>
+										<button id="calculate" type="button" class="btn btn-primary" margin="auto">Calculate the route</button>
+									</center>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -137,6 +145,13 @@
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
 										<input type="radio" class="radio_button" id="Polygon1" name="draw" value="Polygon1">
 										<label for="Polygon">Polygon</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12"> <!-- 12 -->
+										<center>
+											<button id="submit1" type="button" class="btn btn-primary" margin="auto">Submit</button>
+										</center>
 									</div>
 								</div>
 							</div>
@@ -170,17 +185,14 @@
 								</div>
 								<div class="row">
 									<div class="col-xs-12"> <!-- 12 -->
-										<center><button id="submit" type="button" class="btn btn-primary" margin="auto">Submit</button></center>
+										<center>
+											<button id="submit2" type="button" class="btn btn-primary" margin="auto">Submit</button>
+										</center>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12"> <!-- 12 -->
-					<center><button id="calculate" type="button" class="btn btn-primary" margin="auto">Calculate the route</button></center>
 				</div>
 			</div>
 		</div>
@@ -189,29 +201,31 @@
 			<ul>
 				<li id="cm_debut">Définir comme Début</li>
 				<li id="cm_fin">Définir comme Fin</li>  
-			</ul>  
+			</ul>
 		</div>
 		<div id="context_menu2">
 			<ul>
 				<li id="cm_debut">Suppression</li>
-			</ul>  
+			</ul>
 		</div>
-		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!--JQUERY-->
+		<script src="js/notify.js"></script> <!--NOTIFY-->
+		<!--script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script> <NOTIFY-->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <!--BOOTSTRAP-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script> <!--LEAFLET-->
 		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 		<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
 		<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-		<script src="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.5/leaflet-routing-machine.min.js"></script> <!--RML-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
 		<script src="js/menu.js"></script>
 		<script src="js/template.js"></script>
 		<script src="js/set_the_route.js"></script>
 		<script src="js/selection_of_the_area.js"></script>
-		<script src="js/report_a_trouble_zone.js"></script>
+		<!--script src="js/report_a_trouble_zone.js"></script-->
 		<script src="js/report_a_lack_of_data.js"></script>
 	</body>
 </html>
