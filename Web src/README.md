@@ -11,7 +11,7 @@
   * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
   * [report_a_trouble_zone.js](js/report_a_trouble_zone.js) (*Report a trouble zone section scripts*)
   * [report_a_lack_of_data.js](js/report_a_lack_of_data.js) (*Report a lack of data section scripts*)
-* [php](php) (*database access scripts folder*)
+* [php](php) (*folder of database access scripts*)
 
 # API/Frameworks used
 * [Bootstrap](http://getbootstrap.com/)
@@ -23,9 +23,21 @@
 # JS functions
 ## menu.js
 ```js
-$("#submit").click(function(){...});
+$("#map").ready(function(){...});
 ```
-Envoye le **JSON**.
+Charge toutes les **zones de danger** sur la carte à partir de la **BDD**.
+```js
+$("#calculate").click(function(){...});
+```
+Envoye les **points** de départ et d'arrivée à **l'algo**.
+```js
+$("#submit1").click(function(){...});
+```
+Envoye les **zones de danger** à la **BDD**.
+```js
+$("#submit2").click(function(){...});
+```
+Envoye les **zones à vérifier** à la **BDD**.
 ## set_the_route.js
 ```js
 map.locate({setView: true, watch: true}).on('locationfound', function(e){...}).on('locationerror', function(e){});
