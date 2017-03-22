@@ -12,6 +12,9 @@
   * [report_a_trouble_zone.js](js/report_a_trouble_zone.js) (*Report a trouble zone section scripts*)
   * [report_a_lack_of_data.js](js/report_a_lack_of_data.js) (*Report a lack of data section scripts*)
 * [php](php) (*folder of database access scripts*)
+  * [select_all.php](php/select_all.php) (*Select all geometry in DB*)
+  * [insert_to_valid.php](php/insert_to_valid.php) (*Insert selected area in DB*)
+  * [insert_to_verify.php](php/insert_to_verify.php) (*Insert selected area in DB*)
 
 # API/Frameworks used
 * [Bootstrap](http://getbootstrap.com/)
@@ -99,6 +102,19 @@ Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dan
 ## report_a_trouble_zone.js
 ## report_a_lack_of_data.js
 # PHP functions
+Manipulated formats : 
+```
+{  
+ circles : [[[lat,lng],radius]],[...]],  
+ boxes : [[[lat,lng],[lat,lng]],[...]],  
+ polygons : [[[lat,lng],[...],[...]],[...]] 
+}
+```
+
+##select_all.php
+##insert_to_valid.php
+##insert_to_verify.php
+
 # Literature
 * [Découvrir jQuery](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)
 * [Le fonctionnement de $.ajax()](https://openclassrooms.com/courses/un-site-web-dynamique-avec-jquery/le-fonctionnement-de-ajax)
