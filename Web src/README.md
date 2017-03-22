@@ -6,7 +6,6 @@
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
   * [menu.js](js/menu.js) (*data sending scripts + draw route*)
-  * [notify.js](js/notify.js) (*notify API 0.2.0*)
   * [selection_of_the_area.js](js/selection_of_the_area.js) (*Selection of the area section scripts*)
   * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
   * [report_a_trouble_zone.js](js/report_a_trouble_zone.js) (*Report a trouble zone section scripts*)
@@ -21,7 +20,7 @@
 * [jQuery](https://jquery.com/)
 * [Leafletjs](http://leafletjs.com/)
 * [Leaflet Routing Machine](http://www.liedman.net/leaflet-routing-machine/)
-* [Notify.js](https://notifyjs.com/)
+* [Bootstrap Notify](http://bootstrap-notify.remabledesigns.com/)
 
 # JS functions
 ## menu.js
@@ -102,19 +101,17 @@ Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dan
 ## report_a_trouble_zone.js
 ## report_a_lack_of_data.js
 # PHP functions
-Manipulated formats : 
-```
+Manipulated formats :
+```json
 {  
- circles : [[[lat,lng],radius]],[...]],  
- boxes : [[[lat,lng],[lat,lng]],[...]],  
- polygons : [[[lat,lng],[...],[...]],[...]] 
+	circles : [[[lat,lng],radius]],[...]],  
+	boxes : [[[lat,lng],[lat,lng]],[...]],  
+	polygons : [[[lat,lng],[...],[...]],[...]]
 }
 ```
-
 ## select_all.php
 ## insert_to_valid.php
-## insert_to_verify.ph 
-
+## insert_to_verify.php
 # Literature
 * [Découvrir jQuery](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)
 * [Le fonctionnement de $.ajax()](https://openclassrooms.com/courses/un-site-web-dynamique-avec-jquery/le-fonctionnement-de-ajax)

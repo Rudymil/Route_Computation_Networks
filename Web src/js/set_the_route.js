@@ -29,19 +29,25 @@ map.locate({setView: true, watch: true}).on('locationfound', function(e){
             //console.log(e);
             //alert("Location access denied.");
             $.notify(
-				"Location access denied.",
-				{
-					position: "top"
-				},
-				"error"
-			);
+	            {
+	            	title: "<strong>Geolocalisation</strong>",
+	            	message: "Location access denied."
+	            },
+	            {
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+	            }
+            );
         });
 
 var markeraDestination=null;
 
 //Function to define the state of the marker drawn on the map 
-//map.on('dblclick', function(e) {
-	function addmarker(e){
+map.on('dblclick', function addmarker(e) {
+	if ($("#Navigate").is(":checked")){
 	map.doubleClickZoom.disable();
 	
 	var pos = {
@@ -51,12 +57,13 @@ var markeraDestination=null;
 	//console.log(e.latlng.lat);
 	var ce=e;
 	showContextMenu1( markeraDestination, pos,ce);
-}
-//});
+	}
 
-/*map.on("click", function() {
+});
+
+map.on("click", function() {
 hideContextMenu1();
-});*/
+});
 
 //Function to hide the marker state menu
 function hideContextMenu1(){
@@ -65,6 +72,7 @@ $("#context_menu1").css("display","none");
 
 //Function to vizualize the marker state menu
 function showContextMenu1( marker, pos,ep){
+
   // positionne le context menu
   var oElem = $("#context_menu1");    
    $("#context_menu1").css("left",pos.x +'px');
@@ -80,6 +88,8 @@ function showContextMenu1( marker, pos,ep){
             map.addLayer(markerDeparture);
             $("#dep").val(ep.latlng.lat + ", " + ep.latlng.lng);
             hideContextMenu1();
+             markerDeparture.on("dragend",function(ev){
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
 
  	 });  
   
@@ -91,65 +101,13 @@ function showContextMenu1( marker, pos,ep){
   			map.addLayer(markeraDestination)
   			$("#dest").val(ep.latlng.lat + ", " + ep.latlng.lng);
   			hideContextMenu1();
+  			markeraDestination.on("dragend",function(ev){
+            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
   });  
   
 }
 
-//Function to drag the marker
-map.on('click', function mapClickListen(e) {
-  
-	if( markerDeparture !=null) {
-    //console.log('map click event');
 
-		markerDeparture.on('drag', function(e) {
-		  //console.log('marker drag event');
-		});
-		
-		
-		markerDeparture.on('dragstart', function(e) {
-		  //console.log('marker dragstart event');
-		  map.off('click', mapClickListen);
-		});
-		
-		
-		markerDeparture.on('dragend', function(e) {
-			  //console.log('marker dragend event');
-			  setTimeout(function() {
-				map.on('click', mapClickListen);
-			  }, 10);
-			 $("#dep").val(e.target._latlng.lat + ", " + e.target._latlng.lng);
-		});
-  
-	}	
-});
-
-
-map.on('click',function mapClickListen1(e) {
-  
-	if( markeraDestination !=null) {
-    //console.log('map click event');
-
-		markeraDestination.on('drag', function(e) {
-		  //console.log('marker drag event');
-		});
-		
-		
-		markeraDestination.on('dragstart', function(e) {
-		  //console.log('marker dragstart event');
-		  map.off('click', mapClickListen1);
-		});
-		
-		
-		markeraDestination.on('dragend', function(e) {
-			  //console.log('marker dragend event');
-			  setTimeout(function() {
-				map.on('click', mapClickListen1);
-			  }, 10);
-			 $("#dest").val(e.target._latlng.lat + ", " + e.target._latlng.lng);
-		});
-	  
-	}
-});
 
 
 
@@ -160,6 +118,8 @@ $("#remove").click(function(){
 	 $("#dest").val("");
 	 map.removeLayer(markeraDestination);
 	 map.removeLayer(markerDeparture);
+	 markerDeparture.on("dragend",function(ev){
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
  }
 });
 
@@ -183,6 +143,8 @@ $("#inverse").click(function(){
 			map.addLayer(markerDeparture);
 			$("#dep").val(temp2);
 			$("#dest").val("");
+			markerDeparture.on("dragend",function(ev){
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
 		}
 		
 		else if( $("#dest").val() == "" ) {
@@ -191,7 +153,10 @@ $("#inverse").click(function(){
 			map.addLayer(markeraDestination);
 			$("#dest").val(temp1);
 			$("#dep").val("");
+			markeraDestination.on("dragend",function(ev){
+            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
 		}
+		
 			
 		
 		else {
@@ -206,6 +171,10 @@ $("#inverse").click(function(){
 		
 		$("#dest").val(temp1);
 		$("#dep").val(temp2);
+		markerDeparture.on("dragend",function(ev){
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+        markeraDestination.on("dragend",function(ev){
+            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
 		}
 	}
 });
@@ -230,12 +199,17 @@ $("#godep").click(function(){
         
         if (lat == '' || lng == '' || lat == '.' || lng == '.' || temp1>1 || (!floatRegex.test(lat) && !floatRegex.test(lng))||(isNaN(lat) && isNaN(lng)) || lat > 90 || lat < -90 || lng > 90 || lng < -90){
 			//alert ("coordinates not valid");
-			$("#dep").notify(
-				"coordinates not valid", 
+			$.notify(
 				{
-					position: "bottom center"
-				},
-				"error"
+					title: "<strong>Departure</strong>",
+					message: "coordinates not valid",
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 			$("#dep").val(markerDeparture.getLatLng().lat + ", " + markerDeparture.getLatLng().lng);
 		}
@@ -245,6 +219,9 @@ $("#godep").click(function(){
 			}
 			markerDeparture= L.marker([lat ,lng],{icon: greenIcon , draggable: true});
 			map.addLayer(markerDeparture);
+			markerDeparture.on("dragend",function(ev){
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+            map.panTo(markerDeparture.getLatLng());
 		}
 	}
 		
@@ -269,12 +246,17 @@ $("#godest").click(function(){
         
         if (lat == '' || lng == '' || lat == '.' || lng == '.' || temp1>1 || (!floatRegex.test(lat) && !floatRegex.test(lng))||(isNaN(lat) && isNaN(lng)) || lat > 90 || lat < -90 || lng > 90 || lng < -90){
 			//alert ("coordinates not valid");
-			$("#dest").notify(
-				"coordinates not valid", 
+			$.notify(
 				{
-					position: "bottom center"
-				},
-				"error"
+					title: "<strong>Destination</strong>",
+					message: "coordinates not valid",
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 			$("#dest").val(markeraDestination.getLatLng().lat + ", " + markeraDestination.getLatLng().lng);
 		}
@@ -284,6 +266,9 @@ $("#godest").click(function(){
 			}
 			markeraDestination= L.marker([lat ,lng],{icon: redIcon , draggable: true});
 			map.addLayer(markeraDestination);
+			markeraDestination.on("dragend",function(ev){
+            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+            map.panTo(markeraDestination.getLatLng());
 		}
 	}
 		
@@ -302,9 +287,14 @@ var temp= new Array(2);
 //console.log(lngdep);
 temp[0]=[latdep,lngdep];
 latlng[0]=temp[0];
+//console.log(latlng[0]);
+//latlng[0][0]=latdep;
+//latlng[0][1]=lngdep;
 
 var latdes= $("#dest").val().substring(0, $("#dest").val().indexOf(","));
 var lngdes=$("#dest").val().substring($("#dest").val().indexOf(",") + 1);
 temp[1]=[latdes,lngdes];
 latlng[1]=temp[1];
+//latlng[1][0]=latdes;
+//latlng[1][1]=lngdes;
 }

@@ -16,18 +16,23 @@ var latlng= new Array(); // departure/arrival points
 
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
 	$.ajax({
-		url : '../php/select_all.php',
+		url : './php/select_all.php',
 		type : 'POST',
 		dataType : 'json',
 		success : function(code_json, statut){
 			//console.log("code_json : ",code_json);
 			//console.log("statut : ",statut);
 			$.notify(
-				"Loading areas succes", 
 				{
-					position: "top"
-				},
-				"success"
+					title: "<strong>Trouble zones request</strong>",
+					message: statut
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 		},
 		error : function(resultat, statut, erreur){
@@ -35,15 +40,20 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			//console.log("statut : ",statut);
 			//console.log("erreur : ",erreur);
 			$.notify(
-				"Loading areas error", 
 				{
-					position: "top"
-				},
-				"success"
+					title: "<strong>Trouble zones request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 		},
 		complete : function(resultat, statut){
-			if (status == 200){
+			if (status == "success"){
 				console.log(resultat);
 				var json = resultat;
 				console.log(json);
@@ -59,21 +69,31 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 	if (latlng.length == 2 && latlng[0].length == 2 && latlng[1].length == 2){ // si 2 couples de lat Lng
 		if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined) || latlng[1].includes("") || latlng[1].includes(NaN) || latlng[1].includes(undefined)){ // si pas de point
 			if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined)){
-				$("#dep").notify(
-					"Enter departure !!!", 
+				$.notify(
 					{
-						position: "top center"
-					},
-					"error"
+						title: "<strong>Departure</strong>",
+						message: "Enter coordinates",
+					},{
+					type: "danger",
+						placement: {
+							from: "bottom",
+							align: "center"
+						}
+					}
 				);
 			}
 			if (latlng[1].includes("") || latlng[1].includes(NaN) || latlng[1].includes(undefined)){
-				$("#dest").notify(
-					"Enter destination !!!", 
+				$.notify(
 					{
-						position: "top center"
-					},
-					"error"
+						title: "<strong>Destination</strong>",
+						message: "Enter coordinates",
+					},{
+						type: "danger",
+						placement: {
+							from: "bottom",
+							align: "center"
+						}
+					}
 				);
 			}
 		}
@@ -87,24 +107,34 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 				success : function(code_json, statut){
 					//console.log("code_json : ",code_json);
 					//console.log("statut : ",statut);
-					$("#calculate").notify(
-						"Request succes", 
+					$.notify(
 						{
-							position: "bottom center"
-						},
-						"success"
+							title: "<strong>Routing request</strong>",
+							message: statut,
+						},{
+							type: "success",
+							placement: {
+								from: "bottom",
+								align: "center"
+							}
+						}
 					);
 				},
 				error : function(resultat, statut, erreur){
 					//console.log("resultat : ",resultat);
 					//console.log("statut : ",statut);
 					//console.log("erreur : ",erreur);
-					$("#calculate").notify(
-						"Request error", 
+					$.notify(
 						{
-							position: "bottom center"
-						},
-						"error"
+							title: "<strong>Routing request</strong>",
+							message: statut,
+						},{
+							type: "danger",
+							placement: {
+								from: "bottom",
+								align: "center"
+							}
+						}
 					);
 				},
 				complete : function(resultat, statut){
@@ -118,12 +148,17 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 		}
 	}
 	else{
-		$("#calculate").notify(
-			"Size error !!!", 
+		$.notify(
 			{
-				position: "bottom center"
-			},
-			"error"
+				title: "<strong>Array size</strong>",
+				message: "incorrect",
+			},{
+				type: "danger",
+				placement: {
+					from: "bottom",
+					align: "center"
+				}
+			}
 		);
 	}
 });
@@ -132,30 +167,40 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 	var json = new Array();
 	//console.log(json);
 	$.ajax({
-		url : '../php/insert_to_valid.php',
+		url : './php/insert_to_valid.php',
 		type : 'POST',
 		dataType : '',
 		success : function(code, statut){
 			//console.log("code_json : ",code_json);
 			//console.log("statut : ",statut);
-			$("#submit1").notify(
-				"Request succes", 
+			$.notify(
 				{
-					position: "bottom center"
-				},
-				"success"
+					title: "<strong>Sending areas</strong>",
+					message: statut,
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 		},
 		error : function(resultat, statut, erreur){
 			//console.log("resultat : ",resultat);
 			//console.log("statut : ",statut);
 			//console.log("erreur : ",erreur);
-			$("#submit1").notify(
-				"Request error", 
+			$.notify(
 				{
-					position: "bottom center"
-				},
-				"error"
+					title: "<strong>Sending areas</strong>",
+					message: statut,
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 		},
 		complete : function(resultat, statut){
@@ -170,30 +215,40 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 	var json = new Array();
 	//console.log(json);
 	$.ajax({
-		url : '../php/insert_to_verify.php',
+		url : './php/insert_to_verify.php',
 		type : 'POST',
 		dataType : '',
 		success : function(code, statut){
 			//console.log("code_json : ",code_json);
 			//console.log("statut : ",statut);
-			$("#submit2").notify(
-				"Request succes", 
+			$.notify(
 				{
-					position: "bottom center"
-				},
-				"success"
+					title: "<strong>Sending areas</strong>",
+					message: statut,
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 		},
 		error : function(resultat, statut, erreur){
 			//console.log("resultat : ",resultat);
 			//console.log("statut : ",statut);
 			//console.log("erreur : ",erreur);
-			$("#submit2").notify(
-				"Request error", 
+			$.notify(
 				{
-					position: "bottom center"
-				},
-				"error"
+					title: "<strong>Sending areas</strong>",
+					message: statut,
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
 			);
 		},
 		complete : function(resultat, statut){
