@@ -111,9 +111,9 @@ Manipulated formats :
 }
 ```
 
-##select_all.php
-##insert_to_valid.php
-##insert_to_verify.php
+## select_all.php
+## insert_to_valid.php
+## insert_to_verify.ph 
 
 # Literature
 * [Découvrir jQuery](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)
