@@ -20,7 +20,7 @@
 			$lng = (double)$request_circle[$i][0][1];
 			$radius = (double)$request_circle[$i][1];
 
-			$sql_circle = "INSERT INTO hot_area (type, geom) VALUES ('CIRCLE', ST_Buffer(ST_SetSRID(ST_MakePoint(".$lat.",".$lng."),4326),".$radius."));";
+			$sql_circle = "INSERT INTO verif_area (type, geom) VALUES ('CIRCLE', ST_Buffer(ST_SetSRID(ST_MakePoint(".$lat.",".$lng."),4326),".$radius."));";
 
 			$circle = pg_query($dbconn, $sql_circle);
 		}
@@ -32,7 +32,7 @@
 			$x2 = (double)$request_box[$i][1][0];
 			$y2 = (double)$request_box[$i][1][1];
 
-			$sql_box = "INSERT INTO hot_area (type, geom) VALUES ('BOX', ST_SetSRID(ST_MakeBox2D(ST_Point(".$x1.", ".$y1."), ST_Point(".$x2.",".$y2.")),4326));";
+			$sql_box = "INSERT INTO verif_area (type, geom) VALUES ('BOX', ST_SetSRID(ST_MakeBox2D(ST_Point(".$x1.", ".$y1."), ST_Point(".$x2.",".$y2.")),4326));";
 
 			$box = pg_query($dbconn, $sql_box);
 		}
@@ -47,7 +47,7 @@
 				$linestring .= $lat." ".$lng.",";
 			}
 			//echo substr($linestring, 0, -1) ."\n";
-			$sql_poly = "INSERT INTO hot_area (type, geom) VALUES ('POLYGON', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326));";
+			$sql_poly = "INSERT INTO verif_area (type, geom) VALUES ('POLYGON', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326));";
 			$poly = pg_query($dbconn, $sql_poly);
 		}
 
