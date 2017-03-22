@@ -3,30 +3,41 @@
 * [css](css) (*folder of style files*)
   * [template.css](css/template.css) (*basic css*)
   * [context_menu1.css](css/context_menu1.css) (*define departure/arrival points*)
-  * [context_menu2.css](css/context_menu2.css) (*remove shapes*)
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
   * [menu.js](js/menu.js) (*data sending scripts + draw route*)
+  * [notify.js](js/notify.js) (*notify API 0.2.0*)
   * [selection_of_the_area.js](js/selection_of_the_area.js) (*Selection of the area section scripts*)
   * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
   * [report_a_trouble_zone.js](js/report_a_trouble_zone.js) (*Report a trouble zone section scripts*)
   * [report_a_lack_of_data.js](js/report_a_lack_of_data.js) (*Report a lack of data section scripts*)
-* [leaflet-routing-machine-3.2.5](leaflet-routing-machine-3.2.5) (*folder of the Leaflet Routing Machine Framework*)
-  * [dist](leaflet-routing-machine-3.2.5/dist) (*scripts, css and images of the Leaflet Routing Machine Framework*)
-  * [src](leaflet-routing-machine-3.2.5/src) (*js scripts of the Leaflet Routing Machine Framework*)
+* [php](php) (*folder of database access scripts*)
 
 # API/Frameworks used
 * [Bootstrap](http://getbootstrap.com/)
-* [Leafletjs](http://leafletjs.com/)
 * [jQuery](https://jquery.com/)
+* [Leafletjs](http://leafletjs.com/)
 * [Leaflet Routing Machine](http://www.liedman.net/leaflet-routing-machine/)
+* [Notify.js](https://notifyjs.com/)
 
 # JS functions
 ## menu.js
 ```js
-$("#submit").click(function(){...});
+$("#map").ready(function(){...});
 ```
-Envoye le **JSON**.
+Charge toutes les **zones de danger** sur la carte à partir de la **BDD**.
+```js
+$("#calculate").click(function(){...});
+```
+Envoye les **points** de départ et d'arrivée à **l'algo**.
+```js
+$("#submit1").click(function(){...});
+```
+Envoye les **zones de danger** à la **BDD**.
+```js
+$("#submit2").click(function(){...});
+```
+Envoye les **zones à vérifier** à la **BDD**.
 ## set_the_route.js
 ```js
 map.locate({setView: true, watch: true}).on('locationfound', function(e){...}).on('locationerror', function(e){});
@@ -86,43 +97,11 @@ $("#angola").click(function(){...});
 ```
 Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dans **Selection of the area**.
 ## report_a_trouble_zone.js
-```js
-$("#radius").change(function(){...});
-```
-Met à jour la valeur du **rayon** du cercle à dessiner.
-```js
-$(".radio_button").change(function (){...});
-```
-Met à jour le **choix** entre {navigate, circle, box, polygon}.
-```js
-map.addEventListener('click', function(e){...});
-```
-Intéraction de la carte avec le simple clic.
-Déclenche la fonction ```draw_circle```, ```draw_box``` ou ```build_polygon``` en fonction du choix des radio boutons.
-```js
-map.addEventListener('dblclick', function(e){...});
-```
-Intéraction de la carte avec le doucle clic.
-Déclenche la fonction ```draw_polygon``` en fonction du choix des radio boutons.
-```js
-function draw_circle(e){...});
-```
-Dessine un **cercle** dont le centre sera l'endroit cliqué sur la carte et le rayon celui précisé dans les radio boutons.
-```js
-function draw_box(e){...});
-```
-Enregistre le premier point cliqué sur la carte puis dessine le **rectangle** après avoir cliqué au deuxième point.
-```js
-function build_polygon(e){...});
-```
-Enregistre tous les points cliqués sur la carte constituant le futur **polygone**.
-```js
-function draw_polygon(e){...});
-```
-Dessine le **polygone** à partir de tous les points précédemment enregistrés.
 ## report_a_lack_of_data.js
+# PHP functions
 # Literature
-* [Leafler API Reference](http://leafletjs.com/reference.html)
-* [Open Street Map (Partie 2) – Intégration d’une carte avec Leaflet](https://blog.netapsys.fr/open-street-map-partie-2-integration-dune-carte-avec-leaflet/)
+* [Découvrir jQuery](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)
+* [Le fonctionnement de $.ajax()](https://openclassrooms.com/courses/un-site-web-dynamique-avec-jquery/le-fonctionnement-de-ajax)
+* [Leaflet API Reference](http://leafletjs.com/reference.html)
 * [Leaflet Routing Machine](http://www.liedman.net/leaflet-routing-machine/#getting-started)
-* [jQuery : Ecrivez moins pour faire plus !](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)
+* [Open Street Map (Partie 2) – Intégration d’une carte avec Leaflet](https://blog.netapsys.fr/open-street-map-partie-2-integration-dune-carte-avec-leaflet/)
