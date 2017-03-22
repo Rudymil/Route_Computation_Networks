@@ -1,7 +1,7 @@
 # A changer #
 
-Date  (BDD et ph)  
-% de risque  (BDD et ph)
+Date  (BDD et php)  
+% de risque  (BDD et php)
 
 
 # Zones chaudes et zones à vérifier #
