@@ -7,7 +7,7 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$request = $_POST;
-		$conn_string = "host=localhost port=5432 dbname=projcomm user=julie password=julie";
+		$conn_string = "host=localhost port=5432 dbname=projcomm user=postgres";
 		$dbconn = pg_connect($conn_string) or die("Connexion impossible");
 
 		// Circles

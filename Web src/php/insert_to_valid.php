@@ -1,6 +1,10 @@
 <?php
 
-
+	/*
+	TODO :
+	Ajouter le pourcentage de risque
+	*/
+	
 	$return = array();
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -12,7 +16,7 @@
     $request_polygon = $request['polygons'];
 
     // Connexion
-		$conn_string = "host=localhost port=5432 dbname=projcomm user=julie password=julie";
+		$conn_string = "host=localhost port=5432 dbname=projcomm user=postgres";
 		$dbconn = pg_connect($conn_string) or die("Connexion impossible");
 
 		// Circles
@@ -38,7 +42,6 @@
 			$box = pg_query($dbconn, $sql_box);
 		}
 
-
 		// Polygons
 		for ($i = 0; $i < sizeOf($request_polygon); $i++) {
 			$linestring = "";
@@ -47,7 +50,6 @@
 				$lng = (double)$request_polygon[$i][$j][1];
 
 				$linestring .= $lat." ".$lng.",";
-
 			}
 			//echo substr($linestring, 0, -1) ."\n";
 			$sql_poly = "INSERT INTO hot_area (type, geom) VALUES ('POLYGON', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326));";
@@ -56,7 +58,6 @@
 
 		pg_close($dbconn);
 	}
-
 	echo json_encode($return);
 
 ?>
