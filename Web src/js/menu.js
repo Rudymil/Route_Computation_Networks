@@ -1,8 +1,8 @@
 // variables globales
 var drawing = "set_the_route"; // choix de dessin
 var nb_points = 0; // for boxes and polygons
-// Json pour le dession et le point de départ et de fin 
-// variable pour la saisie de zone de danger 
+// Json pour le dession et le point de départ et de fin
+// variable pour la saisie de zone de danger
 var circle = new Array(); // tableau de dictionnaire
 var box = new Array(); // tableau de dictionnaire
 var polygon = new Array(); // tableau de dictionnaire
@@ -58,6 +58,7 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 				var json = resultat;
 				console.log(json);
 			}
+			addGrille();
 		}
 	});
 });
