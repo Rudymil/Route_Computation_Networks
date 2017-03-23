@@ -441,10 +441,6 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				}
 			}
 		}
-<<<<<<< HEAD
-	});
-});
-=======
 		json["circles"] = circlel; // complete JSON
 		circlel = [];
 	}
@@ -553,4 +549,3 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 		});
 	}
 });
->>>>>>> 2ec7981a3bfe22eb8c46dc82ccd1d1fab54bf7e8
