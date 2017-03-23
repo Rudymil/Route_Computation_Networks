@@ -99,7 +99,18 @@ $("#angola").click(function(){...});
 ```
 Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dans **Selection of the area**.
 ## report_a_trouble_zone.js
-## report_a_lack_of_data.js
+## report_a_lack_of_data.js  
+## grid.js
+```js
+function addGrid(json){};
+```  
+Ajoute une grille de couleur sur la carte.
+## codeColor.js  
+```js
+function codeColorRed(value){};
+function heatMapColorforValue(value){};
+```  
+
 # PHP functions
 Manipulated formats :
 ```json
