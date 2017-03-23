@@ -2,10 +2,6 @@ var drawControl=null;
 var editableLayers=null;
 
 
-var lleditableLayers=null;
-
-
-
 $(".radio_button").change(function (){ // choix de dessin
 
 	//console.log("kqsdqsdqs");
@@ -22,25 +18,32 @@ $(".radio_button").change(function (){ // choix de dessin
 	
 	
 	else if ($("#Circle1").is(":checked")==true ){
+	
+	$("#dep").prop('disabled', true);
+	$("#dest").prop('disabled', true);
+	if( markerDeparture != null ) {	
+	markerDeparture.dragging.disable();	
+	}
+	if( markeraDestination != null ) {
+	markeraDestination.dragging.disable();
+	}	
+	
 		
 	if( drawControl != null ) {
-				
+		
 		map.removeControl(drawControl);
 	}	
 	// Initialise the FeatureGroup to store editable layers
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);	
-	markerDeparture.dragging.disable();	
-	markeraDestination.dragging.disable();	
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	
+	editableLayers = new L.FeatureGroup();
+	map.addLayer(editableLayers);
 
 	var drawPluginOptions = {
   	position: 'topright',
   		draw: {
     	circle: {
      	 shapeOptions: {
-     	   color: '#001ae1'
+     	   color: '#e10000'
      	 },
   	  },
     // disable toolbar item by setting it to false
@@ -50,12 +53,14 @@ $(".radio_button").change(function (){ // choix de dessin
     	marker: false,
     	},
   	edit: {
-   	 featureGroup: leditableLayers, //REQUIRED!!
+   	 featureGroup: editableLayers, //REQUIRED!!
    	 remove: false
   	}
 	};
+	
 	drawControl = new L.Control.Draw(drawPluginOptions);
 	map.addControl(drawControl);
+	
 	}
 	
 	
@@ -65,20 +70,25 @@ $(".radio_button").change(function (){ // choix de dessin
 		
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
-	}	
+	}
 	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);	
+	$("#dest").prop('disabled', true);
+	if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
-	markeraDestination.dragging.disable();	
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	}
+	if( markeraDestination != null ) {
+	markeraDestination.dragging.disable();
+	}	
+	
+	editableLayers = new L.FeatureGroup();
+	map.addLayer(editableLayers);
 
 	var drawPluginOptions = {
   	position: 'topright',
   		draw: {
     	rectangle: {
      	 shapeOptions: {
-     	   color: '#001ae1'
+     	   color: '#e10000'
      	 }
   	  },
     // disable toolbar item by setting it to false
@@ -88,12 +98,11 @@ $(".radio_button").change(function (){ // choix de dessin
     	marker: false,
     	},
   	edit: {
-   	 featureGroup: leditableLayers, //REQUIRED!!
+   	 featureGroup: editableLayers, //REQUIRED!!
    	 remove: false
   	}
 	};
-
-		drawControl = new L.Control.Draw(drawPluginOptions);
+drawControl = new L.Control.Draw(drawPluginOptions);
 	map.addControl(drawControl);
 	}
 	
@@ -105,13 +114,18 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}	
-	// Initialise the FeatureGroup to store editable layers
 	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);	
+	$("#dest").prop('disabled', true);
+	if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
-	markeraDestination.dragging.disable();	
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	}
+	if( markeraDestination != null ) {
+	markeraDestination.dragging.disable();
+	}
+	// Initialise the FeatureGroup to store editable layers
+	
+	editableLayers = new L.FeatureGroup();
+	map.addLayer(editableLayers);
 
 	var drawPluginOptions = {
   	position: 'topright',
@@ -119,11 +133,11 @@ $(".radio_button").change(function (){ // choix de dessin
     	polygon: {
      	 allowIntersection: false, // Restricts shapes to simple polygons
       	drawError: {
-       		 color: '#001ae1', // Color the shape will turn when intersects
+       		 color: '#e1e100', // Color the shape will turn when intersects
      		   message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
     	  },
      	 shapeOptions: {
-     	   color: '#001ae1'
+     	   color: '#e10000'
      	 }
   	  },
     // disable toolbar item by setting it to false
@@ -133,18 +147,21 @@ $(".radio_button").change(function (){ // choix de dessin
     	marker: false,
     	},
   	edit: {
-   	 featureGroup: leditableLayers, //REQUIRED!!
+   	 featureGroup: editableLayers, //REQUIRED!!
    	 remove: false
   	}
 	};
-drawControl = new L.Control.Draw(drawPluginOptions);
+	drawControl = new L.Control.Draw(drawPluginOptions);
 	map.addControl(drawControl);
-	
 }
 
+	// Initialise the draw control and pass it the FeatureGroup of editable layers
+	
+	
+	
 
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	editableLayers = new L.FeatureGroup();
+	map.addLayer(editableLayers);
 
 
 
@@ -159,28 +176,29 @@ map.on('draw:created', function(e) {
   		layer = e.layer;
   		if( type=="circle" && $("#Circle1").is(":checked")==true) {
     		
-
+			var description = prompt("Please enter the description of the danger", "Description");
   		
-  		
-			var geomcircle=[[layer._latlng.lat,layer._latlng.lng],layer._mRadius]
-			circlel.push(geomcircle);
-			console.log(circlel);
+			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],description]
+			circle.push(geomcircle);
+			console.log(circle);
 			
 
 		}
 		
 		else if( type=="rectangle" && $("#Box1").is(":checked")==true ) {
 		
+		var description = prompt("Please enter the description of the danger", "Description");
 
-  		
-  		var geombox=[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ]
-		boxl.push(geombox);
-		console.log(boxl);	
+  		var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],description];
+		box.push(geombox);
+		console.log(box);	
 		
 		}
 		
 		else if( type=="polygon" && $("#Polygon1").is(":checked")==true) {
 
+
+		var description = prompt("Please enter the description of the danger", "Description");
 
 		var i= layer._latlngs[0].length ;
 		var tmp = [];
@@ -189,13 +207,13 @@ map.on('draw:created', function(e) {
   			var t=[layer._latlngs[0][pas].lat,layer._latlngs[0][pas].lng];
   			tmp.push(t);
 		}
-		
-		polygonl.push(tmp);
-		console.log(polygonl);
+		tmpa=[tmp,description];
+		polygon.push(tmpa);
+		console.log(polygon);
 		
 		
 		}
 		
-		leditableLayers.addLayer(layer);
+		editableLayers.addLayer(layer);
 
 	});
