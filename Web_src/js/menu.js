@@ -1,16 +1,9 @@
-// variables globales
-var drawing = "set_the_route"; // choix de dessin
-var nb_points = 0; // for boxes and polygons
-// Json pour le dession et le point de départ et de fin
-// variable pour la saisie de zone de danger
-var circle = new Array(); // tableau de dictionnaire
-var box = new Array(); // tableau de dictionnaire
-var polygon = new Array(); // tableau de dictionnaire
-// variable pour la saisie de zone de manque de donnees
-var latlngl= new Array();
-var circlel = new Array(); // tableau de dictionnaire
-var boxl = new Array(); // tableau de dictionnaire
-var polygonl = new Array(); // tableau de dictionnaire
+var circle = new Array(); // danger
+var box = new Array(); // danger
+var polygon = new Array(); // danger
+var circlel = new Array(); // lack
+var boxl = new Array(); // lack
+var polygonl = new Array(); // lack
 var latlng= new Array(); // departure/arrival points
 
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
@@ -182,7 +175,7 @@ function notify_none(shape){
 			title: "<strong>"+shape+"</strong>",
 			message: "none",
 		},{
-			type: "warning",
+			type: "info",
 			placement: {
 				from: "bottom",
 				align: "center"
@@ -252,38 +245,46 @@ function notify_wrong_description(shape){
 }
 
 $("#submit1").click(function(){ // envoie toutes les zones dangereuses
+	console.log("Circles :");
 	console.log(circle);
+	console.log("Boxes :");
 	console.log(box);
+	console.log("Polygons :");
 	console.log(polygon);
 	var json = new Array();
-	if (circle.length == 0 || circle.includes(NaN) || circle.includes(undefined) || circle.includes("")){
+	if (circle.length == 0){
 		notify_none("Circles");
 	}
 	else{
 		for (element in circle){
-			if (element.length != 2){ // si un cercle ne contient pas 2 elements numbers et description
+			if (circle[element].length != 2){ // si circle[element] ne contient pas 2 elements numbers et description
 				notify_wrong_format("Circles");
+				console.log(1);
 				return -1;
 			}
 			else {
-				if (element[0].length != 2 || element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){
-					if (element[0].length != 2){ // si numbers ne contient pas [lat,lng] et radius
-						notify_wrong_format("Boxes");
+				if (circle[element][0].length != 2 || circle[element][1] == undefined || circle[element][1] == ""){
+					if (circle[element][0].length != 2){ // si circle[element][0] ne contient pas [lat,lng] ou radius
+						notify_wrong_format("Circles");
+						console.log(2);
 					}
-					if (element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){ // description
-						notify_wrong_description("Boxes");
+					if (circle[element][1] == undefined || circle[element][1] == ""){ // description
+						notify_wrong_description("Circles");
+						console.log(3);
 					}
 					return -1;
 				}
 				else {
-					if (element[0][0].length != 2 || element[0][1].includes(NaN) || element[0][1].includes(undefined) || element[0][1].includes("")){ // si les coordonnees ne contiennent pas de lat et de lng ou que le radius est mal defini
+					if (circle[element][0][0].length != 2 || circle[element][0][1] == NaN || circle[element][0][1] == undefined || circle[element][0][1] == ""){ // si les coordonnees ne contiennent pas de lat et de lng ou que le radius est mal defini
 						notify_wrong_format("Circles");
+						console.log(4);
 						return -1;
 					}
 					else {
-						for (coordinates in element[0][0]){
-							if (coordinates.includes(NaN) || coordinates.includes(undefined) || coordinates.includes("")){
+						for (coordinates in circle[element][0][0]){
+							if (circle[element][0][0][coordinates] == NaN || circle[element][0][0][coordinates] == undefined || circle[element][0][0][coordinates] == ""){ // si les coordonnees sont males definies
 								notify_none_coordinates("Circles");
+								console.log(5);
 								return -1;
 							}
 						}
@@ -294,34 +295,39 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		json["circles"] = circle; // complete JSON
 		circle = [];
 	}
-	if (box.length == 0 || box.includes(NaN) || box.includes(undefined) || box.includes("")){
+	if (box.length == 0){
 		notify_none("Boxes");
 	}
 	else {
 		for (element in box){
-			if (element.length != 2){ // si une box ne contient pas 2 elements numbers et description
+			if (box[element].length != 2){ // si une box ne contient pas 2 elements numbers et description
 				notify_wrong_format("Boxes");
+				console.log(1);
 				return -1;
 			}
 			else {
-				if (element[0].length != 4 || element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){
-					if (element[0].length != 4){ // si numbers ne contient pas 4 [lat,lng]
+				if (box[element][0].length != 4 || box[element][1] == NaN || box[element][1] == undefined || box[element][1] == ""){
+					if (box[element][0].length != 4){ // si numbers ne contient pas 4 [lat,lng]
 						notify_wrong_format("Boxes");
+						console.log(2);
 					}
-					if (element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){ // description
+					if (box[element][1] == NaN || box[element][1] == undefined || box[element][1] == ""){ // description
 						notify_wrong_description("Boxes");
+						console.log(3);
 					}
 					return -1;
 				}
 				else {
-					for (coordinates in element[0]){
-						if (coordinates.length != 2){ // si les coordonnees ne contiennent pas de lat et de lng
+					for (coordinates in box[element][0]){
+						if (box[element][0][coordinates].length != 2){ // si les coordonnees ne contiennent pas de lat et de lng
 							notify_wrong_format("Boxes");
+							console.log(4);
 							return -1;
 						}
 						else {
-							if (coordinates[0].includes(NaN) || coordinates[0].includes(undefined) || coordinates[0].includes("") || coordinates[1].includes(NaN) || coordinates[1].includes(undefined) || coordinates[1].includes("")){
+							if (box[element][0][coordinates][0] == NaN || box[element][0][coordinates][0] == undefined || box[element][0][coordinates][0] == "" || box[element][0][coordinates][1] == NaN || box[element][0][coordinates][1] == undefined || box[element][0][coordinates][1] == ""){ // si les coordonnees sont mal definies
 								notify_none_coordinates("Boxes");
+								console.log(5);
 								return -1;
 							}
 						}
@@ -332,38 +338,44 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		json["boxes"] = box; // complete JSON
 		box = [];
 	}
-	if (polygon.length == 0 || polygon.includes(NaN) || polygon.includes(undefined) || polygon.includes("")){
+	if (polygon.length == 0){
 		notify_none("Polygons");
 	}
 	else {
 		for (element in polygon){
-			if (element.length != 2){ // si un polygon ne contient pas 2 elements numbers et description
+			if (polygon[element].length != 2){ // si un polygon ne contient pas 2 elements numbers et description
 				notify_wrong_format("Polygons");
+				console.log(1);
 				return -1;
 			}
 			else {
-				if (element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){ // description
+				if (polygon[element][1] == NaN || polygon[element][1] == undefined || polygon[element][1] == ""){ // description
 					notify_wrong_description("Polygons");
+					console.log(2);
 					return -1;
 				}
-				if (element[0].length == 0){ // si un polygon ne contient pas de [lat,lng]
+				if (polygon[element][0].length == 0){ // si un polygon ne contient pas de [lat,lng]
 					notify_none_coordinates("Polygons");
+					console.log(3);
 					return -1;
 				}
 				else {
-					for (number in element[0]){
-						if (number.length == 0 || number.length != 2){ // si un polygon ne contient pas de [lat,lng]
-							if (number.length == 0){
+					for (number in polygon[element][0]){
+						if (polygon[element][0][number].length == 0 || polygon[element][0][number].length != 2){ // si un polygon ne contient pas de [lat,lng]
+							if (polygon[element][0][number].length == 0){
 								notify_none_coordinates("Polygons");
+								console.log(4);
 							}
-							if (number.length != 2){
+							if (polygon[element][0][number].length != 2){
 								notify_wrong_format("Polygons");
+								console.log(5);
 							}
 							return -1;
 						}
 						else {
-							if (number[0].includes(NaN) || number[0].includes(undefined) || number[0].includes("") || number[1].includes(NaN) || number[1].includes(undefined) || number[1].includes("")){ // les coordonnees
+							if (polygon[element][0][number][0] == NaN || polygon[element][0][number][0] == undefined || polygon[element][0][number][0] == "" || polygon[element][0][number][1] == NaN || polygon[element][0][number][1] == undefined || polygon[element][0][number][1] == ""){ // les coordonnees
 								notify_wrong_format("Polygons");
+								console.log(6);
 								return -1;
 							}
 						}
@@ -374,8 +386,9 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		json["polygons"] = polygon; // complete JSON
 		polygon = [];
 	}
-	console.log("json : ",json);
-	if (json.length != 0){
+	console.log("json : ");
+	console.log(json);
+	if (!$.isEmptyObject(json)){
 		$.ajax({
 			url : './php/insert_to_valid.php',
 			type : 'POST',
@@ -401,38 +414,46 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 });
 
 $("#submit2").click(function(){ // envoie toutes les zones a verifier
+	console.log("Circles :");
 	console.log(circlel);
+	console.log("Boxes :");
 	console.log(boxl);
+	console.log("Polygons :");
 	console.log(polygonl);
 	var json = new Array();
-	if (circlel.length == 0 || circlel.includes(NaN) || circlel.includes(undefined) || circlel.includes("")){
+	if (circlel.length == 0){
 		notify_none("Circles");
 	}
 	else{
 		for (element in circlel){
-			if (element.length != 2){ // si un cercle ne contient pas 2 elements numbers et description
+			if (circlel[element].length != 2){ // si circlel[element] ne contient pas 2 elements numbers et description
 				notify_wrong_format("Circles");
+				console.log(1);
 				return -1;
 			}
 			else {
-				if (element[0].length != 2 || element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){
-					if (element[0].length != 2){ // si numbers ne contient pas [lat,lng] et radius
-						notify_wrong_format("Boxes");
+				if (circlel[element][0].length != 2 || circlel[element][1] == undefined || circlel[element][1] == ""){
+					if (circlel[element][0].length != 2){ // si circlel[element][0] ne contient pas [lat,lng] ou radius
+						notify_wrong_format("Circles");
+						console.log(2);
 					}
-					if (element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){ // description
-						notify_wrong_description("Boxes");
+					if (circlel[element][1] == undefined || circlel[element][1] == ""){ // description
+						notify_wrong_description("Circles");
+						console.log(3);
 					}
 					return -1;
 				}
 				else {
-					if (element[0][0].length != 2 || element[0][1].includes(NaN) || element[0][1].includes(undefined) || element[0][1].includes("")){ // si les coordonnees ne contiennent pas de lat et de lng ou que le radius est mal defini
+					if (circlel[element][0][0].length != 2 || circlel[element][0][1] == NaN || circlel[element][0][1] == undefined || circlel[element][0][1] == ""){ // si les coordonnees ne contiennent pas de lat et de lng ou que le radius est mal defini
 						notify_wrong_format("Circles");
+						console.log(4);
 						return -1;
 					}
 					else {
-						for (coordinates in element[0][0]){
-							if (coordinates.includes(NaN) || coordinates.includes(undefined) || coordinates.includes("")){
+						for (coordinates in circlel[element][0][0]){
+							if (circlel[element][0][0][coordinates] == NaN || circlel[element][0][0][coordinates] == undefined || circlel[element][0][0][coordinates] == ""){ // si les coordonnees sont males definies
 								notify_none_coordinates("Circles");
+								console.log(5);
 								return -1;
 							}
 						}
@@ -443,34 +464,39 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 		json["circles"] = circlel; // complete JSON
 		circlel = [];
 	}
-	if (boxl.length == 0 || boxl.includes(NaN) || boxl.includes(undefined) || boxl.includes("")){
+	if (boxl.length == 0){
 		notify_none("Boxes");
 	}
 	else {
 		for (element in boxl){
-			if (element.length != 2){ // si une box ne contient pas 2 elements numbers et description
+			if (boxl[element].length != 2){ // si une boxl ne contient pas 2 elements numbers et description
 				notify_wrong_format("Boxes");
+				console.log(1);
 				return -1;
 			}
 			else {
-				if (element[0].length != 4 || element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){
-					if (element[0].length != 4){ // si numbers ne contient pas 4 [lat,lng]
+				if (boxl[element][0].length != 4 || boxl[element][1] == NaN || boxl[element][1] == undefined || boxl[element][1] == ""){
+					if (boxl[element][0].length != 4){ // si numbers ne contient pas 4 [lat,lng]
 						notify_wrong_format("Boxes");
+						console.log(2);
 					}
-					if (element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){ // description
+					if (boxl[element][1] == NaN || boxl[element][1] == undefined || boxl[element][1] == ""){ // description
 						notify_wrong_description("Boxes");
+						console.log(3);
 					}
 					return -1;
 				}
 				else {
-					for (coordinates in element[0]){
-						if (coordinates.length != 2){ // si les coordonnees ne contiennent pas de lat et de lng
+					for (coordinates in boxl[element][0]){
+						if (boxl[element][0][coordinates].length != 2){ // si les coordonnees ne contiennent pas de lat et de lng
 							notify_wrong_format("Boxes");
+							console.log(4);
 							return -1;
 						}
 						else {
-							if (coordinates[0].includes(NaN) || coordinates[0].includes(undefined) || coordinates[0].includes("") || coordinates[1].includes(NaN) || coordinates[1].includes(undefined) || coordinates[1].includes("")){
+							if (boxl[element][0][coordinates][0] == NaN || boxl[element][0][coordinates][0] == undefined || boxl[element][0][coordinates][0] == "" || boxl[element][0][coordinates][1] == NaN || boxl[element][0][coordinates][1] == undefined || boxl[element][0][coordinates][1] == ""){ // si les coordonnees sont mal definies
 								notify_none_coordinates("Boxes");
+								console.log(5);
 								return -1;
 							}
 						}
@@ -481,38 +507,44 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 		json["boxes"] = boxl; // complete JSON
 		boxl = [];
 	}
-	if (polygonl.length == 0 || polygonl.includes(NaN) || polygonl.includes(undefined) || polygonl.includes("")){
+	if (polygonl.length == 0){
 		notify_none("Polygons");
 	}
 	else {
 		for (element in polygonl){
-			if (element.length != 2){ // si un polygon ne contient pas 2 elements numbers et description
+			if (polygonl[element].length != 2){ // si un polygonl ne contient pas 2 elements numbers et description
 				notify_wrong_format("Polygons");
+				console.log(1);
 				return -1;
 			}
 			else {
-				if (element[1].includes(NaN) || element[1].includes(undefined) || element[1].includes("")){ // description
+				if (polygonl[element][1] == NaN || polygonl[element][1] == undefined || polygonl[element][1] == ""){ // description
 					notify_wrong_description("Polygons");
+					console.log(2);
 					return -1;
 				}
-				if (element[0].length == 0){ // si un polygon ne contient pas de [lat,lng]
+				if (polygonl[element][0].length == 0){ // si un polygonl ne contient pas de [lat,lng]
 					notify_none_coordinates("Polygons");
+					console.log(3);
 					return -1;
 				}
 				else {
-					for (number in element[0]){
-						if (number.length == 0 || number.length != 2){ // si un polygon ne contient pas de [lat,lng]
-							if (number.length == 0){
+					for (number in polygonl[element][0]){
+						if (polygonl[element][0][number].length == 0 || polygonl[element][0][number].length != 2){ // si un polygonl ne contient pas de [lat,lng]
+							if (polygonl[element][0][number].length == 0){
 								notify_none_coordinates("Polygons");
+								console.log(4);
 							}
-							if (number.length != 2){
+							if (polygonl[element][0][number].length != 2){
 								notify_wrong_format("Polygons");
+								console.log(5);
 							}
 							return -1;
 						}
 						else {
-							if (number[0].includes(NaN) || number[0].includes(undefined) || number[0].includes("") || number[1].includes(NaN) || number[1].includes(undefined) || number[1].includes("")){ // les coordonnees
+							if (polygonl[element][0][number][0] == NaN || polygonl[element][0][number][0] == undefined || polygonl[element][0][number][0] == "" || polygonl[element][0][number][1] == NaN || polygonl[element][0][number][1] == undefined || polygonl[element][0][number][1] == ""){ // les coordonnees
 								notify_wrong_format("Polygons");
+								console.log(6);
 								return -1;
 							}
 						}
@@ -523,8 +555,9 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 		json["polygons"] = polygonl; // complete JSON
 		polygonl = [];
 	}
-	console.log("json : ",json);
-	if (json.length != 0){
+	console.log("json : ");
+	console.log(json);
+	if (!$.isEmptyObject(json)){
 		$.ajax({
 			url : './php/insert_to_verify.php',
 			type : 'POST',
