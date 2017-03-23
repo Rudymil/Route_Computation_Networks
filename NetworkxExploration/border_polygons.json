@@ -1,19 +1,18 @@
 [{
     "type": "Feature",
-    "properties": {"party": "Republican"},
+    "properties": {"party": "Republican", "weight": 80},
     "geometry": {
         "type": "Polygon",
         "coordinates": [[
-            [-104.05, 48.99],
-            [-97.22,  48.98],
-            [-96.58,  45.94],
-            [-104.03, 45.94],
-            [-104.05, 48.99]
+            [43.602, 3.878],
+            [43.603, 3.878],
+            [43.603, 3.978],
+            [43.602, 3.978]
         ]]
     }
 }, {
     "type": "Feature",
-    "properties": {"party": "Democrat"},
+    "properties": {"party": "Democrat", "weight": 12},
     "geometry": {
         "type": "Polygon",
         "coordinates": [[

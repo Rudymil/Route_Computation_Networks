@@ -11,6 +11,8 @@ def read_json_file(filename):
     return json_graph.node_link_graph(js_graph)
 
 
+
+
 def selectEdge(graph, source, target):
     id = 0
     for u,v,d in G.edges_iter(data=True):
