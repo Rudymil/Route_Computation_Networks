@@ -11,7 +11,7 @@
 		$dbconn = pg_connect($conn_string) or die("Connexion impossible");
 
 		// Circles
-		$sql_circle = "SELECT ST_X(ST_centroid(geom)), ST_Y(ST_centroid(geom)), ST_MaxDistance(ST_centroid(geom), geom), risque FROM hot_area WHERE type = 'CIRCLE';";
+		$sql_circle = "SELECT ST_X(ST_centroid(geom)), ST_Y(ST_centroid(geom)), ST_MaxDistance(ST_centroid(geom), geom), risque FROM warning_zone WHERE type = 'CIRCLE';";
 		$circle = pg_query($dbconn, $sql_circle);
 
 		while ($row = pg_fetch_assoc($circle)) {
@@ -23,7 +23,7 @@
 		}
 
 		// Boxes
-		$sql_box = "SELECT substring(left(ST_AsText(geom),-2),10), risque FROM hot_area WHERE type = 'BOX';";
+		$sql_box = "SELECT substring(left(ST_AsText(geom),-2),10), risque FROM warning_zone WHERE type = 'BOX';";
 		$box = pg_query($dbconn, $sql_box);
 
 		while ($row = pg_fetch_assoc($box)) {
@@ -37,7 +37,7 @@
 		}
 
 		// Polygons
-		$sql_poly = "SELECT substring(left(ST_AsText(geom),-2),10), risque FROM hot_area WHERE type = 'POLYGON';";
+		$sql_poly = "SELECT substring(left(ST_AsText(geom),-2),10), risque FROM warning_zone WHERE type = 'POLYGON';";
 		$poly = pg_query($dbconn, $sql_poly);
 
 		while ($row = pg_fetch_assoc($poly)) {
