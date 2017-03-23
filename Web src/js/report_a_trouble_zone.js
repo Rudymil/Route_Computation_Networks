@@ -176,10 +176,9 @@ map.on('draw:created', function(e) {
   		layer = e.layer;
   		if( type=="circle" && $("#Circle1").is(":checked")==true) {
     		
-
+			var description = prompt("Please enter the description of the danger", "Description");
   		
-  		
-			var geomcircle=[[layer._latlng.lat,layer._latlng.lng],layer._mRadius]
+			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],description]
 			circle.push(geomcircle);
 			console.log(circle);
 			
@@ -188,9 +187,9 @@ map.on('draw:created', function(e) {
 		
 		else if( type=="rectangle" && $("#Box1").is(":checked")==true ) {
 		
+		var description = prompt("Please enter the description of the danger", "Description");
 
-  		
-  		var geombox=[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ]
+  		var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],description];
 		box.push(geombox);
 		console.log(box);	
 		
@@ -199,6 +198,8 @@ map.on('draw:created', function(e) {
 		else if( type=="polygon" && $("#Polygon1").is(":checked")==true) {
 
 
+		var description = prompt("Please enter the description of the danger", "Description");
+
 		var i= layer._latlngs[0].length ;
 		var tmp = [];
 		console.log(layer);
@@ -206,8 +207,8 @@ map.on('draw:created', function(e) {
   			var t=[layer._latlngs[0][pas].lat,layer._latlngs[0][pas].lng];
   			tmp.push(t);
 		}
-		
-		polygon.push(tmp);
+		tmpa=[tmp,description];
+		polygon.push(tmpa);
 		console.log(polygon);
 		
 		

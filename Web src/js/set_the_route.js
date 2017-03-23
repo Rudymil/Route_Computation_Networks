@@ -87,6 +87,7 @@ function showContextMenu1( marker, pos,ep){
  			markerDeparture = L.marker([ep.latlng.lat, ep.latlng.lng],{icon: greenIcon , draggable: true}).bindPopup('Your are here');
             map.addLayer(markerDeparture);
             $("#dep").val(ep.latlng.lat + ", " + ep.latlng.lng);
+            map.setView(markerDeparture.getLatLng(),13);
             hideContextMenu1();
              markerDeparture.on("dragend",function(ev){
             $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
@@ -100,6 +101,7 @@ function showContextMenu1( marker, pos,ep){
   			markeraDestination= L.marker([ ep.latlng.lat , ep.latlng.lng],{icon: redIcon, draggable: true}).bindPopup('Your destination');
   			map.addLayer(markeraDestination)
   			$("#dest").val(ep.latlng.lat + ", " + ep.latlng.lng);
+  			map.setView(markeraDestination.getLatLng(),13);
   			hideContextMenu1();
   			markeraDestination.on("dragend",function(ev){
             $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
@@ -221,7 +223,8 @@ $("#godep").click(function(){
 			map.addLayer(markerDeparture);
 			markerDeparture.on("dragend",function(ev){
             $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
-            map.panTo(markerDeparture.getLatLng());
+            //map.panTo(markerDeparture.getLatLng());
+            map.setView(markerDeparture.getLatLng(),13);
 		}
 	}
 		
@@ -268,7 +271,8 @@ $("#godest").click(function(){
 			map.addLayer(markeraDestination);
 			markeraDestination.on("dragend",function(ev){
             $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
-            map.panTo(markeraDestination.getLatLng());
+            //map.panTo(markeraDestination.getLatLng());
+            map.setView(markeraDestination.getLatLng(),13);
 		}
 	}
 		
