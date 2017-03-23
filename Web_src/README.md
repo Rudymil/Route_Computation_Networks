@@ -106,6 +106,10 @@ function addGrid(json){};
 ```  
 Ajoute une grille de couleur sur la carte.
 ## codeColor.js  
+```js
+function codeColorRed(value){};
+function heatMapColorforValue(value){};
+```  
 
 # PHP functions
 Manipulated formats :
