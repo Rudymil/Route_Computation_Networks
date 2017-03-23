@@ -284,9 +284,9 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 				}
 			}
 		}
+		json["circles"] = circle; // complete JSON
+		circle = [];
 	}
-	json["circles"] = circle; // complete JSON
-	circle = [];
 	if (box.length == 0 || box.includes(NaN) || box.includes(undefined) || box.includes("")){
 		notify_none("Boxes");
 	}
@@ -322,9 +322,9 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 				}
 			}
 		}
+		json["boxes"] = box; // complete JSON
+		box = [];
 	}
-	json["boxes"] = box; // complete JSON
-	box = [];
 	if (polygon.length == 0 || polygon.includes(NaN) || polygon.includes(undefined) || polygon.includes("")){
 		notify_none("Polygons");
 	}
@@ -364,9 +364,9 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 				}
 			}
 		}
+		json["polygons"] = polygon; // complete JSON
+		polygon = [];
 	}
-	json["polygons"] = polygon; // complete JSON
-	polygon = [];
 	console.log("json : ",json);
 	if (json.length != 0){
 		$.ajax({
@@ -433,9 +433,9 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				}
 			}
 		}
+		json["circles"] = circlel; // complete JSON
+		circlel = [];
 	}
-	json["circles"] = circlel; // complete JSON
-	circlel = [];
 	if (boxl.length == 0 || boxl.includes(NaN) || boxl.includes(undefined) || boxl.includes("")){
 		notify_none("Boxes");
 	}
@@ -471,9 +471,9 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				}
 			}
 		}
+		json["boxes"] = boxl; // complete JSON
+		boxl = [];
 	}
-	json["boxes"] = boxl; // complete JSON
-	boxl = [];
 	if (polygonl.length == 0 || polygonl.includes(NaN) || polygonl.includes(undefined) || polygonl.includes("")){
 		notify_none("Polygons");
 	}
@@ -513,9 +513,9 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				}
 			}
 		}
+		json["polygons"] = polygonl; // complete JSON
+		polygonl = [];
 	}
-	json["polygons"] = polygonl; // complete JSON
-	polygonl = [];
 	console.log("json : ",json);
 	if (json.length != 0){
 		$.ajax({
