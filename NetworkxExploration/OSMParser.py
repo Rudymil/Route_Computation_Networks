@@ -131,18 +131,19 @@ def read_osm(filename_or_stream, only_roads=True):
         if only_roads and 'highway' not in w.tags:
             continue
 
-        if ('oneway' in w.tags):
-            if (w.tags['oneway'] == 'yes'):
-                # ONLY ONE DIRECTION
-                G.add_path(w.nds, id=w.id)
+        if w.tags['highway'] != 'footway':
+            if ('oneway' in w.tags):
+                if (w.tags['oneway'] == 'yes'):
+                    # ONLY ONE DIRECTION
+                    G.add_path(w.nds, id=w.id)
+                else:
+                    # BOTH DIRECTION
+                    G.add_path(w.nds, id=w.id)
+                    G.add_path(w.nds[::-1], id=w.id)
             else:
                 # BOTH DIRECTION
                 G.add_path(w.nds, id=w.id)
                 G.add_path(w.nds[::-1], id=w.id)
-        else:
-            # BOTH DIRECTION
-            G.add_path(w.nds, id=w.id)
-            G.add_path(w.nds[::-1], id=w.id)
 
     ## Complete the used nodes' information
     for n_id in G.nodes_iter():
