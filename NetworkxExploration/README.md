@@ -10,3 +10,5 @@ Load the graph and compute the route
 (to merge with addWeight) [Final : Associate a weight to each edge of a graph from a geojson polygon list]
 Currently, check if a point is inside a polygon from geojson  
 > python3.5 fillWeightMatrix.py
+
+![Schema](routing_via_networkx.png)
