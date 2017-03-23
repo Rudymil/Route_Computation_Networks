@@ -1,45 +1,28 @@
-function addGrille(){
-  var latmin = -8.977323;
-      latmax = -8.916531;
-      lonmin = 13.139992;
-      lonmax = 13.222647;
-      nb_col = 5;
-      nb_lig = 5;
+function addGrid(json){
+  // params
+  var latmin = json.params.latMin;
+      latmax = json.params.latMax;
+      lonmin = json.params.lngMin;
+      lonmax = json.params.lngMax;
+      nb_col = json.params.rows;
+      nb_lig = json.params.cols;
 
-  var grille = L.layerGroup();
+  // gridlayer
+  var grid = L.layerGroup();
 
+  // creation of the grid composed of rectangles
   for (var i=0; i<nb_lig; i++){
       for (var j=0; j<nb_col; j++){
-
-        var elev = Math.random()*100;
-        var color=codeCouleur(elev);
-        var rectanglePoints = [[latmin+j*(latmax-latmin)/nb_col,lonmin+i*(lonmax-lonmin)/nb_lig], [latmin+(j+1)*(latmax-latmin)/nb_col,lonmin+(i+1)*(lonmax-lonmin)/nb_lig]];
-        var rectangle = new L.rectangle(rectanglePoints, {fillOpacity: 0.6, color: color,fillColor: color});
-        rectangle.addTo(grille);
+        // color corresponding of the danger
+        var color=heatMapColorforValue(json.data[i*nb_col+j]);
+        // rectangle
+        var rectanglePoints = [[latmin+j*(latmax-latmin)/nb_col, lonmin+i*(lonmax-lonmin)/nb_lig],
+                              [latmin+(j+1)*(latmax-latmin)/nb_col, lonmin+(i+1)*(lonmax-lonmin)/nb_lig]];
+        var rectangle = new L.rectangle(rectanglePoints, {stroke: false, fillOpacity: 0.4, color: color,fillColor: color});
+        // add to the gid
+        rectangle.addTo(grid);
       }
     }
-    grille.addTo(map);
-}
-
-function addGrille(resultat){
-  var latmin = resultat[params][latMin];
-      latmax = resultat.params.latMax;
-      lonmin = resultat.params.lngMin;
-      lonmax = resultat.params.lngMax;
-      nb_col = resultat.params.rows;
-      nb_lig = resultat.params.cols;
-
-  var grille = L.layerGroup();
-
-  for (var i=0; i<nb_lig; i++){
-      for (var j=0; j<nb_col; j++){
-
-        //var elev = Math.random();
-        var color=codeCouleur(resultat.data[i*nb_col+j]);
-        var rectanglePoints = [[latmin+j*(latmax-latmin)/nb_col,lonmin+i*(lonmax-lonmin)/nb_lig], [latmin+(j+1)*(latmax-latmin)/nb_col,lonmin+(i+1)*(lonmax-lonmin)/nb_lig]];
-        var rectangle = new L.rectangle(rectanglePoints, {fillOpacity: 0.6, color: color,fillColor: color});
-        rectangle.addTo(grille);
-      }
-    }
-    grille.addTo(map);
+    grid.addTo(map);
+    map.setView(new L.LatLng((latmin+latmax)/2,(lonmax+lonmin)/2),13);
 }

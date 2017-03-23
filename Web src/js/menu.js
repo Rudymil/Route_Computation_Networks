@@ -15,7 +15,7 @@ var latlng= new Array(); // departure/arrival points
 
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
 	$.ajax({
-		url : './php/select_all.php',
+		url : './php/heatGrid2json.php',
 		type : 'POST',
 		dataType : 'json',
 		success : function(code_json, statut){
@@ -52,12 +52,16 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			);
 		},
 		complete : function(resultat, statut){
+			console.log(statut);
 			if (status == "success"){
-				console.log(resultat);
-				var json = resultat;
+				console.log(statut);
+				/*console.log(resultat);
+				var json = resultat.responseJSON;
 				console.log(json);
+				addGrid(json);*/
 			}
-			addGrille();
+			var json = resultat.responseJSON;
+			addGrid(json);
 		}
 	});
 });
