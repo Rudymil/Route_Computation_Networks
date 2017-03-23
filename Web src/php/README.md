@@ -12,9 +12,9 @@ Date  (BDD et php)
 Données issues de la partie visualisation :
 ```
 {
-  circles : [[[[lat,lng],radius],"description"], ...]    
-  boxes : [[[[lat,lng],[lat,lng],[lat,lng],[lat,lng]],"description"], ...]]    
-  polygons : [[[[lat,ln],[lat,ln],[lat,ln], ...],"description"], ... }
+  circles : [[[[lat,lng],radius],type,description], ...]    
+  boxes : [[[[lat,lng],[lat,lng],[lat,lng],[lat,lng]],type,description], ...]]    
+  polygons : [[[[lat,ln],[lat,ln],[lat,ln], ...],type,description], ... }
 }
 ```
 
@@ -22,23 +22,17 @@ Nous avons les information suivantes :
 - Pour un cercle :
   - le centre [lat,lng]
   - le rayon   
-  (- % de risque)
-- Pour une boxe :
-  - deux extemités [[lat,lng],[lat,lng]]  
-  (- % de risque)
-- Pour un polygone :
-  - une suite de points [lat,lng],...  
-  (- % de risque)
+  - le type : parmi une liste
+  - le descriptif : % de risque ou texte
+- Pour une boxe et un polygone:
+  - une suite de points [lat,lng],...   
+  - le type : parmi une liste
+  - le descriptif : % de risque ou texte
 
 Code de projection : 4326
 
 Nous pouvons voir dans la [documentation de postgresql](https://www.postgresql.org/docs/9.4/static/datatype-geometric.html) que nous pouvons manipuler plusieurs géometries avec les [fonctionnalités de postgis](http://postgis.net/docs/reference.html).
 
-Nous allons avoir une unique base contenant toutes les zones à risques.
-
-| id | type | geom | risque | date |
-| :---: | :---: | :---: | :---: | :---: |
-| - | - | - | - | - |
 
 Idée pour la date :
 ```
@@ -50,29 +44,47 @@ select to_char(date, 'dd-mmyyyy') from hot_area;
 
 Nous avons trois table :
 - la table de zones à risque intermédiaire demandant la validation
+
+| id | type_geom | geom | type_risque | risque | date | deadline |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| - | - | - | - | - | - | - |
+
 - la table de zones à risque validées
+
+| id | type_geom | geom | type_risque | risque| date | deadline |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| - | - | - | - | - | - | - |
+
 - la table de zones à vérifier car manque d'information
+
+| id | type_geom | geom | type | description | date |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| - | - | - | - | - | - |
 
 Création de la table :
 ```SQL
 CREATE EXTENSION postgis;
 CREATE TABLE hot_area(
   id serial,
-  type varchar,
+  type_geom varchar,
+  type_risque varchar,
   risque real,
   date date NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE conf_hot_area(
   id serial,
-  type varchar,
+  type_geom varchar,
+  type_risque varchar,
   risque real,
   date date NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE verif_area(
   id serial,
+  type_geom varchar,
   type varchar,
+  description varchar,
   date date NOT NULL DEFAULT CURRENT_DATE
 );
 ```
