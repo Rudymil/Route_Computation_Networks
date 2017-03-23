@@ -1,16 +1,16 @@
-##Traitment chain proposition
+## Traitment chain proposition
 
 - Import data into PostgreSQL,
 - Topology traitment with *topology* PostGIS extension,
 - Network generation with *pgRouting*, route calculation and geoJSON export.
 
-##Tools and libraries proposition
+## Tools and libraries proposition
 
-###PostGIS
+### PostGIS
 
 PostGIS with the PostGIS Topology types and functions are used to manage topological objects such as faces, edges and nodes.
 
-**Database creation & Extensions activation**
+** Database creation & Extensions activation **
 
 ```sql
 CREATE DATABASE "roadsdb";
@@ -25,7 +25,7 @@ SHOW search_path;
 
 ```
 
-**Topology creation and association**
+** Topology creation and association **
 
 [CreateTopology](http://postgis.net/docs/manual-dev/CreateTopology.html)
 [AddTopoGeometryColumn](http://postgis.net/docs/manual-dev/AddTopoGeometryColumn.html)
@@ -43,14 +43,14 @@ SELECT topology.AddTopoGeometryColumn('roads_topo', 'public', 'test', 'topo_geom
 UPDATE roads SET topo_geom = topology.toTopoGeom(wkb_geometry, 'roads_topo', 1.0); --With a 1 meter tolerance
 ```
 
-**Sources :**
+** Sources : **
 [Utiliser les topologies PostGIS pour nettoyer un filaire de voirie](https://makina-corpus.com/blog/metier/2013/utiliser-les-topologies-postgis-pour-nettoyer-un-filaire-de-voirie)
 
-###osm2pgrouting
+### osm2pgrouting
 
 Easily import OpenStreetMap data into a pgRouting database using osm2pgrouting tool.
 
-**How to install :**
+** How to install : **
 
 Download the latest version from osm2pgrouting [GitHub repository](https://github.com/pgRouting/osm2pgrouting) and extract the file:
 
@@ -73,7 +73,7 @@ std::string, std::string, std::string, std::string)’:
 
 just change src/Export2DB.h and set the path to libpq-fe.h statically.
 
-**How to use**
+** How to use **
 
 Start the program like this:
 
@@ -101,13 +101,13 @@ optional:
 ```
 
 
-**Source :**
+** Source : **
 [pgrouting.org/docs](http://pgrouting.org/docs/tools/osm2pgrouting.html)
 
-###pgRouting
+### pgRouting
 
 
-#TEST
+# TEST
 
 ```sql
 CREATE EXTENSION postgis_topology;
