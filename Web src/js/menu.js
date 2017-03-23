@@ -164,9 +164,9 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 
 $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 	var json = new Array();
-	json["circles"]=[[[0,0],1,"test1"],[[1,1],2,"test2"],[[2,2],3,"test3"],[[3,3],4,"test4"],[[4,4],5,"test5"]];
-	json["boxes"]=[[[10,0],[0,10],"test1"],[[20,0],[0,20],"test2"],[[30,0],[0,30],"test3"],[[40,0],[0,40],"test4"]];
-	json["polygons"]=[[[10,1],[12,86],[74,95],[75,12],[15,45],[73,3],"test1"],[[3,7],[4,1],[9,1],[4,6],"test2"]];
+	json["circles"]=[[[[0,0],1],"test1"],[[[1,1],2],"test2"],[[[2,2],3],"test3"],[[[3,3],4],"test4"],[[[4,4],5],"test5"]];
+	json["boxes"]=[[[[10,0],[0,10]],"test1"],[[[20,0],[0,20]],"test2"],[[[30,0],[0,30]],"test3"],[[[40,0],[0,40]],"test4"]];
+	json["polygons"]=[[[[10,1],[12,86],[74,95],[75,12],[15,45],[73,3]],"test1"],[[[3,7],[4,1],[9,1],[4,6]],"test2"]];
 	console.log("json : ",json);
 	$.ajax({
 		url : './php/insert_to_valid.php',
@@ -216,9 +216,9 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 
 $("#submit2").click(function(){ // envoie toutes les zones a verifier
 	var json = new Array();
-	json["circles"]=[[[0,0],1,"test1"],[[1,1],2,"test2"],[[2,2],3,"test3"],[[3,3],4,"test4"],[[4,4],5,"test5"]];
-	json["boxes"]=[[[10,0],[0,10],"test1"],[[20,0],[0,20],"test2"],[[30,0],[0,30],"test3"],[[40,0],[0,40],"test4"]];
-	json["polygons"]=[[[10,1],[12,86],[74,95],[75,12],[15,45],[73,3],"test1"],[[3,7],[4,1],[9,1],[4,6],"test2"]];
+	json["circles"]=[[[[0,0],1],"test1"],[[[1,1],2],"test2"],[[[2,2],3],"test3"],[[[3,3],4],"test4"],[[[4,4],5],"test5"]];
+	json["boxes"]=[[[[10,0],[0,10]],"test1"],[[[20,0],[0,20]],"test2"],[[[30,0],[0,30]],"test3"],[[[40,0],[0,40]],"test4"]];
+	json["polygons"]=[[[[10,1],[12,86],[74,95],[75,12],[15,45],[73,3]],"test1"],[[[3,7],[4,1],[9,1],[4,6]],"test2"]];
 	console.log("json : ",json);
 	$.ajax({
 		url : './php/insert_to_verify.php',
