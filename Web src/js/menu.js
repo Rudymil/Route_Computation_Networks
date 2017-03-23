@@ -52,16 +52,11 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			);
 		},
 		complete : function(resultat, statut){
-			console.log(statut);
-			if (status == "success"){
-				console.log(statut);
-				/*console.log(resultat);
+			if (resultat.status == '200'){
 				var json = resultat.responseJSON;
-				console.log(json);
-				addGrid(json);*/
+				//console.log(json);
+				addGrid(json);
 			}
-			var json = resultat.responseJSON;
-			addGrid(json);
 		}
 	});
 });
