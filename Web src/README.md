@@ -104,9 +104,9 @@ Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dan
 Manipulated formats :
 ```json
 {  
-	circles : [[[lat,lng],radius]],[...]],  
-	boxes : [[[lat,lng],[lat,lng]],[...]],  
-	polygons : [[[lat,lng],[...],[...]],[...]]
+	circles : [[[[lat,lng],radius],"description"],[[[lat,lng],radius],"description"]]
+	boxes : [[[[lat,lng],[lat,lng]],"description"],[[[lat,lng],[lat,lng]],"description"]]
+	polygons : [[[[lat,ln],[lat,ln],[lat,ln]],"description"],[[[lat,ln],[lat,ln],[lat,ln]],"description"]]
 }
 ```
 ## select_all.php
