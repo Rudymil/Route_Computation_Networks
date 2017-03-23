@@ -1,0 +1,33 @@
+#context_menu1 {
+	display: none;
+	position: absolute;
+	padding: .125em;
+	border: 1px solid #abc;
+	background: #fff;
+	box-shadow: 2px 2px 5px #ccc;
+}
+#context_menu1 ul {
+	margin: 0;
+	padding: 0;
+	font-size: .8em;
+	list-style: none;
+	cursor: pointer;
+}
+#context_menu1 ul li {
+	padding: .25em 1em;
+	line-height: 1.5em;
+	background: #fff;  
+}
+/* separator */
+#context_menu1 ul li:empty {
+	margin: .125em 0;
+	padding: 0 1em 1px;    
+	background: #abc;
+}
+#context_menu1 ul li[id]:hover {
+	background: #cde;
+}
+#context_menu1 ul hr {
+	margin: 0;
+	padding: 0;
+}
