@@ -22,7 +22,7 @@ function addGrille(){
 }
 
 function addGrille(resultat){
-  var latmin = resultat.params.latMin;
+  var latmin = resultat[params][latMin];
       latmax = resultat.params.latMax;
       lonmin = resultat.params.lngMin;
       lonmax = resultat.params.lngMax;
