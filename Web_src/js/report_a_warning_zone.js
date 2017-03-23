@@ -176,9 +176,29 @@ map.on('draw:created', function(e) {
   		layer = e.layer;
   		if( type=="circle" && $("#Circle1").is(":checked")==true) {
     		
-			var description = prompt("Please enter the description of the danger", "Description");
+			//var description = prompt("Please enter the description of the danger", "Description");
   		
-			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],description]
+  			bootbox.confirm(
+  			"<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>\
+			<div class='form-group'>\
+			<label for='text'>Danger level</label>\
+			<select class='form-control' id='level'>\
+   				<option value='1' selected >Level 1</option>\
+   				<option value='2' >Level 2</option>\
+    			<option value='3'  >Level 3</option>\
+    			<option value='4'>Level 4</option>\
+    			<option value='5' >Level 5</option>\
+			</select>\
+			</div>"
+    		, function(result) {
+        
+			}
+			);
+  			
+			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],"description"]
 			circle.push(geomcircle);
 			console.log(circle);
 			
