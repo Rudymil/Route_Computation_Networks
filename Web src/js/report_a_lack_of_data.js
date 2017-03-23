@@ -19,7 +19,14 @@ $(".radio_button").change(function (){ // choix de dessin
 		map.removeControl(drawControl);
 	}	
 	// Initialise the FeatureGroup to store editable layers
-	
+	$("#dep").prop('disabled', true);
+	$("#dest").prop('disabled', true);
+	if( markerDeparture != null ) {	
+	markerDeparture.dragging.disable();	
+	}
+	if( markeraDestination != null ) {
+	markeraDestination.dragging.disable();
+	}
 	leditableLayers = new L.FeatureGroup();
 	map.addLayer(leditableLayers);
 
@@ -54,7 +61,14 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}	
-	
+	$("#dep").prop('disabled', true);
+	$("#dest").prop('disabled', true);
+	if( markerDeparture != null ) {	
+	markerDeparture.dragging.disable();	
+	}
+	if( markeraDestination != null ) {
+	markeraDestination.dragging.disable();
+	}
 	leditableLayers = new L.FeatureGroup();
 	map.addLayer(leditableLayers);
 
@@ -91,7 +105,14 @@ $(".radio_button").change(function (){ // choix de dessin
 		map.removeControl(drawControl);
 	}	
 	// Initialise the FeatureGroup to store editable layers
-	
+	$("#dep").prop('disabled', true);
+	$("#dest").prop('disabled', true);
+	if( markerDeparture != null ) {	
+	markerDeparture.dragging.disable();	
+	}
+	if( markeraDestination != null ) {
+	markeraDestination.dragging.disable();
+	}
 	leditableLayers = new L.FeatureGroup();
 	map.addLayer(leditableLayers);
 
