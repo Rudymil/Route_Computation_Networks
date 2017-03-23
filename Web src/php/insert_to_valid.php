@@ -25,7 +25,7 @@
 			$risque = (double)$request_circle[$i][1];
 
 			// $sql_circle = "INSERT INTO hot_area (type, geom) VALUES ('CIRCLE', ST_Buffer(ST_SetSRID(ST_MakePoint(".$lat.",".$lng."),4326),".$radius."));";
-			$sql_circle = "INSERT INTO conf_hot_area (type, geom, risque) VALUES ('CIRCLE', ST_Buffer(ST_SetSRID(ST_MakePoint(".$lat.",".$lng."),4326),".$radius."),".$risque.");";
+			$sql_circle = "INSERT INTO warning_zone_undefined (type, geom, risque) VALUES ('CIRCLE', ST_Buffer(ST_SetSRID(ST_MakePoint(".$lat.",".$lng."),4326),".$radius."),".$risque.");";
 
 			$circle = pg_query($dbconn, $sql_circle);
 		}
@@ -45,7 +45,7 @@
 				$linestring .= $lat." ".$lng.",";
 			}
 
-			$sql_box = "INSERT INTO conf_hot_area (type, geom, risque) VALUES ('BOX', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326),".$risque.");";
+			$sql_box = "INSERT INTO warning_zone_undefined (type, geom, risque) VALUES ('BOX', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326),".$risque.");";
 
 			$box = pg_query($dbconn, $sql_box);
 		}
@@ -64,7 +64,7 @@
 				$linestring .= $lat." ".$lng.",";
 			}
 			//echo substr($linestring, 0, -1) ."\n";
-			$sql_poly = "INSERT INTO conf_hot_area (type, geom, risque) VALUES ('POLYGON', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326),".$risque.");";
+			$sql_poly = "INSERT INTO warning_zone_undefined (type, geom, risque) VALUES ('POLYGON', ST_Polygon(ST_GeomFromText('LINESTRING(".substr($linestring, 0, -1).")'), 4326),".$risque.");";
 
 			$poly = pg_query($dbconn, $sql_poly);
 		}
