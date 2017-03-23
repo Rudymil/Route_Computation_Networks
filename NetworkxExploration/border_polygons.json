@@ -1,6 +1,6 @@
 [{
     "type": "Feature",
-    "properties": {"party": "Republican", "weight": 80},
+    "properties": {"description": "Blablabla", "weight": 80},
     "geometry": {
         "type": "Polygon",
         "coordinates": [[
@@ -12,7 +12,7 @@
     }
 }, {
     "type": "Feature",
-    "properties": {"party": "Democrat", "weight": 12},
+    "properties": {"description": "Blablabla2", "weight": 12},
     "geometry": {
         "type": "Polygon",
         "coordinates": [[
