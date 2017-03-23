@@ -22,6 +22,8 @@ import json
 # Networks modules
 import networkx as netx
 from networkx.readwrite import json_graph
+import fillWeightMatrix
+import networkxGraphManager
 
 # Visualization modules
 import matplotlib.pyplot as plt
@@ -57,7 +59,7 @@ def savePath(filename, idList, graph):
 
 # Montpelllier Data
 G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True))
-print(G.nodes())
+# print(G.nodes())
 source_id = "4445471419"
 target_id = "3670601901"
 
@@ -70,13 +72,30 @@ target_id = "3670601901"
 pos0 = (G.node[source_id]['lat'],G.node[source_id]['lon'])
 pos1 = (G.node[target_id]['lat'],G.node[target_id]['lon'])
 
+warningZoneFilenameInput = 'border_polygons.json'
+graphFilenameOutput = 'testAvoid.json'
+defaultWeight = 3.0
+weightKeyToChange = 'weight_to_avoid'
+# Load GeoJSON file containing warning zone sectors
+featureList = fillWeightMatrix.loadGeoJsonWarningZone(warningZoneFilenameInput)
 
+# Set the default weight to the graph
+networkxGraphManager.applyDefaultWeight(G, defaultWeight, weightKeyToChange)
 
+# Set the weight from the warningZoneFilenameInput file
+fillWeightMatrix.fusionWarningZoneWithGraph(G, featureList, "weight", weightKeyToChange)
 
+networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
 ## ROUTING COMPUTATION
+
+
 idList = []
 # [idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id)] ## Uniform weight
-[idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight='length')] ## Weight based on length of ways
+# [idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight='length')] ## Weight based on length of ways
+
+
+
+[idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight='weight_to_avoid')] ## Weight based on length of ways
 # applyRandomWeight(G)
 # [idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight='weight_random')] ## Random weight
 
@@ -135,6 +154,24 @@ if (DISPLAY == "OSM_MAP"):
         y.append(b)
 
     plt.plot(x[:], y[:], 'o', color='r', ms=2);
+
+    ### Display target node
+    x = []
+    y = []
+    points = []
+    for feature in featureList:
+        if feature["type"] == "Feature":
+            if (feature['geometry']["type"] ==  "Polygon"):
+                for point in feature['geometry']["coordinates"][0]:
+                    # print(point[0], point[1])
+                    a,b = map.to_pixels(point[0], point[1])
+                    if (a >= 0) and (b >= 0):
+                        points.append([a, b])
+
+                if (len(points) > 0):
+                    print(points)
+                    plt.Polygon(points)
+                points = []
 
     plt.show()
 
