@@ -16,29 +16,105 @@
   * [insert_to_valid.php](php/insert_to_valid.php) (*Insert selected area in DB*)
   * [insert_to_verify.php](php/insert_to_verify.php) (*Insert selected area in DB*)
 
-# API/Frameworks used
+# API/Frameworks/Tools used
 * [Bootstrap](http://getbootstrap.com/)
+* [The GeoJSON Format Specification](http://geojson.org/geojson-spec.html)
 * [jQuery](https://jquery.com/)
 * [Leafletjs](http://leafletjs.com/)
 * [Leaflet Routing Machine](http://www.liedman.net/leaflet-routing-machine/)
 * [Bootstrap Notify](http://bootstrap-notify.remabledesigns.com/)
 
-# JSON used
-## JSON warning zones
+# GeoJSON used
+## GeoJSON warning zones
 ```json
-{  
-	circles : [[[[lat,lng],radius],"description"],[[[lat,lng],radius],"description"]]
-	boxes : [[[[lat,lng],[lat,lng]],"description"],[[[lat,lng],[lat,lng]],"description"]]
-	polygons : [[[[lat,ln],[lat,ln],[lat,ln]],"description"],[[[lat,ln],[lat,ln],[lat,ln]],"description"]]
-}
+[{
+    "type": "Feature",
+    "properties": {
+        "type": "warningType",
+        "description": "blablabla",
+        "deadline": "date"
+    },
+    "geometry": {
+        "type": "Circle",
+        "coordinates": [[
+            [lat, lng],radius
+        ]]
+    }
+}, {
+    "type": "Feature",
+    "properties": {
+        "type": "warningType",
+        "description": "blablabla",
+        "deadline": "date"
+    },
+    "geometry": {
+        "type": "Rectangle",
+        "coordinates": [[
+            [lat, lng],
+            [lat, lng],
+            [lat, lng],
+            [lat, lng]
+        ]]
+    }
+}, {
+    "type": "Feature",
+    "properties": {
+        "type": "warningType",
+        "description": "blablabla",
+        "deadline": "date"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+            [lat, lng],
+            [...],
+        ]]
+    }
+}]
 ```
-## JSON lack of data
+## GeoJSON anomalies
 ```json
-{  
-	circles : [[[[lat,lng],radius],"description"],[[[lat,lng],radius],"description"]]
-	boxes : [[[[lat,lng],[lat,lng]],"description"],[[[lat,lng],[lat,lng]],"description"]]
-	polygons : [[[[lat,ln],[lat,ln],[lat,ln]],"description"],[[[lat,ln],[lat,ln],[lat,ln]],"description"]]
-}
+[{
+    "type": "Feature",
+    "properties": {
+        "type": "anomalyType",
+        "description": "blablabla"
+    },
+    "geometry": {
+        "type": "Circle",
+        "coordinates": [[
+            [lat, lng],radius
+        ]]
+    }
+}, {
+    "type": "Feature",
+    "properties": {
+        "type": "anomalyType",
+        "description": "blablabla"
+    },
+    "geometry": {
+        "type": "Rectangle",
+        "coordinates": [[
+            [lat, lng],
+            [lat, lng],
+            [lat, lng],
+            [lat, lng]
+        ]]
+    }
+}, {
+    "type": "Feature",
+    "properties": {
+        "type": "anomalyType",
+        "description": "blablabla"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+            [lat, lng],
+            [...],
+        ]]
+    }
+}]
 ```
 # Literature
 * [Découvrir jQuery](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)
