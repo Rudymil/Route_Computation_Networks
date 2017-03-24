@@ -32,7 +32,7 @@ $("#map").ready(function(){
 	var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 	var osm = new L.TileLayer(osmUrl, {minZoom: 1, maxZoom: 18, attribution: osmAttrib});
 	map.addLayer(osm);
-	map.setView([-1.746248, 11.930503],5);
+	//map.setView([-1.746248, 11.930503],5);
 	// Mettre le bouton pour se geolocaliser
 	L.control.locate({
 		strings: {
