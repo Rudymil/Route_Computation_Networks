@@ -10,7 +10,7 @@
   * [selection_of_the_area.js](js/selection_of_the_area.js) (*Selection of the area section scripts*)
   * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
   * [report_a_warning_zone.js](js/report_a_warning_zone.js) (*Report a warning zone section scripts*)
-  * [report_a_anomaly.js](js/report_a_anomaly.js) (*Report a anomaly section scripts*)
+  * [report_an_anomaly.js](js/report_an_anomaly.js) (*Report a anomaly section scripts*)
 * [php](php) (*folder of database access scripts*)
   * [select_all.php](php/select_all.php) (*Select all geometry in DB*)
   * [insert_to_valid.php](php/insert_to_valid.php) (*Insert selected area in DB*)

@@ -45,7 +45,7 @@ $("#submit2").click(function(){...});
 ```
 Envoye les **zones à vérifier** à la **BDD** après avoir vérifié leur format.
 ## report_a_warning_zone.js
-## report_a_lack_of_data.js
+## report_an_anomaly.js
 ## set_the_route.js
 ```js
 map.locate({setView: true, watch: true}).on('locationfound', function(e){...}).on('locationerror', function(e){});

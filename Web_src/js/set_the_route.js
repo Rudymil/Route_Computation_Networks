@@ -23,6 +23,8 @@ map.locate({setView: true, watch: true}).on('locationfound', function(e){
             markerDeparture = L.marker([e.latitude, e.longitude],{icon: greenIcon, draggable: true}).bindPopup('Your are here');
             map.addLayer(markerDeparture);
             $("#dep").val(e.latitude + ", " + e.longitude);
+            markerDeparture.on("dragend",function(ev){
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
               
         })
        .on('locationerror', function(e){
