@@ -16,7 +16,7 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			//console.log("statut : ",statut);
 			$.notify(
 				{
-					title: "<strong>Trouble zones request</strong>",
+					title: "<strong>Warning zones request</strong>",
 					message: statut
 				},{
 					type: "success",
@@ -33,7 +33,7 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			//console.log("erreur : ",erreur);
 			$.notify(
 				{
-					title: "<strong>Trouble zones request</strong>",
+					title: "<strong>Warning zones request</strong>",
 					message: statut
 				},{
 					type: "danger",
