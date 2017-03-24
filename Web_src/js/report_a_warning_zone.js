@@ -172,7 +172,7 @@ drawControl = new L.Control.Draw(drawPluginOptions);
 
 map.on('draw:created', function(e) {
   		var type = e.layerType;
-  		console.log(type);
+  		////console.log(type);
   		layer = e.layer;
   		if( type=="circle" && $("#Circle1").is(":checked")==true) {
     		
@@ -182,7 +182,6 @@ map.on('draw:created', function(e) {
   			var des=null;
 			var lev=null;
   			
-  			  		
   			bootbox.confirm(
   			"<div class='form-group'>\
   				<label for='usr'>Description:</label>\
@@ -206,8 +205,17 @@ map.on('draw:created', function(e) {
     			des= $('#description').val();
     			lev= $('#level').find(":selected").val();
   				
-    			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],lev,des];
-				circle.push(geomcircle);
+    			var layergeo=layer.toGeoJSON();
+  			
+  				layergeo.properties= {
+       			 "type": "warningType",
+       			 "typeGeometry" : "circle",
+       			 "radius" : layer._mRadius ,	
+        		 "description": des,
+     		     "level": level,
+     		     "date": Date.now()
+   			 };
+    			circle.push(layergeo);
 				console.log(circle);
 			}
 			);
@@ -244,13 +252,21 @@ map.on('draw:created', function(e) {
 			</div>"
     		, function(result) {
     		
-        		console.log("inside");
+			//console.log("inside");
     			des= $('#description').val();
     			lev= $('#level').find(":selected").val();
   				
-    			var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],lev,des];
-				box.push(geombox);
-				console.log(box);
+  				////console.log("rectange");
+    			layerjson=layer.toGeoJSON();
+    			layerjson.properties={
+       					 "type": "warningType",
+       					 "description": des,
+       					 "level": level,
+        				"data": Date.now()
+    			}
+    			
+				box.push(layerjson);
+				//console.log(box);
 			}
 			);
 
@@ -285,19 +301,22 @@ map.on('draw:created', function(e) {
 			</div>"
     		, function(result) {
     		
-        		console.log("inside");
+        		//console.log("inside");
     			des= $('#description').val();
     			lev= $('#level').find(":selected").val();
   				
-    			var i= layer._latlngs[0].length ;
-		var tmp = [];
-		for (var pas = 0; pas < i; pas++) {
-  			var t=[layer._latlngs[0][pas].lat,layer._latlngs[0][pas].lng];
-  			tmp.push(t);
-		}
-		tmpa=[tmp,lev,des];
-		polygon.push(tmpa);
-		console.log(polygon);
+  				//console.log(" polygon");
+    			layerjson=layer.toGeoJSON();
+    			layerjson.properties= {
+        			"type": "warningType",
+       				 "description": des,
+       				 "level" : lev ,
+       				 "deadline": Date.now()
+   			 }
+    			
+    			
+				polygon.push(layerjson);
+				//console.log(polygon);
 		
 			}
 			);
