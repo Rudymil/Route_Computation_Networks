@@ -70,27 +70,27 @@ Afficher le menu sur la carte.
 ```js
 $("#cm_debut").click(ep,function(){...};
 ```
-Dessine un marqueur de départ en vert sur la carte et affiche ses coordonnées dans le 1er input text dans **Route** lorsqu'on choisit l'option **Definir comme départ** dans le menu.
+Dessine un marqueur de départ en vert sur la carte et affiche ses coordonnées dans le 1er input text dans **Set the route** lorsqu'on choisit l'option **Definir comme départ** dans le menu.
 ```js
 $("#cm_fin").click(ep,function(){...};
 ```
-Dessine un marqueur de destination en rouge sur la carte et affiche ses coordonnées dans le 2ème input text dans **Route** lorsqu'on choisit l'option **Definir comme destination** dans le menu.
+Dessine un marqueur de destination en rouge sur la carte et affiche ses coordonnées dans le 2ème input text dans **Set the route** lorsqu'on choisit l'option **Definir comme destination** dans le menu.
 ```js
 $("#godep").click(function(){...});
 ```
-Dessine sur la carte un marqueur de départ avec les coordonnées saisies à la main lorsqu'on clic sur le bouton **go en vert** dans **Route**.
+Dessine sur la carte un marqueur de départ avec les coordonnées saisies à la main lorsqu'on clic sur le bouton **go en vert** dans **Set the route**.
 ```js
 $("#godest").click(function(){...});
 ```
-Dessine sur la carte un marqueur de destination avec les coordonnées saisies à la main lorsqu'on clic sur le bouton **go en rouge** dans **Route**.
+Dessine sur la carte un marqueur de destination avec les coordonnées saisies à la main lorsqu'on clic sur le bouton **go en rouge** dans **Set the route**.
 ```js
 $("#inverse").click(function(){...});
 ```
-Inverse les deux marqueurs de départ et de destination lorsqu'on clic sur le bouton avec les deux flèches dans **Route**.
+Inverse les deux marqueurs de départ et de destination lorsqu'on clic sur le bouton avec les deux flèches dans **Set the route**.
 ```js
 $("#remove").click(function(){...});
 ```
-Supprime les marqueurs de la carte lorsqu'on clic sur le boutton **remove** dans **Route**.
+Supprime les marqueurs de la carte lorsqu'on clic sur le boutton **remove** dans **Set the route**.
 ```js
 function affect(){...}
 ```
