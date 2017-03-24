@@ -29,10 +29,6 @@ function notify_none(shape){...}
 ```
 Signale qu'il n'y aucune **shape** à envoyer.
 ```js
-function notify_none_coordinates(shape){...}
-```
-Signale que la **shape** n'a aucune coordonnées.
-```js
 function notify_ajax_sending_areas_success(code, statut){...}
 ```
 Signale un succès de l'envoi des **shapes**.
@@ -40,10 +36,6 @@ Signale un succès de l'envoi des **shapes**.
 function notify_ajax_sending_areas_error(code, statut){...}
 ```
 Signale une erreur de l'envoi des **shapes**.
-```js
-function notify_wrong_description(shape){...}
-```
-Signale que les métadonnées de la **shape** ne sont pas dans le bon format.
 ```js
 $("#submit1").click(function(){...});
 ```
