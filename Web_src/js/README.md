@@ -52,7 +52,7 @@ map.locate({setView: true, watch: true}).on('locationfound', function(e){...}).o
 ```
 Dessine un marqueur de départ sur la carte qui précise la localisation de l'utilisateur lorsqu'on clic sur le bouton de localisation et affiche un msg d'erreur s'il n'y a pas de GPS intégré.
 ```js
-map.on('dblclick', function(e) {....});
+map.on('dblclick', function addmarker(e) {....});
 ```
 Affiche un menu sur la carte pour préciser s'il s'agit d'un point de départ ou de destination lorsqu'on double clic sur la carte.
 ```js
@@ -68,11 +68,11 @@ function showContextMenu1( marker, pos,ep){...};
 ```
 Afficher le menu sur la carte.
 ```js
-function  $("#cm_debut").click(ep,function(){...};
+$("#cm_debut").click(ep,function(){...};
 ```
 Dessine un marqueur de départ en vert sur la carte et affiche ses coordonnées dans le 1er input text dans **Route** lorsqu'on choisit l'option **Definir comme départ** dans le menu.
 ```js
-function  $("#cm_fin").click(ep,function(){...};
+$("#cm_fin").click(ep,function(){...};
 ```
 Dessine un marqueur de destination en rouge sur la carte et affiche ses coordonnées dans le 2ème input text dans **Route** lorsqu'on choisit l'option **Definir comme destination** dans le menu.
 ```js
@@ -84,10 +84,6 @@ $("#godest").click(function(){...});
 ```
 Dessine sur la carte un marqueur de destination avec les coordonnées saisies à la main lorsqu'on clic sur le bouton **go en rouge** dans **Route**.
 ```js
-$("#godep").click(function(){...});
-```
-Dessine sur la carte un marqueur de départ avec les coordonnées saisies à la main lorsqu'on clic sur le bouton **go en vert** dans **Route**.
-```js
 $("#inverse").click(function(){...});
 ```
 Inverse les deux marqueurs de départ et de destination lorsqu'on clic sur le bouton avec les deux flèches dans **Route**.
@@ -95,6 +91,11 @@ Inverse les deux marqueurs de départ et de destination lorsqu'on clic sur le bo
 $("#remove").click(function(){...});
 ```
 Supprime les marqueurs de la carte lorsqu'on clic sur le boutton **remove** dans **Route**.
+```js
+function affect(){...}
+```
+Affecter les coordonnées de départ et d'arrivée à la variable latlng.
+
 ## selection_of_the_area.js
 ```js
 $("#nigeria").click(function(){...});

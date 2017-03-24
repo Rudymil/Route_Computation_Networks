@@ -20,11 +20,12 @@ map.locate({setView: true, watch: true}).on('locationfound', function(e){
  			if( markerDeparture != null ) {
 			map.removeLayer(markerDeparture);
 			}
-            markerDeparture = L.marker([e.latitude, e.longitude],{icon: greenIcon, draggable: true}).bindPopup('Your are here');
+            markerDeparture = L.marker([e.latitude, e.longitude],{icon: greenIcon, draggable: true}).bindPopup(e.latitude + ", " + e.longitude);
             map.addLayer(markerDeparture);
             $("#dep").val(e.latitude + ", " + e.longitude);
             markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
               
         })
        .on('locationerror', function(e){
@@ -86,13 +87,14 @@ function showContextMenu1( marker, pos,ep){
  			if( markerDeparture != null ) {
 			map.removeLayer(markerDeparture);
 			}
- 			markerDeparture = L.marker([ep.latlng.lat, ep.latlng.lng],{icon: greenIcon , draggable: true}).bindPopup('Your are here');
+ 			markerDeparture = L.marker([ep.latlng.lat, ep.latlng.lng],{icon: greenIcon , draggable: true}).bindPopup(ep.latlng.lat + ", " + ep.latlng.lng);
             map.addLayer(markerDeparture);
             $("#dep").val(ep.latlng.lat + ", " + ep.latlng.lng);
             map.setView(markerDeparture.getLatLng(),13);
             hideContextMenu1();
              markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
 
  	 });  
   
@@ -100,13 +102,14 @@ function showContextMenu1( marker, pos,ep){
   			if( markeraDestination != null ) {
 			map.removeLayer(markeraDestination);
 			}
-  			markeraDestination= L.marker([ ep.latlng.lat , ep.latlng.lng],{icon: redIcon, draggable: true}).bindPopup('Your destination');
+  			markeraDestination= L.marker([ ep.latlng.lat , ep.latlng.lng],{icon: redIcon, draggable: true}).bindPopup(ep.latlng.lat + ", " + ep.latlng.lng);
   			map.addLayer(markeraDestination)
   			$("#dest").val(ep.latlng.lat + ", " + ep.latlng.lng);
   			map.setView(markeraDestination.getLatLng(),13);
   			hideContextMenu1();
   			markeraDestination.on("dragend",function(ev){
-            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markeraDestination.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
   });  
   
 }
@@ -122,8 +125,6 @@ $("#remove").click(function(){
 	 $("#dest").val("");
 	 map.removeLayer(markeraDestination);
 	 map.removeLayer(markerDeparture);
-	 markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
  }
 });
 
@@ -143,22 +144,24 @@ $("#inverse").click(function(){
 	  
 		if( $("#dep").val() == "" ) {
 			map.removeLayer(markeraDestination);
-			markerDeparture = L.marker([latdep, lngdep],{icon: greenIcon , draggable: true});
+			markerDeparture = L.marker([latdep, lngdep],{icon: greenIcon , draggable: true}).bindPopup(latdep + ", " +lngdep);
 			map.addLayer(markerDeparture);
 			$("#dep").val(temp2);
 			$("#dest").val("");
 			markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
 		}
 		
 		else if( $("#dest").val() == "" ) {
 			map.removeLayer(markerDeparture);
-			markeraDestination = L.marker([latdest, lngdest],{icon: redIcon , draggable: true});
+			markeraDestination = L.marker([latdest, lngdest],{icon: redIcon , draggable: true}).bindPopup(latdest+ ", " +lngdest);
 			map.addLayer(markeraDestination);
 			$("#dest").val(temp1);
 			$("#dep").val("");
 			markeraDestination.on("dragend",function(ev){
-            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markeraDestination.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
 		}
 		
 			
@@ -167,18 +170,21 @@ $("#inverse").click(function(){
 		map.removeLayer(markerDeparture);
 		map.removeLayer(markeraDestination);
 			
-		markerDeparture = L.marker([latdep, lngdep],{icon: greenIcon , draggable: true});
+		markerDeparture = L.marker([latdep, lngdep],{icon: greenIcon , draggable: true}).bindPopup(latdep+ ", " +lngdep);
 		map.addLayer(markerDeparture);
 		
-		markeraDestination = L.marker([latdest, lngdest],{icon: redIcon , draggable: true});
+		markeraDestination = L.marker([latdest, lngdest],{icon: redIcon , draggable: true}).bindPopup(latdest+ ", " +lngdest);
 		map.addLayer(markeraDestination);
 		
 		$("#dest").val(temp1);
 		$("#dep").val(temp2);
 		markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+            markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
+            
         markeraDestination.on("dragend",function(ev){
-            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+            markeraDestination.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
 		}
 	}
 });
@@ -221,12 +227,13 @@ $("#godep").click(function(){
 			if( markerDeparture !=null) {	
 				map.removeLayer(markerDeparture);
 			}
-			markerDeparture= L.marker([lat ,lng],{icon: greenIcon , draggable: true});
+			markerDeparture= L.marker([lat ,lng],{icon: greenIcon , draggable: true}).bindPopup(lat+ ", " +lng);
 			map.addLayer(markerDeparture);
 			markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
             //map.panTo(markerDeparture.getLatLng());
-            map.setView(markerDeparture.getLatLng(),13);
+				map.setView(markerDeparture.getLatLng(),13);
 		}
 	}
 		
@@ -269,10 +276,11 @@ $("#godest").click(function(){
 			if( markeraDestination !=null){	
 				map.removeLayer(markeraDestination);
 			}
-			markeraDestination= L.marker([lat ,lng],{icon: redIcon , draggable: true});
+			markeraDestination= L.marker([lat ,lng],{icon: redIcon , draggable: true}).bindPopup(lat+ ", " +lng);
 			map.addLayer(markeraDestination);
 			markeraDestination.on("dragend",function(ev){
-            $("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
+				$("#dest").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				markeraDestination.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});
             //map.panTo(markeraDestination.getLatLng());
             map.setView(markeraDestination.getLatLng(),13);
 		}

@@ -178,6 +178,11 @@ map.on('draw:created', function(e) {
     		
 			//var description = prompt("Please enter the description of the danger", "Description");
   		
+  		
+  			var des=null;
+			var lev=null;
+  			
+  			  		
   			bootbox.confirm(
   			"<div class='form-group'>\
   				<label for='usr'>Description:</label>\
@@ -186,50 +191,119 @@ map.on('draw:created', function(e) {
 			<div class='form-group'>\
 			<label for='text'>Danger level</label>\
 			<select class='form-control' id='level'>\
-   				<option value='1' selected >Level 1</option>\
-   				<option value='2' >Level 2</option>\
-    			<option value='3'  >Level 3</option>\
-    			<option value='4'>Level 4</option>\
-    			<option value='5' >Level 5</option>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
 			</select>\
 			</div>"
     		, function(result) {
-        
+    		
+        		console.log("inside");
+    			des= $('#description').val();
+    			lev= $('#level').find(":selected").val();
+  				
+    			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],lev,des];
+				circle.push(geomcircle);
+				console.log(circle);
 			}
 			);
   			
-			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],"description"]
-			circle.push(geomcircle);
-			console.log(circle);
+
+  			
+			
 			
 
 		}
 		
 		else if( type=="rectangle" && $("#Box1").is(":checked")==true ) {
 		
-		var description = prompt("Please enter the description of the danger", "Description");
+		var des=null;
+		var lev=null;
+  			
+		
+		bootbox.confirm(
+  			"<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>\
+			<div class='form-group'>\
+			<label for='text'>Danger level</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>"
+    		, function(result) {
+    		
+        		console.log("inside");
+    			des= $('#description').val();
+    			lev= $('#level').find(":selected").val();
+  				
+    			var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],lev,des];
+				box.push(geombox);
+				console.log(box);
+			}
+			);
 
-  		var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],description];
-		box.push(geombox);
-		console.log(box);	
+  			
 		
 		}
 		
 		else if( type=="polygon" && $("#Polygon1").is(":checked")==true) {
 
 
-		var description = prompt("Please enter the description of the danger", "Description");
 
-		var i= layer._latlngs[0].length ;
+		var des=null;
+		var lev=null;
+  			
+		
+		bootbox.confirm(
+  			"<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>\
+			<div class='form-group'>\
+			<label for='text'>Danger level</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>"
+    		, function(result) {
+    		
+        		console.log("inside");
+    			des= $('#description').val();
+    			lev= $('#level').find(":selected").val();
+  				
+    			var i= layer._latlngs[0].length ;
 		var tmp = [];
-		console.log(layer);
 		for (var pas = 0; pas < i; pas++) {
   			var t=[layer._latlngs[0][pas].lat,layer._latlngs[0][pas].lng];
   			tmp.push(t);
 		}
-		tmpa=[tmp,description];
+		tmpa=[tmp,lev,des];
 		polygon.push(tmpa);
 		console.log(polygon);
+		
+			}
+			);
+		
+		
+		
 		
 		
 		}
