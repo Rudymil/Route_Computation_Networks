@@ -167,20 +167,21 @@ map.on('draw:created', function(e) {
   			  		
   			bootbox.confirm(
   			"<div class='form-group'>\
+  			<label for='text'>Type :</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>\
-			<div class='form-group'>\
-			<label for='text'>Danger level</label>\
-			<select class='form-control' id='anomalyType'>\
-   				<option value='Missing road element' selected >Missing road element </option>\
-   				<option value='Wrong geometry' >Wrong geometry</option>\
-    			<option value='Missing attribute' >Missing attribute</option>\
-    			<option value='Wrong attribute'>Wrong attribute</option>\
-    			<option value='Missing POI' >Missing POI</option>\
-    			<option value='Wrong POI' >Wrong POI</option>\
-			</select>\
-			</div>"
+				</div>"
     		, function(result) {
     		
         		//console.log("inside");
@@ -208,20 +209,21 @@ map.on('draw:created', function(e) {
   			  		
   			bootbox.confirm(
   			"<div class='form-group'>\
+  			<label for='text'>Type</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>\
-			<div class='form-group'>\
-			<label for='text'>Danger level</label>\
-			<select class='form-control' id='anomalyType'>\
-   				<option value='Missing road element' selected >Missing road element </option>\
-   				<option value='Wrong geometry' >Wrong geometry</option>\
-    			<option value='Missing attribute' >Missing attribute</option>\
-    			<option value='Wrong attribute'>Wrong attribute</option>\
-    			<option value='Missing POI' >Missing POI</option>\
-    			<option value='Wrong POI' >Wrong POI</option>\
-			</select>\
-			</div>"
+				</div>"
     		, function(result) {
     		
         		//console.log("inside");
@@ -249,11 +251,7 @@ map.on('draw:created', function(e) {
   			  		
   			bootbox.confirm(
   			"<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>\
-			<div class='form-group'>\
-			<label for='text'>Danger level</label>\
+  			<label for='text'>Type</label>\
 			<select class='form-control' id='level'>\
    				<option value='Road accident' selected >Road accident </option>\
    				<option value='Road degradation' >Road degradation</option>\
@@ -263,7 +261,11 @@ map.on('draw:created', function(e) {
     			<option value='Traffic jam' >Traffic jam</option>\
     			<option value='Road closure' >Road closure</option>\
 			</select>\
-			</div>"
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
     		, function(result) {
     		
         		//console.log("inside");

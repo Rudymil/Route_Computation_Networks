@@ -184,11 +184,7 @@ map.on('draw:created', function(e) {
   			
   			bootbox.confirm(
   			"<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>\
-			<div class='form-group'>\
-			<label for='text'>Danger level</label>\
+			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
    				<option value='Road accident' selected >Road accident </option>\
    				<option value='Road degradation' >Road degradation</option>\
@@ -198,7 +194,11 @@ map.on('draw:created', function(e) {
     			<option value='Traffic jam' >Traffic jam</option>\
     			<option value='Road closure' >Road closure</option>\
 			</select>\
-			</div>"
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
     		, function(result) {
     		
         		console.log("inside");
@@ -235,11 +235,7 @@ map.on('draw:created', function(e) {
 		
 		bootbox.confirm(
   			"<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>\
-			<div class='form-group'>\
-			<label for='text'>Danger level</label>\
+			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
    				<option value='Road accident' selected >Road accident </option>\
    				<option value='Road degradation' >Road degradation</option>\
@@ -249,7 +245,11 @@ map.on('draw:created', function(e) {
     			<option value='Traffic jam' >Traffic jam</option>\
     			<option value='Road closure' >Road closure</option>\
 			</select>\
-			</div>"
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
     		, function(result) {
     		
 			//console.log("inside");
@@ -284,11 +284,7 @@ map.on('draw:created', function(e) {
 		
 		bootbox.confirm(
   			"<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>\
-			<div class='form-group'>\
-			<label for='text'>Danger level</label>\
+			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
    				<option value='Road accident' selected >Road accident </option>\
    				<option value='Road degradation' >Road degradation</option>\
@@ -298,7 +294,11 @@ map.on('draw:created', function(e) {
     			<option value='Traffic jam' >Traffic jam</option>\
     			<option value='Road closure' >Road closure</option>\
 			</select>\
-			</div>"
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
     		, function(result) {
     		
         		//console.log("inside");

@@ -215,20 +215,22 @@ function notify_ajax_sending_areas_error(code, statut){
 }
 
 $("#submit1").click(function(){ // envoie toutes les zones dangereuses
-	console.log("Circles :");
+	/*console.log("Circles :");
 	console.log(circle);
 	console.log("Boxes :");
 	console.log(box);
 	console.log("Polygons :");
-	console.log(polygon);
+	console.log(polygon);*/
 	var geojson = new Array();
 	if (circle.length == 0){
 		notify_none("Circles");
 	}
 	else{
 		for(element in circle){
-			if (circle[element].hasOwnProperty('toGeoJSON()')){ // si la methode est compatible
-				geojson.push(circle[element].toGeoJSON()); // complete GeoJSON
+			console.log("Circle :");
+			console.log(circle[element]);
+			if (circle[element] !== null){ // si la methode est compatible
+				geojson.push(circle[element]); // complete GeoJSON
 			}
 			else {
 				notify_wrong_format("Circles");
@@ -243,8 +245,10 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 	}
 	else {
 		for(element in box){
-			if (box[element].hasOwnProperty('toGeoJSON()')){ // si la methode est compatible
-				geojson.push(box[element].toGeoJSON()); // complete GeoJSON
+			console.log("Box :");
+			console.log(box[element]);
+			if (box[element] !== null){ // si la methode est compatible
+				geojson.push(box[element]); // complete GeoJSON
 			}
 			else {
 				notify_wrong_format("Boxes");
@@ -259,8 +263,10 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 	}
 	else {
 		for(element in polygon){
-			if (polygon[element].hasOwnProperty('toGeoJSON()')){ // si la methode est compatible
-				geojson.push(polygon[element].toGeoJSON()); // complete GeoJSON
+			console.log("Polygon :");
+			console.log(polygon[element]);
+			if (polygon[element] !== null){ // si la methode est compatible
+				geojson.push(polygon[element]); // complete GeoJSON
 			}
 			else {
 				notify_wrong_format("Polygons");
@@ -298,20 +304,22 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 });
 
 $("#submit2").click(function(){ // envoie toutes les zones a verifier
-	console.log("Circles :");
+	/*console.log("Circles :");
 	console.log(circlel);
 	console.log("Boxes :");
 	console.log(boxl);
 	console.log("Polygons :");
-	console.log(polygonl);
+	console.log(polygonl);*/
 	var geojson = new Array();
 	if (circlel.length == 0){
 		notify_none("Circles");
 	}
 	else{
 		for(element in circlel){
-			if (circlel[element].hasOwnProperty('toGeoJSON()')){ // si la methode est compatible
-				geojson.push(circlel[element].toGeoJSON()); // complete GeoJSON
+			console.log("Circle :");
+			console.log(circlel[element]);
+			if (circlel[element] !== null){ // si la methode est compatible
+				geojson.push(circlel[element]); // complete GeoJSON
 			}
 			else {
 				notify_wrong_format("Circles");
@@ -326,8 +334,10 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 	}
 	else {
 		for(element in boxl){
-			if (boxl[element].hasOwnProperty('toGeoJSON()')){ // si la methode est compatible
-				geojson.push(boxl[element].toGeoJSON()); // complete GeoJSON
+			console.log("Box :");
+			console.log(boxl[element]);
+			if (boxl[element] !== null){ // si la methode est compatible
+				geojson.push(boxl[element]); // complete GeoJSON
 			}
 			else {
 				notify_wrong_format("Boxes");
@@ -342,8 +352,10 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 	}
 	else {
 		for(element in polygonl){
-			if (polygonl[element].hasOwnProperty('toGeoJSON()')){ // si la methode est compatible
-				geojson.push(polygonl[element].toGeoJSON()); // complete GeoJSON
+			console.log("Polygon :");
+			console.log(polygonl[element]);
+			if (polygonl[element] !== null){ // si la methode est compatible
+				geojson.push(polygonl[element]); // complete GeoJSON
 			}
 			else {
 				notify_wrong_format("Polygons");
