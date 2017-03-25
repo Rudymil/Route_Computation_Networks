@@ -4,7 +4,10 @@ var polygon = new Array(); // danger
 var circlel = new Array(); // lack
 var boxl = new Array(); // lack
 var polygonl = new Array(); // lack
-var latlng= new Array(); // departure/arrival points
+var latlng = new Array(); // departure/arrival points
+var string_circles = "Circles";
+var string_boxes = "Boxes";
+var string_polygons = "Polygons";
 
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
 	$.ajax({
@@ -90,52 +93,6 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 		}
 		else{
 			var json = latlng;
-			$.ajax({
-				url : '',
-				type : 'POST',
-				data : 'json='+json,
-				dataType : 'json',
-				success : function(code_json, statut){
-					//console.log("code_json : ",code_json);
-					//console.log("statut : ",statut);
-					$.notify(
-						{
-							title: "<strong>Routing request</strong>",
-							message: statut,
-						},{
-							type: "success",
-							placement: {
-								from: "bottom",
-								align: "center"
-							}
-						}
-					);
-				},
-				error : function(resultat, statut, erreur){
-					//console.log("resultat : ",resultat);
-					//console.log("statut : ",statut);
-					//console.log("erreur : ",erreur);
-					$.notify(
-						{
-							title: "<strong>Routing request</strong>",
-							message: statut,
-						},{
-							type: "danger",
-							placement: {
-								from: "bottom",
-								align: "center"
-							}
-						}
-					);
-				},
-				complete : function(resultat, statut){
-					//console.log("resultat : ",resultat);
-					//console.log("statut : ",statut);
-					if (status == 200){
-						json = resultat;
-					}
-				}
-			});
 		}
 	}
 	else{
@@ -223,7 +180,7 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 	console.log(polygon);*/
 	var geojson = new Array();
 	if (circle.length == 0){
-		notify_none("Circles");
+		notify_none(string_circles);
 	}
 	else{
 		for(element in circle){
@@ -233,7 +190,7 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 				geojson.push(circle[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format("Circles");
+				notify_wrong_format(string_circles);
 				circle = [];
 				return -1;
 			}
@@ -241,7 +198,7 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		circle = [];
 	}
 	if (box.length == 0){
-		notify_none("Boxes");
+		notify_none(string_boxes);
 	}
 	else {
 		for(element in box){
@@ -251,7 +208,7 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 				geojson.push(box[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format("Boxes");
+				notify_wrong_format(string_boxes);
 				box = [];
 				return -1;
 			}
@@ -259,7 +216,7 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		box = [];
 	}
 	if (polygon.length == 0){
-		notify_none("Polygons");
+		notify_none(string_polygons);
 	}
 	else {
 		for(element in polygon){
@@ -269,7 +226,7 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 				geojson.push(polygon[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format("Polygons");
+				notify_wrong_format(string_polygons);
 				polygon = [];
 				return -1;
 			}
@@ -312,7 +269,7 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 	console.log(polygonl);*/
 	var geojson = new Array();
 	if (circlel.length == 0){
-		notify_none("Circles");
+		notify_none(string_circles);
 	}
 	else{
 		for(element in circlel){
@@ -322,7 +279,7 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				geojson.push(circlel[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format("Circles");
+				notify_wrong_format(string_circles);
 				circlel = [];
 				return -1;
 			}
@@ -330,7 +287,7 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 		circlel = [];
 	}
 	if (boxl.length == 0){
-		notify_none("Boxes");
+		notify_none(string_boxes);
 	}
 	else {
 		for(element in boxl){
@@ -340,7 +297,7 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				geojson.push(boxl[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format("Boxes");
+				notify_wrong_format(string_boxes);
 				boxl = [];
 				return -1;
 			}
@@ -348,7 +305,7 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 		boxl = [];
 	}
 	if (polygonl.length == 0){
-		notify_none("Polygons");
+		notify_none(string_polygons);
 	}
 	else {
 		for(element in polygonl){
@@ -358,7 +315,7 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 				geojson.push(polygonl[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format("Polygons");
+				notify_wrong_format(string_polygons);
 				polygonl = [];
 				return -1;
 			}
