@@ -22,8 +22,8 @@ def fusionWarningZoneWithGraph(graph, featureList, featurePropertyDescribedWeigh
     for u,v,d in graph.edges_iter(data=True):
 
         # Select the source and the target point of the edge
-        source = Point(graph.node[u]["lat"], graph.node[u]["lon"])
-        target = Point(graph.node[v]["lat"], graph.node[v]["lon"])
+        source = Point(graph.node[u]["lon"], graph.node[u]["lat"])
+        target = Point(graph.node[v]["lon"], graph.node[v]["lat"])
 
         # cumule the weight if the edge interferes with a warning zone
         for feature in featureList:

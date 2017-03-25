@@ -53,12 +53,20 @@ def savePath(filename, idList, graph):
     """
     with open(filename, 'w') as f:
         # print([[graph.node[p]['lat'], graph.node[p]['lon']] for p in idList], file=f)
+        counter = 0
+        modulo = 1
         for p in idList:
-            print("L.latLng("+str(graph.node[p]['lat'])+","+str(graph.node[p]['lon'])+"),", file=f)
+            if (counter >= len(idList) - modulo ):
+                comma = ""
+            else:
+                comma = ","
+            if counter%modulo == 0:
+                print("L.latLng("+str(graph.node[p]['lat'])+","+str(graph.node[p]['lon'])+")"+ comma, file=f)
+            counter+=1
 
 
 # Montpelllier Data
-G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True))
+G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True, cacheTempDir = "/tmp/tmpOSM/"))
 # print(G.nodes())
 source_id = "4445471419"
 target_id = "3670601901"
