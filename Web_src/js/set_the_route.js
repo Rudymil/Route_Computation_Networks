@@ -37,7 +37,7 @@ map.locate({setView: true, watch: true}).on('locationfound', function(e){
 	            	message: "Location access denied."
 	            },
 	            {
-					type: "danger",
+					type: "warning",
 					placement: {
 						from: "bottom",
 						align: "center"
