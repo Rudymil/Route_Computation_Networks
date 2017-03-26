@@ -8,6 +8,8 @@ var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
+var string_insert_to_valid = './php/insert_to_valid.php';
+var string_insert_to_verify = './php/insert_to_verify.php';
 
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
 	$.ajax({
@@ -57,9 +59,7 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 	});
 });
 
-$("#calculate").click(function(){ // envoie les points a l algo pour afficher l itineraire
-	//console.log("latlng : ",latlng);
-	affect(); // fonction définie dans set_the_route.js pour affecter les coordonnees des points de depart et d arrivee à latlng
+function check_latlng(latlng){
 	if (latlng.length == 2 && latlng[0].length == 2 && latlng[1].length == 2){ // si 2 couples de lat Lng
 		if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined) || latlng[1].includes("") || latlng[1].includes(NaN) || latlng[1].includes(undefined)){ // si pas de point
 			if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined)){
@@ -90,9 +90,10 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 					}
 				);
 			}
+			return -1;
 		}
 		else{
-			var json = latlng;
+			return 0;
 		}
 	}
 	else{
@@ -108,14 +109,22 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 				}
 			}
 		);
+		return -1;
+	}
+}
+
+$("#calculate").click(function(){ // envoie les points a l algo pour afficher l itineraire
+	//console.log("latlng : ",latlng);
+	affect(); // fonction définie dans set_the_route.js pour affecter les coordonnees des points de depart et d arrivee à latlng
+	if (check_latlng(latlng) == 0){ // si la verification passe
 	}
 });
 
-function notify_wrong_format(shape){
+function notify_shape_empty(shape){
 	$.notify(
 		{
 			title: "<strong>"+shape+"</strong>",
-			message: "wrong format"
+			message: "empty"
 		},{
 			type: "danger",
 			placement: {
@@ -171,14 +180,7 @@ function notify_ajax_sending_areas_error(code, statut){
 	);
 }
 
-$("#submit1").click(function(){ // envoie toutes les zones dangereuses
-	/*console.log("Circles :");
-	console.log(circle);
-	console.log("Boxes :");
-	console.log(box);
-	console.log("Polygons :");
-	console.log(polygon);*/
-	var geojson = new Array();
+function fill_geojson(circle,box,polygon,geojson){
 	if (circle.length == 0){
 		notify_none(string_circles);
 	}
@@ -186,16 +188,14 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		for(element in circle){
 			console.log("Circle :");
 			console.log(circle[element]);
-			if (circle[element] !== null){ // si la methode est compatible
+			if (circle[element] !== null){ // si c est pas nul
 				geojson.push(circle[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format(string_circles);
-				circle = [];
+				notify_shape_empty(string_circles);
 				return -1;
 			}
 		}
-		circle = [];
 	}
 	if (box.length == 0){
 		notify_none(string_boxes);
@@ -204,16 +204,14 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		for(element in box){
 			console.log("Box :");
 			console.log(box[element]);
-			if (box[element] !== null){ // si la methode est compatible
+			if (box[element] !== null){ // si c est pas nul
 				geojson.push(box[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format(string_boxes);
-				box = [];
+				notify_shape_empty(string_boxes);
 				return -1;
 			}
 		}
-		box = [];
 	}
 	if (polygon.length == 0){
 		notify_none(string_polygons);
@@ -222,45 +220,63 @@ $("#submit1").click(function(){ // envoie toutes les zones dangereuses
 		for(element in polygon){
 			console.log("Polygon :");
 			console.log(polygon[element]);
-			if (polygon[element] !== null){ // si la methode est compatible
+			if (polygon[element] !== null){ // si c est pas nul
 				geojson.push(polygon[element]); // complete GeoJSON
 			}
 			else {
-				notify_wrong_format(string_polygons);
-				polygon = [];
+				notify_shape_empty(string_polygons);
 				return -1;
 			}
 		}
-		polygon = [];
 	}
-	console.log("geojson : ");
-	console.log(geojson);
-	if (!$.isEmptyObject(geojson)){
-		$.ajax({
-			url : './php/insert_to_valid.php',
-			type : 'POST',
-			data : 'geojson='+geojson,
-			dataType : '',
-			success : function(code, statut){
-				//console.log("code_json : ",code);
-				//console.log("statut : ",statut);
-				notify_ajax_sending_areas_success(code, statut);
-			},
-			error : function(resultat, statut, erreur){
-				//console.log("resultat : ",resultat);
-				//console.log("statut : ",statut);
-				//console.log("erreur : ",erreur);
-				notify_ajax_sending_areas_error(code, statut);
-			},
-			complete : function(resultat, statut){
-				//console.log("resultat : ",resultat);
-				//console.log("statut : ",statut);
-			}
-		});
+	return 0;
+}
+
+function send_ajax_geojson(geojson,url){
+	$.ajax({
+		url : url,
+		type : 'POST',
+		data : 'geojson='+geojson,
+		dataType : '',
+		success : function(code, statut){
+			//console.log("code_json : ",code);
+			//console.log("statut : ",statut);
+			notify_ajax_sending_areas_success(code, statut);
+		},
+		error : function(resultat, statut, erreur){
+			//console.log("resultat : ",resultat);
+			//console.log("statut : ",statut);
+			//console.log("erreur : ",erreur);
+			notify_ajax_sending_areas_error(code, statut);
+		},
+		complete : function(resultat, statut){
+			//console.log("resultat : ",resultat);
+			//console.log("statut : ",statut);
+		}
+	});
+}
+
+$("#submit1").click(function(){ // envoie toutes les warning zones
+	/*console.log("Circles :");
+	console.log(circle);
+	console.log("Boxes :");
+	console.log(box);
+	console.log("Polygons :");
+	console.log(polygon);*/
+	var geojson = new Array();
+	if (fill_geojson(circle,box,polygon,geojson) == 0){ // si pas d erreur
+		console.log("geojson : ");
+		console.log(geojson);
+		if (!$.isEmptyObject(geojson)){ // si le geojson est plein
+			circle = [];
+			box = [];
+			polygon = [];
+			send_ajax_geojson(geojson,string_insert_to_valid);
+		}
 	}
 });
 
-$("#submit2").click(function(){ // envoie toutes les zones a verifier
+$("#submit2").click(function(){ // envoie toutes les anomaly
 	/*console.log("Circles :");
 	console.log(circlel);
 	console.log("Boxes :");
@@ -268,83 +284,14 @@ $("#submit2").click(function(){ // envoie toutes les zones a verifier
 	console.log("Polygons :");
 	console.log(polygonl);*/
 	var geojson = new Array();
-	if (circlel.length == 0){
-		notify_none(string_circles);
-	}
-	else{
-		for(element in circlel){
-			console.log("Circle :");
-			console.log(circlel[element]);
-			if (circlel[element] !== null){ // si la methode est compatible
-				geojson.push(circlel[element]); // complete GeoJSON
-			}
-			else {
-				notify_wrong_format(string_circles);
-				circlel = [];
-				return -1;
-			}
+	if (fill_geojson(circlel,boxl,polygonl,geojson) == 0){ // si pas d erreur
+		console.log("geojson : ");
+		console.log(geojson);
+		if (!$.isEmptyObject(geojson)){ // si le geojson est plein
+			circlel = [];
+			boxl = [];
+			polygonl = [];
+			send_ajax_geojson(geojson,string_insert_to_verify);
 		}
-		circlel = [];
-	}
-	if (boxl.length == 0){
-		notify_none(string_boxes);
-	}
-	else {
-		for(element in boxl){
-			console.log("Box :");
-			console.log(boxl[element]);
-			if (boxl[element] !== null){ // si la methode est compatible
-				geojson.push(boxl[element]); // complete GeoJSON
-			}
-			else {
-				notify_wrong_format(string_boxes);
-				boxl = [];
-				return -1;
-			}
-		}
-		boxl = [];
-	}
-	if (polygonl.length == 0){
-		notify_none(string_polygons);
-	}
-	else {
-		for(element in polygonl){
-			console.log("Polygon :");
-			console.log(polygonl[element]);
-			if (polygonl[element] !== null){ // si la methode est compatible
-				geojson.push(polygonl[element]); // complete GeoJSON
-			}
-			else {
-				notify_wrong_format(string_polygons);
-				polygonl = [];
-				return -1;
-			}
-		}
-		polygonl = [];
-	}
-	console.log("geojson : ");
-	console.log(geojson);
-	if (!$.isEmptyObject(geojson)){
-		$.ajax({
-			url : './php/insert_to_verify.php',
-			type : 'POST',
-			data : 'geojson='+geojson,
-			dataType : '',
-			success : function(code, statut){
-				//console.log("code_json : ",code);
-				//console.log("statut : ",statut);
-				notify_ajax_sending_areas_success(code, statut);
-			},
-			error : function(resultat, statut, erreur){
-				//console.log("resultat : ",resultat);
-				//console.log("statut : ",statut);
-				//console.log("erreur : ",erreur);
-				notify_ajax_sending_areas_error(code, statut);
-			},
-			complete : function(resultat, statut){
-				//console.log("resultat : ",resultat);
-				//console.log("statut : ",statut);
-			}
-		});
 	}
 });
