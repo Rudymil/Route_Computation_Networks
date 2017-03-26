@@ -27,11 +27,11 @@ Envoye les **points** de départ et d'arrivée à **l'algo**.
 ```js
 function notify_shape_empty(shape){...}
 ```
-Signale une erreur qu'il n'y aucune **shape**.
+Signale une erreur : aucune **shape**.
 ```js
 function notify_none(shape){...}
 ```
-Signale une info qu'il n'y aucune **shape** à envoyer.
+Signale une info : aucune **shape** à envoyer.
 ```js
 function notify_ajax_sending_areas_success(code, statut){...}
 ```
