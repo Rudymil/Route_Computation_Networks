@@ -45,14 +45,14 @@ function ajax_types(url,type){ // requete ajax sur les types
 				var json = resultat.responseJSON;
 				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
 					//console.log(json);
-					if (type == ""){
+					if (type == "risk_type"){
 						for (element in json){ // pour chaque object du geojson
 							//console.log(element);
 							//console.log(json[element]);
 							types_warning_zones.push(json[element]);
 						}
 					}
-					else if (type == ""){
+					else if (type == "anomaly_type"){
 						for (element in json){ // pour chaque object du geojson
 							//console.log(element);
 							//console.log(json[element]);
@@ -66,8 +66,8 @@ function ajax_types(url,type){ // requete ajax sur les types
 }
 
 $("body").ready(function(){ // lorsque le body est charge
-	ajax_types(url,"");
-	ajax_types(url,"");
+	ajax_types(url,"risk_type");
+	ajax_types(url,"anomaly_type");
 });
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
