@@ -1,8 +1,8 @@
-#OSM#
+# OSM
 
-##Contrôle qualité des Routes##
+## Contrôle qualité des Routes
 
-###Données###
+### Données
 
 Entités considérées : Routes
 Périmétrie de l'étude : [Anglola](http://download.geofabrik.de/africa/angola-latest-free.shp.zip), [Nigeria](http://download.geofabrik.de/africa/nigeria-latest-free.shp.zip)
@@ -32,7 +32,7 @@ Nigeria|16.574|571
 
 Voici la répartition par type de voie, des erreurs et le ratio :
 
-**Angola**
+** Angola **
 
 Catégorie|Quantité|Ratio
 --|--|--
@@ -50,7 +50,7 @@ tertiary|3|0,44%
 bridleway|1|0,15%
 cycleway|1|0,15%
 
-**Nigeria**
+** Nigeria **
 
 Catégorie|Quantité|Ratio
 --|--|--

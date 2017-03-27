@@ -1,19 +1,19 @@
 Installations
 
 Les commandes sont données pour un système avec ubuntu server 14.04
-##Installation des dépendances
+## Installation des dépendances
 
 ```sh
 sudo apt-get install libboost-all-dev subversion git-core tar unzip wget bzip2 build-essential autoconf libtool libxml2-dev libgeos-dev libgeos++-dev libpq-dev libbz2-dev libproj-dev munin-node munin libprotobuf-c0-dev protobuf-c-compiler libfreetype6-dev libpng12-dev libtiff5-dev libicu-dev libgdal-dev libcairo-dev libcairomm-1.0-dev apache2 apache2-dev libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev node-carto
 ```
- 
-##Installation de PostgreSQL & PostGIS
+
+## Installation de PostgreSQL & PostGIS
 
 ```sh
 sudo apt-get install postgresql postgresql-contrib postgis postgresql-9.4-postgis-2.1
 ```
- 
-###Installation d’osm2pgsql
+
+### Installation d’osm2pgsql
 
 ```sh
 mkdir ~/src
@@ -24,7 +24,7 @@ cd osm2pgsql
 sudo apt-get install make cmake g++ libboost-dev libboost-system-dev \
   libboost-filesystem-dev libexpat1-dev zlib1g-dev \
   libbz2-dev libpq-dev libproj-dev lua5.2 liblua5.2-dev
-  
+
 mkdir build && cd build
 cmake ..
 
@@ -32,8 +32,8 @@ make
 
 sudo make install
 ```
- 
-###Installation de Mapnik
+
+### Installation de Mapnik
 
 ```sh
 cd ~/src
@@ -52,7 +52,7 @@ make
 sudo make install
 sudo ldconfig
 ```
- 
+
 Installation de mod_tile & renderd
 
 ```sh

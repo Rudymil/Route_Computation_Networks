@@ -8,7 +8,71 @@ var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
-var url = './php/server.php';
+var url = 'http://172.31.56.223/api/server.php';
+var warning_zones = new Array();
+var layer_group_warning_zones;
+var types_warning_zones = new Array();
+var types_anomalies = new Array();
+
+function ajax_types(url,type){ // requete ajax sur les types
+	$.ajax({
+		url : url,
+		type : 'POST',
+		dataType : 'json',
+		success : function(code_json, statut){
+			//console.log("code_json : ",code_json);
+			//console.log("statut : ",statut);
+		},
+		error : function(resultat, statut, erreur){
+			//console.log("resultat : ",resultat);
+			//console.log("statut : ",statut);
+			//console.log("erreur : ",erreur);
+			$.notify(
+				{
+					title: "<strong>"+type+" request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (resultat.status == '200'){
+				var json = resultat.responseJSON;
+				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
+					//console.log(json);
+					if (type == "risk_type"){
+						for (element in json){ // pour chaque object du geojson
+							//console.log(element);
+							//console.log(json[element]);
+							types_warning_zones.push(json[element]);
+						}
+					}
+					else if (type == "anomaly_type"){
+						for (element in json){ // pour chaque object du geojson
+							//console.log(element);
+							//console.log(json[element]);
+							types_anomalies.push(json[element]);
+						}
+					}
+				}
+			}
+		}
+	});
+}
+
+$("body").ready(function(){ // lorsque le body est charge
+	ajax_types(url,"risk_type");
+	console.log("types_warning_zones :");
+	console.log(types_warning_zones);
+	ajax_types(url,"anomaly_type");
+	console.log("types_anomalies :");
+	console.log(types_anomalies);
+});
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
 	$.ajax({
@@ -58,19 +122,82 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 	});
 }
 
-function add_warning_zones(){ // ajoute toutes les warning zones de la BDD
-	var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
-	var warning_zone = L.polygon(latlngs, {color: 'red'}).addTo(map);
-	var warning_zones = L.layerGroup([warning_zones]);
-	var overlayMaps = {
-    	"Warning zones": warning_zones
-	};
-	L.control.layers(overlayMaps).addTo(map);
+function add_warning_zones(url){ // ajoute toutes les warning zones de la BDD
+	$.ajax({
+		url : url,
+		type : 'GET',
+		data : 'type=warning_zone',
+		dataType : 'json',
+		success : function(code_json, statut){
+			//console.log("code_json : ",code_json);
+			//console.log("statut : ",statut);
+			$.notify(
+				{
+					title: "<strong>Warning zones request</strong>",
+					message: statut
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		error : function(resultat, statut, erreur){
+			//console.log("resultat : ",resultat);
+			//console.log("statut : ",statut);
+			//console.log("erreur : ",erreur);
+			$.notify(
+				{
+					title: "<strong>Warning zones request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (resultat.status == '200'){
+				var json = resultat.responseJSON;
+				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
+					//console.log(json);
+					for (element in json){ // pour chaque object du geojson
+						//console.log(element);
+						//console.log(json[element]);
+						warning_zones = []; // on vide les warning zones
+						warning_zones.push(json[element]); // remplir la warning zone
+					}
+					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
+					var overlayMaps = {"Warning zones": layer_group_warning_zones}; // menu
+					L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+				}
+				else{
+					$.notify(
+						{
+							title: "<strong>Warning zones request</strong>",
+							message: "none"
+						},{
+							type: "info",
+							placement: {
+								from: "bottom",
+								align: "center"
+							}
+						}
+					);
+				}
+			}
+		}
+	});
 }
 
-$("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
+$("#map").ready(function(){ // lorsque la carte est chargee
 	ajax_grid();
-	//add_warning_zones();
+	add_warning_zones(url);
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
@@ -249,7 +376,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	$.ajax({
 		url : url,
-		type : 'GET',
+		type : 'POST',
 		data : 'type='+type+'&geojson='+geojson,
 		dataType : '',
 		success : function(code, statut){
@@ -285,7 +412,7 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 			circle = [];
 			box = [];
 			polygon = [];
-			send_ajax_geojson(geojson,"warning_zones",url);
+			send_ajax_geojson(geojson,"warning_zone",url);
 		}
 	}
 });
@@ -305,7 +432,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 			circlel = [];
 			boxl = [];
 			polygonl = [];
-			send_ajax_geojson(geojson,"anomalies",url);
+			send_ajax_geojson(geojson,"anomaly_zone",url);
 		}
 	}
 });
