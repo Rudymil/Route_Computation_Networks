@@ -34,6 +34,7 @@ latSource = float(sys.argv[1])
 lonSource = float(sys.argv[2])
 latTarget = float(sys.argv[3])
 lonTarget = float(sys.argv[4])
+weightType = sys.argv[5]
 
 
 VERBOSE = False
@@ -149,6 +150,8 @@ networkxGraphManager.applyDefaultWeight(G, defaultWeight, weightKeyToChange)
 # Set the weight from the warningZoneFilenameInput file
 fillWeightMatrix.fusionWarningZoneWithGraph(G, featureList, "weight", weightKeyToChange)
 
+networkxGraphManager.fusionWeight(G, alpha=0.5)
+
 networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
 ## ROUTING COMPUTATION
 
@@ -159,7 +162,7 @@ idList = []
 
 
 
-[idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight='weight_to_avoid')] ## Weight based on length of ways
+[idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight=weightType)] ## Weight based on length of ways
 # applyRandomWeight(G)
 # [idList.append(p) for p in netx.shortest_path(G,source=source_id,target=target_id, weight='weight_random')] ## Random weight
 
