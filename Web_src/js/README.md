@@ -17,9 +17,13 @@ function ajax_grid(){...}
 ```
 Requête ajax pour recupérer une **grille**.
 ```js
+function add_warning_zones(){...}
+```
+Récupère toutes les **warning zones** de la **BDD**.
+```js
 $("#map").ready(function(){...});
 ```
-Charge une **grille**.
+S'exécute lorsque la **carte** est chargée.
 ```js
 function check_latlng(latlng){...}
 ```
@@ -49,9 +53,9 @@ function fill_geojson(circle,box,polygon,geojson){...}
 ```
 Rempli **geojson** des objects contenus dans **circle**, **box** et **polygon**.
 ```js
-function send_ajax_geojson(geojson,url){...}
+function send_ajax_geojson(geojson,type,url){...}
 ```
-Envoie le **geojson** à l'**url**.
+Envoie le **geojson** et le **type** à l'**url**.
 ```js
 $("#submit1").click(function(){...});
 ```

@@ -8,8 +8,7 @@ var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
-var string_insert_to_valid = './php/insert_to_valid.php';
-var string_insert_to_verify = './php/insert_to_verify.php';
+var url = './php/server.php';
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
 	$.ajax({
@@ -59,8 +58,19 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 	});
 }
 
+function add_warning_zones(){ // ajoute toutes les warning zones de la BDD
+	var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+	var warning_zone = L.polygon(latlngs, {color: 'red'}).addTo(map);
+	var warning_zones = L.layerGroup([warning_zones]);
+	var overlayMaps = {
+    	"Warning zones": warning_zones
+	};
+	L.control.layers(overlayMaps).addTo(map);
+}
+
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
 	ajax_grid();
+	//add_warning_zones();
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
@@ -236,11 +246,11 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 	return 0;
 }
 
-function send_ajax_geojson(geojson,url){ // envoie en ajax le geojson a l url en parametre
+function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	$.ajax({
 		url : url,
-		type : 'POST',
-		data : 'geojson='+geojson,
+		type : 'GET',
+		data : 'type='+type+'&geojson='+geojson,
 		dataType : '',
 		success : function(code, statut){
 			//console.log("code_json : ",code);
@@ -275,7 +285,7 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 			circle = [];
 			box = [];
 			polygon = [];
-			send_ajax_geojson(geojson,string_insert_to_valid);
+			send_ajax_geojson(geojson,"warning_zones",url);
 		}
 	}
 });
@@ -295,7 +305,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 			circlel = [];
 			boxl = [];
 			polygonl = [];
-			send_ajax_geojson(geojson,string_insert_to_verify);
+			send_ajax_geojson(geojson,"anomalies",url);
 		}
 	}
 });
