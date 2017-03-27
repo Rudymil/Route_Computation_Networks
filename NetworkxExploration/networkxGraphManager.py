@@ -8,6 +8,7 @@ Copyright (C) 2017 Loïc Messal (github : Tofull)
 """
 import json
 from networkx.readwrite import json_graph
+import random
 
 def read_json_file(filename):
     """
@@ -25,3 +26,21 @@ def write_graph_to_json_file(filename, graph):
     data = json_graph.node_link_data(graph)
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
+
+
+
+def applyRandomWeight(graph, weightKeyToChange = 'weight_random', lowestBound = 0, highestBound = 50000):
+    """
+    Set a random weight (between lowestBound and highestBound) to the graph
+    """
+    for u,v,d in G.edges_iter(data=True):
+        graph.add_weighted_edges_from([( u, v, random.randint(lowestBound, highestBound))], weight = weightKeyToChange)
+
+
+
+def applyDefaultWeight(graph, defaultWeight = 0.0, weightKeyToChange = 'weight'):
+    """
+    Set a default weight to the graph
+    """
+    for u,v,d in graph.edges_iter(data=True):
+        graph.add_weighted_edges_from([( u, v, defaultWeight)], weight=weightKeyToChange)

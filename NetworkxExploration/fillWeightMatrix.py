@@ -4,46 +4,77 @@ import networkx as netx
 from networkx.readwrite import json_graph
 import networkxGraphManager
 from shapely.geometry import shape, Point
+# import psycopg2
+import os
 
-## PARAMETERS
+def connectionPostgres():
+    try:
+        # connect_str = "dbname='projcomm' host='localhost' user='julie' password='julie'"
+        # conn = psycopg2.connect(connect_str)
+        # print("Connected")
+        # cur = conn.cursor()
+        os.system('ogr2ogr -f GeoJSON out.json "PG:host=localhost dbname=projcomm user=julie password=julie" \
+        -sql "select geom,risque from hot_area"')
 
-### Filenames
-graphFilenameInput = 'JSONData.json'
-unallowedAreaFilenameInput = 'border_polygons.json'
-graphFilenameOutput = 'test.json'
+    except Exception as e:
+        print("Can't connect")
+        print(e)
 
-### Default variables
-defaultWeight = 3.0
-weightKeyToChange = 'weight'
 
-## ALGORITHM
+def loadGeoJsonWarningZone(warningZoneFilenameInput):
+    """
+    Return data from geojson
+    """
+    with open(warningZoneFilenameInput) as f:
+        js = json.load(f)
+        return js
 
-# Load the graph from networkx export file
-G = networkxGraphManager.read_json_file(graphFilenameInput)
+def fusionWarningZoneWithGraph(graph, featureList, featurePropertyDescribedWeight = "weight", weightKeyToChange = "weight"):
+    """
+    Apply weight from featureList to the graph
+    """
 
-# Load GeoJSON file containing sectors
-polygonList = []
-with open(unallowedAreaFilenameInput) as f:
-    js = json.load(f)
-for feature in js:
-    if feature["type"] == "Feature":
-        polygon = shape(feature['geometry'])
-        polygonList.append(polygon)
+    for u,v,d in graph.edges_iter(data=True):
 
-# Set the default weight
-for u,v,d in G.edges_iter(data=True):
-    G.add_weighted_edges_from([( u, v, defaultWeight)], weight=weightKeyToChange)
+        # Select the source and the target point of the edge
+        source = Point(graph.node[u]["lon"], graph.node[u]["lat"])
+        target = Point(graph.node[v]["lon"], graph.node[v]["lat"])
 
-# Set the weight from the unallowedAreaFilenameInput file
-for u,v,d in G.edges_iter(data=True):
-    source = Point(G.node[u]["lat"], G.node[u]["lon"])
-    target = Point(G.node[v]["lat"], G.node[v]["lon"])
+        # cumule the weight if the edge interferes with a warning zone
+        for feature in featureList:
+            if feature["type"] == "Feature":
+                polygon = shape(feature['geometry'])
+                if polygon.contains(source) and polygon.contains(target):
+                    if (feature["properties"][featurePropertyDescribedWeight] > 0):
+                        new_weight = d[weightKeyToChange] + feature["properties"][featurePropertyDescribedWeight]
+                        graph.add_weighted_edges_from([( u, v, new_weight)], weight=weightKeyToChange)
 
-    for polygon in polygonList:
-            if polygon.contains(source) and polygon.contains(target):
-                if (feature["properties"]["weight"] > 0):
-                    new_weight = d["weight"] + feature["properties"]["weight"]
-                    G.add_weighted_edges_from([( u, v, new_weight)], weight='weight')
+def main(
+        graphFilenameInput = 'JSONData.json',
+        warningZoneFilenameInput = 'border_polygons.json',
+        graphFilenameOutput = 'test.json',
+        defaultWeight = 3.0,
+        weightKeyToChange = 'weight'
+    ):
+    ## ALGORITHM
+    # Load the graph from networkx export file
+    # G = networkxGraphManager.read_json_file(graphFilenameInput)
 
-# Export the modified graph
-networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
+    # Load GeoJSON file containing warning zone sectors
+    # featureList = loadGeoJsonWarningZone(warningZoneFilenameInput)
+
+    # Set the default weight to the graph
+    # networkxGraphManager.applyDefaultWeight(G, defaultWeight, weightKeyToChange)
+
+    # Set the weight from the warningZoneFilenameInput file
+    # fusionWarningZoneWithGraph(G, featureList, "weight", weightKeyToChange)
+
+    # Export the modified graph
+    # networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
+
+    connectionPostgres();
+
+
+
+if __name__ == '__main__':
+    main()

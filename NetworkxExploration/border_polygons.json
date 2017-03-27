@@ -1,26 +1,14 @@
 [{
     "type": "Feature",
-    "properties": {"party": "Republican", "weight": 80},
+    "properties": {"description": "Blablabla", "weight": 80},
     "geometry": {
         "type": "Polygon",
         "coordinates": [[
-            [43.602, 3.878],
-            [43.603, 3.878],
-            [43.603, 3.978],
-            [43.602, 3.978]
-        ]]
-    }
-}, {
-    "type": "Feature",
-    "properties": {"party": "Democrat", "weight": 12},
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [[
-            [-109.05, 41.00],
-            [-102.06, 40.99],
-            [-102.03, 36.99],
-            [-109.04, 36.99],
-            [-109.05, 41.00]
+          [3.87, 43.60],
+          [3.87, 43.59],
+          [3.889, 43.59],
+          [3.889, 43.60],
+          [3.87, 43.60]
         ]]
     }
 }]
