@@ -120,7 +120,7 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 	}
 });
 
-function notify_shape_empty(shape){
+function notify_shape_empty(shape){ // notifie que l object est vide
 	$.notify(
 		{
 			title: "<strong>"+shape+"</strong>",
@@ -135,7 +135,7 @@ function notify_shape_empty(shape){
 	);
 }
 
-function notify_none(shape){
+function notify_none(shape){ // notifie que rien est a envoyer
 	$.notify(
 		{
 			title: "<strong>"+shape+"</strong>",
@@ -150,7 +150,7 @@ function notify_none(shape){
 	);
 }
 
-function notify_ajax_sending_areas_success(code, statut){
+function notify_ajax_sending_areas_success(code, statut){ // notifie que l envoi a reussi
 	$.notify(
 		{
 			title: "<strong>Sending areas</strong>",
@@ -165,7 +165,7 @@ function notify_ajax_sending_areas_success(code, statut){
 	);
 }
 
-function notify_ajax_sending_areas_error(code, statut){
+function notify_ajax_sending_areas_error(code, statut){ // notifie que lenvoi a echoue
 	$.notify(
 		{
 			title: "<strong>Sending areas</strong>",
@@ -180,7 +180,7 @@ function notify_ajax_sending_areas_error(code, statut){
 	);
 }
 
-function fill_geojson(circle,box,polygon,geojson){
+function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir des shapes en parametres
 	if (circle.length == 0){
 		notify_none(string_circles);
 	}
@@ -232,7 +232,7 @@ function fill_geojson(circle,box,polygon,geojson){
 	return 0;
 }
 
-function send_ajax_geojson(geojson,url){
+function send_ajax_geojson(geojson,url){ // envoie en ajax le geojson a l url en parametre
 	$.ajax({
 		url : url,
 		type : 'POST',
