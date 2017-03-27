@@ -67,7 +67,11 @@ function ajax_types(url,type){ // requete ajax sur les types
 
 $("body").ready(function(){ // lorsque le body est charge
 	ajax_types(url,"risk_type");
+	console.log("types_warning_zones :");
+	console.log(types_warning_zones);
 	ajax_types(url,"anomaly_type");
+	console.log("types_anomalies :");
+	console.log(types_anomalies);
 });
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
