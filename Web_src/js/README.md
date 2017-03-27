@@ -13,6 +13,10 @@ function addGrid(json){};
 Ajoute une grille de couleur sur la carte.
 ## menu.js
 ```js
+function ajax_grid(){...}
+```
+Requête ajax pour recupérer une **grille**.
+```js
 $("#map").ready(function(){...});
 ```
 Charge une **grille**.

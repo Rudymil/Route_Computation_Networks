@@ -11,7 +11,7 @@ var string_polygons = "Polygons";
 var string_insert_to_valid = './php/insert_to_valid.php';
 var string_insert_to_verify = './php/insert_to_verify.php';
 
-$("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
+function ajax_grid(){ // requete ajax pour recuperer une grille
 	$.ajax({
 		url : './php/heatGrid2json.php',
 		type : 'POST',
@@ -21,7 +21,7 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			//console.log("statut : ",statut);
 			$.notify(
 				{
-					title: "<strong>Warning zones request</strong>",
+					title: "<strong>Grid request</strong>",
 					message: statut
 				},{
 					type: "success",
@@ -38,7 +38,7 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			//console.log("erreur : ",erreur);
 			$.notify(
 				{
-					title: "<strong>Warning zones request</strong>",
+					title: "<strong>Grid request</strong>",
 					message: statut
 				},{
 					type: "danger",
@@ -57,9 +57,13 @@ $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte
 			}
 		}
 	});
+}
+
+$("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
+	ajax_grid();
 });
 
-function check_latlng(latlng){
+function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
 	if (latlng.length == 2 && latlng[0].length == 2 && latlng[1].length == 2){ // si 2 couples de lat Lng
 		if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined) || latlng[1].includes("") || latlng[1].includes(NaN) || latlng[1].includes(undefined)){ // si pas de point
 			if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined)){
