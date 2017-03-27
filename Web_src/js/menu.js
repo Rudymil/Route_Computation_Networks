@@ -29,7 +29,7 @@ function ajax_types(url,type){ // requete ajax sur les types
 			//console.log("erreur : ",erreur);
 			$.notify(
 				{
-					title: "<strong>Types request</strong>",
+					title: "<strong>"+type+" request</strong>",
 					message: statut
 				},{
 					type: "danger",
