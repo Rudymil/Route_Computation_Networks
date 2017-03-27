@@ -19,7 +19,7 @@ L.Control.OSMGeocoder = L.Control.extend({
 						title: "<strong>Geocodage</strong>",
 						message: "invalid adress"
 					},{
-						type: "danger",
+						type: "warning",
 						placement: {
 							from: "bottom",
 							align: "center"

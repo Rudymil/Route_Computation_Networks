@@ -13,21 +13,33 @@ function addGrid(json){};
 Ajoute une grille de couleur sur la carte.
 ## menu.js
 ```js
+function ajax_grid(){...}
+```
+Requête ajax pour recupérer une **grille**.
+```js
+function add_warning_zones(){...}
+```
+Récupère toutes les **warning zones** de la **BDD**.
+```js
 $("#map").ready(function(){...});
 ```
-Charge une **grille**.
+S'exécute lorsque la **carte** est chargée.
+```js
+function check_latlng(latlng){...}
+```
+Renvoi 0 si la variable d'entrée contient bien **2 couples de coordonnées**, -1 sinon.
 ```js
 $("#calculate").click(function(){...});
 ```
 Envoye les **points** de départ et d'arrivée à **l'algo**.
 ```js
-function notify_wrong_format(shape){...}
+function notify_shape_empty(shape){...}
 ```
-Signale que le format de la **shape** n'est pas celui attendu.
+Signale une erreur : aucune **shape**.
 ```js
 function notify_none(shape){...}
 ```
-Signale qu'il n'y aucune **shape** à envoyer.
+Signale une info : aucune **shape** à envoyer.
 ```js
 function notify_ajax_sending_areas_success(code, statut){...}
 ```
@@ -37,13 +49,21 @@ function notify_ajax_sending_areas_error(code, statut){...}
 ```
 Signale une erreur de l'envoi des **shapes**.
 ```js
+function fill_geojson(circle,box,polygon,geojson){...}
+```
+Rempli **geojson** des objects contenus dans **circle**, **box** et **polygon**.
+```js
+function send_ajax_geojson(geojson,type,url){...}
+```
+Envoie le **geojson** et le **type** à l'**url**.
+```js
 $("#submit1").click(function(){...});
 ```
 Envoye les **warning zone** à la **BDD** après avoir vérifié leur format.
 ```js
 $("#submit2").click(function(){...});
 ```
-Envoye les **zones à vérifier** à la **BDD** après avoir vérifié leur format.
+Envoye les **anomalies** à la **BDD** après avoir vérifié leur format.
 ## report_a_warning_zone.js
 ## report_an_anomaly.js
 ## set_the_route.js

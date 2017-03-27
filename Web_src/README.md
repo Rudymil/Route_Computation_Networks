@@ -3,6 +3,7 @@
 * [css](css) (*folder of style files*)
   * [template.css](css/template.css) (*basic css*)
   * [context_menu1.css](css/context_menu1.css) (*define departure/arrival points*)
+  * [route.css](css/route.css) (*define route and its points*)
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
   * [menu.js](js/menu.js) (*data sending scripts + draw route*)
@@ -26,94 +27,128 @@
 # GeoJSON used
 ## GeoJSON warning zones
 ```json
+circle
+
 [{
-    "type": "Feature",
-    "properties": {
-        "type": "warningType",
-        "description": "blablabla",
-        "deadline": "date"
-    },
-    "geometry": {
-        "type": "Circle",
-        "coordinates": [[
-            [lat, lng],radius
-        ]]
-    }
-}, {
-    "type": "Feature",
-    "properties": {
-        "type": "warningType",
-        "description": "blablabla",
-        "deadline": "date"
-    },
-    "geometry": {
-        "type": "Rectangle",
-        "coordinates": [[
-            [lat, lng],
-            [lat, lng],
-            [lat, lng],
-            [lat, lng]
-        ]]
-    }
-}, {
-    "type": "Feature",
-    "properties": {
-        "type": "warningType",
-        "description": "blablabla",
-        "deadline": "date"
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [[
-            [lat, lng],
-            [...],
-        ]]
-    }
-}]
+"type":"Feature",
+"properties":
+		{		
+		"type":"warningType",
+		"typeGeometry":"circle",
+		"radius":898.2027678126368,
+		"description":"dsqDQS",
+		"level":"Road accident",
+		"date":1490601231927
+		},
+"geometry":
+		{
+		"type":"Point",
+		"coordinates":[13.228912353515627,-8.930861193495812]} // latitude, longitude
+		}, 
+		{ ...autre objet } ]
+
+box
+
+[
+{
+"type":"Feature",
+"properties":{
+	"type":"warningType",
+	"description":"aaaaa",
+	"level":"Criminal insecurity",
+	"date":1490601964481},
+"geometry":
+{
+	"type":"Polygon",
+	"coordinates":[[[13.179817199707033,-8.944427358695835],	[13.179817199707033,-8.933235308866728],	[13.195266723632814,-8.933235308866728],	[13.195266723632814,-8.944427358695835],	[13.179817199707033,-8.944427358695835]]] // latitude, longitude
+}
+},
+{ ... un autre objet ... }
+]
+
+polygon 
+
+[
+{
+	"type":"Feature",
+	"properties":{
+	"type":"warningType",
+	"description":"qqqqqq",
+	"level":"Road closure",
+	"date":1490602146306
+},
+"geometry":
+{
+	"type":"Polygon",
+	"coordinates":[[[13.217926025390627,-8.949344968775677],	[13.21861267089844,-8.964775658381157],	[13.23131561279297,-8.952397245052008],	[13.230285644531252,-8.944596932563272],	[13.217926025390627,-8.949344968775677]]]}}, // latitude, longitude
+{
+... un autre objet ...
+}
+
+]
+
 ```
 ## GeoJSON anomalies
 ```json
+circlel
+
 [{
-    "type": "Feature",
-    "properties": {
-        "type": "anomalyType",
-        "description": "blablabla"
-    },
-    "geometry": {
-        "type": "Circle",
-        "coordinates": [[
-            [lat, lng],radius
-        ]]
-    }
-}, {
-    "type": "Feature",
-    "properties": {
-        "type": "anomalyType",
-        "description": "blablabla"
-    },
-    "geometry": {
-        "type": "Rectangle",
-        "coordinates": [[
-            [lat, lng],
-            [lat, lng],
-            [lat, lng],
-            [lat, lng]
-        ]]
-    }
-}, {
-    "type": "Feature",
-    "properties": {
-        "type": "anomalyType",
-        "description": "blablabla"
-    },
-    "geometry": {
-        "type": "Polygon",
-        "coordinates": [[
-            [lat, lng],
-            [...],
-        ]]
-    }
-}]
+"type":"Feature",
+"properties":
+		{		
+		"type":"anomalyType",
+		"typeGeometry":"circle",
+		"radius":898.2027678126368,
+		"description":"dsqDQS",
+		"level":"Road accident",
+		"date":1490601231927
+		},
+"geometry":
+		{
+		"type":"Point",
+		"coordinates":[13.228912353515627,-8.930861193495812]} // latitude, longitude
+		}, 
+		{ ...autre objet } ]
+
+boxl
+
+[
+{
+"type":"Feature",
+"properties":{
+	"type":"anomalyType",
+	"description":"aaaaa",
+	"level":"Criminal insecurity",
+	"date":1490601964481},
+"geometry":
+{
+	"type":"Polygon",
+	"coordinates":[[[13.179817199707033,-8.944427358695835],	[13.179817199707033,-8.933235308866728],	[13.195266723632814,-8.933235308866728],	[13.195266723632814,-8.944427358695835],	[13.179817199707033,-8.944427358695835]]] // latitude, longitude
+}
+}, 
+{ ... un autre objet ... }
+]
+
+polygonl 
+
+[
+{
+	"type":"Feature",
+	"properties":{
+	"type":"anomalyType",
+	"description":"qqqqqq",
+	"level":"Road closure",
+	"date":1490602146306
+},
+"geometry":
+{
+	"type":"Polygon",
+	"coordinates":[[[13.217926025390627,-8.949344968775677],	[13.21861267089844,-8.964775658381157],	[13.23131561279297,-8.952397245052008],	[13.230285644531252,-8.944596932563272],	[13.217926025390627,-8.949344968775677]]]}}, // latitude, longitude
+{
+... un autre objet ...
+}
+
+]
 ```
 # Literature
 * [Découvrir jQuery](https://openclassrooms.com/courses/jquery-ecrivez-moins-pour-faire-plus/decouvrir-jquery)

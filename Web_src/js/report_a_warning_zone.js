@@ -198,12 +198,12 @@ map.on('draw:created', function(e) {
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
+				</div>	"
     		, function(result) {
     		
-        		console.log("inside");
+        		//console.log("inside");
     			des= $('#description').val();
-    			lev= $('#level').find(":selected").val();
+    			lev= $('#level').val();
   				
     			var layergeo=layer.toGeoJSON();
   			
@@ -212,11 +212,11 @@ map.on('draw:created', function(e) {
        			 "typeGeometry" : "circle",
        			 "radius" : layer._mRadius ,	
         		 "description": des,
-     		     "level": level,
+     		     "level": lev,
      		     "date": Date.now()
    			 };
     			circle.push(layergeo);
-				console.log(circle);
+				//console.log(circle);
 			}
 			);
   			
@@ -261,8 +261,8 @@ map.on('draw:created', function(e) {
     			layerjson.properties={
        					 "type": "warningType",
        					 "description": des,
-       					 "level": level,
-        				"data": Date.now()
+       					 "level": lev,
+        				"date": Date.now()
     			}
     			
 				box.push(layerjson);
@@ -311,7 +311,7 @@ map.on('draw:created', function(e) {
         			"type": "warningType",
        				 "description": des,
        				 "level" : lev ,
-       				 "deadline": Date.now()
+       				 "date": Date.now()
    			 }
     			
     			
