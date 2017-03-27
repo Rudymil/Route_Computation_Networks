@@ -13,6 +13,10 @@ var warning_zones = new Array();
 var layer_group_warning_zones;
 var types_warning_zones = new Array();
 var types_anomalies = new Array();
+var string_warning_zone = "warning_zone";
+var string_anomaly_zone = "anomaly_zone";
+var string_risk_type = "risk_type";
+var string_anomaly_type = "anomaly_type";
 
 function ajax_types(url,type){ // requete ajax sur les types
 	$.ajax({
@@ -45,14 +49,14 @@ function ajax_types(url,type){ // requete ajax sur les types
 				var json = resultat.responseJSON;
 				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
 					//console.log(json);
-					if (type == "risk_type"){
+					if (type == string_risk_type){
 						for (element in json){ // pour chaque object du geojson
 							//console.log(element);
 							//console.log(json[element]);
 							types_warning_zones.push(json[element]);
 						}
 					}
-					else if (type == "anomaly_type"){
+					else if (type == string_anomaly_type){
 						for (element in json){ // pour chaque object du geojson
 							//console.log(element);
 							//console.log(json[element]);
@@ -66,10 +70,10 @@ function ajax_types(url,type){ // requete ajax sur les types
 }
 
 $("body").ready(function(){ // lorsque le body est charge
-	ajax_types(url,"risk_type");
+	ajax_types(url,string_risk_type);
 	console.log("types_warning_zones :");
 	console.log(types_warning_zones);
-	ajax_types(url,"anomaly_type");
+	ajax_types(url,string_anomaly_type);
 	console.log("types_anomalies :");
 	console.log(types_anomalies);
 });
@@ -306,7 +310,7 @@ function notify_ajax_sending_areas_success(code, statut){ // notifie que l envoi
 	);
 }
 
-function notify_ajax_sending_areas_error(code, statut){ // notifie que lenvoi a echoue
+function notify_ajax_sending_areas_error(erreur, statut){ // notifie que lenvoi a echoue
 	$.notify(
 		{
 			title: "<strong>Sending areas</strong>",
@@ -383,12 +387,14 @@ function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le
 			//console.log("code_json : ",code);
 			//console.log("statut : ",statut);
 			notify_ajax_sending_areas_success(code, statut);
+			return 0;
 		},
 		error : function(resultat, statut, erreur){
 			//console.log("resultat : ",resultat);
 			//console.log("statut : ",statut);
 			//console.log("erreur : ",erreur);
-			notify_ajax_sending_areas_error(code, statut);
+			notify_ajax_sending_areas_error(erreur, statut);
+			return -1;
 		},
 		complete : function(resultat, statut){
 			//console.log("resultat : ",resultat);
@@ -408,11 +414,13 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 	if (fill_geojson(circle,box,polygon,geojson) == 0){ // si pas d erreur
 		console.log("geojson : ");
 		console.log(geojson);
-		if (!$.isEmptyObject(geojson)){ // si le geojson est plein
-			circle = [];
-			box = [];
-			polygon = [];
-			send_ajax_geojson(geojson,"warning_zone",url);
+		console.log(Object.keys(geojson).length);
+		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
+			if (send_ajax_geojson(geojson,string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
+				circle = [];
+				box = [];
+				polygon = [];
+			}
 		}
 	}
 });
@@ -428,11 +436,13 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 	if (fill_geojson(circlel,boxl,polygonl,geojson) == 0){ // si pas d erreur
 		console.log("geojson : ");
 		console.log(geojson);
-		if (!$.isEmptyObject(geojson)){ // si le geojson est plein
-			circlel = [];
-			boxl = [];
-			polygonl = [];
-			send_ajax_geojson(geojson,"anomaly_zone",url);
+		console.log(Object.keys(geojson).length);
+		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
+			if (send_ajax_geojson(geojson,string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
+				circlel = [];
+				boxl = [];
+				polygonl = [];
+			}
 		}
 	}
 });

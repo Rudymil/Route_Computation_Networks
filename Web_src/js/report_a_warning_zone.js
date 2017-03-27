@@ -9,9 +9,10 @@ $(".radio_button").change(function (){ // choix de dessin
 	if ($("#Navigate").is(":checked") ){
 		$("#dep").prop('disabled', false);	
 		$("#dest").prop('disabled', false);	
+		if( markeraDestination != null && markeraDestination != null ){
 		markerDeparture.dragging.enable();
 		markeraDestination.dragging.enable();	
-	
+		}
 		map.removeControl(drawControl);
 	}
 	
@@ -170,10 +171,17 @@ drawControl = new L.Control.Draw(drawPluginOptions);
 
 });
 
+
 map.on('draw:created', function(e) {
   		var type = e.layerType;
   		////console.log(type);
-  		layer = e.layer;
+  		
+  		var layer = e.layer;
+  		//console.log(layer);
+  		
+  		var content =null;
+  		
+  		
   		if( type=="circle" && $("#Circle1").is(":checked")==true) {
     		
 			//var description = prompt("Please enter the description of the danger", "Description");
@@ -215,8 +223,18 @@ map.on('draw:created', function(e) {
      		     "level": lev,
      		     "date": Date.now()
    			 };
+   			 	
+   			 	content = getPopupContent(layer,layergeo);
+   			 	//console.log(content);
+   			 	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
+       			 }
+				
     			circle.push(layergeo);
-				//console.log(circle);
+
+				
+				
 			}
 			);
   			
@@ -264,7 +282,11 @@ map.on('draw:created', function(e) {
        					 "level": lev,
         				"date": Date.now()
     			}
-    			
+    			content = getPopupContent(layer,layerjson)
+    			if (content !== null) {
+                layer.bindPopup(content);
+       			 }
+
 				box.push(layerjson);
 				//console.log(box);
 			}
@@ -314,7 +336,10 @@ map.on('draw:created', function(e) {
        				 "date": Date.now()
    			 }
     			
-    			
+    			content = getPopupContent(layer,layerjson)
+    			if (content !== null) {
+                layer.bindPopup(content);
+       			 }
 				polygon.push(layerjson);
 				//console.log(polygon);
 		
@@ -327,6 +352,89 @@ map.on('draw:created', function(e) {
 		
 		}
 		
+		//layer.bindPopup('A popup!');
+		//var popup = L.popup().setContent("I am a standalone popup.");
+		//layer.bindPopup(popup).openPopup();
+    	//console.log(layer);
 		editableLayers.addLayer(layer);
+		//console.log(editableLayers);
 
 	});
+
+
+ var getPopupContent = function(layer,geo) {
+
+			if (layer instanceof L.Circle) {
+                
+            var html= '<table>\
+ 						 <tr>\
+  							  <td>Type of geometry : </td>\
+  							  <td> ' +geo.properties.typeGeometry+'</td>\
+  						 </tr>\
+ 						 <tr>\
+   							 <td>Level : </td>\
+    						 <td>'+geo.properties.level+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Description : </td>\
+    						 <td>'+geo.properties.description+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Date : </td>\
+    						 <td>'+geo.properties.date+'</td>\
+  						</tr>\
+						</table>'
+				return html;
+                
+            }
+            
+             else if (layer instanceof L.Polygon) {
+            
+            	var html= '<table>\
+ 						 <tr>\
+  							  <td>Type of geometry : </td>\
+  							  <td> '+geo.geometry.type+'</td>\
+  						 </tr>\
+ 						 <tr>\
+   							 <td>Level : </td>\
+    						 <td>'+geo.properties.level+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Description : </td>\
+    						 <td>'+geo.properties.description+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Date : </td>\
+    						 <td>'+geo.properties.date+'</td>\
+  						</tr>\
+						</table>'
+				return html;
+            } 
+
+			 else if (layer instanceof L.Rectangle) {
+            
+            	var html= '<table>\
+ 						 <tr>\
+  							  <td>Type of geometry : </td>\
+  							  <td> '+geo.geometry.type+'</td>\
+  						 </tr>\
+ 						 <tr>\
+   							 <td>Level : </td>\
+    						 <td>'+geo.properties.level+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Description : </td>\
+    						 <td>'+geo.properties.description+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Date : </td>\
+    						 <td>'+geo.properties.date+'</td>\
+  						</tr>\
+						</table>'
+				return html;
+            
+            }
+            
+            return null
+        };
+        

@@ -53,17 +53,17 @@ function notify_ajax_sending_areas_success(code, statut){...}
 ```
 Signale un succès de l'envoi des **shapes**.
 ```js
-function notify_ajax_sending_areas_error(code, statut){...}
+function notify_ajax_sending_areas_error(erreur, statut){...}
 ```
 Signale une erreur de l'envoi des **shapes**.
 ```js
 function fill_geojson(circle,box,polygon,geojson){...}
 ```
-Rempli **geojson** des objects contenus dans **circle**, **box** et **polygon**.
+Rempli **geojson** des objects contenus dans **circle**, **box** et **polygon**. Return -1 si les objects contiennent des objects vides, 0 sinon.
 ```js
 function send_ajax_geojson(geojson,type,url){...}
 ```
-Envoie le **geojson** et le **type** à l'**url**.
+Envoie le **geojson** et le **type** à l'**url**. Return 0 si succès, -1 sinon.
 ```js
 $("#submit1").click(function(){...});
 ```
