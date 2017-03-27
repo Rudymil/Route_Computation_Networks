@@ -25,5 +25,5 @@ function addGrid(json){
     }
     var overlayMaps = {"Grid": grid}; // menu
 		L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
-    map.setView(new L.LatLng((latmin+latmax)/2,(lonmax+lonmin)/2),13);
+    //map.setView(new L.LatLng((latmin+latmax)/2,(lonmax+lonmin)/2),13);
 }
