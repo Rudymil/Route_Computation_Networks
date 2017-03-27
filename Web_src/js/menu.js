@@ -9,6 +9,8 @@ var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
 var url = './php/server.php';
+var warning_zones = new Array();
+var layer_group_warning_zones;
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
 	$.ajax({
@@ -58,19 +60,82 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 	});
 }
 
-function add_warning_zones(){ // ajoute toutes les warning zones de la BDD
-	var latlngs = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
-	var warning_zone = L.polygon(latlngs, {color: 'red'}).addTo(map);
-	var warning_zones = L.layerGroup([warning_zones]);
-	var overlayMaps = {
-    	"Warning zones": warning_zones
-	};
-	L.control.layers(overlayMaps).addTo(map);
+function add_warning_zones(url){ // ajoute toutes les warning zones de la BDD
+	$.ajax({
+		url : url,
+		type : 'GET',
+		data : 'type=null',
+		dataType : 'json',
+		success : function(code_json, statut){
+			//console.log("code_json : ",code_json);
+			//console.log("statut : ",statut);
+			$.notify(
+				{
+					title: "<strong>Warning zones request</strong>",
+					message: statut
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		error : function(resultat, statut, erreur){
+			//console.log("resultat : ",resultat);
+			//console.log("statut : ",statut);
+			//console.log("erreur : ",erreur);
+			$.notify(
+				{
+					title: "<strong>Warning zones request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (resultat.status == '200'){
+				var json = resultat.responseJSON;
+				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
+					//console.log(json);
+					for (element in json){ // pour chaque object du geojson
+						//console.log(element);
+						//console.log(json[element]);
+						warning_zones = []; // on vide les warning zones
+						warning_zones.push(json[element]); // remplir la warning zone
+					}
+					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
+					var overlayMaps = {"Warning zones": layer_group_warning_zones}; // menu
+					L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+				}
+				else{
+					$.notify(
+						{
+							title: "<strong>Warning zones request</strong>",
+							message: "none"
+						},{
+							type: "info",
+							placement: {
+								from: "bottom",
+								align: "center"
+							}
+						}
+					);
+				}
+			}
+		}
+	});
 }
 
 $("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
 	ajax_grid();
-	//add_warning_zones();
+	add_warning_zones(url);
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees

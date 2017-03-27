@@ -17,7 +17,7 @@ function ajax_grid(){...}
 ```
 Requête ajax pour recupérer une **grille**.
 ```js
-function add_warning_zones(){...}
+function add_warning_zones(url){...}
 ```
 Récupère toutes les **warning zones** de la **BDD**.
 ```js
