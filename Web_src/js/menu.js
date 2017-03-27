@@ -314,7 +314,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	$.ajax({
 		url : url,
-		type : 'GET',
+		type : 'POST',
 		data : 'type='+type+'&geojson='+geojson,
 		dataType : '',
 		success : function(code, statut){
@@ -350,7 +350,7 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 			circle = [];
 			box = [];
 			polygon = [];
-			send_ajax_geojson(geojson,"warning_zones",url);
+			send_ajax_geojson(geojson,"warning_zone",url);
 		}
 	}
 });
@@ -370,7 +370,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 			circlel = [];
 			boxl = [];
 			polygonl = [];
-			send_ajax_geojson(geojson,"anomalies",url);
+			send_ajax_geojson(geojson,"anomaly_zone",url);
 		}
 	}
 });
