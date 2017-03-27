@@ -1,11 +1,10 @@
-Install
+Install  
 python3.6
-> sudo apt-get install python3-pip
-> sudo -E python3.6 -m pip install networkx
-> sudo -E python3.6 -m pip install psycopg2
-> sudo -E python3.6 -m pip install shapely
-> sudo -E python3.6 -m pip install matplotlib
-> sudo -E python3.6 -m pip install smopy
+> sudo apt-get install python3-pip  
+> sudo -E python3.6 -m pip install networkx  
+> sudo -E python3.6 -m pip install shapely  
+> sudo -E python3.6 -m pip install matplotlib  
+> sudo -E python3.6 -m pip install smopy  
 
 Tests de solutions avec networkx
 > python3.6 -m pip install smopy
