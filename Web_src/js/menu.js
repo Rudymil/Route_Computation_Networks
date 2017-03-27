@@ -11,6 +11,64 @@ var string_polygons = "Polygons";
 var url = 'http://172.31.56.223/api/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
+var types_warning_zones = new Array();
+var types_anomalies = new Array();
+
+function ajax_types(url,type){ // requete ajax sur les types
+	$.ajax({
+		url : url,
+		type : 'POST',
+		dataType : 'json',
+		success : function(code_json, statut){
+			//console.log("code_json : ",code_json);
+			//console.log("statut : ",statut);
+		},
+		error : function(resultat, statut, erreur){
+			//console.log("resultat : ",resultat);
+			//console.log("statut : ",statut);
+			//console.log("erreur : ",erreur);
+			$.notify(
+				{
+					title: "<strong>Types request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (resultat.status == '200'){
+				var json = resultat.responseJSON;
+				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
+					//console.log(json);
+					if (type == ""){
+						for (element in json){ // pour chaque object du geojson
+							//console.log(element);
+							//console.log(json[element]);
+							types_warning_zones.push(json[element]);
+						}
+					}
+					else if (type == ""){
+						for (element in json){ // pour chaque object du geojson
+							//console.log(element);
+							//console.log(json[element]);
+							types_anomalies.push(json[element]);
+						}
+					}
+				}
+			}
+		}
+	});
+}
+
+$("body").ready(function(){ // lorsque le body est charge
+	ajax_types(url,"");
+	ajax_types(url,"");
+});
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
 	$.ajax({
@@ -133,7 +191,7 @@ function add_warning_zones(url){ // ajoute toutes les warning zones de la BDD
 	});
 }
 
-$("#map").ready(function(){ // charge toutes les zones a eviter lorsque la carte est chargee
+$("#map").ready(function(){ // lorsque la carte est chargee
 	ajax_grid();
 	add_warning_zones(url);
 });

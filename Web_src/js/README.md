@@ -1,17 +1,25 @@
 # JS functions
 ## codeColor.js  
 ```js
-function codeColorRed(value){};
+function codeColorRed(value){...};
 ```
 ```js
-function heatMapColorforValue(value){};
+function heatMapColorforValue(value){...};
 ```  
 ## grid.js
 ```js
-function addGrid(json){};
+function addGrid(json){...};
 ```  
 Ajoute une grille de couleur sur la carte.
 ## menu.js
+```js
+function ajax_types(url,type){...}
+```
+Requête ajax pour recupérer les **types**.
+```js
+$("body").ready(function(){...});
+```
+S'exécute lorsque le **body** est chargé.
 ```js
 function ajax_grid(){...}
 ```
