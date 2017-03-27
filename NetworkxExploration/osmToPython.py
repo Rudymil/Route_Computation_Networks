@@ -17,7 +17,7 @@ import random
 # Data reader modules
 import OSMParser # file OSMParser.py
 import json
-
+import sys
 
 # Networks modules
 import networkx as netx
@@ -30,11 +30,36 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import smopy # osm map
 
+latSource = float(sys.argv[1])
+lonSource = float(sys.argv[2])
+latTarget = float(sys.argv[3])
+lonTarget = float(sys.argv[4])
+
+
+VERBOSE = False
+
+if (VERBOSE):
+    print(latSource)
+    print(lonSource)
+    print(latTarget)
+    print(lonTarget)
+
 
 ## CONFIGURATION VARIABLE
-DISPLAY = "OSM_MAP"
+# DISPLAY = "OSM_MAP"
 # DISPLAY = "MAP"
 # DISPLAY = "GRAPH"
+DISPLAY = "JSON"
+
+def findClosestNodeID(graph, lat, lon):
+    squaredistance = []
+    id = []
+    for n_id in graph.nodes_iter():
+        id.append(n_id)
+        squaredistance.append((lat - graph.node[n_id]['lat'])**2 + (lon - graph.node[n_id]['lon'])**2)
+
+    return id[sorted(range(len(id)), key=lambda k: squaredistance[k])[0]]
+
 
 
 def applyRandomWeight(graph):
@@ -64,20 +89,51 @@ def savePath(filename, idList, graph):
                 print("L.latLng("+str(graph.node[p]['lat'])+","+str(graph.node[p]['lon'])+")"+ comma, file=f)
             counter+=1
 
+def printPath(idList, graph):
+    """
+        export the computed route (as a list of followed points targeted by their id) as array of lat lon location
+
+        Result :
+        [[43.6026628, 3.8776791], [43.6026417, 3.877659], [43.602617, 3.8776495]]
+    """
+    result = []
+    counter = 0
+    modulo = 1
+    for p in idList:
+        if (counter >= len(idList) - modulo ):
+            comma = ""
+        else:
+            comma = ","
+        if counter%modulo == 0:
+            result.append([ str(graph.node[p]['lat']), str(graph.node[p]['lon'])])
+        counter+=1
+    return json.dumps(result)
+
 
 # Montpelllier Data
-G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True, cacheTempDir = "/tmp/tmpOSM/"))
+# G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True, cacheTempDir = "/tmp/tmpOSM/"))
+ajout = 0.005
+G = OSMParser.read_osm(OSMParser.download_osm(round(min(lonSource, lonTarget),4)-ajout,round(min(latSource, latTarget),4)-ajout,round(max(lonSource, lonTarget),4)+ajout,round(max(latSource, latTarget),4)+ajout, cache=True, cacheTempDir = "/tmp/tmpOSM/", verbose = VERBOSE))
 # print(G.nodes())
-source_id = "4445471419"
-target_id = "3670601901"
+# source_id = "4445471419"
+# target_id = "3670601901"
+
+source_id = findClosestNodeID(G, latSource, lonSource)
+target_id = findClosestNodeID(G, latTarget, lonTarget)
 
 # Initial Data
 # G = OSMParser.read_osm(OSMParser.download_osm(-122.328,47.608,-122.31,47.61, cache=True))
 # source_id = "3788313781"
 # target_id = "53195060"
 
+if (VERBOSE):
+    print("source_id : ", source_id)
+    print("target_id : ", target_id)
+# source_id = findClosestNodeID(G, 43.60135620284428, 3.866050243377686)
 
 pos0 = (G.node[source_id]['lat'],G.node[source_id]['lon'])
+if (VERBOSE):
+    print(pos0)
 pos1 = (G.node[target_id]['lat'],G.node[target_id]['lon'])
 
 warningZoneFilenameInput = 'border_polygons.json'
@@ -208,6 +264,11 @@ if (DISPLAY == "GRAPH"):
     # plt.savefig("simple_path.png") # save as png
     plt.show() # display
 
+if (DISPLAY == "JSON"):
+    print(printPath(idList, G))
+    # pass
+
+
 
 ### DATA PRINTER
 # print("nodes :", G.node)
@@ -218,7 +279,6 @@ if (DISPLAY == "GRAPH"):
 # print(G.nodes(data=True))
 # print(G.edges(data=True))
 # print([p for p in netx.all_shortest_paths(G,source="3788313781",target="53195060")])
-
 
 
 

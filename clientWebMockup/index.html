@@ -9,7 +9,9 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-  <link rel="stylesheet" href="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css" />
+  <link rel="stylesheet" href="clientWebMockup/leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.css" />
+  <link rel="stylesheet" href="clientWebMockup/default.css" />
+
 
   <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -28,49 +30,14 @@
   <script src="https://cdn.jsdelivr.net/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-  <script src="leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.js"></script>
+  <script src="clientWebMockup/leaflet-routing-machine-3.2.5/dist/leaflet-routing-machine.js"></script>
+  <script src="clientWebMockup/mapManager.js"></script>
   <script type="text/javascript">
-    var map = L.map('map').setView([43.60, 3.85], 13);
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
 
 
 
 
-    // GEOJSON
-    // Be careful : lat lon inversed
-    var geojsonFeature = [{
-      "type": "Feature",
-      "properties": {
-        "party": "Republican"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [3.87, 43.60],
-            [3.87, 43.59],
-            [3.889, 43.59],
-            [3.889, 43.60],
-            [3.87, 43.60],
-          ]
-        ]
-      }
-    }];
 
-    L.geoJSON(geojsonFeature).addTo(map);
-
-
-
-
-    L.Routing.control({
-      waypoints: [
-        L.latLng(43.6026628, 3.8776791),
-        L.latLng(43.5971788, 3.886726)
-      ]
-    }).addTo(map);
   </script>
 </body>
 
