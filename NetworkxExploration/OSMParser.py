@@ -20,6 +20,8 @@ import networkx
 # Specific modules
 import xml.sax # parse osm file
 from pathlib import Path # manage cached tiles
+from pathlib import PurePosixPath # manage cached tiles
+from pathlib import PosixPath # manage cached tiles
 
 
 
@@ -60,7 +62,8 @@ def download_osm(left, bottom, right, top, proxy = False, proxyHost = "10.0.4.2"
 
         Path(cacheTempDir).mkdir(parents = True, exist_ok = True) ## Create cache path if not exists
 
-        osmFile = Path(cacheTempDir + cachedTileFilename).resolve() ## Replace the relative cache folder path to absolute path
+        cachePath = Path(cacheTempDir).resolve() ## Replace the relative cache folder path to absolute path
+        osmFile = cachePath.joinpath(PosixPath(cachedTileFilename))
 
         if osmFile.is_file():
             # download from the cache folder
@@ -90,10 +93,9 @@ def download_osm(left, bottom, right, top, proxy = False, proxyHost = "10.0.4.2"
 
     if (cache):
         if (verbose):
-            print("Write osm tile in the cache"
-            )
+            print("Write osm tile in the cache")
         content = fp.read()
-        with open(osmFile, 'wb') as f:
+        with open(str(osmFile), 'wb') as f:
             f.write(content)
 
         if osmFile.is_file():

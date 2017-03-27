@@ -3,8 +3,6 @@ var lleditableLayers=null;
 
 $(".radio_button").change(function (){ // choix de dessin
 
-	console.log("kqsdqsdqs");
-	
 	if ($("#Navigate").is(":checked") ){
 	
 		map.removeControl(drawControl);
@@ -158,44 +156,134 @@ drawControl = new L.Control.Draw(drawPluginOptions);
 
 map.on('draw:created', function(e) {
   		var type = e.layerType;
-  		console.log(type);
+  		//console.log(type);
   		layer = e.layer;
   		if( type=="circle" && $("#Circle2").is(":checked")==true) {
     		
-			var description = prompt("Please enter the description of the data", "Description");
-  		
-  		
-			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],description];
-			circlel.push(geomcircle);
-			console.log(circlel);
+			
+			var des=null;
+			var lev=null;
+  				
+  			  		
+  			bootbox.confirm(
+  			"<div class='form-group'>\
+  			<label for='text'>Type :</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
+    		, function(result) {
+    		
+        		//console.log("inside");
+    			des= $('#description').val();
+    			ano= $('#anomalyType').find(":selected").val();
+  				
+    			var geomcircle=[[[layer._latlng.lat,layer._latlng.lng],layer._mRadius],ano,des];
+				circlel.push(geomcircle);
+				//console.log(circlel);
+			}
+			);
+  			
+			
+			
 			
 
 		}
 		
 		else if( type=="rectangle" && $("#Box2").is(":checked")==true ) {
 		
-		var description = prompt("Please enter the description of the data", "Description");
+		
+			var des=null;
+			var lev=null;
+  			
+  			  		
+  			bootbox.confirm(
+  			"<div class='form-group'>\
+  			<label for='text'>Type</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
+    		, function(result) {
+    		
+        		//console.log("inside");
+    			des= $('#description').val();
+    			ano= $('#anomalyType').find(":selected").val();
+  				
+    			var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],ano,des];
+				boxl.push(geombox);
+				//console.log(boxl);	
+
+			}
+			);
+		
+		
   		
-  		var geombox=[[[[layer._latlngs[0][0].lat,layer._latlngs[0][0].lng],[layer._latlngs[0][1].lat,layer._latlngs[0][1].lng] ,[layer._latlngs[0][2].lat,layer._latlngs[0][2].lng] ,[layer._latlngs[0][3].lat,layer._latlngs[0][3].lng] ] ],description];
-		boxl.push(geombox);
-		console.log(boxl);	
+  		
 		
 		}
 		
 		else if( type=="polygon" && $("#Polygon2").is(":checked")==true) {
-
-		var description = prompt("Please enter the description of the data", "Description");
-
-		var i= layer._latlngs[0].length ;
+		
+			var des=null;
+			var lev=null;
+  			
+  			  		
+  			bootbox.confirm(
+  			"<div class='form-group'>\
+  			<label for='text'>Type</label>\
+			<select class='form-control' id='level'>\
+   				<option value='Road accident' selected >Road accident </option>\
+   				<option value='Road degradation' >Road degradation</option>\
+    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
+    			<option value='Massive gathering'>Massive gathering</option>\
+    			<option value='Natural hazard' >Natural hazard</option>\
+    			<option value='Traffic jam' >Traffic jam</option>\
+    			<option value='Road closure' >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
+    		, function(result) {
+    		
+        		//console.log("inside");
+    			des= $('#description').val();
+    			lev= $('#level').find(":selected").val();
+  				
+    			var i= layer._latlngs[0].length ;
 		var tmp = [];
-		console.log(layer);
+		//console.log(layer);
 		for (var pas = 0; pas < i; pas++) {
   			var t=[layer._latlngs[0][pas].lat,layer._latlngs[0][pas].lng];
   			tmp.push(t);
 		}
-		tmpa=[tmp,description]
+		tmpa=[tmp,lev,des]
 		polygonl.push(tmpa);
-		console.log(polygonl);
+		//console.log(polygonl);
+			}
+			);
 		
 		
 		}

@@ -19,7 +19,7 @@ L.Control.OSMGeocoder = L.Control.extend({
 						title: "<strong>Geocodage</strong>",
 						message: "invalid adress"
 					},{
-						type: "danger",
+						type: "warning",
 						placement: {
 							from: "bottom",
 							align: "center"
@@ -34,21 +34,18 @@ L.Control.OSMGeocoder = L.Control.extend({
 				second = new L.LatLng(bbox[1], bbox[3]),
 				bounds = new L.LatLngBounds([first, second]);
 			this._map.fitBounds(bounds);
-			console.log(map.getCenter());
-			console.log(map.getCenter().lat);
-			console.log(map.getCenter().lng);
-			
-						
+									
 			if( markerDeparture != null ) {
 			map.removeLayer(markerDeparture);
 			}
-            markerDeparture = L.marker([map.getCenter().lat, map.getCenter().lng],{icon: greenIcon, draggable: true}).bindPopup('Your are here');
+            markerDeparture = L.marker([map.getCenter().lat, map.getCenter().lng],{icon: greenIcon, draggable: true}).bindPopup(map.getCenter().lat  + ", " +map.getCenter().lng);
             map.addLayer(markerDeparture);
             $("#dep").val(map.getCenter().lat+ ", " + map.getCenter().lng);
-            markerDeparture.on("dragend",function(ev){
-            $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);});
-
-		}
+             markerDeparture.on("dragend",function(ev){            
+				  $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+				  markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});	
+             	}
+           
 	},
 
 	_callbackId: 0,
@@ -129,7 +126,7 @@ L.Control.OSMGeocoder = L.Control.extend({
 		else return null;
 	},
 	_isLatLon_decMin : function (q) {
-		console.log("is LatLon?: "+q);
+		//console.log("is LatLon?: "+q);
 			
 		//N 53° 13.785' E 010° 23.887'
 		//re = /[NS]\s*(\d+)\D*(\d+\.\d+).?\s*[EW]\s*(\d+)\D*(\d+\.\d+)\D*/;
@@ -151,7 +148,7 @@ L.Control.OSMGeocoder = L.Control.extend({
 		if (this._isLatLon(q) != null)
 		{
 			var m = this._isLatLon(q);
-			console.log("LatLon: "+m[1]+" "+m[2]);
+			//console.log("LatLon: "+m[1]+" "+m[2]);
 			//m = {lon, lat}
 			this.options.callback.call(this, this._createSearchResult(m[1],m[2]));
 			
@@ -175,7 +172,7 @@ L.Control.OSMGeocoder = L.Control.extend({
 
 		//and now Nominatim
 		//http://wiki.openstreetmap.org/wiki/Nominatim
-		console.log(this._callbackId);
+		//console.log(this._callbackId);
 		window[("_l_osmgeocoder_"+this._callbackId)] = L.Util.bind(this.options.callback, this);
 
 

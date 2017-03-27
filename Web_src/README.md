@@ -3,7 +3,6 @@
 * [css](css) (*folder of style files*)
   * [template.css](css/template.css) (*basic css*)
   * [context_menu1.css](css/context_menu1.css) (*define departure/arrival points*)
-  * [route.css](css/route.css) (*define route and its points*)
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
   * [menu.js](js/menu.js) (*data sending scripts + draw route*)
