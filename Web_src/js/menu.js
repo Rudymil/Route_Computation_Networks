@@ -8,7 +8,7 @@ var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
-var url = './php/server.php';
+var url = 'http://172.31.56.223/api/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
 
@@ -64,7 +64,7 @@ function add_warning_zones(url){ // ajoute toutes les warning zones de la BDD
 	$.ajax({
 		url : url,
 		type : 'GET',
-		data : 'type=null',
+		data : 'type=warning_zone',
 		dataType : 'json',
 		success : function(code_json, statut){
 			//console.log("code_json : ",code_json);
@@ -314,7 +314,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	$.ajax({
 		url : url,
-		type : 'GET',
+		type : 'POST',
 		data : 'type='+type+'&geojson='+geojson,
 		dataType : '',
 		success : function(code, statut){
@@ -350,7 +350,7 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 			circle = [];
 			box = [];
 			polygon = [];
-			send_ajax_geojson(geojson,"warning_zones",url);
+			send_ajax_geojson(geojson,"warning_zone",url);
 		}
 	}
 });
@@ -370,7 +370,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 			circlel = [];
 			boxl = [];
 			polygonl = [];
-			send_ajax_geojson(geojson,"anomalies",url);
+			send_ajax_geojson(geojson,"anomaly_zone",url);
 		}
 	}
 });
