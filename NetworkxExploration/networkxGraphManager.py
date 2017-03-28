@@ -18,7 +18,6 @@ def read_json_file(filename):
         js_graph = json.load(f)
     return json_graph.node_link_graph(js_graph)
 
-
 def write_graph_to_json_file(filename, graph):
     """
     Write the graph into the filename.
@@ -27,8 +26,6 @@ def write_graph_to_json_file(filename, graph):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
 
-
-
 def applyRandomWeight(graph, weightKeyToChange = 'weight_random', lowestBound = 0, highestBound = 50000):
     """
     Set a random weight (between lowestBound and highestBound) to the graph
@@ -36,15 +33,12 @@ def applyRandomWeight(graph, weightKeyToChange = 'weight_random', lowestBound = 
     for u,v,d in G.edges_iter(data=True):
         graph.add_weighted_edges_from([( u, v, random.randint(lowestBound, highestBound))], weight = weightKeyToChange)
 
-
-
 def applyDefaultWeight(graph, defaultWeight = 0.0, weightKeyToChange = 'weight'):
     """
     Set a default weight to the graph
     """
     for u,v,d in graph.edges_iter(data=True):
         graph.add_weighted_edges_from([( u, v, defaultWeight)], weight=weightKeyToChange)
-
 
 def fusionWeight(graph, fieldA = 'weight_to_avoid', fieldB = 'length', alpha = 1, beta = 1, weightKeyToChange = 'weight_fusion'):
     """
@@ -54,3 +48,55 @@ def fusionWeight(graph, fieldA = 'weight_to_avoid', fieldB = 'length', alpha = 1
     for u,v,d in graph.edges_iter(data=True):
         newWeight = (d[fieldA]**alpha) * (d[fieldB] ** beta)
         graph.add_weighted_edges_from([( u, v, newWeight)], weight=weightKeyToChange)
+
+def findClosestNodeID(graph, lat, lon):
+    """
+
+    """
+    squaredistance = []
+    id = []
+    for n_id in graph.nodes_iter():
+        id.append(n_id)
+        squaredistance.append((lat - graph.node[n_id]['lat'])**2 + (lon - graph.node[n_id]['lon'])**2)
+
+    return id[sorted(range(len(id)), key=lambda k: squaredistance[k])[0]]
+
+def savePath(filename, idList, graph):
+    """
+    Export the computed route (as a list of followed points targeted by their id) as array of lat lon location
+
+    Result :
+    [[43.6026628, 3.8776791], [43.6026417, 3.877659], [43.602617, 3.8776495]]
+    """
+    with open(filename, 'w') as f:
+        # print([[graph.node[p]['lat'], graph.node[p]['lon']] for p in idList], file=f)
+        counter = 0
+        modulo = 1
+        for p in idList:
+            if (counter >= len(idList) - modulo ):
+                comma = ""
+            else:
+                comma = ","
+            if counter%modulo == 0:
+                print("L.latLng("+str(graph.node[p]['lat'])+","+str(graph.node[p]['lon'])+")"+ comma, file=f)
+            counter+=1
+
+def printPath(idList, graph):
+    """
+    Export the computed route (as a list of followed points targeted by their id) as array of lat lon location
+
+    Result :
+    [[43.6026628, 3.8776791], [43.6026417, 3.877659], [43.602617, 3.8776495]]
+    """
+    result = []
+    counter = 0
+    modulo = 1
+    for p in idList:
+        if (counter >= len(idList) - modulo ):
+            comma = ""
+        else:
+            comma = ","
+        if counter%modulo == 0:
+            result.append([ str(graph.node[p]['lat']), str(graph.node[p]['lon'])])
+        counter+=1
+    return json.dumps(result)

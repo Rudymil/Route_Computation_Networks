@@ -37,6 +37,24 @@ lonTarget = float(sys.argv[4])
 weightType = sys.argv[5]
 
 
+
+def printSmopy(listId):
+    """
+
+    """
+    ### Display target node
+    x = []
+    y = []
+    for n in listId:
+        a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
+        x.append(a)
+        y.append(b)
+    # plt.plot(x[:], y[:], 'o', color=colorPrint, ms=sizePoint)
+    return x,y
+
+
+
+
 VERBOSE = False
 
 if (VERBOSE):
@@ -47,69 +65,10 @@ if (VERBOSE):
 
 
 ## CONFIGURATION VARIABLE
-# DISPLAY = "OSM_MAP"
+DISPLAY = "OSM_MAP"
 # DISPLAY = "MAP"
 # DISPLAY = "GRAPH"
-DISPLAY = "JSON"
-
-def findClosestNodeID(graph, lat, lon):
-    squaredistance = []
-    id = []
-    for n_id in graph.nodes_iter():
-        id.append(n_id)
-        squaredistance.append((lat - graph.node[n_id]['lat'])**2 + (lon - graph.node[n_id]['lon'])**2)
-
-    return id[sorted(range(len(id)), key=lambda k: squaredistance[k])[0]]
-
-
-
-def applyRandomWeight(graph):
-    for u,v,d in G.edges_iter(data=True):
-        G.add_weighted_edges_from([( u, v, random.randint(0,50000))], weight='weight_random')
-
-
-
-
-def savePath(filename, idList, graph):
-    """
-        export the computed route (as a list of followed points targeted by their id) as array of lat lon location
-
-        Result :
-        [[43.6026628, 3.8776791], [43.6026417, 3.877659], [43.602617, 3.8776495]]
-    """
-    with open(filename, 'w') as f:
-        # print([[graph.node[p]['lat'], graph.node[p]['lon']] for p in idList], file=f)
-        counter = 0
-        modulo = 1
-        for p in idList:
-            if (counter >= len(idList) - modulo ):
-                comma = ""
-            else:
-                comma = ","
-            if counter%modulo == 0:
-                print("L.latLng("+str(graph.node[p]['lat'])+","+str(graph.node[p]['lon'])+")"+ comma, file=f)
-            counter+=1
-
-def printPath(idList, graph):
-    """
-        export the computed route (as a list of followed points targeted by their id) as array of lat lon location
-
-        Result :
-        [[43.6026628, 3.8776791], [43.6026417, 3.877659], [43.602617, 3.8776495]]
-    """
-    result = []
-    counter = 0
-    modulo = 1
-    for p in idList:
-        if (counter >= len(idList) - modulo ):
-            comma = ""
-        else:
-            comma = ","
-        if counter%modulo == 0:
-            result.append([ str(graph.node[p]['lat']), str(graph.node[p]['lon'])])
-        counter+=1
-    return json.dumps(result)
-
+# DISPLAY = "JSON"
 
 # Montpelllier Data
 # G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True, cacheTempDir = "/tmp/tmpOSM/"))
@@ -119,8 +78,8 @@ G = OSMParser.read_osm(OSMParser.download_osm(round(min(lonSource, lonTarget),4)
 # source_id = "4445471419"
 # target_id = "3670601901"
 
-source_id = findClosestNodeID(G, latSource, lonSource)
-target_id = findClosestNodeID(G, latTarget, lonTarget)
+source_id = networkxGraphManager.findClosestNodeID(G, latSource, lonSource)
+target_id = networkxGraphManager.findClosestNodeID(G, latTarget, lonTarget)
 
 # Initial Data
 # G = OSMParser.read_osm(OSMParser.download_osm(-122.328,47.608,-122.31,47.61, cache=True))
@@ -130,7 +89,7 @@ target_id = findClosestNodeID(G, latTarget, lonTarget)
 if (VERBOSE):
     print("source_id : ", source_id)
     print("target_id : ", target_id)
-# source_id = findClosestNodeID(G, 43.60135620284428, 3.866050243377686)
+# source_id = networkxGraphManager.findClosestNodeID(G, 43.60135620284428, 3.866050243377686)
 
 pos0 = (G.node[source_id]['lat'],G.node[source_id]['lon'])
 if (VERBOSE):
@@ -176,51 +135,57 @@ if (DISPLAY == "OSM_MAP"):
     map = smopy.Map(pos0, pos1, z=15, margin=.1)
     map.show_mpl(ax=plt);
 
+    x,y = printSmopy(G)
     ### Display each node
-    x = []
-    y = []
-    for n in G:
-        a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
-        x.append(a)
-        y.append(b)
-
+    # x = []
+    # y = []
+    # for n in G:
+    #     a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
+    #     x.append(a)
+    #     y.append(b)
+    #
+    # plt.plot(x[:], y[:], 'o', color='k', ms=1);
     plt.plot(x[:], y[:], 'o', color='k', ms=1);
 
 
+    x,y = printSmopy(idList)
     ### Display step - nodes for the route
-    x = []
-    y = []
-    for n in idList:
-        a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
-        x.append(a)
-        y.append(b)
-
+    # x = []
+    # y = []
+    # for n in idList:
+    #     a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
+    #     x.append(a)
+    #     y.append(b)
+    #
+    # plt.plot(x[:], y[:], 'o' , color='b', ms=1)
+    # plt.plot(x[:], y[:], color='b', ms=1)
     plt.plot(x[:], y[:], 'o' , color='b', ms=1);
     plt.plot(x[:], y[:], color='b', ms=1);
 
 
-
+    x,y = printSmopy([source_id])
     ### Display source node
-    x = []
-    y = []
-    for n in [source_id]:
-        a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
-        x.append(a)
-        y.append(b)
+    # x = []
+    # y = []
+    # for n in [source_id]:
+    #     a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
+    #     x.append(a)
+    #     y.append(b)
+    #
+    # plt.plot(x[:], y[:], 'o', color='g', ms=2)
+    plt.plot(x[:], y[:], 'o', color='g', ms=2)
 
-    plt.plot(x[:], y[:], 'o', color='g', ms=2);
-
-
-
+    x,y = printSmopy([target_id])
     ### Display target node
-    x = []
-    y = []
-    for n in [target_id]:
-        a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
-        x.append(a)
-        y.append(b)
+    # x = []
+    # y = []
+    # for n in [target_id]:
+    #     a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
+    #     x.append(a)
+    #     y.append(b)
+    # plt.plot(x[:], y[:], 'o', color='r', ms=2)
+    plt.plot(x[:], y[:], 'o', color='r', ms=2)
 
-    plt.plot(x[:], y[:], 'o', color='r', ms=2);
 
     ### Display target node
     x = []
@@ -268,7 +233,7 @@ if (DISPLAY == "GRAPH"):
     plt.show() # display
 
 if (DISPLAY == "JSON"):
-    print(printPath(idList, G))
+    print(networkxGraphManager.printPath(idList, G))
     # pass
 
 
@@ -298,4 +263,4 @@ data = json_graph.node_link_data(G)
 # s = json.dumps(data, indent=4)
 with open('JSONData.json', 'w') as f:
     json.dump(data, f, indent=4)
-savePath("itineraire.json", idList, G)
+networkxGraphManager.savePath("itineraire.json", idList, G)
