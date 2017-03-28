@@ -11,7 +11,9 @@ var string_polygons = "Polygons";
 var url = 'http://172.31.56.223/api/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
+var grid = L.layerGroup();
 var overlayMaps = new Array();
+var Lcontrollayers;
 var types_warning_zones = new Array();
 var types_anomalies = new Array();
 var string_warning_zone = "warning_zone";
@@ -133,6 +135,8 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 					console.log(json);
 				}
 				addGrid(json);
+				overlayMaps["Grid"] = grid; // menu
+				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 			}
 		}
 	});
@@ -188,6 +192,13 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 					if (DEBUG){
 						console.log(json);
 					}
+					for (element in warning_zones){ // pour chaque warning zones
+						if (DEBUG){
+							console.log(element);
+							console.log(warning_zones[element]);
+						}
+						warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
+					}
 					warning_zones = []; // on vide les warning zones
 					for (element in json){ // pour chaque object du geojson
 						if (DEBUG){
@@ -201,7 +212,8 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 					}
 					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
 					overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-					L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+					Lcontrollayers.remove();
+					Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 				}
 				else{
 					$.notify(
