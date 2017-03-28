@@ -70,27 +70,37 @@ $(function(){
 
   // GEOJSON
   // Be careful : lat lon inversed
-  var geojsonFeature = [{
-    "type": "Feature",
-    "properties": {
-      "party": "Republican"
-    },
-    "geometry": {
-      "type": "Polygon",
-      "coordinates": [
-        [
-          [3.87, 43.60],
-          [3.87, 43.59],
-          [3.889, 43.59],
-          [3.889, 43.60],
-          [3.87, 43.60],
-        ]
-      ]
+  // var geojsonFeature = [{
+  //   "type": "Feature",
+  //   "properties": {
+  //     "party": "Republican"
+  //   },
+  //   "geometry": {
+  //     "type": "Polygon",
+  //     "coordinates": [
+  //       [
+  //         [3.87, 43.60],
+  //         [3.87, 43.59],
+  //         [3.889, 43.59],
+  //         [3.889, 43.60],
+  //         [3.87, 43.60],
+  //       ]
+  //     ]
+  //   }
+  // }];
+
+
+  $.ajax({
+    dataType: "json",
+    url : "../NetworkxExploration/getWarningZones.php",
+    type : "GET",
+    success : function(data){
+      var geojsonFeature = data;
+      console.log(data);
+      L.geoJSON(geojsonFeature).addTo(map);
+
     }
-  }];
-
-  L.geoJSON(geojsonFeature).addTo(map);
-
+  })
 
 
 
@@ -121,9 +131,7 @@ $(function(){
 
 
   function route(weightType, functionDisplay){
-    console.log(weightType);
     $.ajax({
-
       url : "../NetworkxExploration/server.php",
       type : "GET",
       data : 'lonSource=' + source.getLatLng().lng + '&latSource=' + source.getLatLng().lat + '&lonTarget=' + destination.getLatLng().lng + '&latTarget=' + destination.getLatLng().lat + '&weightType=\"' + weightType + '\"',
@@ -134,7 +142,6 @@ $(function(){
         map.spin(false);
       },
       success : function(data){
-        console.log(data);
         functionDisplay(data);
       }
     })
@@ -142,8 +149,6 @@ $(function(){
   }
 
   var displayGreenRouting = function (data, textStatus, xhr){
-    console.log("HEY it s working");
-    console.log(data);
     arrayData = JSON.parse(data);
 
     POINTS = [];
