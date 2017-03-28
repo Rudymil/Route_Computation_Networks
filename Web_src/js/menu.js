@@ -190,19 +190,19 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 				var json = resultat.responseJSON;
 				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
 					if (DEBUG){
-						console.log(json);
+						console.log("json :",json);
 					}
 					for (element in warning_zones){ // pour chaque warning zones
 						if (DEBUG){
-							console.log(element);
-							console.log(warning_zones[element]);
+							console.log("element :",element);
+							console.log("warning_zones[element] :",warning_zones[element]);
 						}
 						warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
 					}
 					warning_zones = []; // on vide les warning zones
 					for (element in json){ // pour chaque object du geojson
 						if (DEBUG){
-							console.log(element);
+							console.log("element :",element);
 							console.log(json[element]);
 						}
 						json[element].setStyle({ // change le style de la shape
@@ -216,6 +216,20 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 					Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 				}
 				else{
+					if (DEBUG){
+						console.log("json :",json);
+					}
+					for (element in warning_zones){ // pour chaque warning zones
+						if (DEBUG){
+							console.log("element :",element);
+							console.log("warning_zones[element] :",warning_zones[element]);
+						}
+						warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
+					}
+					warning_zones = []; // on vide les warning zones
+					delete overlayMaps["Warning zones"];
+					Lcontrollayers.remove();
+					Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 					$.notify(
 						{
 							title: "<strong>Warning zones request</strong>",
@@ -433,7 +447,7 @@ function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : 'type='+type+'&geojson='+geojson,
+		data : type+'='+geojson,
 		dataType : '',
 		success : function(code, statut){
 			if (DEBUG){
