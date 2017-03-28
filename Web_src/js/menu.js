@@ -187,12 +187,15 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 					if (DEBUG){
 						console.log(json);
 					}
+					warning_zones = []; // on vide les warning zones
 					for (element in json){ // pour chaque object du geojson
 						if (DEBUG){
 							console.log(element);
 							console.log(json[element]);
 						}
-						warning_zones = []; // on vide les warning zones
+						json[element].setStyle({ // change le style de la shape
+							fillColor: '#878787' // grey
+						});
 						warning_zones.push(json[element]); // remplir la warning zone
 					}
 					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
