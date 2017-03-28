@@ -11,6 +11,7 @@ var string_polygons = "Polygons";
 var url = 'http://172.31.56.223/api/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
+var overlayMaps = new Array();
 var types_warning_zones = new Array();
 var types_anomalies = new Array();
 var string_warning_zone = "warning_zone";
@@ -199,7 +200,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						warning_zones.push(json[element]); // remplir la warning zone
 					}
 					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
-					var overlayMaps = {"Warning zones": layer_group_warning_zones}; // menu
+					overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
 					L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 				}
 				else{
