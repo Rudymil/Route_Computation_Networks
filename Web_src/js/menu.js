@@ -56,25 +56,13 @@ function ajax_types(url,type){ // requete ajax sur les types
 				var json = resultat.responseJSON;
 				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
 					if (DEBUG){
-						console.log(json);
+						console.log("json : ",json);
 					}
 					if (type == string_risk_type){
-						for (element in json){ // pour chaque object du geojson
-							if (DEBUG){
-								console.log(element);
-								console.log(json[element]);
-							}
-							types_warning_zones.push(json[element]);
-						}
+						types_warning_zones = json;
 					}
 					else if (type == string_anomaly_type){
-						for (element in json){ // pour chaque object du geojson
-							if (DEBUG){
-								console.log(element);
-								console.log(json[element]);
-							}
-							types_anomalies.push(json[element]);
-						}
+						types_anomalies = json;
 					}
 				}
 			}
