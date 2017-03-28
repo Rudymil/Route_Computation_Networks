@@ -27,66 +27,7 @@
 # GeoJSON used
 ## GeoJSON warning zones
 ```json
-circle
-
-[{
-"type":"Feature",
-"properties":
-		{		
-		"type":"warningType",
-		"typeGeometry":"circle",
-		"radius":898.2027678126368,
-		"description":"dsqDQS",
-		"level":"Road accident",
-		"date":1490601231927
-		},
-"geometry":
-		{
-		"type":"Point",
-		"coordinates":[13.228912353515627,-8.930861193495812]} // latitude, longitude
-		}, 
-		{ ...autre objet } ]
-
-box
-
-[
-{
-"type":"Feature",
-"properties":{
-	"type":"warningType",
-	"description":"aaaaa",
-	"level":"Criminal insecurity",
-	"date":1490601964481},
-"geometry":
-{
-	"type":"Polygon",
-	"coordinates":[[[13.179817199707033,-8.944427358695835],	[13.179817199707033,-8.933235308866728],	[13.195266723632814,-8.933235308866728],	[13.195266723632814,-8.944427358695835],	[13.179817199707033,-8.944427358695835]]] // latitude, longitude
-}
-},
-{ ... un autre objet ... }
-]
-
-polygon 
-
-[
-{
-	"type":"Feature",
-	"properties":{
-	"type":"warningType",
-	"description":"qqqqqq",
-	"level":"Road closure",
-	"date":1490602146306
-},
-"geometry":
-{
-	"type":"Polygon",
-	"coordinates":[[[13.217926025390627,-8.949344968775677],	[13.21861267089844,-8.964775658381157],	[13.23131561279297,-8.952397245052008],	[13.230285644531252,-8.944596932563272],	[13.217926025390627,-8.949344968775677]]]}}, // latitude, longitude
-{
-... un autre objet ...
-}
-
-]
-
+{"type":"FeatureCollection","zone_type":"warning_zone","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[7.0496536916202,4.851353550492],[7.0510942257049,4.8472069037448],[7.0582968961281,4.8489612573988],[7.0587770741564,4.8540648057486],[7.0496536916202,4.851353550492]]]},"properties":{"risk_type":1,"risk_intensity":99}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[7.0424510211969,4.8657071308718],[7.0432513179106,4.8620390227449],[7.0390897749994,4.860922638045],[7.0378093002575,4.8637933378205],[7.0424510211969,4.8657071308718]]]},"properties":{"risk_type":3,"risk_intensity":99}}]}
 ```
 ## GeoJSON anomalies
 ```json
