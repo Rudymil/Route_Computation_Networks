@@ -17,7 +17,7 @@ $(function(){
   source.addTo(map);
 
   var destinationIcon = L.divIcon({className: 'destination-div-icon'});
-  var destination = L.marker([43.5971788,3.886726], {icon: destinationIcon});
+  var destination = L.marker([43.594988110031814,3.8692045211791997], {icon: destinationIcon});
   destination.addTo(map);
 
   var group = new L.featureGroup([source, destination]);
