@@ -7,9 +7,6 @@ function addGrid(json){
       nb_col = json.params.rows;
       nb_lig = json.params.cols;
 
-  // gridlayer
-  var grid = L.layerGroup();
-
   // creation of the grid composed of rectangles
   for (var i=0; i<nb_lig; i++){
       for (var j=0; j<nb_col; j++){
@@ -23,7 +20,5 @@ function addGrid(json){
         rectangle.addTo(grid);
       }
     }
-    var overlayMaps = {"Grid": grid}; // menu
-		L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
     //map.setView(new L.LatLng((latmin+latmax)/2,(lonmax+lonmin)/2),13);
 }
