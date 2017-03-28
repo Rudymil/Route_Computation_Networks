@@ -64,10 +64,10 @@ if (VERBOSE):
 
 
 ## CONFIGURATION VARIABLE
-# DISPLAY = "OSM_MAP"
+DISPLAY = "OSM_MAP"
 # DISPLAY = "MAP"
 # DISPLAY = "GRAPH"
-DISPLAY = "JSON"
+# DISPLAY = "JSON"
 
 # Montpelllier Data
 # G = OSMParser.read_osm(OSMParser.download_osm(3.8748,43.5964,3.89,43.6072, cache=True, cacheTempDir = "/tmp/tmpOSM/"))
