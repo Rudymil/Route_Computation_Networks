@@ -5,6 +5,6 @@
   $latTarget =  json_decode($_GET["latTarget"]);
   $weightType =  json_decode($_GET["weightType"]);
 
-  $route = exec("python3.5 ./osmToPython.py ".$latSource." ".$lonSource." ".$latTarget." ".$lonTarget." ".$weightType." 2>&1",  $out, $status);
+  $route = exec("python3.5 ./osm2itinerary.py ".$latSource." ".$lonSource." ".$latTarget." ".$lonTarget." ".$weightType." 2>&1",  $out, $status);
   echo json_encode(json_decode($out[0]));
 ?>
