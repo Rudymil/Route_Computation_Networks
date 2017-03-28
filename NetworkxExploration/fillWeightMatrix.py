@@ -4,22 +4,18 @@ import networkx as netx
 from networkx.readwrite import json_graph
 import networkxGraphManager
 from shapely.geometry import shape, Point
-# import psycopg2
 import os
 
 def connectionPostgres():
+    """
+    Get a GeoJSON file with the warning zone from Postgres
+    """
     try:
-        # connect_str = "dbname='projcomm' host='localhost' user='julie' password='julie'"
-        # conn = psycopg2.connect(connect_str)
-        # print("Connected")
-        # cur = conn.cursor()
-        os.system('ogr2ogr -f GeoJSON out.json "PG:host=localhost dbname=projcomm user=julie password=julie" \
-        -sql "select geom,risque from hot_area"')
-
+        os.system('ogr2ogr -f GeoJSON WZone.json "PG:host=localhost dbname=projcomm user=julie password=julie" \
+        -sql "SELECT geom, risque AS weight FROM hot_area"')
     except Exception as e:
         print("Can't connect")
         print(e)
-
 
 def loadGeoJsonWarningZone(warningZoneFilenameInput):
     """
@@ -57,23 +53,23 @@ def main(
         weightKeyToChange = 'weight'
     ):
     ## ALGORITHM
+    # Get file
+    connectionPostgres()
+
     # Load the graph from networkx export file
-    # G = networkxGraphManager.read_json_file(graphFilenameInput)
+    G = networkxGraphManager.read_json_file(graphFilenameInput)
 
     # Load GeoJSON file containing warning zone sectors
-    # featureList = loadGeoJsonWarningZone(warningZoneFilenameInput)
+    featureList = loadGeoJsonWarningZone(warningZoneFilenameInput)
 
     # Set the default weight to the graph
-    # networkxGraphManager.applyDefaultWeight(G, defaultWeight, weightKeyToChange)
+    networkxGraphManager.applyDefaultWeight(G, defaultWeight, weightKeyToChange)
 
     # Set the weight from the warningZoneFilenameInput file
-    # fusionWarningZoneWithGraph(G, featureList, "weight", weightKeyToChange)
+    fusionWarningZoneWithGraph(G, featureList, "weight", weightKeyToChange)
 
     # Export the modified graph
-    # networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
-
-    connectionPostgres();
-
+    networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
 
 
 if __name__ == '__main__':
