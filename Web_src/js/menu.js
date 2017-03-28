@@ -17,11 +17,13 @@ var string_warning_zone = "warning_zone";
 var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
+var bbox; // bounding box de la map
 
 function ajax_types(url,type){ // requete ajax sur les types
 	$.ajax({
 		url : url,
-		type : 'POST',
+		type : 'GET',
+		data: 'type='+type,
 		dataType : 'json',
 		success : function(code_json, statut){
 			//console.log("code_json : ",code_json);
@@ -126,11 +128,11 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 	});
 }
 
-function add_warning_zones(url){ // ajoute toutes les warning zones de la BDD
+function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la bbox from la BDD
 	$.ajax({
 		url : url,
 		type : 'GET',
-		data : 'type=warning_zone',
+		data : 'type='+string_warning_zone+'&bbox='+bbox,
 		dataType : 'json',
 		success : function(code_json, statut){
 			//console.log("code_json : ",code_json);
@@ -201,7 +203,16 @@ function add_warning_zones(url){ // ajoute toutes les warning zones de la BDD
 
 $("#map").ready(function(){ // lorsque la carte est chargee
 	ajax_grid();
-	add_warning_zones(url);
+	bbox = map.getBounds().toBBoxString();
+	add_warning_zones(url,bbox);
+	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
+		bbox = map.getBounds().toBBoxString();
+		add_warning_zones(url,bbox);
+    });
+    map.on('zoomend', function() { // lorsqu on zoom dans la carte
+		bbox = map.getBounds().toBBoxString();
+		add_warning_zones(url,bbox);
+    });
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees

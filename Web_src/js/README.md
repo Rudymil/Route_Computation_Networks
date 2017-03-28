@@ -27,7 +27,7 @@ Requête ajax pour recupérer une **grille**.
 ```js
 function add_warning_zones(url){...}
 ```
-Récupère toutes les **warning zones** de la **BDD**.
+Ajoute toutes les **warning zones** de la **bbox** from la **BDD**.
 ```js
 $("#map").ready(function(){...});
 ```
