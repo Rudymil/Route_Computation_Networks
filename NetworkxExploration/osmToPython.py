@@ -38,7 +38,7 @@ weightType = sys.argv[5]
 
 
 
-def printSmopy(listId, colorPrint, sizePoint):
+def printSmopy(listId):
     """
 
     """
@@ -49,7 +49,8 @@ def printSmopy(listId, colorPrint, sizePoint):
         a,b = map.to_pixels(G.node[n]['lat'], G.node[n]['lon'])
         x.append(a)
         y.append(b)
-    plt.plot(x[:], y[:], 'o', color=colorPrint, ms=sizePoint)
+    # plt.plot(x[:], y[:], 'o', color=colorPrint, ms=sizePoint)
+    return x,y
 
 
 
@@ -134,7 +135,7 @@ if (DISPLAY == "OSM_MAP"):
     map = smopy.Map(pos0, pos1, z=15, margin=.1)
     map.show_mpl(ax=plt);
 
-    printSmopy(G,'k', 1)
+    x,y = printSmopy(G)
     ### Display each node
     # x = []
     # y = []
@@ -144,9 +145,10 @@ if (DISPLAY == "OSM_MAP"):
     #     y.append(b)
     #
     # plt.plot(x[:], y[:], 'o', color='k', ms=1);
+    plt.plot(x[:], y[:], 'o', color='k', ms=1);
 
 
-    printSmopy(idList,'b', 1)
+    x,y = printSmopy(idList)
     ### Display step - nodes for the route
     # x = []
     # y = []
@@ -155,11 +157,13 @@ if (DISPLAY == "OSM_MAP"):
     #     x.append(a)
     #     y.append(b)
     #
-    # plt.plot(x[:], y[:], 'o' , color='b', ms=1);
-    # plt.plot(x[:], y[:], color='b', ms=1);
+    # plt.plot(x[:], y[:], 'o' , color='b', ms=1)
+    # plt.plot(x[:], y[:], color='b', ms=1)
+    plt.plot(x[:], y[:], 'o' , color='b', ms=1);
+    plt.plot(x[:], y[:], color='b', ms=1);
 
 
-    printSmopy([source_id], 'g', 2)
+    x,y = printSmopy([source_id])
     ### Display source node
     # x = []
     # y = []
@@ -169,8 +173,9 @@ if (DISPLAY == "OSM_MAP"):
     #     y.append(b)
     #
     # plt.plot(x[:], y[:], 'o', color='g', ms=2)
+    plt.plot(x[:], y[:], 'o', color='g', ms=2)
 
-    printSmopy([target_id], 'r', 2)
+    x,y = printSmopy([target_id])
     ### Display target node
     # x = []
     # y = []
@@ -179,6 +184,7 @@ if (DISPLAY == "OSM_MAP"):
     #     x.append(a)
     #     y.append(b)
     # plt.plot(x[:], y[:], 'o', color='r', ms=2)
+    plt.plot(x[:], y[:], 'o', color='r', ms=2)
 
 
     ### Display target node
