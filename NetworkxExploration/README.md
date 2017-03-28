@@ -21,6 +21,9 @@ Currently, check if a point is inside a polygon from geojson
 
 ![Schema](routing_via_networkx.png)
 
+
+> python3.5 osmToPython.py 43.6026628 3.8776791 43.594988110031814 3.8692045211791997 "length"
+
 > cd .. & php -S 127.0.0.1:8082
 
 Open a web browser : 
