@@ -95,10 +95,8 @@ $(function(){
     url : "../NetworkxExploration/getWarningZones.php",
     type : "GET",
     success : function(data){
-      var geojsonFeature = data;
-      console.log(data);
+      var geojsonFeature = JSON.parse(data);
       L.geoJSON(geojsonFeature).addTo(map);
-
     }
   })
 
