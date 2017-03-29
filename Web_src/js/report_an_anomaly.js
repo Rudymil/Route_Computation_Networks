@@ -198,6 +198,14 @@ map.on('draw:created', function(e) {
      		     "level": lev,
      		     "date": Date.now()
    			 	};
+   			 	
+   			 	content = getPopupContent(layer,layergeo);
+   			 	//console.log(content);
+   			 	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
+       			 }
+   			 	
     			circlel.push(layergeo);
 			}
 			);
@@ -245,6 +253,12 @@ map.on('draw:created', function(e) {
        					 "level": lev,
         				"date": Date.now()
     			}
+    			
+    			content = getPopupContent(layer,layerjson)
+    			if (content !== null) {
+                layer.bindPopup(content);
+       			 }
+
     			
 				boxl.push(layerjson);
 				//console.log(boxl);	
@@ -295,7 +309,11 @@ map.on('draw:created', function(e) {
        				 "date": Date.now()
    			 }
     			
-    			
+    			content = getPopupContent(layer,layerjson)
+    			if (content !== null) {
+                layer.bindPopup(content);
+       			 }
+       			 
 				polygonl.push(layerjson);
 		//console.log(polygonl);
 			}
@@ -304,6 +322,85 @@ map.on('draw:created', function(e) {
 		
 		}
 		
-		leditableLayers.addLayer(layer);
+		//leditableLayers.addLayer(layer);
 
 	});
+	
+	
+	
+ var getPopupContent = function(layer,geo) {
+
+			if (layer instanceof L.Circle) {
+                
+            var html= '<table>\
+ 						 <tr>\
+  							  <td>Type of geometry : </td>\
+  							  <td> ' +geo.properties.typeGeometry+'</td>\
+  						 </tr>\
+ 						 <tr>\
+   							 <td>Level : </td>\
+    						 <td>'+geo.properties.level+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Description : </td>\
+    						 <td>'+geo.properties.description+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Date : </td>\
+    						 <td>'+geo.properties.date+'</td>\
+  						</tr>\
+						</table>'
+				return html;
+                
+            }
+            
+             else if (layer instanceof L.Polygon) {
+            
+            	var html= '<table>\
+ 						 <tr>\
+  							  <td>Type of geometry : </td>\
+  							  <td> '+geo.geometry.type+'</td>\
+  						 </tr>\
+ 						 <tr>\
+   							 <td>Level : </td>\
+    						 <td>'+geo.properties.level+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Description : </td>\
+    						 <td>'+geo.properties.description+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Date : </td>\
+    						 <td>'+geo.properties.date+'</td>\
+  						</tr>\
+						</table>'
+				return html;
+            } 
+
+			 else if (layer instanceof L.Rectangle) {
+            
+            	var html= '<table>\
+ 						 <tr>\
+  							  <td>Type of geometry : </td>\
+  							  <td> '+geo.geometry.type+'</td>\
+  						 </tr>\
+ 						 <tr>\
+   							 <td>Level : </td>\
+    						 <td>'+geo.properties.level+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Description : </td>\
+    						 <td>'+geo.properties.description+'</td>\
+  						</tr>\
+  						<tr>\
+   							 <td>Date : </td>\
+    						 <td>'+geo.properties.date+'</td>\
+  						</tr>\
+						</table>'
+				return html;
+            
+            }
+            
+            return null
+        };
+        

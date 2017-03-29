@@ -14,12 +14,26 @@ Pour récupérer des données stockées en base, les différents paramètres dis
 - type=risk_type : la liste des types de risques,
 - type=anomaly_type : la liste des types d'anomalies,
 
+En option :
+
+- bbox : pour limiter l'emprise des données retournées, exemple :
+
+```php
+bbox=12.8,-9.0,13.5,-8.8
+//southWest lng/lat / northEast lng/lat
+```
+Peut être obtenu avec :
+
+```js
+map.getBounds().toBBoxString()
+```
+
 les appels sont effectués en $_GET.
 
 ## SEND data
 
 Pour envoyer des données au backend et les stocker en base :
 
-
+- type=warning_zone & data=[GeoJSON]
 
 les appels sont effectués en $_POST.

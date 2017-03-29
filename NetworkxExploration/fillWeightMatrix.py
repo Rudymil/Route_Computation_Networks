@@ -4,24 +4,20 @@ import networkx as netx
 from networkx.readwrite import json_graph
 import networkxGraphManager
 from shapely.geometry import shape, Point
-# import psycopg2
 import os
 
-def connectionPostgres():
+def connection_postgres():
+    """
+    Get a GeoJSON file with the warning zone from Postgres
+    """
     try:
-        # connect_str = "dbname='projcomm' host='localhost' user='julie' password='julie'"
-        # conn = psycopg2.connect(connect_str)
-        # print("Connected")
-        # cur = conn.cursor()
-        os.system('ogr2ogr -f GeoJSON out.json "PG:host=localhost dbname=projcomm user=julie password=julie" \
-        -sql "select geom,risque from hot_area"')
-
+        os.system('ogr2ogr -f GeoJSON WZone.json "PG:host=localhost dbname=projcomm user=julie password=julie" \
+        -sql "SELECT geom, risque AS weight FROM hot_area"')
     except Exception as e:
         print("Can't connect")
         print(e)
 
-
-def loadGeoJsonWarningZone(warningZoneFilenameInput):
+def load_geojson_warning_zone(warningZoneFilenameInput):
     """
     Return data from geojson
     """
@@ -29,7 +25,7 @@ def loadGeoJsonWarningZone(warningZoneFilenameInput):
         js = json.load(f)
         return js
 
-def fusionWarningZoneWithGraph(graph, featureList, featurePropertyDescribedWeight = "weight", weightKeyToChange = "weight"):
+def fusion_warning_zone_with_graph(graph, featureList, featurePropertyDescribedWeight = "weight", weightKeyToChange = "weight"):
     """
     Apply weight from featureList to the graph
     """
@@ -57,23 +53,23 @@ def main(
         weightKeyToChange = 'weight'
     ):
     ## ALGORITHM
+    # Get file
+    connection_postgres()
+
     # Load the graph from networkx export file
-    # G = networkxGraphManager.read_json_file(graphFilenameInput)
+    G = networkxGraphManager.read_json_file(graphFilenameInput)
 
     # Load GeoJSON file containing warning zone sectors
-    # featureList = loadGeoJsonWarningZone(warningZoneFilenameInput)
+    featureList = load_geojson_warning_zone(warningZoneFilenameInput)
 
     # Set the default weight to the graph
-    # networkxGraphManager.applyDefaultWeight(G, defaultWeight, weightKeyToChange)
+    networkxGraphManager.apply_default_weight(G, defaultWeight, weightKeyToChange)
 
     # Set the weight from the warningZoneFilenameInput file
-    # fusionWarningZoneWithGraph(G, featureList, "weight", weightKeyToChange)
+    fusion_warning_zone_with_graph(G, featureList, "weight", weightKeyToChange)
 
     # Export the modified graph
-    # networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
-
-    connectionPostgres();
-
+    networkxGraphManager.write_graph_to_json_file(graphFilenameOutput, G)
 
 
 if __name__ == '__main__':

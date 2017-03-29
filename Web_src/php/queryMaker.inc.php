@@ -12,7 +12,7 @@
 * bbox should be a string in the form of 'southwest_lng,southwest_lat,northeast_lng,northeast_lat'
 * Leaflet: map.getBounds().toBBoxString()
 */
-function selectQuery($sqlRequest) {
+function selectGeoJSONQuery($sqlRequest) {
   # Connect to PostgreSQL database
   include_once("./connexion.inc.php");
   # Try query or error
@@ -48,17 +48,43 @@ function selectQuery($sqlRequest) {
   return json_encode($geojson, JSON_NUMERIC_CHECK);
 }
 
-function insertQuery($datajson){
+function selectJSONQuery($sqlRequest) {
+  # Connect to PostgreSQL database
+  include_once("./connexion.inc.php");
+  # Try query or error
+  $rs = $conn->query($sqlRequest);
+  if (!$rs) {
+      echo 'An SQL error occured.\n';
+      exit;
+  }
+
+  # Build GeoJSON feature collection array
+  $json = array();
+
+  # Loop through rows to build feature arrays
+  while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+      # Add feature arrays to feature collection array
+      array_push($json, $row);
+  }
+
+  $conn = NULL;
+  return json_encode($json, JSON_NUMERIC_CHECK);
+}
+
+function insertGeoJSONQuery($datajson){
+  if (isset($_GET["DEBUG"])) {
+    print("<h2>The data JSON :</h2>");
+    print($datajson);
+  }
+
   # Connect to PostgreSQL database
   include_once("./connexion.inc.php");
 
-  $data = json_decode($datajson);
+  //$data = json_decode($datajson);
+  $data = $datajson;
   $zone_type = $data->zone_type;
   $nbrOfFeatures = sizeOf($data->features);
   $features = $data->features;
-
-  /*print(sizeOf($features));
-  print_r($features[0]);*/
 
   if ($data->zone_type == "warning_zone") {
     $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity) VALUES ";
@@ -71,21 +97,24 @@ function insertQuery($datajson){
   for ($i=0; $i < sizeOf($features); $i++) {
     if($features[$i]->geometry->type == "Polygon"){
       $type = $features[$i]->geometry->type;
-      $geometry = $features[$i]->geometry->coordinates;
-      $geom = '{"type": "' . $type . '", "coordinates":' . json_encode($geometry) . '}';
-      //print($geom);
+      $geometry = $features[$i]->geometry;
       $properties = $features[$i]->properties;
-      //print_r($properties);
-      /*foreach ($properties as $key => $value) {
-        print("$key -> $value");
-      }*/
+
+      $geometry->crs = new stdClass();
+      $geometry->crs->type = "name";
+      $geometry->crs->properties = new stdClass();
+      $geometry->crs->properties->name = "EPSG:4326";
+
+      $geom = json_encode($geometry);
     }
     if ($data->zone_type == "warning_zone") {
       $risk_type = $properties->risk_type;
       $risk_intensity = $properties->risk_intensity;
-      $sqlRequest .= "(ST_GeomFromGeoJSON($geom), $risk_type, $risk_intensity)";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $risk_type, $risk_intensity)";
     }elseif ($data->zone_type == "anomaly_zone") {
-      $sqlRequest .= "(ST_GeomFromGeoJSON($geom), $anomaly_type, $description)";
+      $anomaly_type = $properties->anomaly_type;
+      $description  = $properties->description;
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $anomaly_type, '" . addslashes($description) . "')";
     }
     if($i < sizeOf($features) - 1){
       $sqlRequest .= ", ";
@@ -95,7 +124,10 @@ function insertQuery($datajson){
     }
   }
 
-  print($sqlRequest);
+  if (isset($_GET["DEBUG"])) {
+    print("<h2>SQL Request : </h2>");
+    print($sqlRequest);
+  }
 
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
