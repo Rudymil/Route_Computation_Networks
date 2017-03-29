@@ -89,7 +89,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	}
 	ajax_types(url,string_risk_type);
 	if (DEBUG){
-		console.log("types_warning_zones :", types_warning_zones);
+		console.log("types_warnheatGrid2json.phping_zones :", types_warning_zones);
 	}
 	ajax_types(url,string_anomaly_type);
 	if (DEBUG){
@@ -150,7 +150,64 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 				}
 				addGrid(json);
 				overlayMaps["Grid"] = grid; // menu
-				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+			}
+		}
+	});
+}
+
+function ajax_polygon(){ //requete ajax pour recuperer un polygon
+	if (DEBUG){
+		console.log("FUNCTION : ajax_polygon");
+	}
+	$.ajax({
+		url : './php/heatPolygon.php',
+		type : 'POST',
+		dataType : 'json',
+		success : function(code_json, statut){
+			if (DEBUG){
+				console.log("ajax_polygon code_json : ", code_json);
+				console.log("ajax_polygon statut : ", statut);
+			}
+			$.notify(
+				{
+					title: "<strong>Heat polygon request</strong>",
+					message: statut
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		error : function(resultat, statut, erreur){
+			if (DEBUG){
+				console.log("ajax_polygon resultat : ", resultat);
+				console.log("ajax_polygon statut : ", statut);
+				console.log("ajax_polygon erreur : ", erreur);
+			}
+			$.notify(
+				{
+					title: "<strong>Heat polygon request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (resultat.status == '200'){
+				if (DEBUG){
+					console.log("ajax_polygon json : ", resultat.responseJSON);
+				}
+				var json = resultat.responseJSON;
+				addHeatPolygon(json);
+				overlayMaps["Heat Polygon"] = heatPoly; // menu
 			}
 		}
 	});
@@ -281,6 +338,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		console.log("EVENT : $('#map').ready");
 	}
 	ajax_grid();
+	ajax_polygon();
 	//bbox = map.getBounds().toBBoxString();
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
@@ -291,6 +349,8 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		bbox = map.getBounds().toBBoxString();
 		add_warning_zones(url,bbox);
     });
+
+	Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
@@ -564,7 +624,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 				console.log("layer : ", layer);
 			}
 			layer.addTo(map); // ajout a la map
-		}
+		}console.log("ajax_polygon json : ", resultat.responseJSON);
 	}
 }
 
