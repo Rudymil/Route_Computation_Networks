@@ -72,10 +72,16 @@ function ajax_types(url,type){ // requete ajax sur les types
 						console.log("json : ", json);
 					}
 					if (type == string_risk_type){
+						if (DEBUG){
+							console.log("types_warning_zones :", types_warning_zones);
+						}
 						types_warning_zones = json;
 					}
 					else if (type == string_anomaly_type){
 						types_anomalies = json;
+						if (DEBUG){
+							console.log("types_anomalies :", types_anomalies);
+						}
 					}
 				}
 			}
@@ -88,13 +94,7 @@ $("body").ready(function(){ // lorsque le body est charge
 		console.log("EVENT : $('body').ready");
 	}
 	ajax_types(url,string_risk_type);
-	if (DEBUG){
-		console.log("types_warning_zones :", types_warning_zones);
-	}
 	ajax_types(url,string_anomaly_type);
-	if (DEBUG){
-		console.log("types_anomalies :", types_anomalies);
-	}
 });
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
@@ -277,7 +277,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 						$.notify(
 							{
-								title: "<strong>Warning zones</strong>",
+								title: "<strong>Warning zones request</strong>",
 								message: 'received'
 							},{
 								type: "success",
