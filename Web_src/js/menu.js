@@ -246,9 +246,10 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							}
 							var shape = L.geoJSON(json["features"][element]);
 							shape.setStyle({ // transforme en layer et change le style
-								fillColor: '#878787' // grey
+								fillColor: '#878787', // grey
+								color: '#878787'
 							});
-							shape.addTo(map); // ajout a la map
+							//shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
 						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -296,12 +297,14 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	//bbox = map.getBounds().toBBoxString();
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
-		bbox = map.getBounds().toBBoxString();
-		add_warning_zones(url,bbox);
+			bbox = map.getBounds().toBBoxString();
+			add_warning_zones(url,bbox);
+		}
     });
     map.on('zoomend', function() { // lorsqu on zoom dans la carte
-		bbox = map.getBounds().toBBoxString();
-		add_warning_zones(url,bbox);
+			bbox = map.getBounds().toBBoxString();
+			add_warning_zones(url,bbox);
+		}
     });
 });
 
