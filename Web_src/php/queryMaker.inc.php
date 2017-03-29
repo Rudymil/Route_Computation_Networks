@@ -1,4 +1,9 @@
 <?php
+include_once("./error.inc.php");
+//Restrict script access only by Web API
+if ($_SERVER["REQUEST_URI"] == "/queryMaker.inc.php") {
+  error(403, "Invalid request URI !");
+}
 /*
  * Title:   PostGIS to GeoJSON
  * Notes:   Query a PostGIS table or view and return the results in GeoJSON format, suitable for use in OpenLayers, Leaflet, etc.
@@ -91,7 +96,7 @@ function insertGeoJSONQuery($datajson){
   }elseif ($data->zone_type == "anomaly_zone") {
     $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description) VALUES ";
   }else {
-    exit("ERROR !");
+    error(400, "Incorrect Data !");
   }
 
   for ($i=0; $i < sizeOf($features); $i++) {

@@ -65,6 +65,10 @@ function send_ajax_geojson(geojson,type,url){...}
 ```
 Envoie le **geojson** et le **type** à l'**url**. Return 0 si succès, -1 sinon.
 ```js
+function style_shape(shape){...}
+```
+Modifie le **style** de chaque **shape**.
+```js
 $("#submit1").click(function(){...});
 ```
 Envoye les **warning zone** à la **BDD** après avoir vérifié leur format.

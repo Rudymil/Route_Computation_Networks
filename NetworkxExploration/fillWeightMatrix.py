@@ -6,15 +6,15 @@ import networkxGraphManager
 from shapely.geometry import shape, Point
 import os
 
-def connection_postgres(warningZoneFilenameInput = 'WZone.json', host="172.31.56.216", dbname="projcomm", user="julie", password="julie", table="hot_area"):
+def connection_postgres(warningZoneFilenameInput = 'border_polygons.json', host="172.31.56.223", dbname="api", user="api", password="apiPassword", table="warning_zone", field='risque'):
     """
     Get a GeoJSON file with the warning zone from Postgres
     """
     try:
         os.system('rm '+warningZoneFilenameInput)
         os.system('ogr2ogr -f GeoJSON '+warningZoneFilenameInput+' "PG:host='+host+' port=5432 dbname='+dbname+' user='+user+' password='+password+'" \
-        -sql "SELECT geom, risque AS weight FROM '+table+'"')
-        print("Connect")
+        -sql "SELECT geom, '+field+' AS weight FROM '+table+'"')
+        # print("Connect")
 
     except Exception as e:
         print("Can't connect")

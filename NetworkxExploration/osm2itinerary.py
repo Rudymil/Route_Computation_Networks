@@ -77,7 +77,9 @@ def main():
 
     # WEIGHT
     # Connection to Postgres -> create GeoJSON file
-    # fillWeightMatrix.connection_postgres()
+    # fillWeightMatrix.connection_postgres(warningZoneFilenameInput, host="172.31.56.216", dbname="projcomm", user="julie", password="julie", table="hot_area", field='risque')
+    fillWeightMatrix.connection_postgres(warningZoneFilenameInput, field='risk_intensity')
+
     # Load GeoJSON file containing warning zone sectors
     featureList = fillWeightMatrix.load_geojson_warning_zone(warningZoneFilenameInput)
     # Set the default weight to the graph
