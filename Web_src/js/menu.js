@@ -155,6 +155,21 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 	});
 }
 
+function notify_warning_zones_none(){
+	$.notify(
+		{
+			title: "<strong>Warning zones request</strong>",
+			message: "none"
+		},{
+			type: "info",
+			placement: {
+				from: "bottom",
+				align: "center"
+			}
+		}
+	);
+}
+
 function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la bbox from la BDD
 	if (DEBUG){
 		console.log("FUNCTION : add_warning_zones");
@@ -223,24 +238,29 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						}
 					}
 					warning_zones = []; // on vide les warning zones
-					for (element in json["FeatureCollection"]){ // pour chaque object du geojson
-						if (DEBUG){
-							console.log("element :", element);
-							console.log("json['FeatureCollection'][element] :", json["FeatureCollection"][element]);
+					if (json["features"].length > 0){
+						for (element in json["features"]){ // pour chaque object du geojson
+							if (DEBUG){
+								console.log("element :", element);
+								console.log("json['features'][element] :", json["features"][element]);
+							}
+							var shape = L.geoJSON(json["features"][element]);
+							shape.setStyle({ // transforme en layer et change le style
+								fillColor: '#878787' // grey
+							});
+							shape.addTo(map); // ajout a la map
+							warning_zones.push(shape); // remplir la warning zone
 						}
-						var shape = L.geoJSON(json["FeatureCollection"][element]);
-						shape.setStyle({ // transforme en layer et change le style
-							fillColor: '#878787' // grey
-						});
-						shape.addTo(map); // ajout a la map
-						warning_zones.push(shape); // remplir la warning zone
+						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
+						overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
+						if (Lcontrollayers != undefined){
+							Lcontrollayers.remove();
+						}
+						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 					}
-					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
-					overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-					if (Lcontrollayers != undefined){
-						Lcontrollayers.remove();
+					else {
+						notify_warning_zones_none();
 					}
-					Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 				}
 				else{
 					if (DEBUG){
@@ -261,18 +281,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						}
 						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 					}
-					$.notify(
-						{
-							title: "<strong>Warning zones request</strong>",
-							message: "none"
-						},{
-							type: "info",
-							placement: {
-								from: "bottom",
-								align: "center"
-							}
-						}
-					);
+					notify_warning_zones_none();
 				}
 			}
 		}
