@@ -19,7 +19,7 @@ Load the graph and compute the route
 Currently, check if a point is inside a polygon from geojson  
 > python3.5 fillWeightMatrix.py
 
-![Schema](routing_via_networkx.png)
+![Schema](./Images/routing_via_networkx.png)
 
 
 > python3.5 osm2itinerary.py 43.6026628 3.8776791 43.594988110031814 3.8692045211791997 "length"
