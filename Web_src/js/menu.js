@@ -170,6 +170,22 @@ function notify_warning_zones_none(){
 	);
 }
 
+function remove_warning_zones(){
+	for (element in warning_zones){ // pour chaque warning zones
+		if (DEBUG){
+			console.log("element :", element);
+			console.log("warning_zones[element] :", warning_zones[element]);
+		}
+		warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
+	}
+	warning_zones = []; // on vide les warning zones
+	delete overlayMaps["Warning zones"];
+	if (Lcontrollayers != undefined){
+		Lcontrollayers.remove();
+	}
+	Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+}
+
 function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la bbox from la BDD
 	if (DEBUG){
 		console.log("FUNCTION : add_warning_zones");
@@ -268,19 +284,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						console.log("add_warning_zones json :", json);
 					}
 					if (warning_zones.length > 0){
-						for (element in warning_zones){ // pour chaque warning zones
-							if (DEBUG){
-								console.log("element :", element);
-								console.log("warning_zones[element] :", warning_zones[element]);
-							}
-							warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
-						}
-						warning_zones = []; // on vide les warning zones
-						delete overlayMaps["Warning zones"];
-						if (Lcontrollayers != undefined){
-							Lcontrollayers.remove();
-						}
-						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+						remove_warning_zones();
 					}
 					notify_warning_zones_none();
 				}
@@ -297,15 +301,27 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	//bbox = map.getBounds().toBBoxString();
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
-		if (map.getZoom() > 9){
+		if (DEBUG){
+			console.log("zoom :", map.getBounds())
+		}
+		if (map.getZoom() > 10){
 			bbox = map.getBounds().toBBoxString();
 			add_warning_zones(url,bbox);
 		}
+		else{
+			remove_warning_zones();
+		}
     });
     map.on('zoomend', function() { // lorsqu on zoom dans la carte
-		if (map.getZoom() > 9){
+		if (DEBUG){
+			console.log("zoom :", map.getBounds())
+		}
+		if (map.getZoom() > 10){
 			bbox = map.getBounds().toBBoxString();
 			add_warning_zones(url,bbox);
+		}
+		else{
+			remove_warning_zones();
 		}
     });
 });
