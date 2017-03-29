@@ -237,7 +237,9 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 					}
 					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
 					overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-					Lcontrollayers.remove();
+					if (Lcontrollayers != undefined){
+						Lcontrollayers.remove();
+					}
 					Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 				}
 				else{
@@ -254,7 +256,9 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						}
 						warning_zones = []; // on vide les warning zones
 						delete overlayMaps["Warning zones"];
-						Lcontrollayers.remove();
+						if (Lcontrollayers != undefined){
+							Lcontrollayers.remove();
+						}
 						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 					}
 					$.notify(
