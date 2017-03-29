@@ -150,6 +150,10 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 				}
 				addGrid(json);
 				overlayMaps["Grid"] = grid; // menu
+				if (Lcontrollayers != undefined){
+					Lcontrollayers.remove();
+				}
+				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map);
 			}
 		}
 	});
@@ -208,6 +212,10 @@ function ajax_polygon(){ //requete ajax pour recuperer un polygon
 				var json = resultat.responseJSON;
 				addHeatPolygon(json);
 				overlayMaps["Heat Polygon"] = heatPoly; // menu
+				if (Lcontrollayers != undefined){
+					Lcontrollayers.remove();
+				}
+				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map);
 			}
 		}
 	});
