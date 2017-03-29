@@ -349,8 +349,6 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		bbox = map.getBounds().toBBoxString();
 		add_warning_zones(url,bbox);
     });
-
-	Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
