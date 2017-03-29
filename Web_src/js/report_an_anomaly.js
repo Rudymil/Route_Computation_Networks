@@ -44,7 +44,8 @@ $(".radio_button").change(function (){ // choix de dessin
     	},
   	edit: {
    	 featureGroup: leditableLayers, //REQUIRED!!
-   	 remove: false
+   	 edit: true,
+   	 remove: true
   	}
 	};
 	drawControl = new L.Control.Draw(drawPluginOptions);
@@ -86,7 +87,8 @@ $(".radio_button").change(function (){ // choix de dessin
     	},
   	edit: {
    	 featureGroup: leditableLayers, //REQUIRED!!
-   	 remove: false
+   	 edit: true,
+   	 remove: true
   	}
 	};
 
@@ -135,7 +137,8 @@ $(".radio_button").change(function (){ // choix de dessin
     	},
   	edit: {
    	 featureGroup: leditableLayers, //REQUIRED!!
-   	 remove: false
+   	 edit: true,
+   	 remove: true
   	}
 	};
 drawControl = new L.Control.Draw(drawPluginOptions);
@@ -144,8 +147,8 @@ drawControl = new L.Control.Draw(drawPluginOptions);
 }
 
 
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	//leditableLayers = new L.FeatureGroup();
+	//map.addLayer(leditableLayers);
 
 
 
@@ -193,7 +196,8 @@ map.on('draw:created', function(e) {
   				layergeo.properties= {
        			 "type": "anomalyType",
        			 "typeGeometry" : "circle",
-       			 "radius" : layer._mRadius ,	
+       			 "radius" : layer._mRadius ,
+       			 "id" : layer._leaflet_id ,	
         		 "description": des,
      		     "level": lev,
      		     "date": Date.now()
@@ -212,7 +216,7 @@ map.on('draw:created', function(e) {
   			
 			
 			
-			
+			leditableLayers.addLayer(layer)
 
 		}
 		
@@ -250,6 +254,7 @@ map.on('draw:created', function(e) {
     			layerjson.properties={
        					 "type": "anomalyType",
        					 "description": des,
+       					 "id" : layer._leaflet_id ,
        					 "level": lev,
         				"date": Date.now()
     			}
@@ -267,7 +272,7 @@ map.on('draw:created', function(e) {
 			);
 		
 		
-  		
+  		leditableLayers.addLayer(layer)
   		
 		
 		}
@@ -306,6 +311,7 @@ map.on('draw:created', function(e) {
         			"type": "anomalyType",
        				 "description": des,
        				 "level" : lev ,
+       				 "id" : layer._leaflet_id ,
        				 "date": Date.now()
    			 }
     			
@@ -319,7 +325,7 @@ map.on('draw:created', function(e) {
 			}
 			);
 		
-		
+			leditableLayers.addLayer(layer)
 		}
 		
 		//leditableLayers.addLayer(layer);
@@ -404,3 +410,114 @@ map.on('draw:created', function(e) {
             return null
         };
         
+
+
+map.on('draw:edited', function (e) {
+		var type = e.layerType;
+         var layers = e.layers;
+         
+         var nc=circlel.length;
+         var np=polygonl.length;
+         var nb=boxl.length;
+         
+         
+         
+         
+         layers.eachLayer(function (layer) {
+         	var ic=0;
+         	var ip=0;
+         	var ib=0;
+         	
+          	while ( ic<nc ) {
+          		if( layer._leaflet_id == circlel[ic].properties.id ) {
+
+          				circlel[ic].properties.radius=layer._mRadius;
+
+          				var tempjson=layer.toGeoJSON();
+          				circlel[ic].geometry=tempjson.geometry;
+
+          		}
+          		ic++;
+          	} 
+          	
+          	while ( ib<nb ) {
+          		if( layer._leaflet_id == boxl[ib].properties.id ) {
+
+          				boxl[ib].properties.radius=layer._mRadius;
+
+          				var tempjson=layer.toGeoJSON();
+          				boxl[ib].geometry=tempjson.geometry;
+
+          		}
+          		ib++;
+          	} 
+          	
+          	while ( ip<np ) {
+          		if( layer._leaflet_id == polygonl[ip].properties.id ) {
+
+          				polygonl[ip].properties.radius=layer._mRadius;
+
+          				var tempjson=layer.toGeoJSON();
+          				polygonl[ip].geometry=tempjson.geometry;
+
+          		}
+          		ip++;
+          	} 
+          	
+          	
+          	
+
+         });
+     });
+     
+     
+
+map.on('draw:deleted', function(e) {
+
+		var type = e.layerType;
+         var layers = e.layers;
+
+         var nc=circlel.length;
+         var np=polygonl.length;
+         var nb=boxl.length;
+
+		layers.eachLayer(function (layer) {
+			var ic=0;
+         	var ip=0;
+         	var ib=0;
+         	
+
+			while(ic<nc) {	
+
+				if( layer._leaflet_id == circlel[ic].properties.id ) {
+
+				circlel.splice(ic,1);
+				nc=circlel.length;
+				}
+				else { ic++; }
+			}
+			
+			while(ib<nb) {	
+
+				if( layer._leaflet_id == boxl[ib].properties.id ) {
+
+				boxl.splice(ib,1);
+				nb=boxl.length;
+				}
+				else { ib++; }
+			}
+			
+			while(ip<np) {	
+
+				if( layer._leaflet_id == polygonl[ip].properties.id ) {
+
+				polygonl.splice(ip,1);
+				np=polygonl.length;
+				}
+				else { ip++; }
+			}
+			
+		
+		});
+
+});

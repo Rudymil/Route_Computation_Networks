@@ -1,7 +1,7 @@
 <?php
 include_once("./error.inc.php");
 //Restrict script access only by Web API
-if ($_SERVER["REQUEST_URI"] == "/queryMaker.inc.php") {
+if ($_SERVER["REQUEST_URI"] == "/api/queryMaker.inc.php") {
   error(403, "Invalid request URI !");
 }
 /*
@@ -77,9 +77,9 @@ function selectJSONQuery($sqlRequest) {
 }
 
 function insertGeoJSONQuery($datajson){
-  if (isset($_GET["DEBUG"])) {
+  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
     print("<h2>The data JSON :</h2>");
-    print($datajson);
+    print(json_encode($datajson));
   }
 
   # Connect to PostgreSQL database
@@ -92,7 +92,7 @@ function insertGeoJSONQuery($datajson){
   $features = $data->features;
 
   if ($data->zone_type == "warning_zone") {
-    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity) VALUES ";
+    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description) VALUES ";
   }elseif ($data->zone_type == "anomaly_zone") {
     $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description) VALUES ";
   }else {
@@ -114,8 +114,8 @@ function insertGeoJSONQuery($datajson){
     }
     if ($data->zone_type == "warning_zone") {
       $risk_type = $properties->risk_type;
-      $risk_intensity = $properties->risk_intensity;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $risk_type, $risk_intensity)";
+      $description = $properties->description;
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $risk_type, (SELECT intensity FROM risk WHERE id = $risk_type), '" . addslashes($description) . "')";
     }elseif ($data->zone_type == "anomaly_zone") {
       $anomaly_type = $properties->anomaly_type;
       $description  = $properties->description;
@@ -129,7 +129,7 @@ function insertGeoJSONQuery($datajson){
     }
   }
 
-  if (isset($_GET["DEBUG"])) {
+  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
     print("<h2>SQL Request : </h2>");
     print($sqlRequest);
   }
