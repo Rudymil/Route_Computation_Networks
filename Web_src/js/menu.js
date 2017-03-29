@@ -13,6 +13,7 @@ var url = 'http://172.31.56.223/api/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
 var grid = L.layerGroup();
+var heatPoly = L.layerGroup();
 var overlayMaps = new Array();
 var Lcontrollayers;
 var types_warning_zones = new Array();
@@ -22,7 +23,7 @@ var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
-var DEBUG = true;
+var DEBUG = false;
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -88,7 +89,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	}
 	ajax_types(url,string_risk_type);
 	if (DEBUG){
-		console.log("types_warning_zones :", types_warning_zones);
+		console.log("types_warnheatGrid2json.phping_zones :", types_warning_zones);
 	}
 	ajax_types(url,string_anomaly_type);
 	if (DEBUG){
@@ -149,7 +150,72 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 				}
 				addGrid(json);
 				overlayMaps["Grid"] = grid; // menu
-				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+				if (Lcontrollayers != undefined){
+					Lcontrollayers.remove();
+				}
+				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map);
+			}
+		}
+	});
+}
+
+function ajax_polygon(){ //requete ajax pour recuperer un polygon
+	if (DEBUG){
+		console.log("FUNCTION : ajax_polygon");
+	}
+	$.ajax({
+		url : './php/heatPolygon.php',
+		type : 'POST',
+		dataType : 'json',
+		success : function(code_json, statut){
+			if (DEBUG){
+				console.log("ajax_polygon code_json : ", code_json);
+				console.log("ajax_polygon statut : ", statut);
+			}
+			$.notify(
+				{
+					title: "<strong>Heat polygon request</strong>",
+					message: statut
+				},{
+					type: "success",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		error : function(resultat, statut, erreur){
+			if (DEBUG){
+				console.log("ajax_polygon resultat : ", resultat);
+				console.log("ajax_polygon statut : ", statut);
+				console.log("ajax_polygon erreur : ", erreur);
+			}
+			$.notify(
+				{
+					title: "<strong>Heat polygon request</strong>",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (resultat.status == '200'){
+				if (DEBUG){
+					console.log("ajax_polygon json : ", resultat.responseJSON);
+				}
+				var json = resultat.responseJSON;
+				addHeatPolygon(json);
+				overlayMaps["Heat Polygon"] = heatPoly; // menu
+				if (Lcontrollayers != undefined){
+					Lcontrollayers.remove();
+				}
+				Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map);
 			}
 		}
 	});
@@ -280,6 +346,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		console.log("EVENT : $('#map').ready");
 	}
 	ajax_grid();
+	ajax_polygon();
 	//bbox = map.getBounds().toBBoxString();
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
@@ -563,7 +630,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 				console.log("layer : ", layer);
 			}
 			layer.addTo(map); // ajout a la map
-		}
+		}console.log("ajax_polygon json : ", resultat.responseJSON);
 	}
 }
 

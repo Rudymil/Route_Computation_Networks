@@ -25,6 +25,14 @@ function ajax_grid(){...}
 ```
 Requête ajax pour recupérer une **grille**.
 ```js
+function notify_warning_zones_none(){...}
+```
+Notifie qu'il n'y a pas de **warning zones** reçues.
+```js
+function remove_warning_zones(){...}
+```
+Supprime les **warning zones** de la carte.
+```js
 function add_warning_zones(url){...}
 ```
 Ajoute toutes les **warning zones** de la **bbox** from la **BDD**.
