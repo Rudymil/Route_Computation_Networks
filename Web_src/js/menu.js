@@ -297,11 +297,13 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	//bbox = map.getBounds().toBBoxString();
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
+		if (map.getZoom() > 9){
 			bbox = map.getBounds().toBBoxString();
 			add_warning_zones(url,bbox);
 		}
     });
     map.on('zoomend', function() { // lorsqu on zoom dans la carte
+		if (map.getZoom() > 9){
 			bbox = map.getBounds().toBBoxString();
 			add_warning_zones(url,bbox);
 		}
