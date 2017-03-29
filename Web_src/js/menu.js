@@ -8,11 +8,12 @@ var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
-//var url = 'http://172.31.56.223/api/server.php';
-var url = './php/server.php';
+var url = 'http://172.31.56.223/api/server.php';
+//var url = './php/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
 var grid = L.layerGroup();
+var heatPoly = L.layerGroup();
 var overlayMaps = new Array();
 var Lcontrollayers;
 var types_warning_zones = new Array();
@@ -22,7 +23,7 @@ var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
-var DEBUG = true;
+var DEBUG = false;
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
