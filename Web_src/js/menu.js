@@ -156,7 +156,7 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 	});
 }
 
-function notify_warning_zones_none(){
+function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zones reçues
 	$.notify(
 		{
 			title: "<strong>Warning zones request</strong>",
@@ -171,7 +171,7 @@ function notify_warning_zones_none(){
 	);
 }
 
-function remove_warning_zones(){
+function remove_warning_zones(){ // supprime les warning zones de la carte
 	for (element in warning_zones){ // pour chaque warning zones
 		if (DEBUG){
 			console.log("element :", element);
