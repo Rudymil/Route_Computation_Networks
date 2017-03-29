@@ -6,16 +6,20 @@ import networkxGraphManager
 from shapely.geometry import shape, Point
 import os
 
-def connection_postgres():
+def connection_postgres(warningZoneFilenameInput = 'border_polygons.json', host="172.31.56.223", dbname="api", user="api", password="apiPassword", table="warning_zone", field='risque'):
     """
     Get a GeoJSON file with the warning zone from Postgres
     """
     try:
-        os.system('ogr2ogr -f GeoJSON WZone.json "PG:host=localhost dbname=projcomm user=julie password=julie" \
-        -sql "SELECT geom, risque AS weight FROM hot_area"')
+        os.system('rm '+warningZoneFilenameInput)
+        os.system('ogr2ogr -f GeoJSON '+warningZoneFilenameInput+' "PG:host='+host+' port=5432 dbname='+dbname+' user='+user+' password='+password+'" \
+        -sql "SELECT geom, '+field+' AS weight FROM '+table+'"')
+        # print("Connect")
+
     except Exception as e:
         print("Can't connect")
         print(e)
+
 
 def load_geojson_warning_zone(warningZoneFilenameInput):
     """
@@ -23,7 +27,7 @@ def load_geojson_warning_zone(warningZoneFilenameInput):
     """
     with open(warningZoneFilenameInput) as f:
         js = json.load(f)
-        return js
+        return js["features"]
 
 def fusion_warning_zone_with_graph(graph, featureList, featurePropertyDescribedWeight = "weight", weightKeyToChange = "weight"):
     """
@@ -39,9 +43,10 @@ def fusion_warning_zone_with_graph(graph, featureList, featurePropertyDescribedW
         # cumule the weight if the edge interferes with a warning zone
         for feature in featureList:
             if feature["type"] == "Feature":
-                polygon = shape(feature['geometry'])
+                polygon = shape(feature["geometry"])
                 if polygon.contains(source) and polygon.contains(target):
                     if (feature["properties"][featurePropertyDescribedWeight] > 0):
+                        # print(feature["properties"][featurePropertyDescribedWeight])
                         new_weight = d[weightKeyToChange] + feature["properties"][featurePropertyDescribedWeight]
                         graph.add_weighted_edges_from([( u, v, new_weight)], weight=weightKeyToChange)
 
@@ -54,7 +59,7 @@ def main(
     ):
     ## ALGORITHM
     # Get file
-    connection_postgres()
+    connection_postgres(warningZoneFilenameInput)
 
     # Load the graph from networkx export file
     G = networkxGraphManager.read_json_file(graphFilenameInput)

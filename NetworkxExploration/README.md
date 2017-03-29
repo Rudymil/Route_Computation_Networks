@@ -22,12 +22,12 @@ Currently, check if a point is inside a polygon from geojson
 ![Schema](routing_via_networkx.png)
 
 
-> python3.5 osmToPython.py 43.6026628 3.8776791 43.594988110031814 3.8692045211791997 "length"
+> python3.5 osm2itinerary.py 43.6026628 3.8776791 43.594988110031814 3.8692045211791997 "length"
 
 > cd .. & php -S 127.0.0.1:8082
 
-Open a web browser : 
+Open a web browser :
 > http://127.0.0.1:8082/clientWebMockup/
 
-Exemple of API routing query : 
+Exemple of API routing query :
 > http://127.0.0.1:8082/NetworkxExploration/server.php?lonSource=3.8776791&latSource=43.6026628&lonTarget=3.8692045211791997&latTarget=43.594988110031814&weightType="length"
