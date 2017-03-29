@@ -50,5 +50,5 @@ function heatGrid2json($gridPath, $jsonPath){
   }
 }
 
-print(heatGrid2json("./penalty.asc", "./penalty.json"));
+print(heatGrid2json("../data/penalty.asc", "../data/penalty.json"));
 ?>
