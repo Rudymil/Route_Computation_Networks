@@ -23,6 +23,7 @@ var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
 var DEBUG = true;
+var zoom = 12;
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -304,7 +305,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		if (DEBUG){
 			console.log("zoom :", map.getZoom())
 		}
-		if (map.getZoom() > 10){
+		if (map.getZoom() > zoom){
 			bbox = map.getBounds().toBBoxString();
 			add_warning_zones(url,bbox);
 		}
@@ -316,7 +317,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		if (DEBUG){
 			console.log("zoom :", map.getZoom())
 		}
-		if (map.getZoom() > 10){
+		if (map.getZoom() > zoom){
 			bbox = map.getBounds().toBBoxString();
 			add_warning_zones(url,bbox);
 		}
