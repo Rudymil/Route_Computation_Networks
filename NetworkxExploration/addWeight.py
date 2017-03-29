@@ -32,21 +32,21 @@ def selectEdge(graph, source, target):
 source = "53062784"
 target = "4241681602"
 
-filename = 'JSONData.json'
+filename = 'WZone.json'
 G = read_json_file(filename)
 # print(G.nodes(data=True))
 # print(G.edges(data=True))
 
 # print(G[int(source)][int(target)])
 e = selectEdge(G, source, target)
-print("source :", source, "target :", target)
-print("edge :", G.edges(data=True)[e])
+# print("source :", source, "target :", target)
+# print("edge :", G.edges(data=True)[e])
 
 source = "4241681602"
 target = "53062785"
 e = selectEdge(G, source, target)
-print("source :", source, "target :", target)
-print("edge :", G.edges(data=True)[e])
+# print("source :", source, "target :", target)
+# print("edge :", G.edges(data=True)[e])
 
 defaultWeight = 3.0
 G.add_weighted_edges_from([( G.edges(data=True)[e][0], G.edges(data=True)[e][1], defaultWeight)])

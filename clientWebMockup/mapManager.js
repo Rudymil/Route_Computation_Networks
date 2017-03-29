@@ -70,26 +70,26 @@ $(function(){
 
   // GEOJSON
   // Be careful : lat lon inversed
-  var geojsonFeature = [{
-    "type": "Feature",
-    "properties": {
-      "party": "Republican"
-    },
-    "geometry": {
-      "type": "Polygon",
-      "coordinates": [
-        [
-          [3.87, 43.60],
-          [3.87, 43.59],
-          [3.889, 43.59],
-          [3.889, 43.60],
-          [3.87, 43.60],
-        ]
-      ]
-    }
-  }];
-
-  L.geoJSON(geojsonFeature).addTo(map);
+  // var geojsonFeature = [{
+  //   "type": "Feature",
+  //   "properties": {
+  //     "party": "Republican"
+  //   },
+  //   "geometry": {
+  //     "type": "Polygon",
+  //     "coordinates": [
+  //       [
+  //         [3.87, 43.60],
+  //         [3.87, 43.59],
+  //         [3.889, 43.59],
+  //         [3.889, 43.60],
+  //         [3.87, 43.60],
+  //       ]
+  //     ]
+  //   }
+  // }];
+  //
+  // L.geoJSON(geojsonFeature).addTo(map);
 
 
 

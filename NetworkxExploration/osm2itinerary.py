@@ -74,7 +74,10 @@ def main():
         print("target_id : ", target_id)
         print("Point : ", pos1)
 
+
     # WEIGHT
+    # Connection to Postgres -> create GeoJSON file
+    # fillWeightMatrix.connection_postgres()
     # Load GeoJSON file containing warning zone sectors
     featureList = fillWeightMatrix.load_geojson_warning_zone(warningZoneFilenameInput)
     # Set the default weight to the graph
