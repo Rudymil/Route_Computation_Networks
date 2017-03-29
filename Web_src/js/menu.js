@@ -72,10 +72,10 @@ function ajax_types(url,type){ // requete ajax sur les types
 						console.log("json : ", json);
 					}
 					if (type == string_risk_type){
+						types_warning_zones = json;
 						if (DEBUG){
 							console.log("types_warning_zones :", types_warning_zones);
 						}
-						types_warning_zones = json;
 					}
 					else if (type == string_anomaly_type){
 						types_anomalies = json;
