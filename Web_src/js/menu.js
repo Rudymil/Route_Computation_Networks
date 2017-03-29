@@ -8,7 +8,8 @@ var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
-var url = 'http://172.31.56.223/api/server.php';
+//var url = 'http://172.31.56.223/api/server.php';
+var url = './php/server.php';
 var warning_zones = new Array();
 var layer_group_warning_zones;
 var grid = L.layerGroup();
@@ -21,9 +22,14 @@ var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
-var DEBUG = false;
+var DEBUG = true;
 
 function ajax_types(url,type){ // requete ajax sur les types
+	if (DEBUG){
+		console.log("function ajax_types");
+		console.log("url : ",url);
+		console.log("type : ",type);
+	}
 	$.ajax({
 		url : url,
 		type : 'GET',
@@ -55,6 +61,9 @@ function ajax_types(url,type){ // requete ajax sur les types
 			);
 		},
 		complete : function(resultat, statut){
+			if (DEBUG){
+				console.log("resultat.status :", resultat.status);
+			}
 			if (resultat.status == '200'){
 				var json = resultat.responseJSON;
 				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
@@ -74,6 +83,9 @@ function ajax_types(url,type){ // requete ajax sur les types
 }
 
 $("body").ready(function(){ // lorsque le body est charge
+	if (DEBUG){
+		console.log("$('body').ready");
+	}
 	ajax_types(url,string_risk_type);
 	if (DEBUG){
 		console.log("types_warning_zones :");
@@ -87,6 +99,9 @@ $("body").ready(function(){ // lorsque le body est charge
 });
 
 function ajax_grid(){ // requete ajax pour recuperer une grille
+	if (DEBUG){
+		console.log("function ajax_grid");
+	}
 	$.ajax({
 		url : './php/heatGrid2json.php',
 		type : 'POST',
@@ -143,13 +158,18 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 }
 
 function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la bbox from la BDD
+	if (DEBUG){
+		console.log("function add_warning_zones");
+		console.log("url : ",url);
+		console.log("bbox : ",bbox);
+	}
 	$.ajax({
 		url : url,
 		type : 'GET',
 		data : 'type='+string_warning_zone+'&bbox='+bbox,
 		dataType : 'json',
 		success : function(code_json, statut){
-			if (DEBUG){
+			if (1){
 				console.log("code_json : ",code_json);
 				console.log("statut : ",statut);
 			}
@@ -187,6 +207,9 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 		},
 		complete : function(resultat, statut){
 			if (resultat.status == '200'){
+				if (DEBUG){
+					console.log("resultat.status :", resultat.status);
+				}
 				var json = resultat.responseJSON;
 				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
 					if (DEBUG){
@@ -255,6 +278,9 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 }
 
 $("#map").ready(function(){ // lorsque la carte est chargee
+	if (DEBUG){
+		console.log("$('#map').ready");
+	}
 	ajax_grid();
 	bbox = map.getBounds().toBBoxString();
 	add_warning_zones(url,bbox);
@@ -269,6 +295,10 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 });
 
 function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
+	if (DEBUG){
+		console.log("function check_latlng");
+		console.log("latlng : ",latlng);
+	}
 	if (latlng.length == 2 && latlng[0].length == 2 && latlng[1].length == 2){ // si 2 couples de lat Lng
 		if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined) || latlng[1].includes("") || latlng[1].includes(NaN) || latlng[1].includes(undefined)){ // si pas de point
 			if (latlng[0].includes("") || latlng[0].includes(NaN) || latlng[0].includes(undefined)){
@@ -324,7 +354,7 @@ function check_latlng(latlng){ // verifie que la variable d entree contient bien
 
 $("#calculate").click(function(){ // envoie les points a l algo pour afficher l itineraire
 	if (DEBUG){
-		console.log("latlng : ",latlng);
+		console.log("$('#calculate').click");
 	}
 	affect(); // fonction définie dans set_the_route.js pour affecter les coordonnees des points de depart et d arrivee à latlng
 	if (check_latlng(latlng) == 0){ // si la verification passe
@@ -332,6 +362,10 @@ $("#calculate").click(function(){ // envoie les points a l algo pour afficher l 
 });
 
 function notify_shape_empty(shape){ // notifie que l object est vide
+	if (DEBUG){
+		console.log("function notify_shape_empty");
+		console.log("shape : ",shape);
+	}
 	$.notify(
 		{
 			title: "<strong>"+shape+"</strong>",
@@ -347,6 +381,10 @@ function notify_shape_empty(shape){ // notifie que l object est vide
 }
 
 function notify_none(shape){ // notifie que rien est a envoyer
+	if (DEBUG){
+		console.log("function notify_none");
+		console.log("shape : ",shape);
+	}
 	$.notify(
 		{
 			title: "<strong>"+shape+"</strong>",
@@ -362,6 +400,11 @@ function notify_none(shape){ // notifie que rien est a envoyer
 }
 
 function notify_ajax_sending_areas_success(code, statut){ // notifie que l envoi a reussi
+	if (DEBUG){
+		console.log("function notify_ajax_sending_areas_success");
+		console.log("code : ",code);
+		console.log("statut : ",statut);
+	}
 	$.notify(
 		{
 			title: "<strong>Sending areas</strong>",
@@ -377,6 +420,11 @@ function notify_ajax_sending_areas_success(code, statut){ // notifie que l envoi
 }
 
 function notify_ajax_sending_areas_error(erreur, statut){ // notifie que lenvoi a echoue
+	if (DEBUG){
+		console.log("function notify_ajax_sending_areas_error");
+		console.log("erreur : ",erreur);
+		console.log("statut : ",statut);
+	}
 	$.notify(
 		{
 			title: "<strong>Sending areas</strong>",
@@ -392,6 +440,13 @@ function notify_ajax_sending_areas_error(erreur, statut){ // notifie que lenvoi 
 }
 
 function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir des shapes en parametres
+	if (DEBUG){
+		console.log("function fill_geojson");
+		console.log("circle : ",circle);
+		console.log("box : ",box);
+		console.log("polygon : ",polygon);
+		console.log("geojson : ",geojson);
+	}
 	if (circle.length == 0){
 		notify_none(string_circles);
 	}
@@ -450,6 +505,12 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 }
 
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
+	if (DEBUG){
+		console.log("function send_ajax_geojson");
+		console.log("geojson : ",geojson);
+		console.log("type : ",type);
+		console.log("url : ",url);
+	}
 	$.ajax({
 		url : url,
 		type : 'POST',
@@ -483,6 +544,10 @@ function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le
 
 function style_shape(shape){ // modifie le style de chaque forme
 	if (DEBUG){
+		console.log("function style_shape");
+		console.log("shape : ",shape);
+	}
+	if (DEBUG){
 		console.log(shape);
 	}
 	if (shape.length > 0){
@@ -508,6 +573,9 @@ function style_shape(shape){ // modifie le style de chaque forme
 }
 
 $("#submit1").click(function(){ // envoie toutes les warning zones
+	if (DEBUG){
+		console.log("$('#submit1').click");
+	}
 	if (DEBUG){
 		console.log("Circles :");
 		console.log(circle);
@@ -537,6 +605,9 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 });
 
 $("#submit2").click(function(){ // envoie toutes les anomaly
+	if (DEBUG){
+		console.log("$('#submit1').click");
+	}
 	if (DEBUG){
 		console.log("Circles :");
 		console.log(circlel);
