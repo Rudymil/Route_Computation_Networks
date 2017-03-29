@@ -280,8 +280,8 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 		console.log("EVENT : $('#map').ready");
 	}
 	ajax_grid();
-	bbox = map.getBounds().toBBoxString();
-	add_warning_zones(url,bbox);
+	//bbox = map.getBounds().toBBoxString();
+	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
 		bbox = map.getBounds().toBBoxString();
 		add_warning_zones(url,bbox);
