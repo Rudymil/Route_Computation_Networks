@@ -54,8 +54,9 @@ $(".radio_button").change(function (){ // choix de dessin
     	marker: false,
     	},
   	edit: {
-   	 featureGroup: editableLayers, //REQUIRED!!
-   	 remove: false
+   	 featureGroup: editableLayers,
+   	 edit: true,
+   	 remove: true
   	}
 	};
 	
@@ -100,7 +101,8 @@ $(".radio_button").change(function (){ // choix de dessin
     	},
   	edit: {
    	 featureGroup: editableLayers, //REQUIRED!!
-   	 remove: false
+   	 edit: true,
+   	 remove: true
   	}
 	};
 drawControl = new L.Control.Draw(drawPluginOptions);
@@ -149,7 +151,8 @@ drawControl = new L.Control.Draw(drawPluginOptions);
     	},
   	edit: {
    	 featureGroup: editableLayers, //REQUIRED!!
-   	 remove: false
+   	 edit: true,
+   	 remove: true
   	}
 	};
 	drawControl = new L.Control.Draw(drawPluginOptions);
@@ -157,12 +160,9 @@ drawControl = new L.Control.Draw(drawPluginOptions);
 }
 
 	// Initialise the draw control and pass it the FeatureGroup of editable layers
-	
-	
-	
 
-	editableLayers = new L.FeatureGroup();
-	map.addLayer(editableLayers);
+	//editableLayers = new L.FeatureGroup();
+	//map.addLayer(editableLayers);
 
 
 
@@ -218,7 +218,8 @@ map.on('draw:created', function(e) {
   				layergeo.properties= {
        			 "type": "warningType",
        			 "typeGeometry" : "circle",
-       			 "radius" : layer._mRadius ,	
+       			 "radius" : layer._mRadius ,
+       			 "id" : layer._leaflet_id ,	
         		 "description": des,
      		     "level": lev,
      		     "date": Date.now()
@@ -233,13 +234,13 @@ map.on('draw:created', function(e) {
 				
     			circle.push(layergeo);
 
-				
+				//console.log(circle);
 				
 			}
 			);
   			
 
-  			
+  			editableLayers.addLayer(layer);
 			
 			
 
@@ -279,6 +280,7 @@ map.on('draw:created', function(e) {
     			layerjson.properties={
        					 "type": "warningType",
        					 "description": des,
+       					 "id" : layer._leaflet_id ,	
        					 "level": lev,
         				"date": Date.now()
     			}
@@ -292,7 +294,7 @@ map.on('draw:created', function(e) {
 			}
 			);
 
-  			
+  			editableLayers.addLayer(layer);
 		
 		}
 		
@@ -332,6 +334,7 @@ map.on('draw:created', function(e) {
     			layerjson.properties= {
         			"type": "warningType",
        				 "description": des,
+       				 "id" : layer._leaflet_id ,	
        				 "level" : lev ,
        				 "date": Date.now()
    			 }
@@ -347,7 +350,7 @@ map.on('draw:created', function(e) {
 			);
 		
 		
-		
+		editableLayers.addLayer(layer);
 		
 		
 		}
@@ -356,7 +359,7 @@ map.on('draw:created', function(e) {
 		//var popup = L.popup().setContent("I am a standalone popup.");
 		//layer.bindPopup(popup).openPopup();
     	//console.log(layer);
-		editableLayers.addLayer(layer);
+		//editableLayers.addLayer(layer);
 		//console.log(editableLayers);
 
 	});
@@ -438,3 +441,112 @@ map.on('draw:created', function(e) {
             return null
         };
         
+
+map.on('draw:edited', function (e) {
+		var type = e.layerType;
+         var layers = e.layers;
+         
+         var nc=circle.length;
+         var np=polygon.length;
+         var nb=box.length;
+         
+         
+         
+         
+         layers.eachLayer(function (layer) {
+         	var ic=0;
+         	var ip=0;
+         	var ib=0;
+         	
+          	while ( ic<nc ) {
+          		if( layer._leaflet_id == circle[ic].properties.id ) {
+       
+          				circle[ic].properties.radius=layer._mRadius;
+
+          				var tempjson=layer.toGeoJSON();
+          				circle[ic].geometry=tempjson.geometry;
+
+          		}
+          		ic++;
+          	} 
+          	
+          	while ( ib<nb ) {
+          		if( layer._leaflet_id == box[ib].properties.id ) {
+
+          				box[ib].properties.radius=layer._mRadius;
+
+          				var tempjson=layer.toGeoJSON();
+          				box[ib].geometry=tempjson.geometry;
+
+          		}
+          		ib++;
+          	} 
+          	
+          	while ( ip<np ) {
+          		if( layer._leaflet_id == polygon[ip].properties.id ) {
+
+          				polygon[ip].properties.radius=layer._mRadius;
+
+          				var tempjson=layer.toGeoJSON();
+          				polygon[ip].geometry=tempjson.geometry;
+
+          		}
+          		ip++;
+          	} 
+          	
+          	
+
+         });
+     });
+     
+     
+
+map.on('draw:deleted', function(e) {
+
+		var type = e.layerType;
+         var layers = e.layers;
+
+         var nc=circle.length;
+         var np=polygon.length;
+         var nb=box.length;
+
+		layers.eachLayer(function (layer) {
+			var ic=0;
+         	var ip=0;
+         	var ib=0;
+         	
+
+			while(ic<nc) {	
+
+				if( layer._leaflet_id == circle[ic].properties.id ) {
+
+				circle.splice(ic,1);
+				nc=circle.length;
+				}
+				else { ic++; }
+			}
+			
+			while(ib<nb) {	
+
+				if( layer._leaflet_id == box[ib].properties.id ) {
+
+				box.splice(ib,1);
+				nb=box.length;
+				}
+				else { ib++; }
+			}
+			
+			while(ip<np) {	
+
+				if( layer._leaflet_id == polygon[ip].properties.id ) {
+
+				polygon.splice(ip,1);
+				np=polygon.length;
+				}
+				else { ip++; }
+			}
+			
+		
+		});
+
+});
