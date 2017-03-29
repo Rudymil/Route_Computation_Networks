@@ -26,8 +26,11 @@ Currently, check if a point is inside a polygon from geojson
 
 > cd .. & php -S 127.0.0.1:8082
 
-Open a web browser : 
+Open a web browser :
 > http://127.0.0.1:8082/clientWebMockup/
 
-Exemple of API routing query : 
+Exemple of API routing query :
 > http://127.0.0.1:8082/NetworkxExploration/server.php?lonSource=3.8776791&latSource=43.6026628&lonTarget=3.8692045211791997&latTarget=43.594988110031814&weightType="length"
+
+Connection base :
+> psql --host 172.31.56.223 --dbname api --user api
