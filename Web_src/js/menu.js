@@ -223,17 +223,23 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						}
 					}
 					warning_zones = []; // on vide les warning zones
-					for (element in json){ // pour chaque object du geojson
+					for (FeatureCollection in json){ // pour chaque object du geojson
 						if (DEBUG){
-							console.log("element :", element);
-							console.log("json[element] :", json[element]);
+							console.log("FeatureCollection :", FeatureCollection);
+							console.log("json[FeatureCollection] :", json[FeatureCollection]);
 						}
-						var shape = L.geoJSON(json[element]);
-						shape.setStyle({ // transforme en layer et change le style
-							fillColor: '#878787' // grey
-						});
-						shape.addTo(map); // ajout a la map
-						warning_zones.push(shape); // remplir la warning zone
+						for (element in json[FeatureCollection]){
+							if (DEBUG){
+								console.log("element :", element);
+								console.log("json[FeatureCollection][element] :", json[FeatureCollection][element]);
+							}
+							var shape = L.geoJSON(json[FeatureCollection][element]);
+							shape.setStyle({ // transforme en layer et change le style
+								fillColor: '#878787' // grey
+							});
+							shape.addTo(map); // ajout a la map
+							warning_zones.push(shape); // remplir la warning zone
+						}
 					}
 					layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
 					overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
