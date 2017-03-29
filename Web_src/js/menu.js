@@ -203,7 +203,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 				console.log("add_warning_zones code_json : ", code_json);
 				console.log("add_warning_zones statut : ", statut);
 			}
-			$.notify(
+			/*$.notify(
 				{
 					title: "<strong>Warning zones request</strong>",
 					message: statut
@@ -214,7 +214,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						align: "center"
 					}
 				}
-			);
+			);*/
 		},
 		error : function(resultat, statut, erreur){
 			if (DEBUG){
@@ -275,6 +275,18 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							Lcontrollayers.remove();
 						}
 						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+						$.notify(
+							{
+								title: "<strong>Warning zones</strong>",
+								message: 'received'
+							},{
+								type: "success",
+								placement: {
+									from: "bottom",
+									align: "center"
+								}
+							}
+						);
 					}
 					else {
 						notify_warning_zones_none();
