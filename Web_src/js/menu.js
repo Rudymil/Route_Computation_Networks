@@ -302,7 +302,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
 		if (DEBUG){
-			console.log("zoom :", map.getBounds())
+			console.log("zoom :", map.getZoom())
 		}
 		if (map.getZoom() > 10){
 			bbox = map.getBounds().toBBoxString();
@@ -314,7 +314,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
     });
     map.on('zoomend', function() { // lorsqu on zoom dans la carte
 		if (DEBUG){
-			console.log("zoom :", map.getBounds())
+			console.log("zoom :", map.getZoom())
 		}
 		if (map.getZoom() > 10){
 			bbox = map.getBounds().toBBoxString();
