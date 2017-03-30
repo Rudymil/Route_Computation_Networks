@@ -186,7 +186,7 @@ $(function(){
     // haversine formula
     dlon = lon2 - lon1 ;
     dlat = lat2 - lat1 ;
-    a = Math.sin(dlat/2)**2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon/2)**2 ;
+    a = Math.pow(Math.sin(dlat/2),2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2),2) ;
     c = 2 * Math.asin(Math.sqrt(a)) ;
     r = 6371 ; // Radius of earth in kilometers. Use 3956 for miles
     r *= 1000 ; // to meters
@@ -233,10 +233,10 @@ $(function(){
       var text;
       var direction;
       if ( angle < 160 && angle > 0 ){
-        text = "À "+distanceToDisplay+"m, "+"tournez à <strong>gauche</strong> en direction de "+ suivante[2];
+        text = "À "+distanceToDisplay+"m, "+"tournez à <strong>gauche</strong> en direction de "+ z[2];
         direction = "left";
       } else if (angle < 360 && angle > 200 ) {
-        text = "À "+distanceToDisplay+"m, "+"tournez à <strong>droite</strong> en direction de "+ suivante[2];
+        text = "À "+distanceToDisplay+"m, "+"tournez à <strong>droite</strong> en direction de "+ z[2];
         direction = "right";
       } else {
         text = "Sur "+distanceToDisplay+"m, "+"continuez <strong>tout droit</strong> sur "+ y[2];
