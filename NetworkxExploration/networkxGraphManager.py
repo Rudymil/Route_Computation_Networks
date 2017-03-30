@@ -8,6 +8,7 @@ Copyright (C) 2017 Loïc Messal (github : Tofull)
 """
 import json
 from networkx.readwrite import json_graph
+import networkx as netx
 import random
 
 def read_json_file(filename):
@@ -88,15 +89,13 @@ def print_path(idList, graph):
     Result :
     [[43.6026628, 3.8776791], [43.6026417, 3.877659], [43.602617, 3.8776495]]
     """
+
+    # name=netx.get_edge_attributes(graph,'name')
+
     result = []
-    counter = 0
-    modulo = 1
-    for p in idList:
-        if (counter >= len(idList) - modulo ):
-            comma = ""
-        else:
-            comma = ","
-        if counter%modulo == 0:
-            result.append([ str(graph.node[p]['lat']), str(graph.node[p]['lon'])])
-        counter+=1
+    for index_node in range(len(idList)-1):
+        edge = graph[idList[index_node]][idList[index_node+1]]
+        result.append([ str(graph.node[idList[index_node]]['lat']), str(graph.node[idList[index_node]]['lon']), edge.get('OSMNAME')])
+    edge = graph[idList[index_node]][idList[index_node+1]]
+    result.append([ str(graph.node[idList[len(idList)-1]]['lat']), str(graph.node[idList[len(idList)-1]]['lon']), edge.get('OSMNAME')])
     return json.dumps(result)

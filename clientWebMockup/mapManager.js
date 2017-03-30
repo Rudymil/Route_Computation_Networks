@@ -245,12 +245,12 @@ $(function(){
       console.log("angle : ", angle, "degrees");
 
       if ( angle < 170 && angle > 0 ){
-        console.log("direction : gauche");
+        console.log("direction : gauche sur "+ z[2]);
       } else if (angle < 360 && angle > 190 ) {
-        console.log("direction : droite");
+        console.log("direction : droite sur "+ z[2]);
 
       } else {
-        console.log("direction : tout droit");
+        console.log("direction : tout droit sur "+ z[2]);
       }
 
 
