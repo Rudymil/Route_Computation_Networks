@@ -349,8 +349,8 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	if (DEBUG){
 		console.log("EVENT : $('#map').ready");
 	}
-	ajax_grid();
-	ajax_polygon();
+	//ajax_grid();
+	//ajax_polygon();
 	//bbox = map.getBounds().toBBoxString();
 	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
