@@ -1,10 +1,40 @@
-var lleditableLayers=null;
 
+var infoscl= new Array();
+var infospl= new Array();
+var infosbl= new Array();
+
+function datem() {
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd='0'+dd
+} 
+
+if(mm<10) {
+    mm='0'+mm
+} 
+
+today = mm+'/'+dd+'/'+yyyy;
+return today;
+
+}
+
+
+leditableLayers = new L.FeatureGroup();
+map.addLayer(leditableLayers);
 
 $(".radio_button").change(function (){ // choix de dessin
 
 	if ($("#Navigate").is(":checked") ){
 	
+		/*if( markeraDestination != null && markeraDestination != null ){
+		markerDeparture.dragging.enable();
+		markeraDestination.dragging.enable();	
+		}*/
 		map.removeControl(drawControl);
 	}
 	
@@ -19,14 +49,13 @@ $(".radio_button").change(function (){ // choix de dessin
 	// Initialise the FeatureGroup to store editable layers
 	$("#dep").prop('disabled', true);
 	$("#dest").prop('disabled', true);
-	if( markerDeparture != null ) {	
+	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
 	if( markeraDestination != null ) {
 	markeraDestination.dragging.disable();
 	}
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	*/
 
 	var drawPluginOptions = {
   	position: 'topright',
@@ -62,14 +91,13 @@ $(".radio_button").change(function (){ // choix de dessin
 	}	
 	$("#dep").prop('disabled', true);
 	$("#dest").prop('disabled', true);
-	if( markerDeparture != null ) {	
+	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
 	if( markeraDestination != null ) {
 	markeraDestination.dragging.disable();
-	}
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	}*/
+
 
 	var drawPluginOptions = {
   	position: 'topright',
@@ -92,7 +120,7 @@ $(".radio_button").change(function (){ // choix de dessin
   	}
 	};
 
-		drawControl = new L.Control.Draw(drawPluginOptions);
+	drawControl = new L.Control.Draw(drawPluginOptions);
 	map.addControl(drawControl);
 	}
 	
@@ -107,14 +135,12 @@ $(".radio_button").change(function (){ // choix de dessin
 	// Initialise the FeatureGroup to store editable layers
 	$("#dep").prop('disabled', true);
 	$("#dest").prop('disabled', true);
-	if( markerDeparture != null ) {	
+	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
 	if( markeraDestination != null ) {
 	markeraDestination.dragging.disable();
-	}
-	leditableLayers = new L.FeatureGroup();
-	map.addLayer(leditableLayers);
+	}*/
 
 	var drawPluginOptions = {
   	position: 'topright',
@@ -141,7 +167,7 @@ $(".radio_button").change(function (){ // choix de dessin
    	 remove: true
   	}
 	};
-drawControl = new L.Control.Draw(drawPluginOptions);
+	drawControl = new L.Control.Draw(drawPluginOptions);
 	map.addControl(drawControl);
 	
 }
@@ -161,6 +187,7 @@ map.on('draw:created', function(e) {
   		var type = e.layerType;
   		//console.log(type);
   		layer = e.layer;
+  		
   		if( type=="circle" && $("#Circle2").is(":checked")==true) {
     		
 			
@@ -191,26 +218,21 @@ map.on('draw:created', function(e) {
     			des= $('#description').val();
     			ano= $('#anomalyType').find(":selected").val();
   				
-    			var layergeo=layer.toGeoJSON();
-  			
-  				layergeo.properties= {
-       			 "type": "anomalyType",
-       			 "typeGeometry" : "circle",
-       			 "radius" : layer._mRadius ,
-       			 "id" : layer._leaflet_id ,	
-        		 "description": des,
-     		     "level": lev,
-     		     "date": Date.now()
-   			 	};
-   			 	
-   			 	content = getPopupContent(layer,layergeo);
+  				console.log(des);
+   			 	content = getPopupContenta(layer,lev,des);
+   			 	var temp = [des,lev,layer._leaflet_id ];
    			 	//console.log(content);
    			 	if (content !== null) {
                 	layer.bindPopup(content);
                 	//layer.setPopupContent(content);
        			 }
-   			 	
-    			circlel.push(layergeo);
+       			 
+       			infoscl.push(temp);
+
+    			//circle.push(layergeo);
+
+				//console.log(circle);
+				
 			}
 			);
   			
@@ -250,23 +272,20 @@ map.on('draw:created', function(e) {
     			des= $('#description').val();
     			ano= $('#anomalyType').find(":selected").val();
   				
-    			layerjson=layer.toGeoJSON();
-    			layerjson.properties={
-       					 "type": "anomalyType",
-       					 "description": des,
-       					 "id" : layer._leaflet_id ,
-       					 "level": lev,
-        				"date": Date.now()
-    			}
-    			
-    			content = getPopupContent(layer,layerjson)
-    			if (content !== null) {
-                layer.bindPopup(content);
+    			console.log(des);
+   			 	content = getPopupContenta(layer,lev,des);
+   			 	var temp = [des,lev,layer._leaflet_id ];
+   			 	//console.log(content);
+   			 	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
        			 }
+       			 
+       			infosbl.push(temp);
 
-    			
-				boxl.push(layerjson);
-				//console.log(boxl);	
+    			//circle.push(layergeo);
+
+				//console.log(circle);
 
 			}
 			);
@@ -306,22 +325,21 @@ map.on('draw:created', function(e) {
     			des= $('#description').val();
     			lev= $('#level').find(":selected").val();
   				
-    			layerjson=layer.toGeoJSON();
-    			layerjson.properties= {
-        			"type": "anomalyType",
-       				 "description": des,
-       				 "level" : lev ,
-       				 "id" : layer._leaflet_id ,
-       				 "date": Date.now()
-   			 }
     			
-    			content = getPopupContent(layer,layerjson)
-    			if (content !== null) {
-                layer.bindPopup(content);
+    			des= $('#description').val();
+    			ano= $('#anomalyType').find(":selected").val();
+  				
+    			console.log(des);
+   			 	content = getPopupContenta(layer,lev,des);
+   			 	var temp = [des,lev,layer._leaflet_id ];
+   			 	//console.log(content);
+   			 	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
        			 }
        			 
-				polygonl.push(layerjson);
-		//console.log(polygonl);
+       			infospl.push(temp);
+    			
 			}
 			);
 		
@@ -334,26 +352,26 @@ map.on('draw:created', function(e) {
 	
 	
 	
- var getPopupContent = function(layer,geo) {
+ var getPopupContenta = function(layer,level,description) {
 
 			if (layer instanceof L.Circle) {
                 
             var html= '<table>\
  						 <tr>\
   							  <td>Type of geometry : </td>\
-  							  <td> ' +geo.properties.typeGeometry+'</td>\
+  							  <td> Circle</td>\
   						 </tr>\
  						 <tr>\
    							 <td>Level : </td>\
-    						 <td>'+geo.properties.level+'</td>\
+    						 <td>'+level+'</td>\
   						</tr>\
   						<tr>\
    							 <td>Description : </td>\
-    						 <td>'+geo.properties.description+'</td>\
+    						 <td>'+description+'</td>\
   						</tr>\
   						<tr>\
    							 <td>Date : </td>\
-    						 <td>'+geo.properties.date+'</td>\
+    						 <td>'+datem()+'</td>\
   						</tr>\
 						</table>'
 				return html;
@@ -365,19 +383,19 @@ map.on('draw:created', function(e) {
             	var html= '<table>\
  						 <tr>\
   							  <td>Type of geometry : </td>\
-  							  <td> '+geo.geometry.type+'</td>\
+  							  <td> Polygon </td>\
   						 </tr>\
  						 <tr>\
    							 <td>Level : </td>\
-    						 <td>'+geo.properties.level+'</td>\
+    						 <td>'+level+'</td>\
   						</tr>\
   						<tr>\
    							 <td>Description : </td>\
-    						 <td>'+geo.properties.description+'</td>\
+    						 <td>'+description+'</td>\
   						</tr>\
   						<tr>\
    							 <td>Date : </td>\
-    						 <td>'+geo.properties.date+'</td>\
+    						 <td>'+datem()+'</td>\
   						</tr>\
 						</table>'
 				return html;
@@ -388,19 +406,19 @@ map.on('draw:created', function(e) {
             	var html= '<table>\
  						 <tr>\
   							  <td>Type of geometry : </td>\
-  							  <td> '+geo.geometry.type+'</td>\
+  							  <td> rectangle</td>\
   						 </tr>\
  						 <tr>\
    							 <td>Level : </td>\
-    						 <td>'+geo.properties.level+'</td>\
+    						 <td>'+level+'</td>\
   						</tr>\
   						<tr>\
    							 <td>Description : </td>\
-    						 <td>'+geo.properties.description+'</td>\
+    						 <td>'+description+'</td>\
   						</tr>\
   						<tr>\
    							 <td>Date : </td>\
-    						 <td>'+geo.properties.date+'</td>\
+    						 <td>'+datem()+'</td>\
   						</tr>\
 						</table>'
 				return html;
@@ -413,6 +431,8 @@ map.on('draw:created', function(e) {
 
 
 map.on('draw:edited', function (e) {
+		
+		/*
 		var type = e.layerType;
          var layers = e.layers;
          
@@ -467,13 +487,14 @@ map.on('draw:edited', function (e) {
           	
           	
 
-         });
+         }); */
      });
      
      
 
 map.on('draw:deleted', function(e) {
 
+		/*
 		var type = e.layerType;
          var layers = e.layers;
 
@@ -518,6 +539,6 @@ map.on('draw:deleted', function(e) {
 			}
 			
 		
-		});
+		}); */
 
 });
