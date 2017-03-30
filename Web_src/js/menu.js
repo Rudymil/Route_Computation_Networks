@@ -222,7 +222,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	});
 }*/
 
-function notify_warning_zones_none(){
+function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zones reçues
 	$.notify(
 		{
 			title: "<strong>Warning zones request</strong>",
@@ -237,7 +237,7 @@ function notify_warning_zones_none(){
 	);
 }
 
-function remove_warning_zones(){
+function remove_warning_zones(){ // supprime les warning zones de la carte
 	for (element in warning_zones){ // pour chaque warning zones
 		if (DEBUG){
 			console.log("element :", element);
@@ -250,7 +250,7 @@ function remove_warning_zones(){
 	if (Lcontrollayers != undefined){
 		Lcontrollayers.remove();
 	}
-	Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+	//Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
 
 function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la bbox from la BDD
