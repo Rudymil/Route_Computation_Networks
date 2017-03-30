@@ -1,3 +1,4 @@
+/* Heat Grid */
 function addGrid(json){
   // params
   var latmin = json.params.latMin;
@@ -44,6 +45,5 @@ function addHeatPolygon(jsondata) {
         //polygon.addTo(map);
       }
     }
-
       //map.setView(new L.LatLng(-8.834868131113,13.227944321366), 13);
-  }
+}

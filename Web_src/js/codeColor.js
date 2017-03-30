@@ -14,16 +14,16 @@ function heatMapColorforValue(value){
   return "hsl(" + h + ", 100%, 50%)";
 }
 
-function getColor(d) {
-            //return d>20? '#000000' : '#ff0000';
-
-            return d > 90 ? '#7f2704' :
-                d > 80  ? '#a63603' :
-                d > 70  ? '#d94801' :
-                d > 60  ? '#f16913' :
-                d > 50  ? '#fd8d3c' :
-                d > 40  ? '#fdae6b' :
-                d > 30  ? '#fdd0a2' :
-                d > 20  ? '#fee6ce' :
-                "#fff5eb";
-        }
+// Scale of color
+// value between 0 and 100
+function getColor(value) {
+    return value > 90 ? '#7f2704' :
+        value > 80  ? '#a63603' :
+        value > 70  ? '#d94801' :
+        value > 60  ? '#f16913' :
+        value > 50  ? '#fd8d3c' :
+        value > 40  ? '#fdae6b' :
+        value > 30  ? '#fdd0a2' :
+        value > 20  ? '#fee6ce' :
+        "#fff5eb";
+}

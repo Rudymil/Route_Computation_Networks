@@ -2,15 +2,25 @@
 ## codeColor.js  
 ```js
 function codeColorRed(value){...};
-```
+```  
+Couleur rgb .
 ```js
 function heatMapColorforValue(value){...};
 ```  
+Couleur hsl.  
+```js
+function getColor(value){...};
+```  
+Echelle de couleur tous les 10.  
 ## grid.js
 ```js
 function addGrid(json){...};
 ```  
-Ajoute une grille de couleur sur la carte.
+Ajout d'une grille de couleurs selon l'intensité du danger en créant des rectangles.  
+```js
+function addHeatPolygon(json){...};
+```
+Ajout de polygones de couleurs selon l'intensité du danger.  
 ## menu.js
 ```js
 function ajax_types(url,type){...}
@@ -24,6 +34,10 @@ S'exécute lorsque le **body** est chargé.
 function ajax_grid(){...}
 ```
 Requête ajax pour recupérer une **grille**.
+```js
+function ajax_polygon(){...}  
+```  
+Requête ajax pour recupérer des **polygones**.
 ```js
 function notify_warning_zones_none(){...}
 ```
