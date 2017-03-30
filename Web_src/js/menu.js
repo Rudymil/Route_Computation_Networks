@@ -1,10 +1,10 @@
-var circle = new Array(); // danger
-var box = new Array(); // danger
-var polygon = new Array(); // danger
-var circlel = new Array(); // lack
-var boxl = new Array(); // lack
-var polygonl = new Array(); // lack
-var latlng = new Array(); // departure/arrival points
+var circle = new Array(); // warning zones
+var box = new Array(); // warning zones
+var polygon = new Array(); // warning zones
+var circlel = new Array(); // anomalies zones
+var boxl = new Array(); // anomalies zones
+var polygonl = new Array(); // anomalies zones
+//var latlng = new Array(); // departure/arrival points
 var string_circles = "Circles";
 var string_boxes = "Boxes";
 var string_polygons = "Polygons";
@@ -19,7 +19,7 @@ var Lcontrollayers;
 var types_warning_zones = new Array();
 var types_anomalies = new Array();
 var string_warning_zone = "warning_zone";
-var string_anomaly_zone = "anomaly_zone";
+//var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
