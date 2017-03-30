@@ -98,8 +98,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	ajax_types(url,string_anomaly_type);
 });
 
-/*
-function ajax_grid(){ // requete ajax pour recuperer une grille
+/*function ajax_grid(){ // requete ajax pour recuperer une grille
 	if (DEBUG){
 		console.log("FUNCTION : ajax_grid");
 	}
@@ -159,11 +158,9 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 			}
 		}
 	});
-}
-*/
+}*/
 
-/*
-function ajax_polygon(){  //requete ajax pour recuperer un polygon
+/*function ajax_polygon(){ // requete ajax pour recuperer un polygon
 	if (DEBUG){
 		console.log("FUNCTION : ajax_polygon");
 	}
@@ -223,8 +220,7 @@ function ajax_polygon(){  //requete ajax pour recuperer un polygon
 			}
 		}
 	});
-}
-*/
+}*/
 
 function notify_warning_zones_none(){
 	$.notify(
