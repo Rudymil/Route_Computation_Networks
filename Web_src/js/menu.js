@@ -97,6 +97,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	}
 });
 
+/*
 function ajax_grid(){ // requete ajax pour recuperer une grille
 	if (DEBUG){
 		console.log("FUNCTION : ajax_grid");
@@ -149,7 +150,7 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 					console.log("ajax_grid json : ", json);
 				}
 				addGrid(json);
-				overlayMaps["Grid"] = grid; // menu
+				ovfunction ajax_polygon(){erlayMaps["Grid"] = grid; // menu
 				if (Lcontrollayers != undefined){
 					Lcontrollayers.remove();
 				}
@@ -158,8 +159,10 @@ function ajax_grid(){ // requete ajax pour recuperer une grille
 		}
 	});
 }
+*/
 
-function ajax_polygon(){ //requete ajax pour recuperer un polygon
+/*
+function ajax_polygon(){  //requete ajax pour recuperer un polygon
 	if (DEBUG){
 		console.log("FUNCTION : ajax_polygon");
 	}
@@ -208,7 +211,7 @@ function ajax_polygon(){ //requete ajax pour recuperer un polygon
 			if (resultat.status == '200'){
 				if (DEBUG){
 					console.log("ajax_polygon json : ", resultat.responseJSON);
-				}
+			function ajax_polygon(){	}
 				var json = resultat.responseJSON;
 				addHeatPolygon(json);
 				overlayMaps["Heat Polygon"] = heatPoly; // menu
@@ -220,6 +223,7 @@ function ajax_polygon(){ //requete ajax pour recuperer un polygon
 		}
 	});
 }
+*/
 
 function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la bbox from la BDD
 	if (DEBUG){
