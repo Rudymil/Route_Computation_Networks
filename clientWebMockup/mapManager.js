@@ -195,63 +195,71 @@ $(function(){
 
 
   function generateRoadMap(data){
-    // console.log(data);
     arrayData = JSON.parse(data);
 
-
-    // for (var coor in arrayData) {
-    //
-    //     lat = arrayData[coor][0];
-    //     lon = arrayData[coor][1];
-    //     console.log(lat,lon);
-    // }
     var i = 0;
     var x;
     var y;
     var z;
-    var n = 3;
+    var suivante;
+    var n = 4;
 
-    // var index = 0;
-    // [x, y, z] = arrayData.slice(index, index + n);
-    //
-    // var distance = haversine(x[0], x[1], y[0], y[1])
-    // console.log("distance : ", distance, "m");
-    //
-    // var angle = computeAngle(vectorize(y,x), vectorize(y,z))
-    // console.log("angle : ", toDegrees(angle), "degrees");
 
     i = arrayData.length - n ;
     var index = 0;
     var cumulDistance = 0;
-    var seuilDistance = 500;
+    var seuilDistance = 20;
+    var oldRoad;
+    var newRoad;
+    var oldDirection;
+    var newDirection;
+
     while (i>0){
-      [x, y, z] = arrayData.slice(index, index + n);
+      [x, y, z, suivante] = arrayData.slice(index, index + n);
 
       var distance = haversine(x[0], x[1], y[0], y[1])
-      if (cumulDistance == 0){
-
-        cumulDistance = distance;
-      } else {
-        cumulDistance += distance;
-      }
-      if (cumulDistance < seuilDistance) {
-        console.log("distance trop courte ");
-      }
-
       console.log("distance : ", distance, "m");
+
+      newRoad = z[2];
+
+      if (oldRoad === undefined || oldRoad === null){
+        oldRoad = newRoad;
+      }
 
       var angle = computeAngle(vectorize(y,x), vectorize(y,z));
       angle = toDegrees(angle);
-      console.log("angle : ", angle, "degrees");
 
-      if ( angle < 170 && angle > 0 ){
-        console.log("direction : gauche sur "+ z[2]);
-      } else if (angle < 360 && angle > 190 ) {
-        console.log("direction : droite sur "+ z[2]);
-
+      distanceToDisplay = cumulDistance.toFixed(2);
+      var text;
+      var direction;
+      if ( angle < 160 && angle > 0 ){
+        text = "À "+distanceToDisplay+"m, "+"tournez à <strong>gauche</strong> en direction de "+ suivante[2];
+        direction = "left";
+      } else if (angle < 360 && angle > 200 ) {
+        text = "À "+distanceToDisplay+"m, "+"tournez à <strong>droite</strong> en direction de "+ suivante[2];
+        direction = "right";
       } else {
-        console.log("direction : tout droit sur "+ z[2]);
+        text = "Sur "+distanceToDisplay+"m, "+"continuez <strong>tout droit</strong> sur "+ y[2];
+        direction = "up";
       }
+      newDirection = direction;
+
+      if (oldDirection === undefined || oldDirection === null){
+        oldDirection = newDirection;
+      }
+
+
+      if (newRoad == oldRoad && (newDirection == oldDirection || cumulDistance < seuilDistance)){
+        cumulDistance += distance;
+      } else {
+        console.log(text);
+        insertRoadmapDescriptor(text, direction, distance);
+        cumulDistance = distance;
+      }
+      oldRoad = newRoad;
+      oldDirection = newDirection;
+
+
 
 
       index++;
@@ -259,6 +267,14 @@ $(function(){
     }
 
 
+  }
+
+  function insertRoadmapDescriptor(text, direction){
+    $("#roadmapDescriptor ul").append('<li><icon class="glyphicon glyphicon-arrow-'+direction+'" /> <span class="tab">'+text+'</span></li>');
+  }
+
+  function resetRoadmapDescriptor(){
+    $("#roadmapDescriptor ul").children().remove();
   }
 
 
@@ -281,7 +297,7 @@ $(function(){
   }
 
   var displayGreenRouting = function (data, textStatus, xhr){
-
+    resetRoadmapDescriptor();
     generateRoadMap(data);
     arrayData = JSON.parse(data);
 
