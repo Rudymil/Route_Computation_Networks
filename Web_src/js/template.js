@@ -38,6 +38,5 @@ $("#map").ready(function(){
 			title: "Show me where I am, yo!"
 		}
 	}).addTo(map);
-	var osmGeocoder = new L.Control.OSMGeocoder({placeholder: 'Search location...'});
-		map.addControl(osmGeocoder);
+	
 });

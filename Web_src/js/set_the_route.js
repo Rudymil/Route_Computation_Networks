@@ -1,4 +1,4 @@
-var markerDeparture=null;
+/*var markerDeparture=null;
 
 // Define icons
 var greenIcon = new L.Icon({
@@ -311,4 +311,65 @@ temp[1]=[latdes,lngdes];
 latlng[1]=temp[1];
 //latlng[1][0]=latdes;
 //latlng[1][1]=lngdes;
-}
+}*/
+
+var controlPenalty = L.Routing.control({
+            waypoints: [null],
+            routeWhileDragging: true,
+            show: true,
+            language: 'en',
+            geocoder: L.Control.Geocoder.nominatim(),
+            autoRoute: true,
+            router: L.Routing.osrmv1({
+                serviceUrl: 'http://172.31.57.114:5001/route/v1'
+            }),
+            lineOptions: {
+            styles: [{color: 'blue', opacity: 1, weight: 5}]},
+            summaryTemplate: '<h2><font color="blue">SAFE ROUTE</font> {name}</h2><h3>{distance}, {time}</h3>'
+        }).addTo(map);
+        
+        var controlSimple = L.Routing.control({
+            waypoints: [null],
+            lineOptions: {
+             styles: [{color: 'red', opacity: 1, weight: 5}]},
+            routeWhileDragging: true,
+            show: true,
+            language: 'en',
+            geocoder: L.Control.Geocoder.nominatim(),
+            autoRoute: true,
+            router: L.Routing.osrmv1({
+                //serviceUrl: 'http://localhost:5000/route/v1'
+            }),
+            summaryTemplate: '<h2><font color="red">DEFAULT</font> {name}</h2><h3>{distance}, {time}</h3>'
+        }).addTo(map);
+        
+        
+function createButton(label, container) {
+            var btn = L.DomUtil.create('button', '', container);
+            btn.setAttribute('type', 'button');
+            btn.innerHTML = label;
+            return btn;
+        }
+
+        map.on('click', function(e) {
+			if ($("#Navigate").is(":checked")==true ){
+            var container = L.DomUtil.create('div'),
+                startBtn = createButton('Start from this location', container),
+                destBtn = createButton('Go to this location', container);
+            L.DomEvent.on(startBtn, 'click', function() {
+				controlSimple.spliceWaypoints(0, 1, e.latlng);
+                controlPenalty.spliceWaypoints(0, 1, e.latlng);
+                map.closePopup();
+            });
+            L.DomEvent.on(destBtn, 'click', function() {
+				controlSimple.spliceWaypoints(controlSimple.getWaypoints().length - 1, 1, e.latlng);
+                controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+                map.closePopup();
+            });
+            L.popup()
+                .setContent(container)
+                .setLatLng(e.latlng)
+                .openOn(map);
+			}
+        });
+
