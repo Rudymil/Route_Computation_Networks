@@ -194,13 +194,13 @@ map.on('draw:created', function(e) {
   			"<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
+   				<option value=1 selected >Road accident </option>\
+   				<option value=2 >Road degradation</option>\
+    			<option value=3  >Criminal insecurity</option>\
+    			<option value=4 >Massive gathering</option>\
+    			<option value=5 >Natural hazard</option>\
+    			<option value=6 >Traffic jam</option>\
+    			<option value=7 >Road closure</option>\
 			</select>\
 			</div>\
 			<div class='form-group'>\
@@ -256,19 +256,19 @@ map.on('draw:created', function(e) {
   			"<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
+   				<option value=1 selected >Road accident </option>\
+   				<option value=2 >Road degradation</option>\
+    			<option value=3  >Criminal insecurity</option>\
+    			<option value=4 >Massive gathering</option>\
+    			<option value=5 >Natural hazard</option>\
+    			<option value=6 >Traffic jam</option>\
+    			<option value=7 >Road closure</option>\
 			</select>\
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
+				</div>	"
     		, function(result) {
     		
 			//console.log("inside");
@@ -310,19 +310,19 @@ map.on('draw:created', function(e) {
   			"<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
+   				<option value=1 selected >Road accident </option>\
+   				<option value=2 >Road degradation</option>\
+    			<option value=3  >Criminal insecurity</option>\
+    			<option value=4 >Massive gathering</option>\
+    			<option value=5 >Natural hazard</option>\
+    			<option value=6 >Traffic jam</option>\
+    			<option value=7 >Road closure</option>\
 			</select>\
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
+				</div>	"
     		, function(result) {
     		
         		//console.log("inside");
