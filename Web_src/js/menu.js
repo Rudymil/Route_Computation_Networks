@@ -245,6 +245,7 @@ function remove_warning_zones(){ // supprime les warning zones de la carte
 		}
 		warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
 	}
+	document.getElementById("legend").style.visibility="hidden";// remove legend of warning zones
 	warning_zones = []; // on vide les warning zones
 	delete overlayMaps["Warning zones"];
 	if (Lcontrollayers != undefined){
@@ -328,13 +329,15 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 								console.log("json['features'][element] :", json["features"][element]);
 							}
 							var shape = L.geoJSON(json["features"][element]);
+							var colorZone = getColor(json["features"][element]["properties"].intensity);
 							shape.setStyle({ // transforme en layer et change le style
-								fillColor: '#878787', // grey
-								color: '#878787'
+								fillColor: colorZone, // grey
+								color: colorZone
 							});
 							//shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
+						document.getElementById("legend").style.visibility="visible"; //affiche la légende
 						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
 						overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
 						if (Lcontrollayers != undefined){
