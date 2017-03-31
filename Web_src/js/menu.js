@@ -344,7 +344,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							Lcontrollayers.remove();
 							legend.remove();
 						}
-						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).enable().addTo(map); // ne pas oublier le null
+						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
 						// ajout de la legende
 						legend = L.control({position: 'bottomleft'});
 						legend.onAdd = function (map) {
