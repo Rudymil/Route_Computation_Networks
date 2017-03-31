@@ -16,15 +16,17 @@ var grid = L.layerGroup();
 var heatPoly = L.layerGroup();
 var overlayMaps = new Array();
 var Lcontrollayers;
+var legend;
 var types_warning_zones = new Array();
 var types_anomalies = new Array();
 var string_warning_zone = "warning_zone";
-//var string_anomaly_zone = "anomaly_zone";
+var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
 var DEBUG = true;
 var zoom = 12;
+var geojson = new Object();
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -223,7 +225,7 @@ $("body").ready(function(){ // lorsque le body est charge
 }*/
 
 function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zones reçues
-	$.notify(
+	/*$.notify(
 		{
 			title: "<strong>Warning zones request</strong>",
 			message: "none"
@@ -234,7 +236,7 @@ function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zone
 				align: "center"
 			}
 		}
-	);
+	);*/
 }
 
 function remove_warning_zones(){ // supprime les warning zones de la carte
@@ -245,11 +247,11 @@ function remove_warning_zones(){ // supprime les warning zones de la carte
 		}
 		warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
 	}
-	$("#legend").css("visibility","hidden");// remove legend of warning zones
 	warning_zones = []; // on vide les warning zones
 	delete overlayMaps["Warning zones"];
 	if (Lcontrollayers != undefined){
 		Lcontrollayers.remove();
+		legend.remove();
 	}
 	//Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
@@ -289,7 +291,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 				console.log("add_warning_zones statut : ", statut);
 				console.log("add_warning_zones erreur : ", erreur);
 			}
-			$.notify(
+			/*$.notify(
 				{
 					title: "<strong>Warning zones request</strong>",
 					message: statut
@@ -300,7 +302,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						align: "center"
 					}
 				}
-			);
+			);*/
 		},
 		complete : function(resultat, statut){
 			if (resultat.status == '200'){
@@ -327,24 +329,42 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							if (DEBUG){
 								console.log("element :", element);
 								console.log("json['features'][element] :", json["features"][element]);
+								console.log("json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity);
 							}
 							var shape = L.geoJSON(json["features"][element]);
 							var colorZone = getColor(json["features"][element]["properties"].intensity);
 							shape.setStyle({ // transforme en layer et change le style
-								fillColor: colorZone, // grey
+								fillColor: colorZone,
 								color: colorZone
 							});
 							//shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
-						$("#legend").css("visibility","visible"); //affiche la légende
 						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
 						overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
 						if (Lcontrollayers != undefined){
 							Lcontrollayers.remove();
+							legend.remove();
 						}
-						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
-						$.notify(
+						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
+						legend = L.control({
+							position: 'bottomleft'
+						}); // ajout de la legende
+						legend.onAdd = function (map) {
+						    var div = L.DomUtil.create('div', 'info legend'),
+						        grades = [20, 30, 40, 50, 60, 70, 80, 90, 100],
+						        labels = [];
+								var divLegend = "";
+						    // loop through our density intervals and generate a label with a colored square for each interval
+						    for (var i = 0; i < grades.length; i++) {
+						        divLegend += ('<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+								grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'))
+						    }
+							$(div).html(divLegend);
+						    return div;
+						};
+						legend.addTo(map);
+						/*$.notify(
 							{
 								title: "<strong>Warning zones request</strong>",
 								message: 'received'
@@ -355,7 +375,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 									align: "center"
 								}
 							}
-						);
+						);*/
 					}
 					else {
 						notify_warning_zones_none();
@@ -554,7 +574,7 @@ function notify_ajax_sending_areas_error(erreur, statut){ // notifie que lenvoi 
 	);
 }
 
-function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir des shapes en parametres
+function fill_geojson(circle,box,polygon,type){ // rempli le geojson a partir des shapes en parametres
 	if (DEBUG){
 		console.log("FUNCTION : fill_geojson");
 		console.log("circle : ", circle);
@@ -562,6 +582,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 		console.log("polygon : ", polygon);
 		console.log("geojson : ", geojson);
 	}
+	var features = new Array();
 	if (circle.length == 0){
 		notify_none(string_circles);
 	}
@@ -571,7 +592,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 				console.log("Circle :", circle[element]);
 			}
 			if (circle[element] !== null){ // si c est pas nul
-				geojson.push(circle[element]); // complete GeoJSON
+				features.push(circle[element]); // complete GeoJSON
 			}
 			else {
 				notify_shape_empty(string_circles);
@@ -588,7 +609,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 				console.log("Box :", box[element]);
 			}
 			if (box[element] !== null){ // si c est pas nul
-				geojson.push(box[element]); // complete GeoJSON
+				features.push(box[element]); // complete GeoJSON
 			}
 			else {
 				notify_shape_empty(string_boxes);
@@ -605,7 +626,7 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 				console.log("Polygon :", polygon[element]);
 			}
 			if (polygon[element] !== null){ // si c est pas nul
-				geojson.push(polygon[element]); // complete GeoJSON
+				features.push(polygon[element]); // complete GeoJSON
 			}
 			else {
 				notify_shape_empty(string_polygons);
@@ -613,21 +634,31 @@ function fill_geojson(circle,box,polygon,geojson){ // rempli le geojson a partir
 			}
 		}
 	}
+	if (features.length > 0){
+		geojson["type"] = "FeatureCollection";
+		geojson["zone_type"] = type;
+		geojson["features"] = features;
+		if (DEBUG){
+			console.log("features :", features);
+			console.log("geojson :", geojson);
+		}
+	}
 	return 0;
 }
 
-function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
+function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	if (DEBUG){
 		console.log("FUNCTION : send_ajax_geojson");
 		console.log("send_ajax_geojson geojson : ", geojson);
+		console.log("send_ajax_geojson geojson.toString() : ", geojson.toString());
 		console.log("send_ajax_geojson type : ", type);
 		console.log("send_ajax_geojson url : ", url);
 	}
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : type+'='+geojson,
-		dataType : '',
+		data : geojson,
+		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
 				console.log("send_ajax_geojson code_json : ", code);
@@ -650,6 +681,7 @@ function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le
 				console.log("send_ajax_geojson resultat : ", resultat);
 				console.log("send_ajax_geojson statut : ", statut);
 			}
+			geojson = [];
 		}
 	});
 }
@@ -684,7 +716,75 @@ function style_shape(shape){ // modifie le style de chaque forme
 	}
 }
 
+function geojsoncircle(ci){
+	var circlejson = new Array();
+	var n=ci.length;
+	var i=n-1;
+	while( i>=0){ 
+		circlejson.push([ci[i].lat,ci[i].lng]);
+		i--;
+	}
+	circlejson.push([ci[n-1].lat,ci[n-1].lng]);
+	return circlejson;
+}
+
 $("#submit1").click(function(){ // envoie toutes les warning zones
+	editableLayers.eachLayer(function(layer){ // stockage des couches dans les variables globales pour les warning zones
+		if (layer instanceof L.Circle){
+			var n = infosc.length;
+			var i = 0;
+			while (i<n){
+				if (infosc[i][2] == layer._leaflet_id){
+					var temp = 
+					{ 
+						"type": "Feature",
+						"properties": {
+							"risk_type": infosc[i][1],
+							"description": infosc[i][0]
+						},
+						"geometry": {
+							"type": "Polygon",
+							"coordinates": [geojsoncircle(layer.toPolygon())]
+						}
+					};
+					circle.push(temp);
+				}
+				i++;
+			}
+		}
+		if (layer instanceof L.Rectangle){
+			var n = infosb.length;
+			var i = 0;
+			while (i<n){
+				if (infosb[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties = 
+					{
+						"risk_type":infosb[i][1],
+						"description":infosb[i][0]
+					};
+					box.push(temp);
+				}
+				i++;
+			}
+		}
+		if (layer instanceof L.Polygon){
+			var n = infosp.length;
+			var i = 0;
+			while (i<n){
+				if (infosp[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties = 
+					{
+						"risk_type":infosp[i][1],
+						"description":infosp[i][0]
+					};
+					polygon.push(temp);
+				}
+			i++;
+			}
+		}
+	});
 	if (DEBUG){
 		console.log("EVENT : $('#submit1').click");
 	}
@@ -693,14 +793,13 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 		console.log("Boxes :", box);
 		console.log("Polygons :", polygon);
 	}
-	var geojson = new Array();
-	if (fill_geojson(circle,box,polygon,geojson) == 0){ // si pas d erreur
+	if (fill_geojson(circle,box,polygon,string_warning_zone) == 0){ // si pas d erreur
 		if (DEBUG){
 			console.log("geojson : ", geojson);
 			console.log(Object.keys(geojson).length);
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
-			if (send_ajax_geojson(geojson,string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
+			if (send_ajax_geojson(string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
 				weak_opacity_shape(circle);
 				circle = [];
 				weak_opacity_shape(box);
@@ -713,6 +812,61 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 });
 
 $("#submit2").click(function(){ // envoie toutes les anomaly
+	leditableLayers.eachLayer(function(layer){ // stockage des couches dans les variables globales pour les anomalies zones
+		if (layer instanceof L.Circle){
+			var n = infoscl.length;
+			var i = 0;
+			while (i<n){
+				if (infoscl[i][2] == layer._leaflet_id ){
+					var temp =
+					{ 
+						"type": "Feature",
+						"properties":{
+							"risk_type":infoscl[i][1],
+							"description":infoscl[i][0]
+						},
+						"geometry": {
+							"type": "Polygon",
+							"coordinates": [geojsoncircle(layer.toPolygon())]
+						} 	
+					};
+				circlel.push(temp);
+				}
+			i++;
+			}
+		}
+		if (layer instanceof L.Rectangle){
+			var n = infosbl.length;
+			var i = 0;
+			while (i<n){
+				if (infosbl[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties = {
+						"risk_type":infosbl[i][1],
+						"description":infosbl[i][0]
+					};
+					boxl.push(temp);
+				}
+			i++;
+			}
+		}
+		if (layer instanceof L.Polygon){
+			var n = infospl.length;
+			var i = 0;
+			while (i<n){
+				if (infospl[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties =
+					{
+						"risk_type":infospl[i][1],
+						"description":infospl[i][0]
+					}
+					polygonl.push(temp);
+				}
+				i++;
+			}
+		}
+	});
 	if (DEBUG){
 		console.log("EVENT : $('#submit1').click");
 	}
@@ -721,14 +875,13 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 		console.log("Boxes :", boxl);
 		console.log("Polygons :", polygonl);
 	}
-	var geojson = new Array();
-	if (fill_geojson(circlel,boxl,polygonl,geojson) == 0){ // si pas d erreur
+	if (fill_geojson(circlel,boxl,polygonl,string_anomaly_zone) == 0){ // si pas d erreur
 		if (DEBUG){
 			console.log("geojson : ", geojson);
 			console.log(Object.keys(geojson).length);
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
-			if (send_ajax_geojson(geojson,string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
+			if (send_ajax_geojson(string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
 				weak_opacity_shape(circlel);
 				circlel = [];
 				weak_opacity_shape(boxl);

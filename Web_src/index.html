@@ -27,9 +27,9 @@
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
 		<link rel="icon" sizes="196x196" href="img/favicon-196.png"/>
 		<link rel="icon" type="image/x-icon" href="img/favicon.ico"/>
-		<style>
-			#legend { position: absolute; bottom: 0; right: 0; font-family: sans-serif;z-index: 20;}
-			#legend div { display: inline-block; padding: 5px; margin: 0; }
+		<style>#map {}
+		.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; }
+		.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
 		</style>
 	</head>
 	<body>
@@ -96,11 +96,11 @@
 									<center>
 										<button id="inverse" class="btn btn-default">
 											<img src="img/inverse.png" width="20" />
-										</button>										
+										</button>
 									</center>
 								</div>
 							</div><br>
-							
+
 							<div class="row">
 								<div class="col-xs-12">
 									<center>
@@ -201,21 +201,10 @@
 			</div>
 		</div>
 		<div id="map"></div>
-		<div id="legend" style="visibility:hidden;" >
-			<div style="color: black;">Level of dangerousness:</div>
-			<div style="background: #ffe0cc">20-30</div>
-			<div style="background: #ffd1b3">30-40</div>
-			<div style="background: #ffb380">40-50</div>
-			<div style="background: #ff944d">50-60</div>
-			<div style="background: #ff751a">60-70</div>
-			<div style="background: #e65c00">70-80</div>
-			<div style="background: #b34700">80-90</div>
-			<div style="background: #4d1f00">90+</div>
-		</div>
 		<div id="context_menu1">
 			<ul>
 				<li id="cm_debut">Définir comme Début</li>
-				<li id="cm_fin">Définir comme Fin</li>  
+				<li id="cm_fin">Définir comme Fin</li>
 			</ul>
 		</div>
 		<div id="context_menu2">
