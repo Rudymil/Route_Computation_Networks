@@ -656,7 +656,7 @@ function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le
 		url : url,
 		type : 'POST',
 		data : type+'='+geojson,
-		dataType : '',
+		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
 				console.log("send_ajax_geojson code_json : ", code);
