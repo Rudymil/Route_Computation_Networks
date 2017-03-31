@@ -224,7 +224,7 @@ $("body").ready(function(){ // lorsque le body est charge
 }*/
 
 function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zones reçues
-	$.notify(
+	/*$.notify(
 		{
 			title: "<strong>Warning zones request</strong>",
 			message: "none"
@@ -235,7 +235,7 @@ function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zone
 				align: "center"
 			}
 		}
-	);
+	);*/
 }
 
 function remove_warning_zones(){ // supprime les warning zones de la carte
@@ -290,7 +290,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 				console.log("add_warning_zones statut : ", statut);
 				console.log("add_warning_zones erreur : ", erreur);
 			}
-			$.notify(
+			/*$.notify(
 				{
 					title: "<strong>Warning zones request</strong>",
 					message: statut
@@ -301,7 +301,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						align: "center"
 					}
 				}
-			);
+			);*/
 		},
 		complete : function(resultat, statut){
 			if (resultat.status == '200'){
@@ -335,7 +335,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 								fillColor: colorZone, // grey
 								color: colorZone
 							});
-							//shape.addTo(map); // ajout a la map
+							shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
 						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -344,7 +344,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							Lcontrollayers.remove();
 							legend.remove();
 						}
-						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
 						// ajout de la legende
 						legend = L.control({position: 'bottomleft'});
 						legend.onAdd = function (map) {
@@ -363,7 +363,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						};
 						legend.addTo(map);
 
-						$.notify(
+						/*$.notify(
 							{
 								title: "<strong>Warning zones request</strong>",
 								message: 'received'
@@ -374,7 +374,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 									align: "center"
 								}
 							}
-						);
+						);*/
 					}
 					else {
 						notify_warning_zones_none();
