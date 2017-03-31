@@ -429,7 +429,7 @@ $("#map").ready(function(){ // lorsque la carte est chargee
     });
 });
 
-function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
+/*function check_latlng(latlng){ // verifie que la variable d entree contient bien un couple de 2 coordonnees
 	if (DEBUG){
 		console.log("FUNCTION : check_latlng");
 		console.log("latlng : ", latlng);
@@ -485,16 +485,16 @@ function check_latlng(latlng){ // verifie que la variable d entree contient bien
 		);
 		return -1;
 	}
-}
+}*/
 
-$("#calculate").click(function(){ // envoie les points a l algo pour afficher l itineraire
+/*$("#calculate").click(function(){ // envoie les points a l algo pour afficher l itineraire
 	if (DEBUG){
 		console.log("EVENT : $('#calculate').click");
 	}
 	affect(); // fonction définie dans set_the_route.js pour affecter les coordonnees des points de depart et d arrivee à latlng
 	if (check_latlng(latlng) == 0){ // si la verification passe
 	}
-});
+});*/
 
 function notify_shape_empty(shape){ // notifie que l object est vide
 	if (DEBUG){
@@ -658,7 +658,7 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : type+'='+JSON.stringify(geojson),
+		data : type+'='+JSON.stringify(geojson), // object -> string
 		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
@@ -682,7 +682,7 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 				console.log("send_ajax_geojson resultat : ", resultat);
 				console.log("send_ajax_geojson statut : ", statut);
 			}
-			geojson = new Object();
+			geojson = new Object(); // reinitialisation
 		}
 	});
 }
@@ -707,7 +707,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 			}
 			layer.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
-				fillColor: 'yellow' // jaune
+				fillColor: 'black' // noir
 			});
 			if (DEBUG){
 				console.log("layer : ", layer);
@@ -801,11 +801,11 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
-				weak_opacity_shape(circle);
+				style_shape(circle);
 				circle = [];
-				weak_opacity_shape(box);
+				style_shape(box);
 				box = [];
-				weak_opacity_shape(polygon);
+				style_shape(polygon);
 				polygon = [];
 			}
 		}
@@ -883,11 +883,11 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_anomaly_zone,url) == 0){ // si pas d'erreur a l envoie
-				weak_opacity_shape(circlel);
+				style_shape(circlel);
 				circlel = [];
-				weak_opacity_shape(boxl);
+				style_shape(boxl);
 				boxl = [];
-				weak_opacity_shape(polygonl);
+				style_shape(polygonl);
 				polygonl = [];
 			}
 		}
