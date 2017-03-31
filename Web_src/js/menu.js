@@ -345,8 +345,9 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							legend.remove();
 						}
 						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
-						// ajout de la legende
-						legend = L.control({position: 'bottomleft'});
+						$("leaflet-control-layers-selector").attr('name', 'warning_zones');
+						$('input[name=warning_zones]').attr('checked');
+						legend = L.control({position: 'bottomleft'}); // ajout de la legende
 						legend.onAdd = function (map) {
 						    var div = L.DomUtil.create('div', 'info legend'),
 						        grades = [20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -355,10 +356,10 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						    // loop through our density intervals and generate a label with a colored square for each interval
 						    for (var i = 0; i < grades.length; i++) {
 						        divLegend += ('<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-										grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'))
+								grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'))
 
 						    }
-								$(div).html(divLegend);
+							$(div).html(divLegend);
 						    return div;
 						};
 						legend.addTo(map);
