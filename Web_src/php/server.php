@@ -74,10 +74,8 @@ elseif (isset($_POST["anomaly_zone"])) {
 //Check waypoints
 elseif (isset($_POST["waypoint"])) {
   $json = json_decode($_POST["waypoint"]);
-  if ($json->data_type != "waypoint") {error(400, "Incorrect Data !");}
-  foreach ($json->features as $key => $value) {
-    if (!isset($value->properties->anomaly_type) || !isset($value->properties->description)) {error(400, "Incorrect Data !");}
-  }
+
+  if ($json->waypoint != "start" && $json->waypoint != "end" && $json->waypoint != "step") {error(400, "Incorrect Data !");}
   $result = checkWaypoint($json);
   print $result;
 }

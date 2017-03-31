@@ -218,27 +218,21 @@ function checkWaypoint($datajson){
     print(json_encode($datajson));
   }
 
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
+  $coordinates = $datajson->coordinates;
 
-  //$data = json_decode($datajson);
-  $data = $datajson;
-  $features = $data->features;
-  $nbrOfFeatures = sizeOf($features);
-  print($nbrOfFeatures);
-  if ($nbrOfFeatures != 2) {
+  if (sizeOf($coordinates) != 2) {
     error(400, "Incorrect Data !");
   }
 
-  $startPoint = json_encode($features[0]->geometry);
-  $endPoint = json_encode($features[1]->geometry);
-
-  $sqlRequest = "SELECT COUNT(*) FROM country WHERE ST_Contains(geom, ST_SetSRID(ST_GeomFromGeoJSON('$startPoint'), 4326)) AND ST_Contains(geom, ST_SetSRID(ST_GeomFromGeoJSON('$endPoint'), 4326));";
+  $sqlRequest = "SELECT id, name FROM country WHERE ST_Contains(geom, ST_SetSRID(ST_Point($coordinates[0], $coordinates[1]), 4326));";
 
   if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
     print("<h2>SQL Request : </h2>");
     print($sqlRequest);
   }
+
+  # Connect to PostgreSQL database
+  include_once("./connexion.inc.php");
 
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
@@ -246,8 +240,12 @@ function checkWaypoint($datajson){
   }
   $conn = NULL;
   $request_result = $rs->fetch(PDO::FETCH_ASSOC);
-  if($request_result["count"] == 1){
-    return true;
+
+  if(sizeOf($request_result["id"]) == 1){
+    $countryId = $request_result["id"];
+    $countryName = $request_result["name"];
+    //print(json_encode($request_result));
+    return json_encode($request_result, JSON_NUMERIC_CHECK);
   }
   else{return false;}
 }
