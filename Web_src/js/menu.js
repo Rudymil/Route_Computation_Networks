@@ -655,15 +655,15 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 		console.log("send_ajax_geojson type : ", type);
 		console.log("send_ajax_geojson url : ", url);
 	}
-	var string = JSON.stringify(geojson);
+	//var string = JSON.stringify(geojson);
 	//string = string.slice(0,string.length-1);
 	if (DEBUG){
-		console.log("string : ", string);
+		//console.log("string : ", string);
 	}
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : type+'='+string.slice(0,string.length-1),
+		data : type+'='+JSON.stringify(geojson),
 		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
