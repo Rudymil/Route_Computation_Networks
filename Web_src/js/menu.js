@@ -633,12 +633,14 @@ function fill_geojson(circle,box,polygon,geojson,type){ // rempli le geojson a p
 			}
 		}
 	}
-	geojson["type"] = "FeatureCollection";
-	geojson["zone_type"] = type;
-	geojson["features"] = features;
-	if (DEBUG){
-		console.log("features :", features);
-		console.log("geojson :", geojson);
+	if (features.length > 0){
+		geojson["type"] = "FeatureCollection";
+		geojson["zone_type"] = type;
+		geojson["features"] = features;
+		if (DEBUG){
+			console.log("features :", features);
+			console.log("geojson :", geojson);
+		}
 	}
 	return 0;
 }
