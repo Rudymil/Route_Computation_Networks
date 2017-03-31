@@ -703,7 +703,75 @@ function style_shape(shape){ // modifie le style de chaque forme
 	}
 }
 
-$("#submit1").click(function(){ // envoie toutes les warning zones
+function geojsoncircle(ci){
+	var circlejson = new Array();
+	var n=ci.length;
+	var i=n-1;
+	while( i>=0){ 
+		circlejson.push([ci[i].lat,ci[i].lng]);
+		i--;
+	}
+	circlejson.push([ci[n-1].lat,ci[n-1].lng]);
+	return circlejson;
+}
+
+$("#submit1").click(function(){ // envoie toutes les warning zoneseditableLayers.eachLayer(function (layer) {
+	editableLayers.eachLayer(function(layer){ // stockage des couches dans les variables globales pour les warning zones
+		if (layer instanceof L.Circle){
+			var n = infosc.length;
+			var i = 0;
+			while (i<n){
+				if (infosc[i][2] == layer._leaflet_id){
+					var temp = 
+					{ 
+						"type": "Feature",
+						"properties": {
+							"risk_type": infosc[i][1],
+							"description": infosc[i][0]
+						},
+						"geometry": {
+							"type": "Polygon",
+							"coordinates": [geojsoncircle(layer.toPolygon())]
+						}
+					};
+					circle.push(temp);
+				}
+				i++;
+			}
+		}
+		if (layer instanceof L.Rectangle){
+			var n = infosb.length;
+			var i = 0;
+			while (i<n){
+				if (infosb[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties = 
+					{
+						"risk_type":infosb[i][1],
+						"description":infosb[i][0]
+					};
+					box.push(temp);
+				}
+				i++;
+			}
+		}
+		if (layer instanceof L.Polygon){
+			var n = infosp.length;
+			var i = 0;
+			while (i<n){
+				if (infosp[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties = 
+					{
+						"risk_type":infosp[i][1],
+						"description":infosp[i][0]
+					};
+					polygon.push(temp);
+				}
+			i++;
+			}
+		}
+	});
 	if (DEBUG){
 		console.log("EVENT : $('#submit1').click");
 	}
@@ -732,6 +800,61 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 });
 
 $("#submit2").click(function(){ // envoie toutes les anomaly
+	leditableLayers.eachLayer(function(layer){ // stockage des couches dans les variables globales pour les anomalies zones
+		if (layer instanceof L.Circle){
+			var n = infoscl.length;
+			var i = 0;
+			while (i<n){
+				if (infoscl[i][2] == layer._leaflet_id ){
+					var temp =
+					{ 
+						"type": "Feature",
+						"properties":{
+							"risk_type":infoscl[i][1],
+							"description":infoscl[i][0]
+						},
+						"geometry": {
+							"type": "Polygon",
+							"coordinates": [geojsoncircle(layer.toPolygon())]
+						} 	
+					};
+				circlel.push(temp);
+				}
+			i++;
+			}
+		}
+		if (layer instanceof L.Rectangle){
+			var n = infosbl.length;
+			var i = 0;
+			while (i<n){
+				if (infosbl[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties = {
+						"risk_type":infosbl[i][1],
+						"description":infosbl[i][0]
+					};
+					boxl.push(temp);
+				}
+			i++;
+			}
+		}
+		if (layer instanceof L.Polygon){
+			var n = infospl.length;
+			var i = 0;
+			while (i<n){
+				if (infospl[i][2] == layer._leaflet_id){
+					var temp = layer.toGeoJSON();
+					temp.properties =
+					{
+						"risk_type":infospl[i][1],
+						"description":infospl[i][0]
+					}
+					polygonl.push(temp);
+				}
+				i++;
+			}
+		}
+	});
 	if (DEBUG){
 		console.log("EVENT : $('#submit1').click");
 	}
