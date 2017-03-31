@@ -223,7 +223,7 @@ $("body").ready(function(){ // lorsque le body est charge
 }*/
 
 function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zones reçues
-	$.notify(
+	/*$.notify(
 		{
 			title: "<strong>Warning zones request</strong>",
 			message: "none"
@@ -234,7 +234,7 @@ function notify_warning_zones_none(){ // notifie qu il n y a pas de warning zone
 				align: "center"
 			}
 		}
-	);
+	);*/
 }
 
 function remove_warning_zones(){ // supprime les warning zones de la carte
@@ -289,7 +289,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 				console.log("add_warning_zones statut : ", statut);
 				console.log("add_warning_zones erreur : ", erreur);
 			}
-			$.notify(
+			/*$.notify(
 				{
 					title: "<strong>Warning zones request</strong>",
 					message: statut
@@ -300,7 +300,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						align: "center"
 					}
 				}
-			);
+			);*/
 		},
 		complete : function(resultat, statut){
 			if (resultat.status == '200'){
@@ -343,8 +343,8 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						if (Lcontrollayers != undefined){
 							Lcontrollayers.remove();
 						}
-						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
-						$.notify(
+						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
+						/*$.notify(
 							{
 								title: "<strong>Warning zones request</strong>",
 								message: 'received'
@@ -355,7 +355,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 									align: "center"
 								}
 							}
-						);
+						);*/
 					}
 					else {
 						notify_warning_zones_none();
