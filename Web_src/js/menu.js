@@ -26,7 +26,7 @@ var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
 var DEBUG = true;
 var zoom = 12;
-var geojson = new Array();
+var geojson = new Object();
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
