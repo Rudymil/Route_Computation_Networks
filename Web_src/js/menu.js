@@ -656,7 +656,7 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 		console.log("send_ajax_geojson url : ", url);
 	}
 	var string = JSON.stringify(geojson);
-	string = string.split('"').join('');
+	//string = string.split('"').join('');
 	if (DEBUG){
 		console.log("string : ", string);
 	}
