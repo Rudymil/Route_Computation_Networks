@@ -2,6 +2,14 @@ CREATE DATABASE databaseName;
 CREATE EXTENSION postgis;
 CREATE SCHEMA osm;
 
+CREATE TABLE country(
+  id serial,
+  name character varying(50) NOT NULL,
+  geom geometry(MultiPolygon, 4326) NOT NULL,
+  CONSTRAINT country_pk PRIMARY KEY(id),
+  CONSTRAINT country_unique UNIQUE(name)
+);
+
 CREATE TABLE risk(
   id serial,
   name character varying(25) NOT NULL,
@@ -41,11 +49,13 @@ CREATE TABLE anomaly_zone(
 );
 
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.country TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.warning_zone TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.anomaly_zone TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.risk TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.anomaly TO api;
 
+GRANT USAGE ON SEQUENCE public.country_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.anomaly_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.anomaly_zone_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.risk_id_seq TO api;
