@@ -16,6 +16,7 @@ var grid = L.layerGroup();
 var heatPoly = L.layerGroup();
 var overlayMaps = new Array();
 var Lcontrollayers;
+var legend;
 var types_warning_zones = new Array();
 var types_anomalies = new Array();
 var string_warning_zone = "warning_zone";
@@ -245,11 +246,11 @@ function remove_warning_zones(){ // supprime les warning zones de la carte
 		}
 		warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
 	}
-	$("#legend").css("visibility","hidden");// remove legend of warning zones
 	warning_zones = []; // on vide les warning zones
 	delete overlayMaps["Warning zones"];
 	if (Lcontrollayers != undefined){
 		Lcontrollayers.remove();
+		legend.remove();
 	}
 	//Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
@@ -337,13 +338,31 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							//shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
-						$("#legend").css("visibility","visible"); //affiche la légende
 						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
 						overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
 						if (Lcontrollayers != undefined){
 							Lcontrollayers.remove();
+							legend.remove();
 						}
 						Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
+						// ajout de la legende
+						legend = L.control({position: 'bottomleft'});
+						legend.onAdd = function (map) {
+						    var div = L.DomUtil.create('div', 'info legend'),
+						        grades = [20, 30, 40, 50, 60, 70, 80, 90, 100],
+						        labels = [];
+								var divLegend = "";
+						    // loop through our density intervals and generate a label with a colored square for each interval
+						    for (var i = 0; i < grades.length; i++) {
+						        divLegend += ('<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+										grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'))
+
+						    }
+								$(div).html(divLegend);
+						    return div;
+						};
+						legend.addTo(map);
+
 						$.notify(
 							{
 								title: "<strong>Warning zones request</strong>",
