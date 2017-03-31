@@ -657,7 +657,7 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : geojson,
+		data : type+'='+geojson,
 		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
