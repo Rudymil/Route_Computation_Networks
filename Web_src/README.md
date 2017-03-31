@@ -6,7 +6,7 @@
   * [route.css](css/route.css) (*define route and its points*)
 * [js](js) (*folder of script files*)
   * [template.js](js/template.js) (*basic scripts*)
-  * [menu.js](js/menu.js) (*ajax scripts*)
+  * [menu.js](js/menu.js) (*ajax scripts for sending polygons*)
   * [selection_of_the_area.js](js/selection_of_the_area.js) (*Selection of the area section scripts*)
   * [set_the_route.js](js/set_the_route.js) (*Route section scripts*)
   * [report_a_warning_zone.js](js/report_a_warning_zone.js) (*Report a warning zone section scripts*)

@@ -92,12 +92,63 @@ function ajax_types(url,type){ // requete ajax sur les types
 	});
 }
 
+function ajax_countries(url){ // requete ajax sur les pays
+	if (DEBUG){
+		console.log("ajax_countries url : ", url);
+	}
+	$.ajax({
+		url : url,
+		type : 'GET',
+		data: '',
+		dataType : 'json',
+		success : function(code_json, statut){
+			if (DEBUG){
+				console.log("ajax_countries code_json : ", code_json);
+				console.log("ajax_countries statut : ", statut);
+			}
+		},
+		error : function(resultat, statut, erreur){
+			if (DEBUG){
+				console.log("ajax_countries resultat : ", resultat);
+				console.log("ajax_countries statut : ", statut);
+				console.log("ajax_countries erreur : ", erreur);
+			}
+			$.notify(
+				{
+					title: "",
+					message: statut
+				},{
+					type: "danger",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+				}
+			);
+		},
+		complete : function(resultat, statut){
+			if (DEBUG){
+				console.log("ajax_countries resultat.status :", resultat.status);
+			}
+			if (resultat.status == '200'){
+				var json = resultat.responseJSON;
+				if (!$.isEmptyObject(json)){ // si le resultat json n est pas vide
+					if (DEBUG){
+						console.log("json : ", json);
+					}
+				}
+			}
+		}
+	});
+}
+
 $("body").ready(function(){ // lorsque le body est charge
 	if (DEBUG){
 		console.log("EVENT : $('body').ready");
 	}
-	ajax_types(url,string_risk_type);
-	ajax_types(url,string_anomaly_type);
+	ajax_types(url,string_risk_type); // recupere les types des warning zones
+	ajax_types(url,string_anomaly_type); // recupere les types des anomalies zones
+	//ajax_countries(url); // recupere la liste des pays
 });
 
 /*function ajax_grid(){ // requete ajax pour recuperer une grille
@@ -719,9 +770,9 @@ function style_shape(shape){ // modifie le style de chaque forme
 
 function geojsoncircle(ci){
 	var circlejson = new Array();
-	var n=ci.length;
-	var i=n-1;
-	while( i>=0){ 
+	var n = ci.length;
+	var i = n-1;
+	while (i >= 0){ 
 		circlejson.push([ci[i].lat,ci[i].lng]);
 		i--;
 	}

@@ -27,6 +27,10 @@ function ajax_types(url,type){...}
 ```
 Requête ajax pour recupérer les **types**.
 ```js
+function ajax_countries(url){...}
+```
+Requête ajax pour recupérer la liste des **pays dotés d'un graph**.
+```js
 $("body").ready(function(){...});
 ```
 S'exécute lorsque le **body** est chargé.
