@@ -328,6 +328,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							if (DEBUG){
 								console.log("element :", element);
 								console.log("json['features'][element] :", json["features"][element]);
+								console.log("json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity;
 							}
 							var shape = L.geoJSON(json["features"][element]);
 							var colorZone = getColor(json["features"][element]["properties"].intensity);
@@ -345,8 +346,9 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							legend.remove();
 						}
 						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
-						$("leaflet-control-layers-selector").attr('checked');
-						legend = L.control({position: 'bottomleft'}); // ajout de la legende
+						legend = L.control({
+							position: 'bottomleft'
+						}); // ajout de la legende
 						legend.onAdd = function (map) {
 						    var div = L.DomUtil.create('div', 'info legend'),
 						        grades = [20, 30, 40, 50, 60, 70, 80, 90, 100],
