@@ -648,7 +648,7 @@ function fill_geojson(circle,box,polygon,geojson,type){ // rempli le geojson a p
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	if (1){
 		console.log("FUNCTION : send_ajax_geojson");
-		console.log("send_ajax_geojson geojson : ", geojson);
+		console.log("send_ajax_geojson geojson.toString() : ", geojson.toString());
 		console.log("send_ajax_geojson type : ", type);
 		console.log("send_ajax_geojson url : ", url);
 	}
