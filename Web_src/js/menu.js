@@ -24,7 +24,7 @@ var string_anomaly_zone = "anomaly_zone";
 var string_risk_type = "risk_type";
 var string_anomaly_type = "anomaly_type";
 var bbox; // bounding box de la map
-var DEBUG = false;
+var DEBUG = true;
 var zoom = 12;
 
 function ajax_types(url,type){ // requete ajax sur les types
@@ -646,7 +646,7 @@ function fill_geojson(circle,box,polygon,geojson,type){ // rempli le geojson a p
 }
 
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
-	if (1){
+	if (DEBUG){
 		console.log("FUNCTION : send_ajax_geojson");
 		console.log("send_ajax_geojson geojson : ", geojson.toString());
 		console.log("send_ajax_geojson geojson.toString() : ", geojson.toString());
