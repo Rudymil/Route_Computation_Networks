@@ -634,9 +634,15 @@ function fill_geojson(circle,box,polygon,geojson,type){ // rempli le geojson a p
 		}
 	}
 	if (features.length > 0){
-		geojson["type"] = "FeatureCollection";
-		geojson["zone_type"] = type;
-		geojson["features"] = features;
+		var temp1 = new Array();
+		temp1["type"] = "FeatureCollection";
+		geojson.push(temp1);
+		var temp2 = new Array();
+		temp2["zone_type"] = type;
+		geojson.push(temp2);
+		var temp3 = new Array();
+		temp3["features"] = features;
+		geojson.push(temp3);
 		if (DEBUG){
 			console.log("features :", features);
 			console.log("geojson :", geojson);
@@ -648,6 +654,7 @@ function fill_geojson(circle,box,polygon,geojson,type){ // rempli le geojson a p
 function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le type a l url en parametre
 	if (1){
 		console.log("FUNCTION : send_ajax_geojson");
+		console.log("send_ajax_geojson geojson : ", geojson);
 		console.log("send_ajax_geojson geojson.toString() : ", geojson.toString());
 		console.log("send_ajax_geojson type : ", type);
 		console.log("send_ajax_geojson url : ", url);
