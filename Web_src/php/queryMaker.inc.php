@@ -142,6 +142,7 @@ function insertGeoJSONQuery($datajson){
     print("Success !");
   }
   $conn = NULL;
+  print(true);
 }
 
 /*function updateGeoJSONQuery($datajson){
@@ -212,6 +213,7 @@ function insertGeoJSONQuery($datajson){
   $conn = NULL;
 }
 */
+
 function checkWaypoint($datajson){
   if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
     print("<h2>The data JSON :</h2>");
@@ -244,7 +246,6 @@ function checkWaypoint($datajson){
   if(sizeOf($request_result["id"]) == 1){
     $countryId = $request_result["id"];
     $countryName = $request_result["name"];
-    //print(json_encode($request_result));
     return json_encode($request_result, JSON_NUMERIC_CHECK);
   }
   else{return false;}
