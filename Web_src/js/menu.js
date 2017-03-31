@@ -328,7 +328,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							if (DEBUG){
 								console.log("element :", element);
 								console.log("json['features'][element] :", json["features"][element]);
-								console.log("json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity;
+								console.log("json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity);
 							}
 							var shape = L.geoJSON(json["features"][element]);
 							var colorZone = getColor(json["features"][element]["properties"].intensity);
