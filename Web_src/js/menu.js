@@ -651,13 +651,14 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 		console.log("FUNCTION : send_ajax_geojson");
 		console.log("send_ajax_geojson geojson : ", geojson);
 		console.log("send_ajax_geojson geojson.toString() : ", geojson.toString());
+		console.log("send_ajax_geojson JSON.stringify(geojson) : ", JSON.stringify(geojson));
 		console.log("send_ajax_geojson type : ", type);
 		console.log("send_ajax_geojson url : ", url);
 	}
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : type+'='+geojson,
+		data : type+'='+JSON.stringify(geojson),
 		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
