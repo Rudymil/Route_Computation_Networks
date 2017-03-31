@@ -650,7 +650,7 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	if (DEBUG){
 		console.log("FUNCTION : send_ajax_geojson");
 		console.log("send_ajax_geojson geojson : ", geojson);
-		console.log("send_ajax_geojson geojson.prototype.toString() : ", geojson.prototype.toString());
+		console.log("send_ajax_geojson geojson.toString() : ", geojson.toString());
 		console.log("send_ajax_geojson type : ", type);
 		console.log("send_ajax_geojson url : ", url);
 	}
