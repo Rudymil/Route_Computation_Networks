@@ -334,7 +334,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 								fillColor: colorZone, // grey
 								color: colorZone
 							});
-							//shape.addTo(map); // ajout a la map
+							shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
 						$("#legend").css("visibility","visible"); //affiche la légende
