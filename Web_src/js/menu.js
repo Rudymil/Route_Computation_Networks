@@ -882,7 +882,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 			console.log(Object.keys(geojson).length);
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
-			if (send_ajax_geojson(string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
+			if (send_ajax_geojson(string_anomaly_zone,url) == 0){ // si pas d'erreur a l envoie
 				weak_opacity_shape(circlel);
 				circlel = [];
 				weak_opacity_shape(boxl);
