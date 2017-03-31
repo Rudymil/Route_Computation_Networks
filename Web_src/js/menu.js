@@ -655,7 +655,7 @@ function send_ajax_geojson(geojson,type,url){ // envoie en ajax le geojson et le
 	$.ajax({
 		url : url,
 		type : 'POST',
-		data : /*type+*/'warning_zone={type: FeatureCollection,zone_type: anomaly_zone,features: [{type: Feature,geometry: {type: Polygon,coordinates:[[[7.0496536916202,4.851353550492],[7.0510942257049,4.8472069037448]]]},properties: {anomaly_type: 1,description: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}}}'/*+geojson*/,
+		data : 'type='+type+'&geojson='+geojson,
 		dataType : 'json',
 		success : function(code, statut){
 			if (DEBUG){
