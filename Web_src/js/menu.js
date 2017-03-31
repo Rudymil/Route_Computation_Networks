@@ -345,8 +345,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							legend.remove();
 						}
 						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
-						$("leaflet-control-layers-selector").attr('name', 'warning_zones');
-						$('input[name=warning_zones]').attr('checked');
+						$("leaflet-control-layers-selector").attr('checked');
 						legend = L.control({position: 'bottomleft'}); // ajout de la legende
 						legend.onAdd = function (map) {
 						    var div = L.DomUtil.create('div', 'info legend'),
@@ -357,7 +356,6 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						    for (var i = 0; i < grades.length; i++) {
 						        divLegend += ('<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
 								grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+'))
-
 						    }
 							$(div).html(divLegend);
 						    return div;
