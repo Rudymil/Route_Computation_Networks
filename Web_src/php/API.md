@@ -135,25 +135,12 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
 
 ```json
 {
-  "type": "FeatureCollection",
-  "data_type": "waypoint",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.097,
-          9.592
-        ]}},
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          8.098,
-          9.593
-        ]}}]
+  "type": "Point",
+  "waypoint": {"start"|"step"|"end"},
+  "coordinates": [
+    8.097,
+    9.592
+  ]
 }
 ```
 
