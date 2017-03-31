@@ -332,10 +332,10 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							var shape = L.geoJSON(json["features"][element]);
 							var colorZone = getColor(json["features"][element]["properties"].intensity);
 							shape.setStyle({ // transforme en layer et change le style
-								fillColor: colorZone, // grey
+								fillColor: colorZone,
 								color: colorZone
 							});
-							shape.addTo(map); // ajout a la map
+							//shape.addTo(map); // ajout a la map
 							warning_zones.push(shape); // remplir la warning zone
 						}
 						layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -344,7 +344,7 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 							Lcontrollayers.remove();
 							legend.remove();
 						}
-						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).addTo(map); // ne pas oublier le null
+						Lcontrollayers = L.control.layers(null,overlayMaps,{position: 'topleft'}).enable().addTo(map); // ne pas oublier le null
 						// ajout de la legende
 						legend = L.control({position: 'bottomleft'});
 						legend.onAdd = function (map) {
@@ -362,7 +362,6 @@ function add_warning_zones(url,bbox){ // ajoute toutes les warning zones de la b
 						    return div;
 						};
 						legend.addTo(map);
-
 						/*$.notify(
 							{
 								title: "<strong>Warning zones request</strong>",
