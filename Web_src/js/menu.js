@@ -740,36 +740,41 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 function style_layer(type){ // modifie le style de la couche
 	if (DEBUG){
 		console.log("FUNCTION : style_layer");
+		console.log("style_layer type :", type);
 	}
+	var couche = new L.layerGroup();
 	if (type == string_warning_zone){
+		couche = editableLayers;
+		if (DEBUG){
+			console.log("style_layer editableLayers :", editableLayers);
+		}
 		editableLayers.clearLayers();
+		couche.setStyle({ // change le style de la shape
+					//opacity: 0.1, // weak opacity
+					color: 'red', // rouge
+					fillColor: 'black' // noir
+		});
+		if (DEBUG){
+			console.log("style_layer couche :", couche);
+		}
+		couche.addTo(map); // ajout a la map
 	}
 	if (type == string_anomaly_zone){
-		leditableLayers.clearLayers();
-	}
-	/*if (shape.length > 0){
-		for (element in shape){
-			if (DEBUG){
-				console.log("element : ", element);
-				console.log("shape[element] : ", shape[element]);
-			}
-			shape[element].remove();
-			/*couche = L.geoJSON(shape[element]); // transform into shape
-			if (DEBUG){
-				console.log("couche : ", couche);
-			}
-			couche.setStyle({ // change le style de la shape
-				//opacity: 0.1, // weak opacity
-				color: 'black',
-				fillColor: 'black' // noir
-			});
-			if (DEBUG){
-				console.log("couche : ", couche);
-			}
-			couche.removeFrom(map);
-			couche.addTo(map); // ajout a la map
+		couche = leditableLayers;
+		if (DEBUG){
+		console.log("style_layer leditableLayers :", leditableLayers);
 		}
-	}*/
+		leditableLayers.clearLayers();
+		couche.setStyle({ // change le style de la shape
+					//opacity: 0.1, // weak opacity
+					color: 'blue', // bleu
+					fillColor: 'black' // noir
+		});
+		if (DEBUG){
+			console.log("style_layer couche :", couche);
+		}
+		couche.addTo(map); // ajout a la map
+	}
 }
 
 function geojsoncircle(ci){
