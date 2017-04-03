@@ -750,7 +750,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 			}
 			var couche = L.geoJSON(shape[element]); // transform into shape
 			if (DEBUG){
-				console.log("layer : ", couche);
+				console.log("couche : ", couche);
 			}
 			couche.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
@@ -758,9 +758,9 @@ function style_shape(shape){ // modifie le style de chaque forme
 				fillColor: 'black' // noir
 			});
 			if (DEBUG){
-				console.log("layer : ", couche);
+				console.log("couche : ", couche);
 			}
-			shape[element].removeFrom(map);
+			couche.removeFrom(map);
 			couche.addTo(map); // ajout a la map
 		}
 	}
