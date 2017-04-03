@@ -55,8 +55,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	//console.log("kqsdqsdqs");
 	
 	if ($("#Navigate").is(":checked") ){
-		$("#dep").prop('disabled', false);	
-		$("#dest").prop('disabled', false);	
+		$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "visible");
+		//$("#dep").prop('disabled', true);
+		//$("#dest").prop('disabled', true);
 		/*if( markeraDestination != null && markeraDestination != null ){
 		markerDeparture.dragging.enable();
 		markeraDestination.dragging.enable();	
@@ -67,9 +68,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	
 	
 	else if ($("#Circle1").is(":checked")==true ){
-	
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
@@ -120,8 +121,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*
 	if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
@@ -165,8 +167,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}	
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
