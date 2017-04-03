@@ -737,11 +737,16 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	});
 }
 
-function style_layer(){ // modifie le style de la couche
+function style_layer(type){ // modifie le style de la couche
 	if (DEBUG){
 		console.log("FUNCTION : style_layer");
 	}
-	leditableLayers.clearLayers();
+	if (type == string_warning_zone){
+		editableLayers.clearLayers();
+	}
+	if (type == string_anomaly_zone){
+		leditableLayers.clearLayers();
+	}
 	/*if (shape.length > 0){
 		for (element in shape){
 			if (DEBUG){
@@ -854,7 +859,7 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 				circle = new Array();
 				box = new Array();
 				polygon = new Array();
-				style_layer();
+				style_layer(string_warning_zone);
 			}
 		}
 	}
@@ -934,7 +939,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 				circlel = new Array();
 				boxl = new Array();
 				polygonl = new Array();
-				style_layer();
+				style_layer(string_anomaly_zone);
 			}
 		}
 	}
