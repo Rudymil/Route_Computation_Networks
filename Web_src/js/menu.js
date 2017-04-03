@@ -28,7 +28,7 @@ var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
 var json_countries = new Array();
-var liste_countries = {'Angola':[[9.140230,8.676766],5],'Nigeria':[[-11.120391,17.881084],5]};
+var liste_countries = {'Angola':[new L.LatLng(9.140230,8.676766),5],'Nigeria':[new L.LatLng(-11.120391,17.881084),5]};
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -148,11 +148,10 @@ function ajax_countries(url){ // requete ajax sur les pays
 							}
 							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id="+json_countries[object]['name']+">"+json_countries[object]['name']+"</button></center></div></div>"); // ajout du bouton
 							if (DEBUG){
-								console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
-								console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
+								console.log("ajax_countries liste_countries[json_countries[object]['name']] : ", liste_countries[json_countries[object]['name']]);
 							}
 							$("#"+json_countries[object]['name']).click(function(){ // reset view
-								map.setView(new L.LatLng(liste_countries[json_countries[object]['name']][0]),liste_countries[json_countries[object]['name']][1]);
+								map.setView(liste_countries[json_countries[object]['name']]);
 							});
 						}
 					}
