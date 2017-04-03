@@ -27,6 +27,7 @@ var bbox; // bounding box de la map
 var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
+var couche;
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -748,7 +749,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 				console.log("element : ", element);
 				console.log("shape[element] : ", shape[element]);
 			}
-			var couche = L.geoJSON(shape[element]); // transform into shape
+			couche = L.geoJSON(shape[element]); // transform into shape
 			if (DEBUG){
 				console.log("couche : ", couche);
 			}

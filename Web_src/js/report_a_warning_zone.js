@@ -66,7 +66,7 @@ $(".radio_button").change(function (){ // choix de dessin
 	
 
 	var drawPluginOptions = {
-  	position: 'topright',
+  	position: 'topleft',
   		draw: {
     	circle: {
      	 shapeOptions: {
@@ -113,7 +113,7 @@ $(".radio_button").change(function (){ // choix de dessin
 	//map.addLayer(editableLayers);
 
 	var drawPluginOptions = {
-  	position: 'topright',
+  	position: 'topleft',
   		draw: {
     	rectangle: {
      	 shapeOptions: {
@@ -158,7 +158,7 @@ $(".radio_button").change(function (){ // choix de dessin
 	//map.addLayer(editableLayers);
 
 	var drawPluginOptions = {
-  	position: 'topright',
+  	position: 'topleft',
   		draw: {
     	polygon: {
      	 allowIntersection: false, // Restricts shapes to simple polygons
@@ -232,7 +232,7 @@ map.on('draw:created', function(e) {
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
 				</div>	"
     		, function(result) {
     		
@@ -252,7 +252,13 @@ map.on('draw:created', function(e) {
      		     "anomaly_type": lev
    			 };
    			 	*/
-   			 	console.log(des);
+   			 	
+   			 	if( des=="") {
+  					des= "without description";
+  				}
+  				
+  				
+   			 	//console.log(des);
    			 	content = getPopupContentw(layer,lev,des);
    			 	var temp = [des,lev,layer._leaflet_id ];
    			 	//console.log(content);
@@ -306,6 +312,10 @@ map.on('draw:created', function(e) {
     			des= $('#description').val();
     			lev= $('#level').find(":selected").val();
   				
+  				if( des=="") {
+  					des= "without description";
+  				}
+  				
   				console.log(des);
    			 	content = getPopupContentw(layer,lev,des);
    			 	var temp = [des,lev,layer._leaflet_id ];
@@ -352,6 +362,11 @@ map.on('draw:created', function(e) {
     		
         		des= $('#description').val();
     			lev= $('#level').find(":selected").val();
+  				
+  				
+  				if( des=="") {
+  					des= "without description";
+  				}
   				
   				console.log(des);
    			 	content = getPopupContentw(layer,lev,des);
