@@ -3,7 +3,7 @@ $("body").ready(function(){ // lorsque le body est charge
 		console.log("EVENT : $('body').ready");
 	}
 	for (object in json_countries){
-		$("#panel-element-204612>.panel-body").add("div").addClass("row").append("div").addClass("col-xs-12").append("center").append("button").addType("button").addClass("btn btn-primary btn-xm").addId(json_countries[object]["name"]).append(json_countries[object]["name"]);
+		$("#panel-element-204612>.panel-body").append("div").addClass("row").append("div").addClass("col-xs-12").append("center").append("button").addType("button").addClass("btn btn-primary btn-xm").addId(json_countries[object]["name"]).append(json_countries[object]["name"]);
 	}
 });
 
