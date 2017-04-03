@@ -99,7 +99,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 	$.ajax({
 		url : url,
 		type : 'GET',
-		data: 'type = country',
+		data: 'type=country',
 		dataType : 'json',
 		success : function(code_json, statut){
 			if (DEBUG){
