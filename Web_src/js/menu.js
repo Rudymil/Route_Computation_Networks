@@ -153,6 +153,10 @@ function ajax_countries(url){ // requete ajax sur les pays
 								console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
 							}
 							$("#"+json_countries[object]['name']).click(function(){ // reset view
+								if (DEBUG){
+									console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
+									console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
+								}
 								map.setView(liste_countries[json_countries[object]['name']][0],liste_countries[json_countries[object]['name']][1]);
 							});
 						}
