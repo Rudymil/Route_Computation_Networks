@@ -749,10 +749,12 @@ function style_layer(type){ // modifie le style de la couche
 			console.log("style_layer editableLayers :", editableLayers);
 		}
 		editableLayers.clearLayers();
-		couche.setStyle({ // change le style de la shape
-			//opacity: 0.1, // weak opacity
-			color: 'red', // rouge
-			fillColor: 'black' // noir
+		couche.eachLayer(function(layer){
+			layer.setStyle({ // change le style de la shape
+				//opacity: 0.1, // weak opacity
+				color: 'red', // rouge
+				fillColor: 'black' // noir
+			});
 		});
 		if (DEBUG){
 			console.log("style_layer couche :", couche);
@@ -765,10 +767,12 @@ function style_layer(type){ // modifie le style de la couche
 		console.log("style_layer leditableLayers :", leditableLayers);
 		}
 		leditableLayers.clearLayers();
-		couche.setStyle({ // change le style de la shape
-			//opacity: 0.1, // weak opacity
-			color: 'blue', // bleu
-			fillColor: 'black' // noir
+		couche.eachLayer(function(layer){
+			couche.setStyle({ // change le style de la shape
+				//opacity: 0.1, // weak opacity
+				color: 'blue', // bleu
+				fillColor: 'black' // noir
+			});
 		});
 		if (DEBUG){
 			console.log("style_layer couche :", couche);
