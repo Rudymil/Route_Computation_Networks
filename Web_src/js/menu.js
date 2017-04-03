@@ -154,7 +154,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 							}
 							$("#"+json_countries[object]['name']).click(function(){ // reset view
 								if (DEBUG){
-									console.log("$(this).id : ", $(this).id);
+									console.log("$(this) : ", $(this));
 									console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
 									console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
 								}
