@@ -138,6 +138,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 						console.log("json : ", json);
 					}
 					json_countries = json;
+					countries_DOM(); // construit les boutons
 				}
 			}
 		}
