@@ -760,6 +760,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 			if (DEBUG){
 				console.log("layer : ", couche);
 			}
+			shape[element].remove();
 			couche.addTo(map); // ajout a la map
 		}
 	}
