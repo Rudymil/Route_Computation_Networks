@@ -152,9 +152,9 @@ function ajax_countries(url){ // requete ajax sur les pays
 								console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
 								console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
 							}
-							$("#"+json_countries[object]['name']).click(function(this){ // reset view
+							$("#"+json_countries[object]['name']).click(function(){ // reset view
 								if (DEBUG){
-									console.log(this);
+									console.log($(this));
 									console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
 									console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
 								}
