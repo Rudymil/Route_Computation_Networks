@@ -742,9 +742,6 @@ function style_shape(shape){ // modifie le style de chaque forme
 		console.log("FUNCTION : style_shape");
 		console.log("shape : ", shape);
 	}
-	if (DEBUG){
-		console.log("shape : ", shape);
-	}
 	if (shape.length > 0){
 		for (element in shape){
 			if (DEBUG){
@@ -852,11 +849,11 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_warning_zone,url) != -1){ // si pas d'erreur a l envoie
 				style_shape(circle);
-				circle = [];
+				circle = new Array();
 				style_shape(box);
-				box = [];
+				box = new Array();
 				style_shape(polygon);
-				polygon = [];
+				polygon = new Array();
 			}
 		}
 	}
@@ -934,11 +931,11 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_anomaly_zone,url) != -1){ // si pas d'erreur a l envoie
 				style_shape(circlel);
-				circlel = [];
+				circlel = new Array();
 				style_shape(boxl);
-				boxl = [];
+				boxl = new Array();
 				style_shape(polygonl);
-				polygonl = [];
+				polygonl = new Array();
 			}
 		}
 	}
