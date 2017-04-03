@@ -28,6 +28,7 @@ var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
 var json_countries = new Array();
+var liste_countries = ['Angola':[[9.140230,8.676766],5],'Nigeria':[[-11.120391,17.881084],5],];
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -146,13 +147,14 @@ function ajax_countries(url){ // requete ajax sur les pays
 								console.log("ajax_countries json_countries[object] : ", json_countries[object]);
 							}
 							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id="+json_countries[object]['name']+">"+json_countries[object]['name']+"</button></center></div></div>"); // ajout du bouton
+							if (DEBUG){
+								console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
+								console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
+							}
+							$("#"+json_countries[object]['name']).click(function(){ // reset view
+								map.setView(new L.LatLng(liste_countries[json_countries[object]['name']][0]),liste_countries[json_countries[object]['name']][1]);
+							});
 						}
-						$("#Nigeria").click(function(){ // reset sur port harcourt
-							map.setView(new L.LatLng(4.804448, 7.016409),13);
-						});
-						$("#Angola").click(function(){ // reset sur luanda
-							map.setView(new L.LatLng(-8.830395, 13.236284),14);
-						});
 					}
 				}
 			}
@@ -752,24 +754,24 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 }
 
 function style_layer(type){ // modifie le style de la couche
+	couche = new L.FeatureGroup();
 	if (DEBUG){
 		console.log("FUNCTION : style_layer");
 		console.log("style_layer type :", type);
+		console.log("style_layer couche :", couche);
 	}
-	couche = new L.FeatureGroup();
 	if (type == string_warning_zone){
 		if (DEBUG){
 			console.log("style_layer editableLayers :", editableLayers);
-			console.log("style_layer couche :", couche);
 		}
 		editableLayers.eachLayer(function(layer){
 			if (DEBUG){
 				console.log("style_layer layer : ", layer)
 			}
-			layer.setStyle({ // change le style de la shape
+			layer.setStyle({ // change le style de la layer
 				//opacity: 0.1, // weak opacity
-				color: '#ff0033', // rouge
-				fillColor: '#140004' // noir
+				color: 'red', // rouge
+				fillColor: 'black' // noir
 			});
 			couche.addLayer(layer); // ajout a la map
 		});
@@ -780,16 +782,14 @@ function style_layer(type){ // modifie le style de la couche
 		map.addLayer(couche);
 	}
 	if (type == string_anomaly_zone){
-		//couche = leditableLayers;
 		if (DEBUG){
 			console.log("style_layer leditableLayers :", leditableLayers);
 		}
-		
 		leditableLayers.eachLayer(function(layer){
 			if (DEBUG){
 				console.log("style_layer layer : ", layer)
 			}
-			layer.setStyle({ // change le style de la shape
+			layer.setStyle({ // change le style de la layer
 				//opacity: 0.1, // weak opacity
 				color: '#0033ff', // bleu
 				fillColor: '#140004' // noir
