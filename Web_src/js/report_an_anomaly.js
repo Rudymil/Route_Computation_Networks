@@ -24,27 +24,27 @@ return today;
 }
 
 
-
-var na=types_anomalies.length;
-var debuta="<div class='form-group'>\
+function htmlca() {
+	var na=types_anomalies.length;
+	var debuta="<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='anomalyType'>\
 				<option value='' disabled selected>Select anomaly </option>";
-var fina= "</select>\
+	var fina= "</select>\
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
 				</div>	";
 
-for( var i=0 ; i<na ; i++ ) {
+	for( var i=0 ; i<na ; i++ ) {
 
-debutw=debutw+"<option value="+types_anomalies[i].id+" >"+types_anomalies[i].name +"</option>";
+		debutw=debutw+"<option value="+types_anomalies[i].id+" >"+types_anomalies[i].name +"</option>";
+	}
+
+	var htmla=debuta+fina;
+	return htmla;
 }
-
-var htmla=debuta+fina;
-
-
 
 leditableLayers = new L.FeatureGroup();
 map.addLayer(leditableLayers);
@@ -217,7 +217,7 @@ map.on('draw:created', function(e) {
 			var lev=null;
   				
   			  		
-  			bootbox.confirm(htmla, function(result) {
+  			bootbox.confirm(htmlca(), function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -258,7 +258,7 @@ map.on('draw:created', function(e) {
 			var lev=null;
   			
   			  		
-  			bootbox.confirm(htmla, function(result) {
+  			bootbox.confirm(htmlca(), function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -298,7 +298,7 @@ map.on('draw:created', function(e) {
 			var lev=null;
   			
   			  		
-  			bootbox.confirm(htmla, function(result) {
+  			bootbox.confirm(htmlca(), function(result) {
     		
     			
     			des= $('#description').val();

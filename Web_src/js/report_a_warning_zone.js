@@ -25,27 +25,28 @@ return today;
 
 }
 
-
-var nw=types_warning_zones.length;
-var debutw="<div class='form-group'>\
+function hmtlcw() {
+	var nw=types_warning_zones.length;
+	var debutw="<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
 				<option value='' disabled selected>Select the warning zone</option>";
-var finw= "</select>\
+	var finw= "</select>\
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
 				</div>	";
 
-for( var i=0 ; i<nw ; i++ ) {
+	for( var i=0 ; i<nw ; i++ ) {
 
-debutw=debutw+"<option value="+types_warning_zones[i].id+" >"+types_warning_zones[i].name +"</option>";
+	debutw=debutw+"<option value="+types_warning_zones[i].id+" >"+types_warning_zones[i].name +"</option>";
+	}
+
+	var htmlw=debutw+finw;
+	
+	return htmlw;
 }
-
-var htmlw=debutw+finw;
-
-
 editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
@@ -237,7 +238,7 @@ map.on('draw:created', function(e) {
   			var des=null;
 			var lev=null;
   			
-  			bootbox.confirm(htmlw, function(result) {
+  			bootbox.confirm(hmtlcw(), function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -292,7 +293,7 @@ map.on('draw:created', function(e) {
 		var lev=null;
   			
 		
-		bootbox.confirm(htmlw, function(result) {
+		bootbox.confirm(hmtlcw(), function(result) {
     		
 			//console.log("inside");
     			des= $('#description').val();
@@ -327,7 +328,7 @@ map.on('draw:created', function(e) {
 		var lev=null;
   			
 		
-		bootbox.confirm(htmlw, function(result) {
+		bootbox.confirm(hmtlcw(), function(result) {
     		
         		des= $('#description').val();
     			lev= $('#level').find(":selected").val();
