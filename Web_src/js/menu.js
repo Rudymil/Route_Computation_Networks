@@ -151,7 +151,6 @@ $("body").ready(function(){ // lorsque le body est charge
 	ajax_types(url,string_risk_type); // recupere les types des warning zones
 	ajax_types(url,string_anomaly_type); // recupere les types des anomalies zones
 	ajax_countries(url); // recupere la liste des pays
-	countries_DOM(); // construit les boutons
 });
 
 /*function ajax_grid(){ // requete ajax pour recuperer une grille
