@@ -748,18 +748,18 @@ function style_shape(shape){ // modifie le style de chaque forme
 				console.log("element : ", element);
 				console.log("shape[element] : ", shape[element]);
 			}
-			var layer = L.geoJSON(shape[element]); // transform into shape
+			var couche = L.geoJSON(shape[element]); // transform into shape
 			if (DEBUG){
-				console.log("layer : ", layer);
+				console.log("layer : ", couche);
 			}
-			layer.setStyle({ // change le style de la shape
+			couche.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
 				fillColor: 'black' // noir
 			});
 			if (DEBUG){
-				console.log("layer : ", layer);
+				console.log("layer : ", couche);
 			}
-			layer.addTo(map); // ajout a la map
+			couche.addTo(map); // ajout a la map
 		}
 	}
 }
