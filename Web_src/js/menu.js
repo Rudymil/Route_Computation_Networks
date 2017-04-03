@@ -742,7 +742,7 @@ function style_layer(type){ // modifie le style de la couche
 		console.log("FUNCTION : style_layer");
 		console.log("style_layer type :", type);
 	}
-	var couche = new L.layerGroup();
+	var couche = new L.featureGroup();
 	if (type == string_warning_zone){
 		couche = editableLayers;
 		if (DEBUG){
