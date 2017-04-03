@@ -762,9 +762,9 @@ function style_layer(){ // modifie le style de la couche
 				console.log("couche : ", couche);
 			}
 			couche.removeFrom(map);
-			couche.addTo(map); // ajout a la map*/
+			couche.addTo(map); // ajout a la map
 		}
-	}
+	}*/
 }
 
 function geojsoncircle(ci){
