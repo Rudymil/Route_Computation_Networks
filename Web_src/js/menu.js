@@ -717,7 +717,6 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 				console.log("send_ajax_geojson statut : ", statut);
 			}
 			notify_ajax_sending_areas_success(code, statut);
-			return 0;
 		},
 		error : function(resultat, statut, erreur){
 			if (DEBUG){
@@ -851,7 +850,7 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 			console.log(Object.keys(geojson).length);
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
-			if (send_ajax_geojson(string_warning_zone,url) == 0){ // si pas d'erreur a l envoie
+			if (send_ajax_geojson(string_warning_zone,url) != -1){ // si pas d'erreur a l envoie
 				style_shape(circle);
 				circle = [];
 				style_shape(box);
@@ -933,7 +932,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 			console.log(Object.keys(geojson).length);
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
-			if (send_ajax_geojson(string_anomaly_zone,url) == 0){ // si pas d'erreur a l envoie
+			if (send_ajax_geojson(string_anomaly_zone,url) != -1){ // si pas d'erreur a l envoie
 				style_shape(circlel);
 				circlel = [];
 				style_shape(boxl);
