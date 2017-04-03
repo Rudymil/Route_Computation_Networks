@@ -23,16 +23,21 @@ else {
 }
 
 //GET zones
-if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] == "anomaly_zone")) {
-  $bBoxSQL = "";
+if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] == "anomaly_zone") && !isset($_GET["action"])) {
+  $tableSQL = "";
+  $filterSQL = "";
   if (isset($_GET["bbox"])) {
     $bBox = explode(",", $_GET["bbox"]); //southWest lng/lat / northEast lng/lat
-    $bBoxSQL = " AND ST_Contains(ST_SetSRID(ST_MakeBox2D(ST_Point($bBox[0], $bBox[1]), ST_Point($bBox[2], $bBox[3])),4326), z.geom)";
+    $filterSQL .= " AND ST_Contains(ST_SetSRID(ST_MakeBox2D(ST_Point($bBox[0], $bBox[1]), ST_Point($bBox[2], $bBox[3])),4326), z.geom)";
   }
+  /*if (isset($_GET["country_id"])) {
+      $tableSQL .= "country c";
+      $filterSQL .= " AND ST_Contains(c.geom, z.geom)";
+    }*/
   if ($_GET["type"] == "warning_zone") {
-    $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, t.name, description, risk_intensity AS intensity FROM warning_zone z, risk t WHERE z.risk_type = t.id $bBoxSQL;";
+    $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, t.name, description, risk_intensity AS intensity FROM warning_zone z, risk t WHERE z.risk_type = t.id $filterSQL;";
   }elseif ($_GET["type"] == "anomaly_zone") {
-    $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, t.name, description FROM anomaly_zone z, anomaly t WHERE z.anomaly_type = t.id $bBoxSQL;";
+    $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, t.name, description FROM anomaly_zone z, anomaly t WHERE z.anomaly_type = t.id $filterSQL;";
   }
   if (isset($_GET["DEBUG"])) {
     print("<p><strong>Query :</strong> " . $zones_list . "</p>");
@@ -89,7 +94,17 @@ elseif (isset($_POST["waypoint"])) {
   print $result;
 }
 
+//Delete object
+elseif (isset($_GET["action"]) && isset($_GET["type"]) && isset($_GET["id"]) && is_numeric($_GET["id"]) && $_GET["action"] == "delete") {
+  if ($_GET["type"] == "warning_zone" || $_GET["type"] == "anomaly_zone") {
+    $type = $_GET["type"];
+    $id = $_GET["id"];
+    deleteQuery("DELETE FROM $type WHERE id = $id;");
+  }
+}
+
 else{
   error(400, "No data received !");
 }
+
 ?>
