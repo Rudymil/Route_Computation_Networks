@@ -2,7 +2,12 @@ $("body").ready(function(){ // lorsque le body est charge
 	if (DEBUG){
 		console.log("EVENT : $('body').ready");
 	}
-	while (json_countries.lenght <= 0){ // tant que pas rempli
+	while (json_countries.length <= 0){ // tant que pas rempli
+		var i = 0;
+		if (DEBUG){
+			console.log(i);
+		}
+		i++;
 	}
 	if (DEBUG){
 		console.log("EVENT : $('body').ready json_countries : ", json_countries);
