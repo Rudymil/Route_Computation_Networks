@@ -9,7 +9,7 @@ Le mode **DEBUG** est activable en ajoutant la variable DEBUG dans l'URL sans va
 
 Pour récupérer des données stockées en base, les requêtes sont à effectuer en GET, les différents paramètres disponibles sont les suivants :
 
-- type=[warning_zone|anomaly_zone|risk_type|anomaly_type] : pour récupérer au choix : les warning_zone ou les anomaly_zone ou les risk_type ou les anomaly_type.
+- type=[warning_zone|anomaly_zone|risk_type|anomaly_type|country] : pour récupérer au choix : les warning_zone ou les anomaly_zone ou les risk_type ou les anomaly_type ou la liste des pays.
 - bbox=[southWestLng,southWestLat,northEastLng,northEastLat] **(optionnel)** : permet la limitation des zones retournées suivant une bounding box
 
 La chaine des coordonnées de la bounding box est disponible via la fonction javascript :
