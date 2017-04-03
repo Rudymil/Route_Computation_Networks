@@ -749,7 +749,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 				console.log("element : ", element);
 				console.log("shape[element] : ", shape[element]);
 			}
-			shape[element].removeFrom(map);
+			shape[element].remove();
 			/*couche = L.geoJSON(shape[element]); // transform into shape
 			if (DEBUG){
 				console.log("couche : ", couche);
