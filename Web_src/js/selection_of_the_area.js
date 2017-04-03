@@ -2,7 +2,7 @@ function countries_DOM(){
 	if (DEBUG){
 		console.log("countries_DOM json_countries : ", json_countries);
 	}
-	if (json_countries.lenght > 0){ // si y a des pays
+	if (json_countries.length > 0){ // si y a des pays
 		for (object in json_countries){
 			if (DEBUG){
 				console.log("countries_DOM object : ", object);
