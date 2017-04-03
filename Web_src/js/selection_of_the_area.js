@@ -8,7 +8,8 @@ function countries_DOM(){
 				console.log("countries_DOM object : ", object);
 				console.log("countries_DOM json_countries[object] : ", json_countries[object]);
 			}
-			$("#panel-element-204612>.panel-body").append("div").addClass("row").append("div").addClass("col-xs-12").append("center").append("button").addClass("btn btn-primary btn-xm").append(json_countries[object]["name"]);
+			$("#panel-element-204612>.panel-body").add("div").addClass("row");
+			//.append("div").addClass("col-xs-12").append("center").append("button").addClass("btn btn-primary btn-xm").append(json_countries[object]["name"]);
 		}
 	}
 }
