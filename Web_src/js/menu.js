@@ -147,6 +147,12 @@ function ajax_countries(url){ // requete ajax sur les pays
 							}
 							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id="+json_countries[object]['name']+">"+json_countries[object]['name']+"</button></center></div></div>"); // ajout du bouton
 						}
+						$("#Nigeria").click(function(){ // reset sur port harcourt
+							map.setView(new L.LatLng(4.804448, 7.016409),13);
+						});
+						$("#Angola").click(function(){ // reset sur luanda
+							map.setView(new L.LatLng(-8.830395, 13.236284),14);
+						});
 					}
 				}
 			}
