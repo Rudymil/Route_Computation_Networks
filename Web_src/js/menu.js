@@ -28,7 +28,7 @@ var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
 var json_countries = new Array();
-var liste_countries = ['Angola':[[9.140230,8.676766],5],'Nigeria':[[-11.120391,17.881084],5],];
+var liste_countries = ['Angola':[[9.140230,8.676766],5],'Nigeria':[[-11.120391,17.881084],5]];
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
