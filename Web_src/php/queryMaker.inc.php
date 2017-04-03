@@ -4,27 +4,14 @@ include_once("./error.inc.php");
 if ($_SERVER["REQUEST_URI"] == "/api/queryMaker.inc.php") {
   error(403, "Invalid request URI !");
 }
-/*
- * Title:   PostGIS to GeoJSON
- * Notes:   Query a PostGIS table or view and return the results in GeoJSON format, suitable for use in OpenLayers, Leaflet, etc.
- * Author:  Bryan R. McBride, GISP
- * Contact: bryanmcbride.com
- * GitHub:  https://github.com/bmcbride/PHP-Database-GeoJSON
- */
 
-/*
-* If bbox variable is set, only return records that are within the bounding box
-* bbox should be a string in the form of 'southwest_lng,southwest_lat,northeast_lng,northeast_lat'
-* Leaflet: map.getBounds().toBBoxString()
-*/
 function selectGeoJSONQuery($sqlRequest) {
   # Connect to PostgreSQL database
   include_once("./connexion.inc.php");
   # Try query or error
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
-      echo 'An SQL error occured.\n';
-      exit;
+    exit("An SQL error occured.\n");
   }
 
   # Build GeoJSON feature collection array
@@ -58,9 +45,9 @@ function selectJSONQuery($sqlRequest) {
   include_once("./connexion.inc.php");
   # Try query or error
   $rs = $conn->query($sqlRequest);
+  $conn = NULL;
   if (!$rs) {
-      echo 'An SQL error occured.\n';
-      exit;
+    exit("An SQL error occured.\n");
   }
 
   # Build GeoJSON feature collection array
@@ -71,9 +58,20 @@ function selectJSONQuery($sqlRequest) {
       # Add feature arrays to feature collection array
       array_push($json, $row);
   }
-
-  $conn = NULL;
   return json_encode($json, JSON_NUMERIC_CHECK);
+}
+
+function deleteQuery($sqlRequest) {
+  # Connect to PostgreSQL database
+  include_once("./connexion.inc.php");
+  # Try query or error
+  $rs = $conn->query($sqlRequest);
+  $conn = NULL;
+  if (!$rs) {
+    exit("An SQL error occured.\n");
+  }else {
+    print("true");
+  }
 }
 
 function insertGeoJSONQuery($datajson){
@@ -136,7 +134,7 @@ function insertGeoJSONQuery($datajson){
 
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
-      exit("An SQL error occured.\n");
+    exit("An SQL error occured.\n");
   }
   if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
     print("Success !");
@@ -238,7 +236,7 @@ function checkWaypoint($datajson){
 
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
-      exit("An SQL error occured.\n");
+    exit("An SQL error occured.\n");
   }
   $conn = NULL;
   $request_result = $rs->fetch(PDO::FETCH_ASSOC);

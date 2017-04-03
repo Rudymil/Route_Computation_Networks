@@ -27,7 +27,7 @@ var bbox; // bounding box de la map
 var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
-var couche;
+var json_countries = new Array();
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -100,7 +100,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 	$.ajax({
 		url : url,
 		type : 'GET',
-		data: '',
+		data: 'type=country',
 		dataType : 'json',
 		success : function(code_json, statut){
 			if (DEBUG){
@@ -116,7 +116,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 			}
 			$.notify(
 				{
-					title: "",
+					title: "<strong>Countries request</strong>",
 					message: statut
 				},{
 					type: "danger",
@@ -137,6 +137,23 @@ function ajax_countries(url){ // requete ajax sur les pays
 					if (DEBUG){
 						console.log("json : ", json);
 					}
+					json_countries = json;
+					//countries_DOM(); // construit les boutons
+					if (json_countries.length > 0){ // si y a des pays
+						for (object in json_countries){
+							if (DEBUG){
+								console.log("ajax_countries object : ", object);
+								console.log("ajax_countries json_countries[object] : ", json_countries[object]);
+							}
+							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id="+json_countries[object]['name']+">"+json_countries[object]['name']+"</button></center></div></div>"); // ajout du bouton
+						}
+						$("#Nigeria").click(function(){ // reset sur port harcourt
+							map.setView(new L.LatLng(4.804448, 7.016409),13);
+						});
+						$("#Angola").click(function(){ // reset sur luanda
+							map.setView(new L.LatLng(-8.830395, 13.236284),14);
+						});
+					}
 				}
 			}
 		}
@@ -149,7 +166,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	}
 	ajax_types(url,string_risk_type); // recupere les types des warning zones
 	ajax_types(url,string_anomaly_type); // recupere les types des anomalies zones
-	//ajax_countries(url); // recupere la liste des pays
+	ajax_countries(url); // recupere la liste des pays
 });
 
 /*function ajax_grid(){ // requete ajax pour recuperer une grille
@@ -451,10 +468,6 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	if (DEBUG){
 		console.log("EVENT : $('#map').ready");
 	}
-	//ajax_grid();
-	//ajax_polygon();
-	//bbox = map.getBounds().toBBoxString();
-	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
 		if (DEBUG){
 			console.log("zoom :", map.getZoom())
@@ -738,33 +751,53 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	});
 }
 
-function style_shape(shape){ // modifie le style de chaque forme
+function style_layer(type){ // modifie le style de la couche
 	if (DEBUG){
-		console.log("FUNCTION : style_shape");
-		console.log("shape : ", shape);
+		console.log("FUNCTION : style_layer");
+		console.log("style_layer type :", type);
 	}
-	if (shape.length > 0){
-		for (element in shape){
+	var couche = new L.featureGroup();
+	if (type == string_warning_zone){
+		couche = editableLayers;
+		if (DEBUG){
+			console.log("style_layer editableLayers :", editableLayers);
+		}
+		editableLayers.clearLayers();
+		couche.eachLayer(function(layer){
 			if (DEBUG){
-				console.log("element : ", element);
-				console.log("shape[element] : ", shape[element]);
+				console.log("style_layer layer : ", layer)
 			}
-			shape[element].remove();
-			/*couche = L.geoJSON(shape[element]); // transform into shape
-			if (DEBUG){
-				console.log("couche : ", couche);
-			}
-			couche.setStyle({ // change le style de la shape
+			layer.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
-				color: 'black',
+				color: 'red', // rouge
 				fillColor: 'black' // noir
 			});
-			if (DEBUG){
-				console.log("couche : ", couche);
-			}
-			couche.removeFrom(map);
-			couche.addTo(map); // ajout a la map*/
+		});
+		if (DEBUG){
+			console.log("style_layer couche :", couche);
 		}
+		couche.addTo(map); // ajout a la map
+	}
+	if (type == string_anomaly_zone){
+		couche = leditableLayers;
+		if (DEBUG){
+		console.log("style_layer leditableLayers :", leditableLayers);
+		}
+		leditableLayers.clearLayers();
+		couche.eachLayer(function(layer){
+			if (DEBUG){
+				console.log("style_layer layer : ", layer)
+			}
+			layer.setStyle({ // change le style de la shape
+				//opacity: 0.1, // weak opacity
+				color: 'blue', // bleu
+				fillColor: 'black' // noir
+			});
+		});
+		if (DEBUG){
+			console.log("style_layer couche :", couche);
+		}
+		couche.addTo(map); // ajout a la map
 	}
 }
 
@@ -852,12 +885,10 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_warning_zone,url) != -1){ // si pas d'erreur a l envoie
-				style_shape(circle);
 				circle = new Array();
-				style_shape(box);
 				box = new Array();
-				style_shape(polygon);
 				polygon = new Array();
+				style_layer(string_warning_zone);
 			}
 		}
 	}
@@ -874,7 +905,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 					{ 
 						"type": "Feature",
 						"properties":{
-							"risk_type":infoscl[i][1],
+							"anomaly_type":infoscl[i][1],
 							"description":infoscl[i][0]
 						},
 						"geometry": {
@@ -894,7 +925,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 				if (infosbl[i][2] == layer._leaflet_id){
 					var temp = layer.toGeoJSON();
 					temp.properties = {
-						"risk_type":infosbl[i][1],
+						"anomaly_type":infosbl[i][1],
 						"description":infosbl[i][0]
 					};
 					boxl.push(temp);
@@ -910,7 +941,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 					var temp = layer.toGeoJSON();
 					temp.properties =
 					{
-						"risk_type":infospl[i][1],
+						"anomaly_type":infospl[i][1],
 						"description":infospl[i][0]
 					}
 					polygonl.push(temp);
@@ -934,12 +965,10 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_anomaly_zone,url) != -1){ // si pas d'erreur a l envoie
-				style_shape(circlel);
 				circlel = new Array();
-				style_shape(boxl);
 				boxl = new Array();
-				style_shape(polygonl);
 				polygonl = new Array();
+				style_layer(string_anomaly_zone);
 			}
 		}
 	}

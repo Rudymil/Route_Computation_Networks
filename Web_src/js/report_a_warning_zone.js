@@ -25,7 +25,28 @@ return today;
 
 }
 
+function hmtlcw() {
+	var nw=types_warning_zones.length;
+	var debutw="<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='level'>\
+				<option value='' disabled selected>Select the warning zone</option>";
+	var finw= "</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
+				</div>	";
 
+	for( var i=0 ; i<nw ; i++ ) {
+
+	debutw=debutw+"<option value="+types_warning_zones[i].id+" >"+types_warning_zones[i].name +"</option>";
+	}
+
+	var htmlw=debutw+finw;
+	
+	return htmlw;
+}
 editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
@@ -34,8 +55,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	//console.log("kqsdqsdqs");
 	
 	if ($("#Navigate").is(":checked") ){
-		$("#dep").prop('disabled', false);	
-		$("#dest").prop('disabled', false);	
+		$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "visible");
+		//$("#dep").prop('disabled', true);
+		//$("#dest").prop('disabled', true);
 		/*if( markeraDestination != null && markeraDestination != null ){
 		markerDeparture.dragging.enable();
 		markeraDestination.dragging.enable();	
@@ -46,9 +68,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	
 	
 	else if ($("#Circle1").is(":checked")==true ){
-	
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
@@ -99,8 +121,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*
 	if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
@@ -144,8 +167,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}	
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
@@ -217,24 +241,7 @@ map.on('draw:created', function(e) {
   			var des=null;
 			var lev=null;
   			
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
-				</div>	"
-    		, function(result) {
+  			bootbox.confirm(hmtlcw(), function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -289,24 +296,7 @@ map.on('draw:created', function(e) {
 		var lev=null;
   			
 		
-		bootbox.confirm(
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>	"
-    		, function(result) {
+		bootbox.confirm(hmtlcw(), function(result) {
     		
 			//console.log("inside");
     			des= $('#description').val();
@@ -341,24 +331,7 @@ map.on('draw:created', function(e) {
 		var lev=null;
   			
 		
-		bootbox.confirm(
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>	"
-    		, function(result) {
+		bootbox.confirm(hmtlcw(), function(result) {
     		
         		des= $('#description').val();
     			lev= $('#level').find(":selected").val();
@@ -592,3 +565,26 @@ map.on('draw:deleted', function(e) {
 		}); */
 
 });
+
+
+/* modele precedent
+
+
+  			"<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='level'>\
+   				<option value=1 selected >Road accident </option>\
+   				<option value=2 >Road degradation</option>\
+    			<option value=3  >Criminal insecurity</option>\
+    			<option value=4 >Massive gathering</option>\
+    			<option value=5 >Natural hazard</option>\
+    			<option value=6 >Traffic jam</option>\
+    			<option value=7 >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>	"
+
+*/

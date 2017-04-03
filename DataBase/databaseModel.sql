@@ -48,15 +48,31 @@ CREATE TABLE anomaly_zone(
   CONSTRAINT anomaly_zone_fk FOREIGN KEY (anomaly_type) REFERENCES anomaly(id)
 );
 
+CREATE TABLE poi_type (
+    id serial,
+    name text NOT NULL
+);
+
+CREATE TABLE poi (
+    id serial,
+    geom geometry(POINT, 4326),
+    name character varying(255) NOT NULL,
+    poi_type_id integer,
+    layer_poi character varying(50) DEFAULT NULL::character varying
+);
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.country TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.warning_zone TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.anomaly_zone TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.risk TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.anomaly TO api;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.poi_type TO api;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.poi TO api;
 
 GRANT USAGE ON SEQUENCE public.country_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.anomaly_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.anomaly_zone_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.risk_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.warning_zone_id_seq TO api;
+GRANT USAGE ON SEQUENCE public.poi_type_id_seq TO api;
+GRANT USAGE ON SEQUENCE public.poi_id_seq TO api;

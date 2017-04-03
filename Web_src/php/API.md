@@ -12,11 +12,19 @@ Pour récupérer des données stockées en base, les requêtes sont à effectuer
 - type=[warning_zone|anomaly_zone|risk_type|anomaly_type|country] : pour récupérer au choix : les warning_zone ou les anomaly_zone ou les risk_type ou les anomaly_type ou la liste des pays.
 - bbox=[southWestLng,southWestLat,northEastLng,northEastLat] **(optionnel)** : permet la limitation des zones retournées suivant une bounding box
 
-La chaine des coordonnées de la bounding box est disponible via la fonction javascript :
+La chaîne des coordonnées de la bounding box est disponible via la fonction javascript :
 
 ```js
 map.getBounds().toBBoxString()
 ```
+
+## DELETE data
+
+Pour supprimer des données stockées en base, les requêtes sont à effectuer en GET, les différents paramètres disponibles sont les suivants :
+
+- action=delete
+- type=[warning_zone|anomaly_zone]
+- id={identifiant de l'objet}
 
 ## SEND data
 
@@ -146,4 +154,4 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
 
 ## Sécurité & Contrôle
 
-Si l'API Web est appelée, mais que les requêtes GET ou POST ne passent pas les paramètres obigatoires, elle retournera une **erreur HTML code 400**.
+Si l'API Web est appelée, mais que les requêtes GET ou POST ne passent pas les paramètres obligatoires, elle retournera une **erreur HTML code 400**.
