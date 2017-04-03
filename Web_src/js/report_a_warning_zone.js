@@ -26,6 +26,26 @@ return today;
 }
 
 
+var nw=types_warning_zones.length;
+var debutw="<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='level'>\
+				<option value='' disabled selected>Select the warning zone</option>";
+var finw= "</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
+				</div>	";
+
+for( var i=0 ; i<nw ; i++ ) {
+
+debutw=debutw+"<option value="+types_warning_zones[i].id+" >"+types_warning_zones[i].name +"</option>";
+}
+
+var htmlw=debutw+finw;
+
+
 editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
@@ -217,24 +237,7 @@ map.on('draw:created', function(e) {
   			var des=null;
 			var lev=null;
   			
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
-				</div>	"
-    		, function(result) {
+  			bootbox.confirm(htmlw, function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -289,24 +292,7 @@ map.on('draw:created', function(e) {
 		var lev=null;
   			
 		
-		bootbox.confirm(
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>	"
-    		, function(result) {
+		bootbox.confirm(htmlw, function(result) {
     		
 			//console.log("inside");
     			des= $('#description').val();
@@ -341,24 +327,7 @@ map.on('draw:created', function(e) {
 		var lev=null;
   			
 		
-		bootbox.confirm(
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>	"
-    		, function(result) {
+		bootbox.confirm(htmlw, function(result) {
     		
         		des= $('#description').val();
     			lev= $('#level').find(":selected").val();
@@ -592,3 +561,26 @@ map.on('draw:deleted', function(e) {
 		}); */
 
 });
+
+
+/* modele precedent
+
+
+  			"<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='level'>\
+   				<option value=1 selected >Road accident </option>\
+   				<option value=2 >Road degradation</option>\
+    			<option value=3  >Criminal insecurity</option>\
+    			<option value=4 >Massive gathering</option>\
+    			<option value=5 >Natural hazard</option>\
+    			<option value=6 >Traffic jam</option>\
+    			<option value=7 >Road closure</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>	"
+
+*/

@@ -24,6 +24,28 @@ return today;
 }
 
 
+
+var na=types_anomalies.length;
+var debuta="<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='anomalyType'>\
+				<option value='' disabled selected>Select anomaly </option>";
+var fina= "</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
+				</div>	";
+
+for( var i=0 ; i<na ; i++ ) {
+
+debutw=debutw+"<option value="+types_anomalies[i].id+" >"+types_anomalies[i].name +"</option>";
+}
+
+var htmla=debuta+fina;
+
+
+
 leditableLayers = new L.FeatureGroup();
 map.addLayer(leditableLayers);
 
@@ -195,23 +217,7 @@ map.on('draw:created', function(e) {
 			var lev=null;
   				
   			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='anomalyType'>\
-   				<option value=1 selected >Missing road element </option>\
-   				<option value=2 >Wrong geometry</option>\
-    			<option value=3  >Missing attribute</option>\
-    			<option value=4 >Wrong attibute</option>\
-    			<option value=5 >Missing POI</option>\
-    			<option value=6 >Wrong POI</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
+  			bootbox.confirm(htmla, function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -252,24 +258,7 @@ map.on('draw:created', function(e) {
 			var lev=null;
   			
   			  		
-  			bootbox.confirm(
-  			
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='anomalyType'>\
-   				<option value=1 selected >Missing road element </option>\
-   				<option value=2 >Wrong geometry</option>\
-    			<option value=3  >Missing attribute</option>\
-    			<option value=4 >Wrong attibute</option>\
-    			<option value=5 >Missing POI</option>\
-    			<option value=6 >Wrong POI</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
+  			bootbox.confirm(htmla, function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
@@ -309,24 +298,7 @@ map.on('draw:created', function(e) {
 			var lev=null;
   			
   			  		
-  			bootbox.confirm(
-  			
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='anomalyType'>\
-   				<option value=1 selected >Missing road element </option>\
-   				<option value=2 >Wrong geometry</option>\
-    			<option value=3  >Missing attribute</option>\
-    			<option value=4 >Wrong attibute</option>\
-    			<option value=5 >Missing POI</option>\
-    			<option value=6 >Wrong POI</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
+  			bootbox.confirm(htmla, function(result) {
     		
     			
     			des= $('#description').val();
@@ -550,3 +522,25 @@ map.on('draw:deleted', function(e) {
 		}); */
 
 });
+
+/* ancien modele 
+
+
+  			
+  			"<div class='form-group'>\
+  			<label for='text'>Type</label>\
+			<select class='form-control' id='anomalyType'>\
+   				<option value=1 selected >Missing road element </option>\
+   				<option value=2 >Wrong geometry</option>\
+    			<option value=3  >Missing attribute</option>\
+    			<option value=4 >Wrong attibute</option>\
+    			<option value=5 >Missing POI</option>\
+    			<option value=6 >Wrong POI</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
+ 
+ */
