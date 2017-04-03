@@ -1,9 +1,11 @@
 $("body").ready(function(){ // lorsque le body est charge
 	if (DEBUG){
 		console.log("EVENT : $('body').ready");
-		console.log("EVENT : $('body').ready json_countries : ", json_countries);
 	}
 	while (json_countries.lenght <= 0){ // tant que pas rempli
+	}
+	if (DEBUG){
+		console.log("EVENT : $('body').ready json_countries : ", json_countries);
 	}
 	if (json_countries.lenght > 0){ // si y a des pays
 		for (object in json_countries){
