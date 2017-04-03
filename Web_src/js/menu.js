@@ -27,7 +27,6 @@ var bbox; // bounding box de la map
 var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
-var couche;
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -738,12 +737,12 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	});
 }
 
-function style_shape(shape){ // modifie le style de chaque forme
+function style_layer();{ // modifie le style de la couche
 	if (DEBUG){
-		console.log("FUNCTION : style_shape");
-		console.log("shape : ", shape);
+		console.log("FUNCTION : style_layer");
 	}
-	if (shape.length > 0){
+	leditableLayers.clearLayers();
+	/*if (shape.length > 0){
 		for (element in shape){
 			if (DEBUG){
 				console.log("element : ", element);
@@ -852,12 +851,10 @@ $("#submit1").click(function(){ // envoie toutes les warning zones
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_warning_zone,url) != -1){ // si pas d'erreur a l envoie
-				style_shape(circle);
 				circle = new Array();
-				style_shape(box);
 				box = new Array();
-				style_shape(polygon);
 				polygon = new Array();
+				style_layer();
 			}
 		}
 	}
@@ -874,7 +871,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 					{ 
 						"type": "Feature",
 						"properties":{
-							"risk_type":infoscl[i][1],
+							"anomaly_type":infoscl[i][1],
 							"description":infoscl[i][0]
 						},
 						"geometry": {
@@ -894,7 +891,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 				if (infosbl[i][2] == layer._leaflet_id){
 					var temp = layer.toGeoJSON();
 					temp.properties = {
-						"risk_type":infosbl[i][1],
+						"anomaly_type":infosbl[i][1],
 						"description":infosbl[i][0]
 					};
 					boxl.push(temp);
@@ -910,7 +907,7 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 					var temp = layer.toGeoJSON();
 					temp.properties =
 					{
-						"risk_type":infospl[i][1],
+						"anomaly_type":infospl[i][1],
 						"description":infospl[i][0]
 					}
 					polygonl.push(temp);
@@ -934,12 +931,10 @@ $("#submit2").click(function(){ // envoie toutes les anomaly
 		}
 		if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0){ // si le geojson est plein
 			if (send_ajax_geojson(string_anomaly_zone,url) != -1){ // si pas d'erreur a l envoie
-				style_shape(circlel);
 				circlel = new Array();
-				style_shape(boxl);
 				boxl = new Array();
-				style_shape(polygonl);
 				polygonl = new Array();
+				style_layer();
 			}
 		}
 	}

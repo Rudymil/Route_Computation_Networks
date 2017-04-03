@@ -328,21 +328,6 @@ var controlPenalty = L.Routing.control({
             summaryTemplate: '<h2><font color="blue">SAFE ROUTE</font> {name}</h2><h3>{distance}, {time}</h3>'
         }).addTo(map);
         
-        var controlSimple = L.Routing.control({
-            waypoints: [null],
-            lineOptions: {
-             styles: [{color: 'red', opacity: 1, weight: 5}]},
-            routeWhileDragging: true,
-            show: true,
-            language: 'en',
-            geocoder: L.Control.Geocoder.nominatim(),
-            autoRoute: true,
-            router: L.Routing.osrmv1({
-                //serviceUrl: 'http://localhost:5000/route/v1'
-            }),
-            summaryTemplate: '<h2><font color="red">DEFAULT</font> {name}</h2><h3>{distance}, {time}</h3>'
-        }).addTo(map);
-        
         
 function createButton(label, container) {
             var btn = L.DomUtil.create('button', '', container);
@@ -357,12 +342,10 @@ function createButton(label, container) {
                 startBtn = createButton('Start from this location', container),
                 destBtn = createButton('Go to this location', container);
             L.DomEvent.on(startBtn, 'click', function() {
-				controlSimple.spliceWaypoints(0, 1, e.latlng);
                 controlPenalty.spliceWaypoints(0, 1, e.latlng);
                 map.closePopup();
             });
             L.DomEvent.on(destBtn, 'click', function() {
-				controlSimple.spliceWaypoints(controlSimple.getWaypoints().length - 1, 1, e.latlng);
                 controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
                 map.closePopup();
             });
