@@ -756,48 +756,51 @@ function style_layer(type){ // modifie le style de la couche
 		console.log("FUNCTION : style_layer");
 		console.log("style_layer type :", type);
 	}
-	var couche = new L.featureGroup();
+	couche = new L.FeatureGroup();
 	if (type == string_warning_zone){
-		couche = editableLayers;
 		if (DEBUG){
 			console.log("style_layer editableLayers :", editableLayers);
+			console.log("style_layer couche :", couche);
 		}
-		editableLayers.clearLayers();
-		couche.eachLayer(function(layer){
+		editableLayers.eachLayer(function(layer){
 			if (DEBUG){
 				console.log("style_layer layer : ", layer)
 			}
 			layer.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
-				color: 'red', // rouge
-				fillColor: 'black' // noir
+				color: '#ff0033', // rouge
+				fillColor: '#140004' // noir
 			});
+			couche.addLayer(layer); // ajout a la map
 		});
+		editableLayers.clearLayers();
 		if (DEBUG){
 			console.log("style_layer couche :", couche);
 		}
-		couche.addTo(map); // ajout a la map
+		map.addLayer(couche);
 	}
 	if (type == string_anomaly_zone){
-		couche = leditableLayers;
+		//couche = leditableLayers;
 		if (DEBUG){
-		console.log("style_layer leditableLayers :", leditableLayers);
+			console.log("style_layer leditableLayers :", leditableLayers);
 		}
-		leditableLayers.clearLayers();
-		couche.eachLayer(function(layer){
+		
+		leditableLayers.eachLayer(function(layer){
 			if (DEBUG){
 				console.log("style_layer layer : ", layer)
 			}
 			layer.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
-				color: 'blue', // bleu
-				fillColor: 'black' // noir
+				color: '#0033ff', // bleu
+				fillColor: '#140004' // noir
 			});
+			couche.addLayer(layer); // ajout a la map	
 		});
+		leditableLayers.clearLayers();
 		if (DEBUG){
 			console.log("style_layer couche :", couche);
 		}
-		couche.addTo(map); // ajout a la map
+		map.addLayer(couche);
 	}
 }
 
