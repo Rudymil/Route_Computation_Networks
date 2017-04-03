@@ -28,6 +28,7 @@ var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
 var json_countries = new Array();
+var liste_countries = {'Nigeria':[new L.LatLng(9.140230,8.676766),6],'Angola':[new L.LatLng(-11.120391,17.881084),6]};
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -138,6 +139,29 @@ function ajax_countries(url){ // requete ajax sur les pays
 						console.log("json : ", json);
 					}
 					json_countries = json;
+					//countries_DOM(); // construit les boutons
+					if (json_countries.length > 0){ // si y a des pays
+						var fonctions = new Array();
+						for (object in json_countries){
+							if (DEBUG){
+								console.log("ajax_countries object : ", object);
+								console.log("ajax_countries json_countries[object] : ", json_countries[object]);
+							}
+							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id="+json_countries[object]['name']+">"+json_countries[object]['name']+"</button></center></div></div>"); // ajout du bouton
+							if (DEBUG){
+								console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
+								console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
+							}
+							$("#"+json_countries[object]['name']).click(function(event){ // reset view
+								if (DEBUG){
+									console.log("$(this).id : ", event.target.id);
+									console.log("ajax_countries liste_countries[json_countries[object]['name']][0] : ", liste_countries[json_countries[object]['name']][0]);
+									console.log("ajax_countries liste_countries[json_countries[object]['name']][1] : ", liste_countries[json_countries[object]['name']][1]);
+								}
+								map.setView(liste_countries[event.target.id][0],liste_countries[event.target.id][1]);
+							});
+						}
+					}
 				}
 			}
 		}
@@ -736,52 +760,53 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 }
 
 function style_layer(type){ // modifie le style de la couche
+	couche = new L.FeatureGroup();
 	if (DEBUG){
 		console.log("FUNCTION : style_layer");
 		console.log("style_layer type :", type);
+		console.log("style_layer couche :", couche);
 	}
-	var couche = new L.featureGroup();
 	if (type == string_warning_zone){
-		couche = editableLayers;
 		if (DEBUG){
 			console.log("style_layer editableLayers :", editableLayers);
 		}
-		editableLayers.clearLayers();
-		couche.eachLayer(function(layer){
+		editableLayers.eachLayer(function(layer){
 			if (DEBUG){
 				console.log("style_layer layer : ", layer)
 			}
-			layer.setStyle({ // change le style de la shape
+			layer.setStyle({ // change le style de la layer
 				//opacity: 0.1, // weak opacity
 				color: 'red', // rouge
 				fillColor: 'black' // noir
 			});
+			couche.addLayer(layer); // ajout a la map
 		});
+		editableLayers.clearLayers();
 		if (DEBUG){
 			console.log("style_layer couche :", couche);
 		}
-		couche.addTo(map); // ajout a la map
+		map.addLayer(couche);
 	}
 	if (type == string_anomaly_zone){
-		couche = leditableLayers;
 		if (DEBUG){
-		console.log("style_layer leditableLayers :", leditableLayers);
+			console.log("style_layer leditableLayers :", leditableLayers);
 		}
-		leditableLayers.clearLayers();
-		couche.eachLayer(function(layer){
+		leditableLayers.eachLayer(function(layer){
 			if (DEBUG){
 				console.log("style_layer layer : ", layer)
 			}
-			layer.setStyle({ // change le style de la shape
+			layer.setStyle({ // change le style de la layer
 				//opacity: 0.1, // weak opacity
-				color: 'blue', // bleu
-				fillColor: 'black' // noir
+				color: '#0033ff', // bleu
+				fillColor: '#140004' // noir
 			});
+			couche.addLayer(layer); // ajout a la map	
 		});
+		leditableLayers.clearLayers();
 		if (DEBUG){
 			console.log("style_layer couche :", couche);
 		}
-		couche.addTo(map); // ajout a la map
+		map.addLayer(couche);
 	}
 }
 
