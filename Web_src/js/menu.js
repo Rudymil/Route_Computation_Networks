@@ -27,6 +27,7 @@ var bbox; // bounding box de la map
 var DEBUG = true;
 var zoom = 12;
 var geojson = new Object();
+var json_countries = new Array();
 
 function ajax_types(url,type){ // requete ajax sur les types
 	if (DEBUG){
@@ -136,6 +137,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 					if (DEBUG){
 						console.log("json : ", json);
 					}
+					json_countries = json;
 				}
 			}
 		}
