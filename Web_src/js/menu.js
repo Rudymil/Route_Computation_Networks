@@ -138,7 +138,16 @@ function ajax_countries(url){ // requete ajax sur les pays
 						console.log("json : ", json);
 					}
 					json_countries = json;
-					countries_DOM(); // construit les boutons
+					//countries_DOM(); // construit les boutons
+					if (json_countries.length > 0){ // si y a des pays
+						for (object in json_countries){
+							if (DEBUG){
+								console.log("ajax_countries object : ", object);
+								console.log("ajax_countries json_countries[object] : ", json_countries[object]);
+							}
+							$("#panel-element-204612>.panel-body").append('<div class="row"><div class="col-xs-12" ></div><center><button type="button" class="btn btn-primary btn-xm" id='json_countries[object]["name"]'>'json_countries[object]["name"]'</button></center></div>');
+						}
+					}
 				}
 			}
 		}
