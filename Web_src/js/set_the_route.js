@@ -356,3 +356,37 @@ function createButton(label, container) {
 			}
         });
 
+var geoloc=L.easyButton({
+		states: [{
+			stateName:'show me where I am',
+			icon: 'fa-map-marker',
+			title: 'Show me where I am, yo!',
+			onClick: function(control){
+				//alert("test");
+			control._map.on('locationfound', function(e){
+			controlPenalty.spliceWaypoints(0, 1, e.latlng);
+			//map.closePopup();
+     });
+         control._map.on('locationerror', function(e){
+            $.notify(
+	            {
+	            	title: "<strong>Geolocalisation</strong>",
+	            	message: "Location access denied."
+	            },
+	            {
+					type: "warning",
+					placement: {
+						from: "bottom",
+						align: "center"
+					}
+	            }
+            );
+     });
+
+         control._map.locate({setView: true, maxZoom: 16});
+      }
+		}]
+	});
+	
+geoloc.addTo(map);
+

@@ -146,6 +146,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 								console.log("ajax_countries json_countries[object] : ", json_countries[object]);
 							}
 							//$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ></div><center><button type='button' class='btn btn-primary btn-xm' id=""></button></center></div>");
+							//$("#panel-element-204612>.panel-body")
 						}
 					}
 				}
