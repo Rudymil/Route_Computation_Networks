@@ -754,6 +754,7 @@ function style_shape(shape){ // modifie le style de chaque forme
 			}
 			couche.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
+				color: 'black',
 				fillColor: 'black' // noir
 			});
 			if (DEBUG){
