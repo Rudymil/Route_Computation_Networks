@@ -5,18 +5,10 @@ header('Access-Control-Allow-Origin: *');
 
 if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
   header('Content-type: text/html; charset=utf-8');
-  /*print("<h2>\$_SERVER :</h2>");
-  print_r($_SERVER);*/
-
   print("<h2>\$_REQUEST :</h2>");
   print_r($_REQUEST);
 
   print("<h2>REQUEST_METHOD :" . $_SERVER["REQUEST_METHOD"] . "</h2>");
-
-  /*print("<h2>\$_GET :</h2>");
-  print_r($_GET);
-  print("<h2>\$_POST :</h2>");
-  print_r($_POST);*/
 }
 else {
   header('Content-type: application/json');
@@ -71,10 +63,21 @@ elseif (isset($_GET["type"]) && ($_GET["type"] == "risk_type" || $_GET["type"] =
 elseif (isset($_POST["warning_zone"])) {
   $json = json_decode($_POST["warning_zone"]);
   if ($json->zone_type != "warning_zone") {error(400, "Incorrect Data !");}
-  foreach ($json->features as $key => $value) {
-    if (!isset($value->properties->risk_type) || !isset($value->properties->description)) {error(400, "Incorrect Data !");}
+
+  //Update
+  if (isset($_POST["action"]) && $_POST["action"] == "update") {
+    foreach ($json->features as $key => $value) {
+      if (!isset($value->properties->risk_type) || !isset($value->properties->description) || !isset($value->properties->intensity)) {error(400, "Incorrect Data !");}
+    }
+    updateGeoJSONQuery($json);
   }
-  insertGeoJSONQuery($json);
+  //Insert
+  else {
+    foreach ($json->features as $key => $value) {
+      if (!isset($value->properties->risk_type) || !isset($value->properties->description)) {error(400, "Incorrect Data !");}
+    }
+    insertGeoJSONQuery($json);
+  }
 }
 elseif (isset($_POST["anomaly_zone"])) {
   $json = json_decode($_POST["anomaly_zone"]);
