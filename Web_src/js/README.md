@@ -27,6 +27,10 @@ function ajax_types(url,type){...}
 ```
 Requête ajax pour recupérer les **types**.
 ```js
+function ajax_countries(url){...}
+```
+Requête ajax pour recupérer la liste des **pays dotés d'un graph**.
+```js
 $("body").ready(function(){...});
 ```
 S'exécute lorsque le **body** est chargé.
@@ -47,7 +51,7 @@ function remove_warning_zones(){...}
 ```
 Supprime les **warning zones** de la carte.
 ```js
-function add_warning_zones(url){...}
+function add_warning_zones(url,bbox){...}
 ```
 Ajoute toutes les **warning zones** de la **bbox** from la **BDD**.
 ```js
@@ -79,11 +83,11 @@ function notify_ajax_sending_areas_error(erreur, statut){...}
 ```
 Signale une erreur de l'envoi des **shapes**.
 ```js
-function fill_geojson(circle,box,polygon,geojson){...}
+function fill_geojson(circle,box,polygon,type){...}
 ```
-Rempli **geojson** des objects contenus dans **circle**, **box** et **polygon**. Return -1 si les objects contiennent des objects vides, 0 sinon.
+Rempli le **geojson** des objects contenus dans **circle**, **box** et **polygon** en fonction du **type**. Return -1 si les objects contiennent des objects vides, 0 sinon.
 ```js
-function send_ajax_geojson(geojson,type,url){...}
+function send_ajax_geojson(type,url){...}
 ```
 Envoie le **geojson** et le **type** à l'**url**. Return 0 si succès, -1 sinon.
 ```js
@@ -93,11 +97,11 @@ Modifie le **style** de chaque **shape**.
 ```js
 $("#submit1").click(function(){...});
 ```
-Envoye les **warning zone** à la **BDD** après avoir vérifié leur format.
+Envoye les **warning zone** à la **BDD**.
 ```js
 $("#submit2").click(function(){...});
 ```
-Envoye les **anomalies** à la **BDD** après avoir vérifié leur format.
+Envoye les **anomalies** à la **BDD**.
 ## report_a_warning_zone.js
 ## report_an_anomaly.js
 ## set_the_route.js
