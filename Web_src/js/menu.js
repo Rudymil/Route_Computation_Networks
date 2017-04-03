@@ -99,7 +99,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 	$.ajax({
 		url : url,
 		type : 'GET',
-		data: '',
+		data: 'country',
 		dataType : 'json',
 		success : function(code_json, statut){
 			if (DEBUG){
@@ -115,7 +115,7 @@ function ajax_countries(url){ // requete ajax sur les pays
 			}
 			$.notify(
 				{
-					title: "",
+					title: "<strong>Countries request</strong>",
 					message: statut
 				},{
 					type: "danger",
@@ -148,7 +148,7 @@ $("body").ready(function(){ // lorsque le body est charge
 	}
 	ajax_types(url,string_risk_type); // recupere les types des warning zones
 	ajax_types(url,string_anomaly_type); // recupere les types des anomalies zones
-	//ajax_countries(url); // recupere la liste des pays
+	ajax_countries(url); // recupere la liste des pays
 });
 
 /*function ajax_grid(){ // requete ajax pour recuperer une grille
@@ -450,10 +450,6 @@ $("#map").ready(function(){ // lorsque la carte est chargee
 	if (DEBUG){
 		console.log("EVENT : $('#map').ready");
 	}
-	//ajax_grid();
-	//ajax_polygon();
-	//bbox = map.getBounds().toBBoxString();
-	//add_warning_zones(url,bbox);
 	map.on('dragend', function(){ // lorsqu on se deplace dans la carte
 		if (DEBUG){
 			console.log("zoom :", map.getZoom())
