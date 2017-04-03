@@ -737,7 +737,7 @@ function send_ajax_geojson(type,url){ // envoie en ajax le geojson et le type a 
 	});
 }
 
-function style_layer();{ // modifie le style de la couche
+function style_layer(){ // modifie le style de la couche
 	if (DEBUG){
 		console.log("FUNCTION : style_layer");
 	}
