@@ -24,6 +24,28 @@ return today;
 }
 
 
+function htmlca() {
+	var na=types_anomalies.length;
+	var debuta="<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='anomalyType'>\
+				<option value='' disabled selected>Select anomaly </option>";
+	var fina= "</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
+				</div>	";
+
+	for( var i=0 ; i<na ; i++ ) {
+
+		debuta=debuta+"<option value="+types_anomalies[i].id+" >"+types_anomalies[i].name +"</option>";
+	}
+
+	var htmla=debuta+fina;
+	return htmla;
+}
+
 leditableLayers = new L.FeatureGroup();
 map.addLayer(leditableLayers);
 
@@ -47,8 +69,9 @@ $(".radio_button").change(function (){ // choix de dessin
 		map.removeControl(drawControl);
 	}	
 	// Initialise the FeatureGroup to store editable layers
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
@@ -58,7 +81,7 @@ $(".radio_button").change(function (){ // choix de dessin
 	*/
 
 	var drawPluginOptions = {
-  	position: 'topright',
+  	position: 'topleft',
   		draw: {
     	circle: {
      	 shapeOptions: {
@@ -89,8 +112,9 @@ $(".radio_button").change(function (){ // choix de dessin
 	if( drawControl != null ) {
 		map.removeControl(drawControl);
 	}	
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
@@ -100,7 +124,7 @@ $(".radio_button").change(function (){ // choix de dessin
 
 
 	var drawPluginOptions = {
-  	position: 'topright',
+  	position: 'topleft',
   		draw: {
     	rectangle: {
      	 shapeOptions: {
@@ -133,8 +157,9 @@ $(".radio_button").change(function (){ // choix de dessin
 		map.removeControl(drawControl);
 	}	
 	// Initialise the FeatureGroup to store editable layers
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
+	$(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+	//$("#dep").prop('disabled', true);
+	//$("#dest").prop('disabled', true);
 	/*if( markerDeparture != null ) {	
 	markerDeparture.dragging.disable();	
 	}
@@ -143,7 +168,7 @@ $(".radio_button").change(function (){ // choix de dessin
 	}*/
 
 	var drawPluginOptions = {
-  	position: 'topright',
+  	position: 'topleft',
   		draw: {
     	polygon: {
      	 allowIntersection: false, // Restricts shapes to simple polygons
@@ -195,32 +220,19 @@ map.on('draw:created', function(e) {
 			var lev=null;
   				
   			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
+  			bootbox.confirm(htmlca(), function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
     			ano= $('#anomalyType').find(":selected").val();
   				
+  				if( des=="") {
+  					des= "without description";
+  				}
+  				
   				console.log(des);
    			 	content = getPopupContenta(layer,lev,des);
-   			 	var temp = [des,lev,layer._leaflet_id ];
+   			 	var temp = [des,ano,layer._leaflet_id ];
    			 	//console.log(content);
    			 	if (content !== null) {
                 	layer.bindPopup(content);
@@ -249,32 +261,19 @@ map.on('draw:created', function(e) {
 			var lev=null;
   			
   			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
+  			bootbox.confirm(htmlca(), function(result) {
     		
         		//console.log("inside");
     			des= $('#description').val();
     			ano= $('#anomalyType').find(":selected").val();
   				
+  				if( des=="") {
+  					des= "without description";
+  				}
+  				
     			console.log(des);
    			 	content = getPopupContenta(layer,lev,des);
-   			 	var temp = [des,lev,layer._leaflet_id ];
+   			 	var temp = [des,ano,layer._leaflet_id ];
    			 	//console.log(content);
    			 	if (content !== null) {
                 	layer.bindPopup(content);
@@ -302,36 +301,20 @@ map.on('draw:created', function(e) {
 			var lev=null;
   			
   			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
+  			bootbox.confirm(htmlca(), function(result) {
     		
-        		//console.log("inside");
-    			des= $('#description').val();
-    			lev= $('#level').find(":selected").val();
-  				
     			
     			des= $('#description').val();
     			ano= $('#anomalyType').find(":selected").val();
   				
+  				
+  				if( des=="") {
+  					des= "without description";
+  				}
+  				
     			console.log(des);
    			 	content = getPopupContenta(layer,lev,des);
-   			 	var temp = [des,lev,layer._leaflet_id ];
+   			 	var temp = [des,ano,layer._leaflet_id ];
    			 	//console.log(content);
    			 	if (content !== null) {
                 	layer.bindPopup(content);
@@ -542,3 +525,25 @@ map.on('draw:deleted', function(e) {
 		}); */
 
 });
+
+/* ancien modele 
+
+
+  			
+  			"<div class='form-group'>\
+  			<label for='text'>Type</label>\
+			<select class='form-control' id='anomalyType'>\
+   				<option value=1 selected >Missing road element </option>\
+   				<option value=2 >Wrong geometry</option>\
+    			<option value=3  >Missing attribute</option>\
+    			<option value=4 >Wrong attibute</option>\
+    			<option value=5 >Missing POI</option>\
+    			<option value=6 >Wrong POI</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
+ 
+ */
