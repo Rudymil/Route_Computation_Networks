@@ -144,8 +144,14 @@ function ajax_countries(url){ // requete ajax sur les pays
 							if (DEBUG){
 								console.log("ajax_countries object : ", object);
 								console.log("ajax_countries json_countries[object] : ", json_countries[object]);
-							}
-							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' id="ajax_countries json_countries[object]['name']">"ajax_countries json_countries[object]['name']"</button></center></div></div>");
+							} // ajax_countries json_countries[object]['name']
+							$("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center></center></div></div>");
+							$("<button>", {
+								type: 'button',
+								class: 'btn btn-primary btn-xm',
+							    id: ajax_countries json_countries[object]['name'],
+							    text: ajax_countries json_countries[object]['name']
+							}).appendTo("#panel-element-204612>.panel-body>.row>.col-xs-12");
 						}
 					}
 				}
