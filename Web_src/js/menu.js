@@ -750,6 +750,9 @@ function style_layer(type){ // modifie le style de la couche
 		}
 		editableLayers.clearLayers();
 		couche.eachLayer(function(layer){
+			if (DEBUG){
+				console.log("style_layer layer : ", layer)
+			}
 			layer.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
 				color: 'red', // rouge
@@ -768,7 +771,10 @@ function style_layer(type){ // modifie le style de la couche
 		}
 		leditableLayers.clearLayers();
 		couche.eachLayer(function(layer){
-			couche.setStyle({ // change le style de la shape
+			if (DEBUG){
+				console.log("style_layer layer : ", layer)
+			}
+			layer.setStyle({ // change le style de la shape
 				//opacity: 0.1, // weak opacity
 				color: 'blue', // bleu
 				fillColor: 'black' // noir

@@ -39,7 +39,7 @@ function htmlca() {
 
 	for( var i=0 ; i<na ; i++ ) {
 
-		debutw=debutw+"<option value="+types_anomalies[i].id+" >"+types_anomalies[i].name +"</option>";
+		debuta=debuta+"<option value="+types_anomalies[i].id+" >"+types_anomalies[i].name +"</option>";
 	}
 
 	var htmla=debuta+fina;
