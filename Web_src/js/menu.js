@@ -555,6 +555,7 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
         console.log("send_ajax_geojson type : ", type);
         console.log("send_ajax_geojson url : ", url);
     }
+    var retour;
     $.ajax({
         url: url,
         type: 'POST',
@@ -581,11 +582,15 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
                 console.log("send_ajax_geojson statut : ", statut);
             }
             geojson = new Object(); // reinitialisation
-            if (statut == 'parsererror') {
-                return -1;
-            }
+            retour = statut;
         }
     });
+	if (DEBUG) {
+	    console.log("send_ajax_geojson retour : ", retour);
+	}
+    if (retour == 'parsererror') {
+        return -1;
+    }
 }
 
 function style_layer(type) { // modifie le style de la couche
