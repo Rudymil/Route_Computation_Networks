@@ -314,79 +314,83 @@ latlng[1]=temp[1];
 }*/
 
 var controlPenalty = L.Routing.control({
-            waypoints: [null],
-            routeWhileDragging: true,
-            show: true,
-            language: 'en',
-            geocoder: L.Control.Geocoder.nominatim(),
-            autoRoute: true,
-            router: L.Routing.osrmv1({
-                serviceUrl: 'http://172.31.57.114:5001/route/v1'
-            }),
-            lineOptions: {
-            styles: [{color: 'blue', opacity: 1, weight: 5}]},
-            summaryTemplate: '<h2><font color="blue">SAFE ROUTE</font> {name}</h2><h3>{distance}, {time}</h3>'
-        }).addTo(map);
-        
-        
+    waypoints: [null],
+    routeWhileDragging: true,
+    show: true,
+    language: 'en',
+    geocoder: L.Control.Geocoder.nominatim(),
+    autoRoute: true,
+    router: L.Routing.osrmv1({
+        serviceUrl: 'http://172.31.57.114:5001/route/v1'
+    }),
+    lineOptions: {
+        styles: [{
+            color: 'blue',
+            opacity: 1,
+            weight: 5
+        }]
+    },
+    summaryTemplate: '<h2><font color="blue">SAFE ROUTE</font> {name}</h2><h3>{distance}, {time}</h3>'
+}).addTo(map);
+
+
 function createButton(label, container) {
-            var btn = L.DomUtil.create('button', '', container);
-            btn.setAttribute('type', 'button');
-            btn.innerHTML = label;
-            return btn;
-        }
+    var btn = L.DomUtil.create('button', '', container);
+    btn.setAttribute('type', 'button');
+    btn.innerHTML = label;
+    return btn;
+}
 
-        map.on('click', function(e) {
-			if ($("#Navigate").is(":checked")==true ){
-            var container = L.DomUtil.create('div'),
-                startBtn = createButton('Start from this location', container),
-                destBtn = createButton('Go to this location', container);
-            L.DomEvent.on(startBtn, 'click', function() {
-                controlPenalty.spliceWaypoints(0, 1, e.latlng);
-                map.closePopup();
-            });
-            L.DomEvent.on(destBtn, 'click', function() {
-                controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
-                map.closePopup();
-            });
-            L.popup()
-                .setContent(container)
-                .setLatLng(e.latlng)
-                .openOn(map);
-			}
+map.on('click', function(e) {
+    if ($("#Navigate").is(":checked") == true) {
+        var container = L.DomUtil.create('div'),
+            startBtn = createButton('Start from this location', container),
+            destBtn = createButton('Go to this location', container);
+        L.DomEvent.on(startBtn, 'click', function() {
+            controlPenalty.spliceWaypoints(0, 1, e.latlng);
+            map.closePopup();
         });
+        L.DomEvent.on(destBtn, 'click', function() {
+            controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+            map.closePopup();
+        });
+        L.popup()
+            .setContent(container)
+            .setLatLng(e.latlng)
+            .openOn(map);
+    }
+});
 
-var geoloc=L.easyButton({
-		states: [{
-			stateName:'show me where I am',
-			icon: 'fa-map-marker',
-			title: 'Show me where I am, yo!',
-			onClick: function(control){
-				//alert("test");
-			control._map.on('locationfound', function(e){
-			controlPenalty.spliceWaypoints(0, 1, e.latlng);
-			//map.closePopup();
-     });
-         control._map.on('locationerror', function(e){
-            $.notify(
-	            {
-	            	title: "<strong>Geolocalisation</strong>",
-	            	message: "Location access denied."
-	            },
-	            {
-					type: "warning",
-					placement: {
-						from: "bottom",
-						align: "center"
-					}
-	            }
-            );
-     });
+var geoloc = L.easyButton({
+    states: [{
+        stateName: 'show me where I am',
+        icon: 'fa-map-marker',
+        title: 'Show me where I am, yo!',
+        onClick: function(control) {
+            //alert("test");
+            control._map.on('locationfound', function(e) {
+                controlPenalty.spliceWaypoints(0, 1, e.latlng);
+                //map.closePopup();
+            });
+            control._map.on('locationerror', function(e) {
+                $.notify({
+                    title: "<strong>Geolocalisation</strong>",
+                    message: "Location access denied."
+                }, {
+                    type: "warning",
+                    placement: {
+                        from: "bottom",
+                        align: "center"
+                    }
+                });
+            });
 
-         control._map.locate({setView: true, maxZoom: 16});
-      }
-		}]
-	});
-	
+            control._map.locate({
+                setView: true,
+                maxZoom: 16
+            });
+        }
+    }]
+});
+
 geoloc.addTo(map);
-
