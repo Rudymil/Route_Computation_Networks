@@ -38,12 +38,12 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
 }
 
 //GET country
-elseif (isset($_GET["type"]) && $_GET["type"] == "country") {
-  $types_list = "SELECT id, name FROM country ORDER BY name;";
+elseif (isset($_GET["type"]) && $_GET["type"] == "countryGeo") {
+  $types_list = "SELECT id, name, ST_asGeoJSON(ST_Centroid(geom)) AS geojson FROM country ORDER BY name;";
   if (isset($_GET["DEBUG"])) {
     print("<p><strong>Query :</strong> " . $types_list . "</p>");
   }
-  print(selectJSONQuery($types_list));
+  print(selectGeoJSONQuery($types_list));
 }
 
 //GET types
