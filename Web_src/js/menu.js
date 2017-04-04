@@ -116,7 +116,7 @@ function ajax_countries(url) { // requete ajax sur les pays
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                 }
-                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][0],json_countries[event.target.id]['geometry']['coordinates'][1]], 6);
+                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1],json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                             });
                         }
                     }
