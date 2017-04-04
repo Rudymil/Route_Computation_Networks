@@ -53,8 +53,27 @@ A minimum of 2GB of RAM is required
 We want to be at the maximum independent of the internet and transportable.
 We need to keep the data of the regions we are interested in and update them after a given period, like a month.
 
+### Tested images
 https://github.com/mediagis/nominatim-docker
 
+We tryed to run these docker image. With some configurations (two lines replaced), we were able to set nominatim geocoding on Angola area. The data for nominatim come from [the geofabrick](http://download.geofabrik.de/).
+
+![nominatim-angola](luanda_nominatim.png)
+
+As this image fulfill all the requirements for our usage of nominatim, we created a php-server side page to query nominatim service and extract :
+- lat/lon if we send an address
+- address if we send a lat/lon
+
+Example :
+
+![result_nominatim-angola](result_nominatim.png)
+
+
+Check our tool [here](test_request_nominatim.php).
+
+### Others images
 https://github.com/helvalius/nominatim-docker
 
-Lot of [images](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=nominatim&starCount=0) on hub.docker.com :
+We tried this docker image too. The result is the same : a working nominatim service. Because of the number of pull on docker hub, and because of the number of respecting issues on each github repository, we decided to use the [mediagis docker image](https://github.com/mediagis/nominatim-docker).
+
+Lot of [images](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=nominatim&starCount=0) on hub.docker.com
