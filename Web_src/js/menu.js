@@ -115,7 +115,7 @@ function ajax_countries(url) { // requete ajax sur les pays
                                     console.log("event.target.id : ", event.target.id);
                                     console.log("ajax_countries json_countries[object]['geometry']['coordinates'] : ", json_countries[object]['geometry']['coordinates']);
                                 }
-                                map.setView(json_countries[event.target.id]['geometry']['coordinates'], zoom);
+                                map.setView(json_countries[event.target.id]['geometry']['coordinates'], 5);
                             });
                         }
                     }
