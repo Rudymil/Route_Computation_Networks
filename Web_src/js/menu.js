@@ -112,7 +112,7 @@ function ajax_countries(url) { // requete ajax sur les pays
                             $("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id=" + json_countries[object]['properties']['name'] + ">" + json_countries[object]['properties']['name'] + "</button></center></div></div>"); // ajout du bouton
                             $("#" + json_countries[object]['properties']['name']).click(function(event) { // reset view
                                 if (DEBUG) {
-                                    console.log("$(this).id : ", event.target.id);
+                                    console.log("event.target : ", event.target);
                                     console.log("ajax_countries json_countries[object]['geometry']['coordinates'] : ", json_countries[object]['geometry']['coordinates']);
                                 }
                                 map.setView(json_countries[object]['geometry']['coordinates'], zoom);
