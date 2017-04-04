@@ -36,7 +36,11 @@ function hmtlcw() {
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description' required >\
-				</div>	";
+				</div>\
+				<div class='form-group'>\
+				<label for='usr'>Expiration date: </label> <br>\
+				<input type='date' name='dateex' id='datee' placeholder='2008-08-29' >\
+				</div>";
 
     for (var i = 0; i < nw; i++) {
 
@@ -234,15 +238,28 @@ map.on('draw:created', function(e) {
             	//console.log("inside");
             	des = $('#description').val();
             	lev = $('#level').val();
-
+				da= $('#datee').val();
+				
+				if (lev == "") {
+                 return false ;
+            	}
+				
+				console.log(da);
             	if (des == "") {
                  	return false ;
             	}
 
+				var timestamp=Date.parse(da)
+				console.log(timestamp);
+				if (isNaN(timestamp) )
+				{
+   				 	return false;
+
+				}
 
             	//console.log(des);
             	content = getPopupContentw(layer, lev, des);
-            	var temp = [des, lev, layer._leaflet_id];
+            	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
            	 	if (content !== null) {
                 	layer.bindPopup(content);
@@ -280,6 +297,24 @@ map.on('draw:created', function(e) {
             	//console.log("inside");
             	des = $('#description').val();
             	lev = $('#level').find(":selected").val();
+				da= $('#datee').val();
+				
+				if (lev == "") {
+                 return false ;
+            	}
+				
+				console.log(da);
+            	if (des == "") {
+                 	return false ;
+            	}
+
+				var timestamp=Date.parse(da)
+				console.log(timestamp);
+				if (isNaN(timestamp) )
+				{
+   				 	return false;
+
+				}
 
             	if (des == "") {
             	    return false;
@@ -287,7 +322,7 @@ map.on('draw:created', function(e) {
 
             	console.log(des);
             	content = getPopupContentw(layer, lev, des);
-            	var temp = [des, lev, layer._leaflet_id];
+            	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
                 	layer.bindPopup(content);
@@ -317,7 +352,25 @@ map.on('draw:created', function(e) {
 			if ( result ) {
             	des = $('#description').val();
             	lev = $('#level').find(":selected").val();
+				da= $('#datee').val();
+				
+				if (lev == "") {
+                 return false ;
+            	}
+				
+				console.log(da);
+            	if (des == "") {
+                 	return false ;
+            	}
 
+				var timestamp=Date.parse(da)
+				console.log(timestamp);
+				if (isNaN(timestamp) )
+				{
+   				 	return false;
+
+				}
+				
 
             	if (des == "") {
                 	return false ;
@@ -325,7 +378,7 @@ map.on('draw:created', function(e) {
 
            		console.log(des);
             	content = getPopupContentw(layer, lev, des);
-            	var temp = [des, lev, layer._leaflet_id];
+            	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
                 	layer.bindPopup(content);

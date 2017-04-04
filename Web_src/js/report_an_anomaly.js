@@ -34,6 +34,10 @@ function htmlca() {
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' placeholder='Description' required >\
+				</div>\
+				<div class='form-group'>\
+				<label for='usr'>Expiration date: </label> <br>\
+				<input type='date' name='dateex' id='datee'>\
 				</div>	";
 
     for (var i = 0; i < na; i++) {
@@ -215,14 +219,29 @@ map.on('draw:created', function(e) {
             //console.log("inside");
             des = $('#description').val();
             ano = $('#anomalyType').find(":selected").val();
-            
-            if (des == "") {
-                return false;
+            da= $('#datee').val();
+			
+			if (ano == "") {
+                 return false ;
             }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
 
             console.log(des);
             content = getPopupContenta(layer, lev, des);
-            var temp = [des, ano, layer._leaflet_id];
+            var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
                 layer.bindPopup(content);
@@ -259,21 +278,36 @@ map.on('draw:created', function(e) {
             //console.log("inside");
             des = $('#description').val();
             ano = $('#anomalyType').find(":selected").val();
-            
-            if (des == "") {
-                return false;
+			da= $('#datee').val();
+			
+			if (ano == "") {
+                 return false ;
             }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
 
             console.log(des);
             content = getPopupContenta(layer, lev, des);
-            var temp = [des, ano, layer._leaflet_id];
+            var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
                 layer.bindPopup(content);
                 //layer.setPopupContent(content);
             }
 
-            infoscl.push(temp);
+            infosbl.push(temp);
 
             //circle.push(layergeo);
 
@@ -301,21 +335,36 @@ map.on('draw:created', function(e) {
             //console.log("inside");
             des = $('#description').val();
             ano = $('#anomalyType').find(":selected").val();
-            
-            if (des == "") {
-                return false;
+			da= $('#datee').val();
+			
+			if (ano == "") {
+                 return false ;
             }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
 
             console.log(des);
             content = getPopupContenta(layer, lev, des);
-            var temp = [des, ano, layer._leaflet_id];
+            var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
                 layer.bindPopup(content);
                 //layer.setPopupContent(content);
             }
 
-            infoscl.push(temp);
+            infospl.push(temp);
 
             //circle.push(layergeo);
 
