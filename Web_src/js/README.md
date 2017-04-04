@@ -29,7 +29,7 @@ Requête ajax pour recupérer les **types**.
 ```js
 function ajax_countries(url){...}
 ```
-Requête ajax pour recupérer la liste des **pays dotés d'un graph**.
+Requête ajax pour recupérer la liste des **pays dotés d'un graph** + création de chaque bouton et de la fonction associée.
 ```js
 $("body").ready(function(){...});
 ```
@@ -91,9 +91,9 @@ function send_ajax_geojson(type,url){...}
 ```
 Envoie le **geojson** et le **type** à l'**url**. Return 0 si succès, -1 sinon.
 ```js
-function style_shape(shape){...}
+function style_layer(type){...}
 ```
-Modifie le **style** de chaque **shape**.
+Modifie le **style** des layers en fonction du **type**.
 ```js
 $("#submit1").click(function(){...});
 ```
@@ -153,13 +153,3 @@ Supprime les marqueurs de la carte lorsqu'on clic sur le boutton **remove** dans
 function affect(){...}
 ```
 Affecter les coordonnées de départ et d'arrivée à la variable latlng.
-
-## selection_of_the_area.js
-```js
-$("#nigeria").click(function(){...});
-```
-Reset la view de la carte sur Port Harcourt lorsqu'on clic sur le bouton **Nigeria** dans **Selection of the area**.
-```js
-$("#angola").click(function(){...});
-```
-Reset la view de la carte sur Luanda lorsqu'on clic sur le bouton **Angola** dans **Selection of the area**.

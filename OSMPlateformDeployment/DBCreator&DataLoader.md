@@ -16,5 +16,5 @@ osm2pgsql --create --slim --verbose --database osm angola-latest.osm.pbf nigeria
 
 ## Update database's data
 ```sh
-osm2pgsql --append --slim --verbose --database osm angola-latest.osm.pbf nigeria-latest.osm.pbf 
+osm2pgsql --latlong --append --slim --verbose --database osm angola-latest.osm.pbf nigeria-latest.osm.pbf 
 ```
