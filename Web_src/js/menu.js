@@ -1,4 +1,9 @@
-function ajax_types(url, type) { // requete ajax sur les types
+/**
+ * Ajax request asking all the type of risk or anomaly from the DB.
+ * @param {string} url - Url to the Web API.
+ * @param {string} type - Type between risk or anomaly.
+ */
+function ajax_types(url, type) {
     if (DEBUG) {
         console.log("FUNCTION : ajax_types");
         console.log("ajax_types url : ", url);
@@ -58,8 +63,11 @@ function ajax_types(url, type) { // requete ajax sur les types
         }
     });
 }
-
-function ajax_countries(url) { // requete ajax sur les pays
+/**
+ * Ajax request asking all the countries contained by the BD.
+ * @param {string} url - Url to the Web API.
+ */
+function ajax_countries(url) {
     if (DEBUG) {
         console.log("ajax_countries url : ", url);
     }
@@ -125,8 +133,10 @@ function ajax_countries(url) { // requete ajax sur les pays
         }
     });
 }
-
-$("body").ready(function() { // lorsque le body est charge
+/**
+ * Executed when the body DOM is ready.
+ */
+$("body").ready(function() {
     if (DEBUG) {
         console.log("EVENT : $('body').ready");
     }
@@ -134,23 +144,25 @@ $("body").ready(function() { // lorsque le body est charge
     ajax_types(url, string_anomaly_type); // recupere les types des anomalies zones
     ajax_countries(url); // recupere la liste des pays
 });
-
-function notify_warning_zones_none() { // notifie qu il n y a pas de warning zones reçues
-    /*$.notify(
-    	{
-    		title: "<strong>Warning zones request</strong>",
-    		message: "none"
-    	},{
-    		type: "info",
-    		placement: {
-    			from: "bottom",
-    			align: "center"
-    		}
-    	}
-    );*/
+/**
+ * Notify using Bootstrap Notify that the area targeted or viewed not contains "warning zones".
+ */
+function notify_warning_zones_none() {
+    $.notify({
+        title: "<strong>Warning zones request</strong>",
+        message: "none"
+    }, {
+        type: "info",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
 }
-
-function remove_warning_zones() { // supprime les warning zones de la carte
+/**
+ * Removed from the map all "warning zones" displayed.
+ */
+function remove_warning_zones() {
     for (element in warning_zones) { // pour chaque warning zones
         if (DEBUG) {
             console.log("element :", element);
@@ -166,8 +178,12 @@ function remove_warning_zones() { // supprime les warning zones de la carte
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
-
-function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la bbox from la BDD
+/**
+ * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
+ * @param {string} url - Url to the Web API.
+ * @param {string} bbox - Bounding box of the map.
+ */
+function add_warning_zones(url, bbox) {
     if (DEBUG) {
         console.log("FUNCTION : add_warning_zones");
         console.log("add_warning_zones url : ", url);
@@ -248,7 +264,7 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                                 fillColor: colorZone,
                                 color: colorZone
                             });
-                            //shape.addTo(map); // ajout a la map
+                            shape.addTo(map); // ajout a la map
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -290,7 +306,7 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                         	}
                         );*/
                     } else {
-                        notify_warning_zones_none();
+                        //notify_warning_zones_none();
                     }
                 } else {
                     if (DEBUG) {
@@ -299,18 +315,23 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
                     }
-                    notify_warning_zones_none();
+                    //notify_warning_zones_none();
                 }
             }
         }
     });
 }
-
-$("#map").ready(function() { // lorsque la carte est chargee
+/**
+ * Executed when the map is ready.
+ */
+$("#map").ready(function() {
     if (DEBUG) {
         console.log("EVENT : $('#map').ready");
     }
-    map.on('dragend', function() { // lorsqu on se deplace dans la carte
+    /**
+     * Executed when the map is moved.
+     */
+    map.on('dragend', function() {
         if (DEBUG) {
             console.log("zoom :", map.getZoom())
         }
@@ -321,7 +342,10 @@ $("#map").ready(function() { // lorsque la carte est chargee
             remove_warning_zones();
         }
     });
-    map.on('zoomend', function() { // lorsqu on zoom dans la carte
+    /**
+     * Executed when the zoom changes.
+     */
+    map.on('zoomend', function() {
         if (DEBUG) {
             console.log("zoom :", map.getZoom())
         }
@@ -333,14 +357,17 @@ $("#map").ready(function() { // lorsque la carte est chargee
         }
     });
 });
-
-function notify_shape_empty(shape) { // notifie que l object est vide
+/**
+ * Notify using Bootstrap Notify that the leaflet vector layer is empty.
+ * @param {string} element - Type of leaflet vector layer.
+ */
+function notify_shape_empty(element) {
     if (DEBUG) {
         console.log("FUNCTION : notify_shape_empty");
-        console.log("shape : ", shape);
+        console.log("element : ", element);
     }
     $.notify({
-        title: "<strong>" + shape + "</strong>",
+        title: "<strong>" + element + "</strong>",
         message: "empty"
     }, {
         type: "danger",
@@ -350,14 +377,17 @@ function notify_shape_empty(shape) { // notifie que l object est vide
         }
     });
 }
-
-function notify_none(shape) { // notifie que rien est a envoyer
+/**
+ * Notify using Bootstrap Notify that the array of leaflet vector layers is empty.
+ * @param {string} collection - Type of leaflet vector layer.
+ */
+function notify_none(collection) {
     if (DEBUG) {
         console.log("FUNCTION : notify_none");
-        console.log("shape : ", shape);
+        console.log("collection : ", collection);
     }
     $.notify({
-        title: "<strong>" + shape + "</strong>",
+        title: "<strong>" + collection + "</strong>",
         message: "none",
     }, {
         type: "info",
@@ -367,11 +397,13 @@ function notify_none(shape) { // notifie que rien est a envoyer
         }
     });
 }
-
-function notify_ajax_sending_areas_success(code, statut) { // notifie que l envoi a reussi
+/**
+ * Notify using Bootstrap Notify that the zones sending to the DB succeeded.
+ * @param {object.statut} statut - Network code.
+ */
+function notify_ajax_sending_areas_success(statut) {
     if (DEBUG) {
         console.log("FUNCTION : notify_ajax_sending_areas_success");
-        console.log("code : ", code);
         console.log("statut : ", statut);
     }
     $.notify({
@@ -385,11 +417,13 @@ function notify_ajax_sending_areas_success(code, statut) { // notifie que l envo
         }
     });
 }
-
-function notify_ajax_sending_areas_error(erreur, statut) { // notifie que lenvoi a echoue
+/**
+ * Notify using Bootstrap Notify that the zones sending to the DB failed.
+ * @param {object.statut} statut - Network code.
+ */
+function notify_ajax_sending_areas_error(statut) {
     if (DEBUG) {
         console.log("FUNCTION : notify_ajax_sending_areas_error");
-        console.log("erreur : ", erreur);
         console.log("statut : ", statut);
     }
     $.notify({
@@ -403,7 +437,9 @@ function notify_ajax_sending_areas_error(erreur, statut) { // notifie que lenvoi
         }
     });
 }
-
+/**
+ * Notify using Bootstrap Notify that the "risk_type" into the "properties" is not correct.
+ */
 function notify_risk_type_wrong() {
     $.notify({
         title: "<strong>risk_type</strong>",
@@ -416,7 +452,9 @@ function notify_risk_type_wrong() {
         }
     });
 }
-
+/**
+ * Notify using Bootstrap Notify that the "anomaly_type" into the "properties" is not correct.
+ */
 function notify_anomaly_type_wrong() {
     $.notify({
         title: "<strong>anomaly_type</strong>",
@@ -429,7 +467,9 @@ function notify_anomaly_type_wrong() {
         }
     });
 }
-
+/**
+ * Notify using Bootstrap Notify that the "description" into the "properties" is not correct.
+ */
 function notify_description_wrong() {
     $.notify({
         title: "<strong>description</strong>",
@@ -442,7 +482,27 @@ function notify_description_wrong() {
         }
     });
 }
-
+/**
+ * Notify using Bootstrap Notify that the "properties" is not correct.
+ */
+function notify_properties_wrong() {
+    $.notify({
+        title: "<strong>properties</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+/**
+ * Check that the "properties" of the shape is correctly written in function of the type.
+ * @param {vector layer} shape - Leaflet vector layer.
+ * @param {string} type - Type of leaflet vector layer.
+ * @return {number} -1 - If the verification reveals an error.
+ */
 function verification(shape, type) {
     if (shape["properties"] != null) { // si y a des properties
         if (type == string_risk_type) {
@@ -465,10 +525,21 @@ function verification(shape, type) {
                 return -1;
             }
         }
+    } else {
+    	notify_properties_wrong();
+    	return -1;
     }
 }
-
-function fill_geojson(circle, box, polygon, type) { // rempli le geojson a partir des shapes en parametres
+/**
+ * Check that the "properties" of the shape is correctly written in function of the type.
+ * @param {array} circle - Array containing leaflet vector layers (circles).
+ * @param {array} box - Array containing leaflet vector layers (rectangles).
+ * @param {array} polygon - Array containing leaflet vector layers (polygons).
+ * @param {string} type - Type of leaflet vector layer (warning or anomaly).
+ * @return {number} -1 - If the array contains empty objects.
+ * @return {number} 0 - Else.
+ */
+function fill_geojson(circle, box, polygon, type) {
     if (DEBUG) {
         console.log("FUNCTION : fill_geojson");
         console.log("circle : ", circle);
@@ -545,8 +616,12 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
     }
     return 0;
 }
-
-function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type a l url en parametre
+/**
+ * Ajax request sending all the zones to the BD by specifying the type.
+ * @param {string} type - Type of leaflet vector layer (warning or anomaly).
+ * @param {string} url - Url to the Web API.
+ */
+function send_ajax_geojson(type, url) {
     if (DEBUG) {
         console.log("FUNCTION : send_ajax_geojson");
         console.log("send_ajax_geojson geojson : ", geojson);
@@ -565,7 +640,7 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
                 console.log("send_ajax_geojson code_json : ", code);
                 console.log("send_ajax_geojson statut : ", statut);
             }
-            notify_ajax_sending_areas_success(code, statut);
+            notify_ajax_sending_areas_success(statut);
             if (type == string_risk_type) {
                 style_layer(string_warning_zone); // changement de style
             }
@@ -579,7 +654,7 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
                 console.log("send_ajax_geojson statut : ", statut);
                 console.log("send_ajax_geojson erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(erreur, statut);
+            notify_ajax_sending_areas_error(statut);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
@@ -600,8 +675,11 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
         }
     });
 }
-
-function style_layer(type) { // modifie le style de la couche
+/**
+ * Change the inner color in black of all the leaflet vector layers corresponding to the type.
+ * @param {string} type - Type of leaflet vector layer (warning or anomaly).
+ */
+function style_layer(type) {
     couche = new L.FeatureGroup();
     if (DEBUG) {
         console.log("FUNCTION : style_layer");
@@ -651,7 +729,6 @@ function style_layer(type) { // modifie le style de la couche
         map.addLayer(couche);
     }
 }
-
 function geojsoncircle(ci) {
     var circlejson = new Array();
     var n = ci.length;
@@ -663,7 +740,9 @@ function geojsoncircle(ci) {
     circlejson.push([ci[n - 1].lat, ci[n - 1].lng]);
     return circlejson;
 }
-
+/**
+ * Executed for sending all the "warning zones".
+ */
 $("#submit1").click(function() { // envoie toutes les warning zones
     editableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les warning zones
         if (layer instanceof L.Circle) {
@@ -736,7 +815,9 @@ $("#submit1").click(function() { // envoie toutes les warning zones
         }
     }
 });
-
+/**
+ * Executed for sending all the "anomaly zones".
+ */
 $("#submit2").click(function() { // envoie toutes les anomaly
     leditableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les anomalies zones
         if (layer instanceof L.Circle) {
