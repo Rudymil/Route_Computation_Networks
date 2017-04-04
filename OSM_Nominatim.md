@@ -51,6 +51,7 @@ A minimum of 2GB of RAM is required
 ## Docker ##
 
 We want to be at the maximum independent of the internet and transportable.
+We need to keep the data of the regions we are interested in and update them after a given period, like a month.
 
 https://github.com/mediagis/nominatim-docker
 
