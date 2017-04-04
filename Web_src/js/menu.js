@@ -116,7 +116,7 @@ function ajax_countries(url) { // requete ajax sur les pays
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                 }
-                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1],json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
+                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                             });
                         }
                     }
@@ -404,6 +404,70 @@ function notify_ajax_sending_areas_error(erreur, statut) { // notifie que lenvoi
     });
 }
 
+function notify_risk_type_wrong() {
+    $.notify({
+        title: "<strong>risk_type</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+
+function notify_anomaly_type_wrong() {
+    $.notify({
+        title: "<strong>anomaly_type</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+
+function notify_description_wrong() {
+    $.notify({
+        title: "<strong>description</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+
+function verification(shape) {
+    if (shape["properties"] != null) { // si y a des properties
+        if (type == string_risk_type) {
+            if (shape["properties"]["risk_type"] == null || shape["properties"]["risk_type"] == undefined) { // si pas de risque
+                notify_risk_type_wrong();
+                return -1;
+            }
+            if (shape["properties"]["description"] == null || shape["properties"]["description"] == undefined) { // si pas de description
+                notify_description_wrong();
+                return -1;
+            }
+        }
+        if (type == string_anomaly_type) {
+            if (shape["properties"]["anomaly_type"] == null || shape["properties"]["anomaly_type"] == undefined) { // si pas de type
+                notify_anomaly_type_wrong();
+                return -1;
+            }
+            if (shape["properties"]["description"] == null || shape["properties"]["description"] == undefined) { // si pas de description
+                notify_description_wrong();
+                return -1;
+            }
+        }
+    }
+}
+
 function fill_geojson(circle, box, polygon, type) { // rempli le geojson a partir des shapes en parametres
     if (DEBUG) {
         console.log("FUNCTION : fill_geojson");
@@ -421,7 +485,11 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Circle :", circle[element]);
             }
             if (circle[element] !== null) { // si c est pas nul
-                features.push(circle[element]); // complete GeoJSON
+                if (verification(circle[element]) == -1) { // verification des properties
+                    return -1;
+                } else {
+                    features.push(circle[element]); // complete GeoJSON
+                }
             } else {
                 notify_shape_empty(string_circles);
                 return -1;
@@ -436,7 +504,11 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Box :", box[element]);
             }
             if (box[element] !== null) { // si c est pas nul
-                features.push(box[element]); // complete GeoJSON
+                if (verification(box[element]) == -1) { // verification des properties
+                    return -1;
+                } else {
+                    features.push(box[element]); // complete GeoJSON
+                }
             } else {
                 notify_shape_empty(string_boxes);
                 return -1;
@@ -451,7 +523,11 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Polygon :", polygon[element]);
             }
             if (polygon[element] !== null) { // si c est pas nul
-                features.push(polygon[element]); // complete GeoJSON
+                if (verification(polygon[element]) == -1) { // verification des properties
+                    return -1;
+                } else {
+                    features.push(polygon[element]); // complete GeoJSON
+                }
             } else {
                 notify_shape_empty(string_polygons);
                 return -1;
