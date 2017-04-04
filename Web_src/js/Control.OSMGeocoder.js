@@ -1,228 +1,227 @@
 if (typeof console == "undefined") {
-	this.console = { log: function (msg) { /* do nothing since it would otherwise break IE */} };
+    this.console = {
+        log: function(msg) { /* do nothing since it would otherwise break IE */ }
+    };
 }
 
 
 L.Control.OSMGeocoder = L.Control.extend({
-	options: {
-		collapsed: true,
-		position: 'topright',
-		text: 'Locate',
-		placeholder: '',
-		bounds: null, // L.LatLngBounds
-		email: null, // String
-		callback: function (results) {
-			if (results.length == 0) {
-				//alert("ERROR: didn't find a result");
-				$.notify(
-					{
-						title: "<strong>Geocodage</strong>",
-						message: "invalid adress"
-					},{
-						type: "warning",
-						placement: {
-							from: "bottom",
-							align: "center"
-						}
-					}
-				);
-				//console.log("ERROR: didn't find a result");
-				return;
-			}
-			var bbox = results[0].boundingbox,
-				first = new L.LatLng(bbox[0], bbox[2]),
-				second = new L.LatLng(bbox[1], bbox[3]),
-				bounds = new L.LatLngBounds([first, second]);
-			this._map.fitBounds(bounds);
-									
-			if( markerDeparture != null ) {
-			map.removeLayer(markerDeparture);
-			}
-            markerDeparture = L.marker([map.getCenter().lat, map.getCenter().lng],{icon: greenIcon, draggable: true}).bindPopup(map.getCenter().lat  + ", " +map.getCenter().lng);
+    options: {
+        collapsed: true,
+        position: 'topright',
+        text: 'Locate',
+        placeholder: '',
+        bounds: null, // L.LatLngBounds
+        email: null, // String
+        callback: function(results) {
+            if (results.length == 0) {
+                //alert("ERROR: didn't find a result");
+                $.notify({
+                    title: "<strong>Geocodage</strong>",
+                    message: "invalid adress"
+                }, {
+                    type: "warning",
+                    placement: {
+                        from: "bottom",
+                        align: "center"
+                    }
+                });
+                //console.log("ERROR: didn't find a result");
+                return;
+            }
+            var bbox = results[0].boundingbox,
+                first = new L.LatLng(bbox[0], bbox[2]),
+                second = new L.LatLng(bbox[1], bbox[3]),
+                bounds = new L.LatLngBounds([first, second]);
+            this._map.fitBounds(bounds);
+
+            if (markerDeparture != null) {
+                map.removeLayer(markerDeparture);
+            }
+            markerDeparture = L.marker([map.getCenter().lat, map.getCenter().lng], {
+                icon: greenIcon,
+                draggable: true
+            }).bindPopup(map.getCenter().lat + ", " + map.getCenter().lng);
             map.addLayer(markerDeparture);
-            $("#dep").val(map.getCenter().lat+ ", " + map.getCenter().lng);
-             markerDeparture.on("dragend",function(ev){            
-				  $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
-				  markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)});	
-             	}
-           
-	},
+            $("#dep").val(map.getCenter().lat + ", " + map.getCenter().lng);
+            markerDeparture.on("dragend", function(ev) {
+                $("#dep").val(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng);
+                markerDeparture.bindPopup(ev.target.getLatLng().lat + ", " + ev.target.getLatLng().lng)
+            });
+        }
 
-	_callbackId: 0,
+    },
 
-	initialize: function (options) {
-		L.Util.setOptions(this, options);
-	},
+    _callbackId: 0,
 
-	onAdd: function (map) {
-		this._map = map;
+    initialize: function(options) {
+        L.Util.setOptions(this, options);
+    },
 
-		var className = 'leaflet-control-geocoder',
-			container = this._container = L.DomUtil.create('div', className);
+    onAdd: function(map) {
+        this._map = map;
 
-		L.DomEvent.disableClickPropagation(container);
+        var className = 'leaflet-control-geocoder',
+            container = this._container = L.DomUtil.create('div', className);
 
-		var form = this._form = L.DomUtil.create('form', className + '-form');
+        L.DomEvent.disableClickPropagation(container);
 
-		var input = this._input = document.createElement('input');
-		input.type = "text";
-		input.placeholder = this.options.placeholder || '';
+        var form = this._form = L.DomUtil.create('form', className + '-form');
 
-		var submit = document.createElement('input');
-		submit.type = "submit";
-		submit.value = this.options.text;
+        var input = this._input = document.createElement('input');
+        input.type = "text";
+        input.placeholder = this.options.placeholder || '';
 
-		form.appendChild(input);
-		form.appendChild(submit);
+        var submit = document.createElement('input');
+        submit.type = "submit";
+        submit.value = this.options.text;
 
-		L.DomEvent.addListener(form, 'submit', this._geocode, this);
+        form.appendChild(input);
+        form.appendChild(submit);
 
-		if (this.options.collapsed) {
-			L.DomEvent.addListener(container, 'mouseover', this._expand, this);
-			L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
+        L.DomEvent.addListener(form, 'submit', this._geocode, this);
 
-			var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
-			link.href = '#';
-			link.title = 'Nominatim Geocoder';
+        if (this.options.collapsed) {
+            L.DomEvent.addListener(container, 'mouseover', this._expand, this);
+            L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
 
-			L.DomEvent.addListener(link, L.Browser.touch ? 'click' : 'focus', this._expand, this);
+            var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
+            link.href = '#';
+            link.title = 'Nominatim Geocoder';
 
-			this._map.on('movestart', this._collapse, this);
+            L.DomEvent.addListener(link, L.Browser.touch ? 'click' : 'focus', this._expand, this);
 
-		} else {
-			this._expand();
-		}
+            this._map.on('movestart', this._collapse, this);
 
-		container.appendChild(form);
+        } else {
+            this._expand();
+        }
 
-		return container;
-				
-	},
+        container.appendChild(form);
 
-	/* helper functions for cofile:///home/hind/Documents/projetcom/Projet-Commun/Web%20src/index.htmlrdinate extraction */
-	_createSearchResult : function(lat, lon) {
-		//creates an position description similar to the result of a Nominatim search
-		var diff = 0.005;
-		var result = [];
-		result[0] = {};
-		result[0]["boundingbox"] = [parseFloat(lat)-diff,parseFloat(lat)+diff,parseFloat(lon)-diff,parseFloat(lon)+diff];
-		result[0]["class"]="boundary";
-		result[0]["display_name"]="Position: "+lat+" "+lon;
-		result[0]["lat"] = lat;
-		result[0]["lon"] = lon;
-		return result;
-	},
-	_isLatLon : function (q) {
-		//"lon lat" => xx.xxx x.xxxxx
-		var re = /(-?\d+\.\d+)\s(-?\d+\.\d+)/;
-		var m = re.exec(q);
-		if (m != undefined) return m;
+        return container;
 
-		//lat...xx.xxx...lon...x.xxxxx
-		re = /lat\D*(-?\d+\.\d+)\D*lon\D*(-?\d+\.\d+)/;
-		m = re.exec(q);
-		//showRegExpResult(m);
-		if (m != undefined) return m;
-		else return null;
-	},
-	_isLatLon_decMin : function (q) {
-		//console.log("is LatLon?: "+q);
-			
-		//N 53° 13.785' E 010° 23.887'
-		//re = /[NS]\s*(\d+)\D*(\d+\.\d+).?\s*[EW]\s*(\d+)\D*(\d+\.\d+)\D*/;
-		re = /([ns])\s*(\d+)\D*(\d+\.\d+).?\s*([ew])\s*(\d+)\D*(\d+\.\d+)/i;
-		m = re.exec(q.toLowerCase());
-		
+    },
 
-		//showRegExpResult(m);
-		if ((m != undefined)) return m;
-		else return null;
-		// +- dec min +- dec min
-	},
+    /* helper functions for cofile:///home/hind/Documents/projetcom/Projet-Commun/Web%20src/index.htmlrdinate extraction */
+    _createSearchResult: function(lat, lon) {
+        //creates an position description similar to the result of a Nominatim search
+        var diff = 0.005;
+        var result = [];
+        result[0] = {};
+        result[0]["boundingbox"] = [parseFloat(lat) - diff, parseFloat(lat) + diff, parseFloat(lon) - diff, parseFloat(lon) + diff];
+        result[0]["class"] = "boundary";
+        result[0]["display_name"] = "Position: " + lat + " " + lon;
+        result[0]["lat"] = lat;
+        result[0]["lon"] = lon;
+        return result;
+    },
+    _isLatLon: function(q) {
+        //"lon lat" => xx.xxx x.xxxxx
+        var re = /(-?\d+\.\d+)\s(-?\d+\.\d+)/;
+        var m = re.exec(q);
+        if (m != undefined) return m;
 
-	_geocode : function (event) {
-		L.DomEvent.preventDefault(event);
-		this._map = map;
-		var q = this._input.value;
-		//try to find corrdinates
-		if (this._isLatLon(q) != null)
-		{
-			var m = this._isLatLon(q);
-			//console.log("LatLon: "+m[1]+" "+m[2]);
-			//m = {lon, lat}
-			this.options.callback.call(this, this._createSearchResult(m[1],m[2]));
-			
-			return;
-		}
-		else if (this._isLatLon_decMin(q) != null)
-		{
-			var m = this._isLatLon_decMin(q);
-			//m: [ns, lat dec, lat min, ew, lon dec, lon min]
-			var temp  = new Array();
-			temp['n'] = 1;
-			temp['s'] = -1;
-			temp['e'] = 1;
-			temp['w'] = -1;
-			this.options.callback.call(this,this._createSearchResult(
-				temp[m[1]]*(Number(m[2]) + m[3]/60),
-				temp[m[4]]*(Number(m[5]) + m[6]/60)
-			));
-			return;
-		}
+        //lat...xx.xxx...lon...x.xxxxx
+        re = /lat\D*(-?\d+\.\d+)\D*lon\D*(-?\d+\.\d+)/;
+        m = re.exec(q);
+        //showRegExpResult(m);
+        if (m != undefined) return m;
+        else return null;
+    },
+    _isLatLon_decMin: function(q) {
+        //console.log("is LatLon?: "+q);
 
-		//and now Nominatim
-		//http://wiki.openstreetmap.org/wiki/Nominatim
-		//console.log(this._callbackId);
-		window[("_l_osmgeocoder_"+this._callbackId)] = L.Util.bind(this.options.callback, this);
+        //N 53° 13.785' E 010° 23.887'
+        //re = /[NS]\s*(\d+)\D*(\d+\.\d+).?\s*[EW]\s*(\d+)\D*(\d+\.\d+)\D*/;
+        re = /([ns])\s*(\d+)\D*(\d+\.\d+).?\s*([ew])\s*(\d+)\D*(\d+\.\d+)/i;
+        m = re.exec(q.toLowerCase());
 
 
-		/* Set up params to send to Nominatim */
-		var params = {
-			// Defaults
-			q: this._input.value,
-			json_callback : ("_l_osmgeocoder_"+this._callbackId++),
-			format: 'json'
-		};
+        //showRegExpResult(m);
+        if ((m != undefined)) return m;
+        else return null;
+        // +- dec min +- dec min
+    },
 
-		if (this.options.bounds && this.options.bounds != null) {
-			if( this.options.bounds instanceof L.LatLngBounds ) {
-				params.viewbox = this.options.bounds.toBBoxString();
-				params.bounded = 1;
-			}
-			else {
-				console.log('bounds must be of type L.LatLngBounds');
-				return;
-			}
-		}
+    _geocode: function(event) {
+        L.DomEvent.preventDefault(event);
+        this._map = map;
+        var q = this._input.value;
+        //try to find corrdinates
+        if (this._isLatLon(q) != null) {
+            var m = this._isLatLon(q);
+            //console.log("LatLon: "+m[1]+" "+m[2]);
+            //m = {lon, lat}
+            this.options.callback.call(this, this._createSearchResult(m[1], m[2]));
 
-		if (this.options.email && this.options.email != null) {
-			if (typeof this.options.email == 'string') {
-				params.email = this.options.email;
-			}
-			else{
-				console.log('email must be a string');
-			}
-		}
+            return;
+        } else if (this._isLatLon_decMin(q) != null) {
+            var m = this._isLatLon_decMin(q);
+            //m: [ns, lat dec, lat min, ew, lon dec, lon min]
+            var temp = new Array();
+            temp['n'] = 1;
+            temp['s'] = -1;
+            temp['e'] = 1;
+            temp['w'] = -1;
+            this.options.callback.call(this, this._createSearchResult(
+                temp[m[1]] * (Number(m[2]) + m[3] / 60),
+                temp[m[4]] * (Number(m[5]) + m[6] / 60)
+            ));
+            return;
+        }
 
-		var protocol = location.protocol;
-		if (protocol == "file:") protocol = "https:";
-		var url = protocol + "//nominatim.openstreetmap.org/search" + L.Util.getParamString(params),
-			script = document.createElement("script");
+        //and now Nominatim
+        //http://wiki.openstreetmap.org/wiki/Nominatim
+        //console.log(this._callbackId);
+        window[("_l_osmgeocoder_" + this._callbackId)] = L.Util.bind(this.options.callback, this);
 
 
-		script.type = "text/javascript";
-		script.src = url;
-		script.id = this._callbackId;
-		document.getElementsByTagName("head")[0].appendChild(script);	
-		
-	},
+        /* Set up params to send to Nominatim */
+        var params = {
+            // Defaults
+            q: this._input.value,
+            json_callback: ("_l_osmgeocoder_" + this._callbackId++),
+            format: 'json'
+        };
 
-	_expand: function () {
-		L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
-	},
+        if (this.options.bounds && this.options.bounds != null) {
+            if (this.options.bounds instanceof L.LatLngBounds) {
+                params.viewbox = this.options.bounds.toBBoxString();
+                params.bounded = 1;
+            } else {
+                console.log('bounds must be of type L.LatLngBounds');
+                return;
+            }
+        }
 
-	_collapse: function () {
-		this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
-	}
+        if (this.options.email && this.options.email != null) {
+            if (typeof this.options.email == 'string') {
+                params.email = this.options.email;
+            } else {
+                console.log('email must be a string');
+            }
+        }
+
+        var protocol = location.protocol;
+        if (protocol == "file:") protocol = "https:";
+        var url = protocol + "//nominatim.openstreetmap.org/search" + L.Util.getParamString(params),
+            script = document.createElement("script");
+
+
+        script.type = "text/javascript";
+        script.src = url;
+        script.id = this._callbackId;
+        document.getElementsByTagName("head")[0].appendChild(script);
+
+    },
+
+    _expand: function() {
+        L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
+    },
+
+    _collapse: function() {
+        this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
+    }
 
 });
