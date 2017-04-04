@@ -22,6 +22,21 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
     $bBox = explode(",", $_GET["bbox"]); //southWest lng/lat / northEast lng/lat
     $filterSQL .= " AND ST_Contains(ST_SetSRID(ST_MakeBox2D(ST_Point($bBox[0], $bBox[1]), ST_Point($bBox[2], $bBox[3])),4326), z.geom)";
   }
+  //Expired
+  if (isset($_GET["expired"]) && $_GET["expired"] == "false") {
+    $filterSQL .= " AND expiration_date >= NOW()";
+  }
+  elseif (isset($_GET["expired"]) && $_GET["expired"] == "true") {
+    $filterSQL .= " AND expiration_date < NOW()";
+  }
+
+  //Validated
+  if (isset($_GET["validated"]) && $_GET["validated"] == "false") {
+    $filterSQL .= " AND expiration_date IS NULL";
+  }
+  elseif (isset($_GET["validated"]) && $_GET["validated"] == "true") {
+    $filterSQL .= " AND expiration_date IS NOT NULL";
+  }
   /*if (isset($_GET["country_id"])) {
       $tableSQL .= "country c";
       $filterSQL .= " AND ST_Contains(c.geom, z.geom)";
@@ -38,7 +53,7 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
 }
 
 //GET country
-elseif (isset($_GET["type"]) && $_GET["type"] == "countryGeo") {
+elseif (isset($_GET["type"]) && $_GET["type"] == "country") {
   $types_list = "SELECT id, name, ST_asGeoJSON(ST_Centroid(geom)) AS geojson FROM country ORDER BY name;";
   if (isset($_GET["DEBUG"])) {
     print("<p><strong>Query :</strong> " . $types_list . "</p>");

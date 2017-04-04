@@ -5,28 +5,40 @@ http://172.31.56.223/api/server.php
 
 Le mode **DEBUG** est activable en ajoutant la variable DEBUG dans l'URL sans valeur, exemple : http://172.31.56.223/api/server.php?DEBUG&{...}
 
-## GET data
+## Les paramètres
 
-Pour récupérer des données stockées en base, les requêtes sont à effectuer en GET, les différents paramètres disponibles sont les suivants :
+Les différents paramètres de l'API sont :
 
-- type=[warning_zone|anomaly_zone|risk_type|anomaly_type|country] : pour récupérer au choix : les warning_zone ou les anomaly_zone ou les risk_type ou les anomaly_type ou la liste des pays.
-- bbox=[southWestLng,southWestLat,northEastLng,northEastLat] **(optionnel)** : permet la limitation des zones retournées suivant une bounding box
+- **DEBUG** : permet d'activer le mode debug,
+- **type** : spécifie le type d'objet demandé, au choix parmi : {warning_zone|anomaly_zone|risk_type|anomaly_type|country}
+- **warning_zone**
+- **anomaly_zone**
+- **waypoint**
+- **bbox** : permet la limitation des zones retournées suivant une bounding box [southWestLng,southWestLat,northEastLng,northEastLat]
+- **action**
+- **id** : permet de cibler une entité particulière
+- **expired** : {true|false}
+- **validated** : {true|false}
 
-La chaîne des coordonnées de la bounding box est disponible via la fonction javascript :
+## Interactions
 
-```js
-map.getBounds().toBBoxString()
-```
+Les données disponibles via l'API ainsi que leur méthode et format d'envoi et/ou de retour sont :
 
-## DELETE data
+|Données|GET|POST|
+|---|---|---|
+|country|GeoJSON|#NA|
+|waypoint|#NA|GeoJSON|
+|risk|JSON|#NA|
+|anomaly_type|JSON|#NA|
+|warning_zone|GeoJSON|GeoJSON|
+|anomaly_zone|GeoJSON|#NA|
 
-Pour supprimer des données stockées en base, les requêtes sont à effectuer en GET, les différents paramètres disponibles sont les suivants :
+*Exemple de lecture concernant les warning_zone :*
 
-- action=delete
-- type=[warning_zone|anomaly_zone]
-- id={identifiant de l'objet}
+- pour récupérer celles en base : faire une requête en GET, les données retournées seront au format GeoJSON,
+- pour en créer en base : faire une requête en POST avec les données au format GeoJSON.
 
-## SEND data
+## Insert data
 
 Pour envoyer des données au backend et les stocker en base, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
 
@@ -34,7 +46,103 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
 - anomaly_zone=[GeoJSON]
 - waypoint=[GeoJSON]
 
-### GeoJSON Formats
+## Update data
+
+Pour mettre à jour des entitées existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
+
+- action=update
+- type=warning_zone
+- warning_zone=[GeoJSON]
+
+## Delete data
+
+Pour supprimer des données stockées en base, les requêtes sont à effectuer en GET, les différents paramètres disponibles sont les suivants :
+
+- action=delete
+- type=[warning_zone|anomaly_zone]
+- id={identifiant de l'objet}
+
+## Formats
+
+Exemples de formats de données JSON & GeoJSON utilisés.
+
+### JSON
+
+**risk|anomaly_zone**
+```json
+[
+  {"id": 1, "name": "Nom 1"},
+  {"id": 2, "name": "Nom 2"}
+]
+```
+
+### GeoJSON en POST
+
+**warning_zone** 
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.254404067993, -8.8440258142784],
+            [13.254404067993, -8.8402941462384],
+            [13.265390396118, -8.8402941462384],
+            [13.265390396118, -8.8440258142784],
+            [13.254404067993, -8.8440258142784]
+          ]
+        ]
+      },
+      "properties": {
+        "id": 130,
+        "name": "Risque 1",
+        "description": "without description",
+        "expiration_date": "2017-06-01"
+      }
+    },
+    {another feature}
+  ]
+}
+```
+
+**anomaly_zone** 
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.254404067993, -8.8440258142784],
+            [13.254404067993, -8.8402941462384],
+            [13.265390396118, -8.8402941462384],
+            [13.265390396118, -8.8440258142784],
+            [13.254404067993, -8.8440258142784]
+          ]
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "name": "Anomalie 1",
+        "description": "Manque la nouvelle route du golf et le restaurant",
+        "expiration_date": "2017-06-01"
+      }
+    },
+    {another feature}
+  ]
+}
+```
+
+### GeoJSON en GET (Update)
 
 **warning_zone** 
 
@@ -48,96 +156,27 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
       "geometry": {
         "type": "Polygon",
         "coordinates": [
-          [[
-              7.0,
-              4.0
-            ],
-            {...}
-            [
-              7.1,
-              4.0
-            ]]]
+          [
+            [13.254404067993, -8.8440258142784],
+            [13.254404067993, -8.8402941462384],
+            [13.265390396118, -8.8402941462384],
+            [13.265390396118, -8.8440258142784],
+            [13.254404067993, -8.8440258142784]
+          ]
+        ]
       },
       "properties": {
-        "risk_type": "#",
-        "description": "texte de description"
+        "id": 5,
+        "risk_type": 1,
+        "description": "test",
+        "intensity": 60,
+        "expiration_date": "2017-06-01"
       }
     },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [[
-              7.0,
-              4.0
-            ],
-            {...}
-            [
-              7.1,
-              4.0
-            ]]]
-      },
-      "properties": {
-        "risk_type": "#",
-        "description": "texte de description"
-      }
-    }
+    {another feature}
   ]
 }
 ```
-
-**anomaly_zone** 
-
-```json
-{
-  "type": "FeatureCollection",
-  "zone_type": "anomaly_zone",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [[
-              7.0,
-              4.0
-            ],
-            {...}
-            [
-              7.1,
-              4.0
-            ]]]
-      },
-      "properties": {
-        "anomaly_type": #,
-        "description": "Excepteur sint occaecat cupidatat non proident."
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [[
-              7.0,
-              4.0
-            ],
-            {...}
-            [
-              7.1,
-              4.0
-            ]]]
-      },
-      "properties": {
-        "anomaly_type": #,
-        "description": "Excepteur sint occaecat cupidatat non proident."
-      }
-    }
-  ]
-}
-```
-
 
 **waypoint** 
 
@@ -145,13 +184,31 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
 {
   "type": "Point",
   "waypoint": {"start"|"step"|"end"},
-  "coordinates": [
-    8.097,
-    9.592
-  ]
+  "coordinates": [8.097, 9.592]
 }
 ```
 
 ## Sécurité & Contrôle
 
+### Code HTML
 Si l'API Web est appelée, mais que les requêtes GET ou POST ne passent pas les paramètres obligatoires, elle retournera une **erreur HTML code 400**.
+
+### Injections SQL
+[PHP Manuel](http://php.net/manual/fr/security.database.sql-injection.php)
+https://www.acunetix.com/websitesecurity/sql-security/
+https://www.acunetix.com/websitesecurity/php-security-1/
+
+## Outils & Aide
+
+### Validation en ligne
+
+Editeur, validateur, minifieur en ligne JSON - [jsoneditoronline.org](http://www.jsoneditoronline.org/)
+
+Validateur en ligne GeoJSON - [geojsonlint.com](http://geojsonlint.com/)
+
+### Divers
+La chaîne des coordonnées de la bounding box est disponible via la fonction javascript :
+
+```js
+map.getBounds().toBBoxString()
+```

@@ -111,11 +111,11 @@ function insertGeoJSONQuery($datajson){
       $risk_type = $properties->risk_type;
       $expiration_date = $properties->expiration_date;
       $description = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $risk_type, (SELECT intensity FROM risk WHERE id = $risk_type), '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($risk_type) . ", (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . "), '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
     }elseif ($data->zone_type == "anomaly_zone") {
       $anomaly_type = $properties->anomaly_type;
       $description  = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $anomaly_type, '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($anomaly_type) . ", '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
     }
     if($i < sizeOf($features) - 1){
       $sqlRequest .= ", ";
