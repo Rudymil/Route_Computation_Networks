@@ -14,7 +14,7 @@
 * [leaflet.markercluster.js](leaflet.markercluster.js)
 * [leaflet-routing-machine.js](leaflet-routing-machine.js)
 * [list.min.js](list.min.js)
-* [menu.js](menu.js) (*Ajax resquests*) [menu.md](menu.md)
+* [menu.js](menu.js) (*Ajax requests*) [menu.md](menu.md)
 * [report_a_warning_zone.js](report_a_warning_zone.js)
 * [report_an_anomaly.js](report_an_anomaly.js)
 * [set_the_route.js](set_the_route.js) [set_the_route.md](set_the_route.md)
