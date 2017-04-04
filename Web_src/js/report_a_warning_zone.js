@@ -35,7 +35,7 @@ function hmtlcw() {
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required >\
 				</div>	";
 
     for (var i = 0; i < nw; i++) {
@@ -230,44 +230,38 @@ map.on('draw:created', function(e) {
         var lev = null;
 
         bootbox.confirm(hmtlcw(), function(result) {
+			if ( result ) {
+            	//console.log("inside");
+            	des = $('#description').val();
+            	lev = $('#level').val();
 
-            //console.log("inside");
-            des = $('#description').val();
-            lev = $('#level').val();
-            /*
-    			var layergeo=layer.toGeoJSON();
-  			
-  				console.log(layer.toPolygon());
-  				layergeo.properties= {
-       			 "type": "warningType",
-       			 "typeGeometry" : "circle",
-       			 "radius" : layer._mRadius ,
-       			 "id" : layer._leaflet_id ,	
-        		 "description": des,
-     		     "anomaly_type": lev
-   			 };
-   			 	*/
-
-            if (des == "") {
-                des = "without description";
-            }
+            	if (des == "") {
+                 	return false ;
+            	}
 
 
-            //console.log(des);
-            content = getPopupContentw(layer, lev, des);
-            var temp = [des, lev, layer._leaflet_id];
-            //console.log(content);
-            if (content !== null) {
-                layer.bindPopup(content);
-                //layer.setPopupContent(content);
-            }
+            	//console.log(des);
+            	content = getPopupContentw(layer, lev, des);
+            	var temp = [des, lev, layer._leaflet_id];
+            	//console.log(content);
+           	 	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
+            	}
 
-            infosc.push(temp);
+            	infosc.push(temp);
 
-            //circle.push(layergeo);
+            	//circle.push(layergeo);
 
-            //console.log(circle);
-
+            	//console.log(circle);
+            
+            
+            
+            
+			}
+			else {
+				editableLayers.removeLayer(layer);
+			}
         });
 
 
@@ -282,25 +276,31 @@ map.on('draw:created', function(e) {
 
 
         bootbox.confirm(hmtlcw(), function(result) {
+			if ( result ) {
+            	//console.log("inside");
+            	des = $('#description').val();
+            	lev = $('#level').find(":selected").val();
 
-            //console.log("inside");
-            des = $('#description').val();
-            lev = $('#level').find(":selected").val();
+            	if (des == "") {
+            	    return false;
+            	}
 
-            if (des == "") {
-                des = "without description";
+            	console.log(des);
+            	content = getPopupContentw(layer, lev, des);
+            	var temp = [des, lev, layer._leaflet_id];
+            	//console.log(content);
+            	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
+            	}
+
+            	infosb.push(temp);
+            	
             }
-
-            console.log(des);
-            content = getPopupContentw(layer, lev, des);
-            var temp = [des, lev, layer._leaflet_id];
-            //console.log(content);
-            if (content !== null) {
-                layer.bindPopup(content);
-                //layer.setPopupContent(content);
+            else {
+            	editableLayers.removeLayer(layer);
             }
-
-            infosb.push(temp);
+            
         });
 
         editableLayers.addLayer(layer);
@@ -314,26 +314,31 @@ map.on('draw:created', function(e) {
 
 
         bootbox.confirm(hmtlcw(), function(result) {
+			if ( result ) {
+            	des = $('#description').val();
+            	lev = $('#level').find(":selected").val();
 
-            des = $('#description').val();
-            lev = $('#level').find(":selected").val();
 
+            	if (des == "") {
+                	return false ;
+            	}
 
-            if (des == "") {
-                des = "without description";
-            }
+           		console.log(des);
+            	content = getPopupContentw(layer, lev, des);
+            	var temp = [des, lev, layer._leaflet_id];
+            	//console.log(content);
+            	if (content !== null) {
+                	layer.bindPopup(content);
+                	//layer.setPopupContent(content);
+           	 	}
 
-            console.log(des);
-            content = getPopupContentw(layer, lev, des);
-            var temp = [des, lev, layer._leaflet_id];
-            //console.log(content);
-            if (content !== null) {
-                layer.bindPopup(content);
-                //layer.setPopupContent(content);
-            }
-
-            infosp.push(temp);
-
+            	infosp.push(temp);
+			
+			}
+			else {
+				editableLayers.removeLayer(layer);
+			}
+			
         });
 
 
