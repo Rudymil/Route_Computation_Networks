@@ -665,147 +665,147 @@ function geojsoncircle(ci) {
 }
 
 $("#submit1").click(function() { // envoie toutes les warning zones
-            editableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les warning zones
-                if (layer instanceof L.Circle) {
-                    var n = infosc.length;
-                    var i = 0;
-                    while (i < n) {
-                        if (infosc[i][2] == layer._leaflet_id) {
-                            var temp = {
-                                "type": "Feature",
-                                "properties": {
-                                    "risk_type": infosc[i][1],
-                                    "description": infosc[i][0]
-                                },
-                                "geometry": {
-                                    "type": "Polygon",
-                                    "coordinates": [geojsoncircle(layer.toPolygon())]
-                                }
-                            };
-                            circle.push(temp);
+    editableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les warning zones
+        if (layer instanceof L.Circle) {
+            var n = infosc.length;
+            var i = 0;
+            while (i < n) {
+                if (infosc[i][2] == layer._leaflet_id) {
+                    var temp = {
+                        "type": "Feature",
+                        "properties": {
+                            "risk_type": infosc[i][1],
+                            "description": infosc[i][0]
+                        },
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [geojsoncircle(layer.toPolygon())]
                         }
-                        i++;
-                    }
+                    };
+                    circle.push(temp);
                 }
-                if (layer instanceof L.Rectangle) {
-                    var n = infosb.length;
-                    var i = 0;
-                    while (i < n) {
-                        if (infosb[i][2] == layer._leaflet_id) {
-                            var temp = layer.toGeoJSON();
-                            temp.properties = {
-                                "risk_type": infosb[i][1],
-                                "description": infosb[i][0]
-                            };
-                            box.push(temp);
-                        }
-                        i++;
-                    }
-                }
-                if (layer instanceof L.Polygon) {
-                    var n = infosp.length;
-                    var i = 0;
-                    while (i < n) {
-                        if (infosp[i][2] == layer._leaflet_id) {
-                            var temp = layer.toGeoJSON();
-                            temp.properties = {
-                                "risk_type": infosp[i][1],
-                                "description": infosp[i][0]
-                            };
-                            polygon.push(temp);
-                        }
-                        i++;
-                    }
-                }
-            });
-            if (DEBUG) {
-                console.log("EVENT : $('#submit1').click");
+                i++;
             }
-            if (DEBUG) {
-                console.log("Circles :", circle);
-                console.log("Boxes :", box);
-                console.log("Polygons :", polygon);
+        }
+        if (layer instanceof L.Rectangle) {
+            var n = infosb.length;
+            var i = 0;
+            while (i < n) {
+                if (infosb[i][2] == layer._leaflet_id) {
+                    var temp = layer.toGeoJSON();
+                    temp.properties = {
+                        "risk_type": infosb[i][1],
+                        "description": infosb[i][0]
+                    };
+                    box.push(temp);
+                }
+                i++;
             }
-            if (fill_geojson(circle, box, polygon, string_warning_zone) == 0) { // si pas d erreur
-                if (DEBUG) {
-                    console.log("geojson : ", geojson);
-                    console.log("Object.keys(geojson).length : ", Object.keys(geojson).length);
+        }
+        if (layer instanceof L.Polygon) {
+            var n = infosp.length;
+            var i = 0;
+            while (i < n) {
+                if (infosp[i][2] == layer._leaflet_id) {
+                    var temp = layer.toGeoJSON();
+                    temp.properties = {
+                        "risk_type": infosp[i][1],
+                        "description": infosp[i][0]
+                    };
+                    polygon.push(temp);
                 }
-                if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
-                    send_ajax_geojson(string_warning_zone, url;
-                    }
-                }
-            });
+                i++;
+            }
+        }
+    });
+    if (DEBUG) {
+        console.log("EVENT : $('#submit1').click");
+    }
+    if (DEBUG) {
+        console.log("Circles :", circle);
+        console.log("Boxes :", box);
+        console.log("Polygons :", polygon);
+    }
+    if (fill_geojson(circle, box, polygon, string_warning_zone) == 0) { // si pas d erreur
+        if (DEBUG) {
+            console.log("geojson : ", geojson);
+            console.log("Object.keys(geojson).length : ", Object.keys(geojson).length);
+        }
+        if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
+            send_ajax_geojson(string_warning_zone, url);
+        }
+    }
+});
 
-        $("#submit2").click(function() { // envoie toutes les anomaly
-                leditableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les anomalies zones
-                    if (layer instanceof L.Circle) {
-                        var n = infoscl.length;
-                        var i = 0;
-                        while (i < n) {
-                            if (infoscl[i][2] == layer._leaflet_id) {
-                                var temp = {
-                                    "type": "Feature",
-                                    "properties": {
-                                        "anomaly_type": infoscl[i][1],
-                                        "description": infoscl[i][0]
-                                    },
-                                    "geometry": {
-                                        "type": "Polygon",
-                                        "coordinates": [geojsoncircle(layer.toPolygon())]
-                                    }
-                                };
-                                circlel.push(temp);
-                            }
-                            i++;
+$("#submit2").click(function() { // envoie toutes les anomaly
+    leditableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les anomalies zones
+        if (layer instanceof L.Circle) {
+            var n = infoscl.length;
+            var i = 0;
+            while (i < n) {
+                if (infoscl[i][2] == layer._leaflet_id) {
+                    var temp = {
+                        "type": "Feature",
+                        "properties": {
+                            "anomaly_type": infoscl[i][1],
+                            "description": infoscl[i][0]
+                        },
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [geojsoncircle(layer.toPolygon())]
                         }
-                    }
-                    if (layer instanceof L.Rectangle) {
-                        var n = infosbl.length;
-                        var i = 0;
-                        while (i < n) {
-                            if (infosbl[i][2] == layer._leaflet_id) {
-                                var temp = layer.toGeoJSON();
-                                temp.properties = {
-                                    "anomaly_type": infosbl[i][1],
-                                    "description": infosbl[i][0]
-                                };
-                                boxl.push(temp);
-                            }
-                            i++;
-                        }
-                    }
-                    if (layer instanceof L.Polygon) {
-                        var n = infospl.length;
-                        var i = 0;
-                        while (i < n) {
-                            if (infospl[i][2] == layer._leaflet_id) {
-                                var temp = layer.toGeoJSON();
-                                temp.properties = {
-                                    "anomaly_type": infospl[i][1],
-                                    "description": infospl[i][0]
-                                }
-                                polygonl.push(temp);
-                            }
-                            i++;
-                        }
-                    }
-                });
-                if (DEBUG) {
-                    console.log("EVENT : $('#submit1').click");
+                    };
+                    circlel.push(temp);
                 }
-                if (DEBUG) {
-                    console.log("Circles :", circlel);
-                    console.log("Boxes :", boxl);
-                    console.log("Polygons :", polygonl);
+                i++;
+            }
+        }
+        if (layer instanceof L.Rectangle) {
+            var n = infosbl.length;
+            var i = 0;
+            while (i < n) {
+                if (infosbl[i][2] == layer._leaflet_id) {
+                    var temp = layer.toGeoJSON();
+                    temp.properties = {
+                        "anomaly_type": infosbl[i][1],
+                        "description": infosbl[i][0]
+                    };
+                    boxl.push(temp);
                 }
-                if (fill_geojson(circlel, boxl, polygonl, string_anomaly_zone) == 0) { // si pas d erreur
-                    if (DEBUG) {
-                        console.log("geojson : ", geojson);
-                        console.log("Object.keys(geojson).length : ", Object.keys(geojson).length);
+                i++;
+            }
+        }
+        if (layer instanceof L.Polygon) {
+            var n = infospl.length;
+            var i = 0;
+            while (i < n) {
+                if (infospl[i][2] == layer._leaflet_id) {
+                    var temp = layer.toGeoJSON();
+                    temp.properties = {
+                        "anomaly_type": infospl[i][1],
+                        "description": infospl[i][0]
                     }
-                    if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
-                        send_ajax_geojson(string_anomaly_zone, url;
-                        }
-                    }
-                });
+                    polygonl.push(temp);
+                }
+                i++;
+            }
+        }
+    });
+    if (DEBUG) {
+        console.log("EVENT : $('#submit1').click");
+    }
+    if (DEBUG) {
+        console.log("Circles :", circlel);
+        console.log("Boxes :", boxl);
+        console.log("Polygons :", polygonl);
+    }
+    if (fill_geojson(circlel, boxl, polygonl, string_anomaly_zone) == 0) { // si pas d erreur
+        if (DEBUG) {
+            console.log("geojson : ", geojson);
+            console.log("Object.keys(geojson).length : ", Object.keys(geojson).length);
+        }
+        if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
+            send_ajax_geojson(string_anomaly_zone, url);
+        }
+    }
+});
