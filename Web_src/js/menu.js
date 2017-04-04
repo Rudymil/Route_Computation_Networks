@@ -443,7 +443,7 @@ function notify_description_wrong() {
     });
 }
 
-function verification(shape) {
+function verification(shape,type) {
     if (shape["properties"] != null) { // si y a des properties
         if (type == string_risk_type) {
             if (shape["properties"]["risk_type"] == null || shape["properties"]["risk_type"] == undefined) { // si pas de risque
@@ -485,7 +485,7 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Circle :", circle[element]);
             }
             if (circle[element] !== null) { // si c est pas nul
-                if (verification(circle[element]) == -1) { // verification des properties
+                if (verification(circle[element],type) == -1) { // verification des properties
                     return -1;
                 } else {
                     features.push(circle[element]); // complete GeoJSON
@@ -504,7 +504,7 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Box :", box[element]);
             }
             if (box[element] !== null) { // si c est pas nul
-                if (verification(box[element]) == -1) { // verification des properties
+                if (verification(box[element],type) == -1) { // verification des properties
                     return -1;
                 } else {
                     features.push(box[element]); // complete GeoJSON
@@ -523,7 +523,7 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Polygon :", polygon[element]);
             }
             if (polygon[element] !== null) { // si c est pas nul
-                if (verification(polygon[element]) == -1) { // verification des properties
+                if (verification(polygon[element],type) == -1) { // verification des properties
                     return -1;
                 } else {
                     features.push(polygon[element]); // complete GeoJSON
