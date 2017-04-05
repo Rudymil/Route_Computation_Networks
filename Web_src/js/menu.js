@@ -514,6 +514,10 @@ function verification(shape, type) {
                 notify_description_wrong();
                 return -1;
             }
+            if (shape["properties"]["expiration_date"] == null || shape["properties"]["expiration_date"] == undefined) { // si pas de date
+                notify_description_wrong();
+                return -1;
+            }
         }
         if (type == string_anomaly_type) {
             if (shape["properties"]["anomaly_type"] == null || shape["properties"]["anomaly_type"] == undefined) { // si pas de type
@@ -521,6 +525,10 @@ function verification(shape, type) {
                 return -1;
             }
             if (shape["properties"]["description"] == null || shape["properties"]["description"] == undefined) { // si pas de description
+                notify_description_wrong();
+                return -1;
+            }
+            if (shape["properties"]["expiration_date"] == null || shape["properties"]["expiration_date"] == undefined) { // si pas de date
                 notify_description_wrong();
                 return -1;
             }
