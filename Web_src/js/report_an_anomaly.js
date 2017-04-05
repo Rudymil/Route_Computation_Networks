@@ -240,7 +240,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, ano, des);
+            content = getPopupContenta(layer, ano, des,d);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -299,7 +299,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, ano, des);
+            content = getPopupContenta(layer, ano, des,d);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -356,7 +356,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, ano, des);
+            content = getPopupContenta(layer, ano, des,d);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -386,7 +386,7 @@ map.on('draw:created', function(e) {
 
 
 
-var getPopupContenta = function(layer, level, description) {
+var getPopupContenta = function(layer, level, description,d) {
 
     if (layer instanceof L.Circle) {
 
@@ -405,7 +405,7 @@ var getPopupContenta = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
@@ -427,7 +427,7 @@ var getPopupContenta = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
@@ -448,7 +448,7 @@ var getPopupContenta = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;

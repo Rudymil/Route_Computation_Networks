@@ -258,7 +258,7 @@ map.on('draw:created', function(e) {
 				}
 
             	//console.log(des);
-            	content = getPopupContentw(layer, lev, des);
+            	content = getPopupContentw(layer, lev, des,d);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
            	 	if (content !== null) {
@@ -316,7 +316,7 @@ map.on('draw:created', function(e) {
 				}
 
             	console.log(des);
-            	content = getPopupContentw(layer, lev, des);
+            	content = getPopupContentw(layer, lev, des,d);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
@@ -367,7 +367,7 @@ map.on('draw:created', function(e) {
 				}
 
            		console.log(des);
-            	content = getPopupContentw(layer, lev, des);
+            	content = getPopupContentw(layer, lev, des,d);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
@@ -400,7 +400,7 @@ map.on('draw:created', function(e) {
 });
 
 
-var getPopupContentw = function(layer, level, description) {
+var getPopupContentw = function(layer, level, description,d) {
 
     if (layer instanceof L.Circle) {
 
@@ -419,7 +419,7 @@ var getPopupContentw = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
@@ -441,7 +441,7 @@ var getPopupContentw = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
@@ -462,7 +462,7 @@ var getPopupContentw = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
