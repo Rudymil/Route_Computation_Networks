@@ -974,7 +974,6 @@ function send_ajax_point(point) {
                                                 align: "center"
                                             }
                                         });
-
                                     }
                                 } else {
                                     controlPenalty.spliceWaypoints(0, 1, e.latlng);
@@ -1003,7 +1002,6 @@ function send_ajax_point(point) {
                                                 align: "center"
                                             }
                                         });
-
                                     }
                                 } else {
                                     controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
