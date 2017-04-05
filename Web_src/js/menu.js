@@ -729,6 +729,8 @@ function style_layer(type) {
         map.addLayer(couche);
     }
 }
+/**
+ */
 function geojsoncircle(ci) {
     var circlejson = new Array();
     var n = ci.length;

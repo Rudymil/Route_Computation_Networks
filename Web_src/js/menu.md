@@ -147,6 +147,8 @@ function send_ajax_geojson(type, url) {...}
 function style_layer(type) {...}
 ```
 ```js
+/**
+ */
 function geojsoncircle(ci) {...}
 ```
 ```js
