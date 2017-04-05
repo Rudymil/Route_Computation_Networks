@@ -961,10 +961,23 @@ function send_ajax_point(point) {
                                 countrystart[1] = reponse["name"];
                                 if (countryend[0] != null || countryend[0] != undefined && countryend[1] != null || countryend[0] != undefined) { // si point d arrivee
                                     if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1]) { // si egalite
+                                        controlPenalty.spliceWaypoints(0, 1, e.latlng);
 
                                     } else { // sinon
+                                        $.notify({
+                                            title: "<strong>Localisation</strong>",
+                                            message: "This position does not exist in the country of destination"
+                                        }, {
+                                            type: "warning",
+                                            placement: {
+                                                from: "bottom",
+                                                align: "center"
+                                            }
+                                        });
 
                                     }
+                                } else {
+                                    controlPenalty.spliceWaypoints(0, 1, e.latlng);
                                 }
                             }
                             if (point[2] == "end") { // si point d arrivee
@@ -978,10 +991,22 @@ function send_ajax_point(point) {
                                 countryend[1] = reponse["name"];
                                 if (countrystart[0] != null || countrystart[0] != undefined && countrystart[1] != null || countrystart[0] != undefined) { // si point de depart
                                     if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1]) { // si egalite
-
+                                        controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
                                     } else { // sinon
+                                        $.notify({
+                                            title: "<strong>Localisation</strong>",
+                                            message: "This position does not exist in the country of departure"
+                                        }, {
+                                            type: "warning",
+                                            placement: {
+                                                from: "bottom",
+                                                align: "center"
+                                            }
+                                        });
 
                                     }
+                                } else {
+                                    controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
                                 }
                             }
                             if (point[2] == "step") { // si point intermediaire

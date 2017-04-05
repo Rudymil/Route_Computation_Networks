@@ -321,17 +321,15 @@ var controlPenalty = L.Routing.control({
     geocoder: L.Control.Geocoder.nominatim(),
     autoRoute: true,
     createMarker: function(i, wp) {
-							var marker=L.marker(wp.latLng,{draggable: true});				
-							marker.on("click",function(e){
-								marker.bindPopup(e.latlng.lat + ", " +e.latlng.lng);
-									//alert (e.latlng.lat + ", " +e.latlng.lng);
-								});
-							return marker;
-							//.bindPopup(L.LatLng(wp[i].latitude, wp[i].longitude));
-							//.bindPopup('LatLng:' + L.marker.getLatLng());
-							//var newLatLng = new L.LatLng(res[key].latitude, res[key].longitude);
-							//,{draggable: true}).on('click', function(e) {alert(e.target.getLatLng().lat + ", " + e.target.getLatLng().lng); });
-							},
+        var marker = L.marker(wp.latLng, {
+            draggable: true
+        });
+        marker.on("click", function(e) {
+            marker.bindPopup(e.latlng.lat + ", " + e.latlng.lng);
+            //alert (e.latlng.lat + ", " +e.latlng.lng);
+        });
+        return marker;
+    },
     router: L.Routing.osrmv1({
         serviceUrl: 'http://172.31.57.114:5001/route/v1'
     }),
@@ -360,14 +358,15 @@ map.on('click', function(e) {
             startBtn = createButton('Start from this location', container),
             destBtn = createButton('Go to this location', container);
         L.DomEvent.on(startBtn, 'click', function() {
-            controlPenalty.spliceWaypoints(0, 1, e.latlng);
-			latlngstart=[e.latlng.lat,e.latlng.lng,"start"];
-			//alert(latlngstart);
+            //controlPenalty.spliceWaypoints(0, 1, e.latlng);
+            latlngstart = [e.latlng.lat, e.latlng.lng, "start"];
+            send_ajax_point(latlngstart);
             map.closePopup();
         });
         L.DomEvent.on(destBtn, 'click', function() {
-            controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
-            latlngend=[e.latlng.lat,e.latlng.lng,"end"];
+            //controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+            latlngend = [e.latlng.lat, e.latlng.lng, "end"];
+            send_ajax_point(latlngend);
             map.closePopup();
         });
         L.popup()
