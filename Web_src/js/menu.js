@@ -927,7 +927,7 @@ function send_ajax_point(point) {
         $.ajax({
             url: url,
             type: 'POST',
-            data: 'type=' + JSON.stringify(json),
+            data: 'waypoint=' + JSON.stringify(json),
             dataType: 'json',
             success: function(code_json, statut) {
                 if (DEBUG) {
