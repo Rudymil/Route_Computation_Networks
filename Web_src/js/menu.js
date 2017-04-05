@@ -647,6 +647,7 @@ function send_ajax_geojson(type, url) {
             if (DEBUG) {
                 console.log("send_ajax_geojson code_json : ", code);
                 console.log("send_ajax_geojson statut : ", statut);
+                console.log("send_ajax_geojson type : ", type);
             }
             notify_ajax_sending_areas_success(statut);
             if (type == string_risk_type) {
