@@ -240,7 +240,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, ano, des,d);
+            content = getPopupContenta(layer, ano, des,da);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -299,7 +299,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, ano, des,d);
+            content = getPopupContenta(layer, ano, des,da);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -356,7 +356,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, ano, des,d);
+            content = getPopupContenta(layer, ano, des,da);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {

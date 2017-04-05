@@ -258,7 +258,7 @@ map.on('draw:created', function(e) {
 				}
 
             	//console.log(des);
-            	content = getPopupContentw(layer, lev, des,d);
+            	content = getPopupContentw(layer, lev, des,da);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
            	 	if (content !== null) {
@@ -316,7 +316,7 @@ map.on('draw:created', function(e) {
 				}
 
             	console.log(des);
-            	content = getPopupContentw(layer, lev, des,d);
+            	content = getPopupContentw(layer, lev, des,da);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
@@ -367,7 +367,7 @@ map.on('draw:created', function(e) {
 				}
 
            		console.log(des);
-            	content = getPopupContentw(layer, lev, des,d);
+            	content = getPopupContentw(layer, lev, des,da);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
