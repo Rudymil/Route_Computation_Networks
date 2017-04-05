@@ -30,7 +30,7 @@ function hmtlcw() {
     var debutw = "<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
-				<option value='' disabled selected>Select the warning zone</option>";
+				<option value=null disabled selected>Select the warning zone</option>";
     var finw = "</select>\
 			</div>\
 			<div class='form-group'>\
@@ -240,7 +240,7 @@ map.on('draw:created', function(e) {
             	lev = $('#level').val();
 				da= $('#datee').val();
 				
-				if (lev == "") {
+				if (lev == null) {
                  return false ;
             	}
 				
@@ -291,15 +291,14 @@ map.on('draw:created', function(e) {
         var des = null;
         var lev = null;
 
-
+ 
         bootbox.confirm(hmtlcw(), function(result) {
 			if ( result ) {
-            	//console.log("inside");
             	des = $('#description').val();
-            	lev = $('#level').find(":selected").val();
+            	lev = $('#level').val();
 				da= $('#datee').val();
 				
-				if (lev == "") {
+				if (lev == null) {
                  return false ;
             	}
 				
@@ -315,10 +314,6 @@ map.on('draw:created', function(e) {
    				 	return false;
 
 				}
-
-            	if (des == "") {
-            	    return false;
-            	}
 
             	console.log(des);
             	content = getPopupContentw(layer, lev, des);
@@ -351,10 +346,10 @@ map.on('draw:created', function(e) {
         bootbox.confirm(hmtlcw(), function(result) {
 			if ( result ) {
             	des = $('#description').val();
-            	lev = $('#level').find(":selected").val();
+            	lev = $('#level').val();
 				da= $('#datee').val();
 				
-				if (lev == "") {
+				if (lev == null) {
                  return false ;
             	}
 				
@@ -370,11 +365,6 @@ map.on('draw:created', function(e) {
    				 	return false;
 
 				}
-				
-
-            	if (des == "") {
-                	return false ;
-            	}
 
            		console.log(des);
             	content = getPopupContentw(layer, lev, des);

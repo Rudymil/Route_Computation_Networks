@@ -28,7 +28,7 @@ function htmlca() {
     var debuta = "<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='anomalyType'>\
-				<option value='' disabled selected>Select anomaly </option>";
+				<option value=null disabled selected>Select anomaly </option>";
     var fina = "</select>\
 			</div>\
 			<div class='form-group'>\
@@ -37,7 +37,7 @@ function htmlca() {
 				</div>\
 				<div class='form-group'>\
 				<label for='usr'>Expiration date: </label> <br>\
-				<input type='date' name='dateex' id='datee'>\
+				<input type='date' name='dateex' id='datee'  placeholder='2008-08-29'>\
 				</div>	";
 
     for (var i = 0; i < na; i++) {
@@ -218,10 +218,10 @@ map.on('draw:created', function(e) {
 			if( result ) {
             //console.log("inside");
             des = $('#description').val();
-            ano = $('#anomalyType').find(":selected").val();
+            ano = $('#anomalyType').val();
             da= $('#datee').val();
 			
-			if (ano == "") {
+			if (ano == null) {
                  return false ;
             }
 				
@@ -240,7 +240,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, lev, des);
+            content = getPopupContenta(layer, ano, des);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -277,14 +277,14 @@ map.on('draw:created', function(e) {
 			if( result ) {
             //console.log("inside");
             des = $('#description').val();
-            ano = $('#anomalyType').find(":selected").val();
+            ano = $('#anomalyType').val();
 			da= $('#datee').val();
 			
-			if (ano == "") {
+			if (ano == null) {
                  return false ;
             }
 				
-			console.log(da);
+			console.log(ano);
             if (des == "") {
                  return false ;
             }
@@ -299,7 +299,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, lev, des);
+            content = getPopupContenta(layer, ano, des);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
@@ -334,14 +334,14 @@ map.on('draw:created', function(e) {
 			if( result ) {
             //console.log("inside");
             des = $('#description').val();
-            ano = $('#anomalyType').find(":selected").val();
+            ano = $('#anomalyType').val();
 			da= $('#datee').val();
 			
-			if (ano == "") {
+			if (ano == null) {
                  return false ;
             }
 				
-			console.log(da);
+			console.log(ano);
             if (des == "") {
                  return false ;
             }
@@ -356,7 +356,7 @@ map.on('draw:created', function(e) {
 				
 
             console.log(des);
-            content = getPopupContenta(layer, lev, des);
+            content = getPopupContenta(layer, ano, des);
             var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
