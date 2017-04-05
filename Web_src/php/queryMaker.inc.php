@@ -4,27 +4,14 @@ include_once("./error.inc.php");
 if ($_SERVER["REQUEST_URI"] == "/api/queryMaker.inc.php") {
   error(403, "Invalid request URI !");
 }
-/*
- * Title:   PostGIS to GeoJSON
- * Notes:   Query a PostGIS table or view and return the results in GeoJSON format, suitable for use in OpenLayers, Leaflet, etc.
- * Author:  Bryan R. McBride, GISP
- * Contact: bryanmcbride.com
- * GitHub:  https://github.com/bmcbride/PHP-Database-GeoJSON
- */
 
-/*
-* If bbox variable is set, only return records that are within the bounding box
-* bbox should be a string in the form of 'southwest_lng,southwest_lat,northeast_lng,northeast_lat'
-* Leaflet: map.getBounds().toBBoxString()
-*/
 function selectGeoJSONQuery($sqlRequest) {
   # Connect to PostgreSQL database
   include_once("./connexion.inc.php");
   # Try query or error
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
-      echo 'An SQL error occured.\n';
-      exit;
+    exit("An SQL error occured.\n");
   }
 
   # Build GeoJSON feature collection array
@@ -58,9 +45,9 @@ function selectJSONQuery($sqlRequest) {
   include_once("./connexion.inc.php");
   # Try query or error
   $rs = $conn->query($sqlRequest);
+  $conn = NULL;
   if (!$rs) {
-      echo 'An SQL error occured.\n';
-      exit;
+    exit("An SQL error occured.\n");
   }
 
   # Build GeoJSON feature collection array
@@ -71,9 +58,20 @@ function selectJSONQuery($sqlRequest) {
       # Add feature arrays to feature collection array
       array_push($json, $row);
   }
-
-  $conn = NULL;
   return json_encode($json, JSON_NUMERIC_CHECK);
+}
+
+function deleteQuery($sqlRequest) {
+  # Connect to PostgreSQL database
+  include_once("./connexion.inc.php");
+  # Try query or error
+  $rs = $conn->query($sqlRequest);
+  $conn = NULL;
+  if (!$rs) {
+    exit("An SQL error occured.\n");
+  }else {
+    print("true");
+  }
 }
 
 function insertGeoJSONQuery($datajson){
@@ -89,9 +87,9 @@ function insertGeoJSONQuery($datajson){
   $features = $data->features;
 
   if ($data->zone_type == "warning_zone") {
-    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description) VALUES ";
+    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description, expiration_date) VALUES ";
   }elseif ($data->zone_type == "anomaly_zone") {
-    $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description) VALUES ";
+    $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description, expiration_date) VALUES ";
   }else {
     error(400, "Incorrect Data !");
   }
@@ -111,12 +109,13 @@ function insertGeoJSONQuery($datajson){
     }
     if ($data->zone_type == "warning_zone") {
       $risk_type = $properties->risk_type;
+      $expiration_date = $properties->expiration_date;
       $description = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $risk_type, (SELECT intensity FROM risk WHERE id = $risk_type), '" . addslashes($description) . "')";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($risk_type) . ", (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . "), '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
     }elseif ($data->zone_type == "anomaly_zone") {
       $anomaly_type = $properties->anomaly_type;
       $description  = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $anomaly_type, '" . addslashes($description) . "')";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($anomaly_type) . ", '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
     }
     if($i < sizeOf($features) - 1){
       $sqlRequest .= ", ";
@@ -136,7 +135,7 @@ function insertGeoJSONQuery($datajson){
 
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
-      exit("An SQL error occured.\n");
+    exit("An SQL error occured.\n");
   }
   if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
     print("Success !");
@@ -145,32 +144,24 @@ function insertGeoJSONQuery($datajson){
   print(true);
 }
 
-/*function updateGeoJSONQuery($datajson){
+function updateGeoJSONQuery($datajson){
   if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+    print("<h1>Action : Update</h1>");
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
   }
 
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
-
   //$data = json_decode($datajson);
   $data = $datajson;
   $zone_type = $data->zone_type;
-  $nbrOfFeatures = sizeOf($data->features);
   $features = $data->features;
 
-  if ($data->zone_type == "warning_zone") {
-    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description) VALUES ";
-  }elseif ($data->zone_type == "anomaly_zone") {
-    $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description) VALUES ";
-  }else {
-    error(400, "Incorrect Data !");
-  }
+  # Connect to PostgreSQL database
+  include_once("./connexion.inc.php");
 
-  for ($i=0; $i < sizeOf($features); $i++) {
-    if($features[$i]->geometry->type == "Polygon"){
-      $type = $features[$i]->geometry->type;
+  if ($data->zone_type == "warning_zone" || $data->zone_type == "anomaly_zone") {
+    for ($i=0; $i < sizeOf($features); $i++){
+      $sqlRequest = "UPDATE ";
       $geometry = $features[$i]->geometry;
       $properties = $features[$i]->properties;
 
@@ -178,41 +169,48 @@ function insertGeoJSONQuery($datajson){
       $geometry->crs->type = "name";
       $geometry->crs->properties = new stdClass();
       $geometry->crs->properties->name = "EPSG:4326";
-
       $geom = json_encode($geometry);
-    }
-    if ($data->zone_type == "warning_zone") {
+
+      $properties = $features[$i]->properties;
       $risk_type = $properties->risk_type;
-      $description = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $risk_type, (SELECT intensity FROM risk WHERE id = $risk_type), '" . addslashes($description) . "')";
-    }elseif ($data->zone_type == "anomaly_zone") {
-      $anomaly_type = $properties->anomaly_type;
-      $description  = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), $anomaly_type, '" . addslashes($description) . "')";
-    }
-    if($i < sizeOf($features) - 1){
-      $sqlRequest .= ", ";
-    }
-    else {
+      $intensity = $properties->intensity;
+      $description = addslashes($properties->description);
+      $expiration_date = addslashes($properties->expiration_date);
+
+      $sqlRequest .= $data->zone_type . " SET";
+      $sqlRequest .= " geom = ST_GeomFromGeoJSON('" . $geom . "')";
+
+      if($data->zone_type == "warning_zone") {
+        $sqlRequest .= ", risk_type = " . $risk_type;
+        $sqlRequest .= ", risk_intensity = " . $intensity;
+        $sqlRequest .= ", validation_date = NOW()";
+      }
+      elseif($data->zone_type == "warning_zone") {
+        $sqlRequest .= ", anomaly_type = " . $anomaly_type;
+      }
+      $sqlRequest .= ", description = '" . $description . "'";
+      $sqlRequest .= ", expiration_date = '" . $expiration_date . "'";
+
+      $sqlRequest .= " WHERE id = " . $properties->id;
+
       $sqlRequest .= ";";
+
+      if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+        print("<h2>SQL Request : </h2>");
+        print("<p>" . $sqlRequest . "</p>");
+      }
     }
-  }
 
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
-    print("<h2>SQL Request : </h2>");
-    print($sqlRequest);
-  }
-
-  $rs = $conn->query($sqlRequest);
-  if (!$rs) {
-      exit("An SQL error occured.\n");
-  }
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
-    print("Success !");
+    $rs = $conn->query($sqlRequest);
+    if (!$rs) {
+        exit("An SQL error occured.\n");
+    }
+    if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+      print("Success !");
+    }
   }
   $conn = NULL;
 }
-*/
 
 function checkWaypoint($datajson){
   if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
@@ -238,7 +236,7 @@ function checkWaypoint($datajson){
 
   $rs = $conn->query($sqlRequest);
   if (!$rs) {
-      exit("An SQL error occured.\n");
+    exit("An SQL error occured.\n");
   }
   $conn = NULL;
   $request_result = $rs->fetch(PDO::FETCH_ASSOC);

@@ -1,438 +1,468 @@
-
-var infoscl= new Array();
-var infospl= new Array();
-var infosbl= new Array();
+var infoscl = new Array();
+var infospl = new Array();
+var infosbl = new Array();
 
 function datem() {
 
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
 
-if(dd<10) {
-    dd='0'+dd
-} 
+    if (dd < 10) {
+        dd = '0' + dd
+    }
 
-if(mm<10) {
-    mm='0'+mm
-} 
+    if (mm < 10) {
+        mm = '0' + mm
+    }
 
-today = mm+'/'+dd+'/'+yyyy;
-return today;
+    today = yyyy+'/'+ mm + '/' + dd;
+    return today;
 
 }
 
+
+function htmlca() {
+    var na = types_anomalies.length;
+    var debuta = "<div class='form-group'>\
+			<label for='text'>Type :</label>\
+			<select class='form-control' id='anomalyType'>\
+				<option value='' disabled selected>Select anomaly </option>";
+    var fina = "</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required >\
+				</div>\
+				<div class='form-group'>\
+				<label for='usr'>Expiration date: </label> <br>\
+				<input type='date' name='dateex' id='datee'>\
+				</div>	";
+
+    for (var i = 0; i < na; i++) {
+
+        debuta = debuta + "<option value=" + types_anomalies[i].id + " >" + types_anomalies[i].name + "</option>";
+    }
+
+    var htmla = debuta + fina;
+    return htmla;
+}
 
 leditableLayers = new L.FeatureGroup();
 map.addLayer(leditableLayers);
 
-$(".radio_button").change(function (){ // choix de dessin
+$(".radio_button").change(function() { // choix de dessin
 
-	if ($("#Navigate").is(":checked") ){
-	
-		/*if( markeraDestination != null && markeraDestination != null ){
-		markerDeparture.dragging.enable();
-		markeraDestination.dragging.enable();	
-		}*/
-		map.removeControl(drawControl);
-	}
-	
-	
-	
-	else if ($("#Circle2").is(":checked")==true ){
-		
-	if( drawControl != null ) {
-		
-		map.removeControl(drawControl);
-	}	
-	// Initialise the FeatureGroup to store editable layers
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
-	/*if( markerDeparture != null ) {	
-	markerDeparture.dragging.disable();	
-	}
-	if( markeraDestination != null ) {
-	markeraDestination.dragging.disable();
-	}
-	*/
+    if ($("#Navigate").is(":checked")) {
 
-	var drawPluginOptions = {
-  	position: 'topright',
-  		draw: {
-    	circle: {
-     	 shapeOptions: {
-     	   color: '#001ae1'
-     	 },
-  	  },
-    // disable toolbar item by setting it to false
-    	polyline: false,
-    	polygon: false, // Turns off this drawing tool
-    	rectangle: false,
-    	marker: false,
-    	},
-  	edit: {
-   	 featureGroup: leditableLayers, //REQUIRED!!
-   	 edit: true,
-   	 remove: true
-  	}
-	};
-	drawControl = new L.Control.Draw(drawPluginOptions);
-	map.addControl(drawControl);
-	}
-	
-	
-	
-	else if ($("#Box2").is(":checked")==true ){
-	
-		
-	if( drawControl != null ) {
-		map.removeControl(drawControl);
-	}	
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
-	/*if( markerDeparture != null ) {	
-	markerDeparture.dragging.disable();	
-	}
-	if( markeraDestination != null ) {
-	markeraDestination.dragging.disable();
-	}*/
+        /*if( markeraDestination != null && markeraDestination != null ){
+        markerDeparture.dragging.enable();
+        markeraDestination.dragging.enable();	
+        }*/
+        map.removeControl(drawControl);
+    }
+    else if ($("#Circle2").is(":checked") == true) {
+
+        if (drawControl != null) {
+
+            map.removeControl(drawControl);
+        }
+        // Initialise the FeatureGroup to store editable layers
+        $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*if( markerDeparture != null ) {	
+        markerDeparture.dragging.disable();	
+        }
+        if( markeraDestination != null ) {
+        markeraDestination.dragging.disable();
+        }
+        */
+
+        var drawPluginOptions = {
+            position: 'topleft',
+            draw: {
+                circle: {
+                    shapeOptions: {
+                        color: '#001ae1'
+                    },
+                },
+                // disable toolbar item by setting it to false
+                polyline: false,
+                polygon: false, // Turns off this drawing tool
+                rectangle: false,
+                marker: false,
+            },
+            edit: {
+                featureGroup: leditableLayers, //REQUIRED!!
+                edit: true,
+                remove: true
+            }
+        };
+        drawControl = new L.Control.Draw(drawPluginOptions);
+        map.addControl(drawControl);
+    } 
+    else if ($("#Box2").is(":checked") == true) {
 
 
-	var drawPluginOptions = {
-  	position: 'topright',
-  		draw: {
-    	rectangle: {
-     	 shapeOptions: {
-     	   color: '#001ae1'
-     	 }
-  	  },
-    // disable toolbar item by setting it to false
-    	polyline: false,
-    	circle: false, // Turns off this drawing tool
-    	polygon: false,
-    	marker: false,
-    	},
-  	edit: {
-   	 featureGroup: leditableLayers, //REQUIRED!!
-   	 edit: true,
-   	 remove: true
-  	}
-	};
-
-	drawControl = new L.Control.Draw(drawPluginOptions);
-	map.addControl(drawControl);
-	}
-	
-	
-	
-	else if ($("#Polygon2").is(":checked")==true ){
-	
-	
-	if( drawControl != null ) {
-		map.removeControl(drawControl);
-	}	
-	// Initialise the FeatureGroup to store editable layers
-	$("#dep").prop('disabled', true);
-	$("#dest").prop('disabled', true);
-	/*if( markerDeparture != null ) {	
-	markerDeparture.dragging.disable();	
-	}
-	if( markeraDestination != null ) {
-	markeraDestination.dragging.disable();
-	}*/
-
-	var drawPluginOptions = {
-  	position: 'topright',
-  		draw: {
-    	polygon: {
-     	 allowIntersection: false, // Restricts shapes to simple polygons
-      	drawError: {
-       		 color: '#001ae1', // Color the shape will turn when intersects
-     		   message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-    	  },
-     	 shapeOptions: {
-     	   color: '#001ae1'
-     	 }
-  	  },
-    // disable toolbar item by setting it to false
-    	polyline: false,
-    	circle: false, // Turns off this drawing tool
-    	rectangle: false,
-    	marker: false,
-    	},
-  	edit: {
-   	 featureGroup: leditableLayers, //REQUIRED!!
-   	 edit: true,
-   	 remove: true
-  	}
-	};
-	drawControl = new L.Control.Draw(drawPluginOptions);
-	map.addControl(drawControl);
-	
-}
+        if (drawControl != null) {
+            map.removeControl(drawControl);
+        }
+        $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*if( markerDeparture != null ) {	
+        markerDeparture.dragging.disable();	
+        }
+        if( markeraDestination != null ) {
+        markeraDestination.dragging.disable();
+        }*/
 
 
-	//leditableLayers = new L.FeatureGroup();
-	//map.addLayer(leditableLayers);
+        var drawPluginOptions = {
+            position: 'topleft',
+            draw: {
+                rectangle: {
+                    shapeOptions: {
+                        color: '#001ae1'
+                    }
+                },
+                // disable toolbar item by setting it to false
+                polyline: false,
+                circle: false, // Turns off this drawing tool
+                polygon: false,
+                marker: false,
+            },
+            edit: {
+                featureGroup: leditableLayers, //REQUIRED!!
+                edit: true,
+                remove: true
+            }
+        };
+
+        drawControl = new L.Control.Draw(drawPluginOptions);
+        map.addControl(drawControl);
+    } 
+    else if ($("#Polygon2").is(":checked") == true) {
+
+
+        if (drawControl != null) {
+            map.removeControl(drawControl);
+        }
+        // Initialise the FeatureGroup to store editable layers
+        $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*if( markerDeparture != null ) {	
+        markerDeparture.dragging.disable();	
+        }
+        if( markeraDestination != null ) {
+        markeraDestination.dragging.disable();
+        }*/
+
+        var drawPluginOptions = {
+            position: 'topleft',
+            draw: {
+                polygon: {
+                    allowIntersection: false, // Restricts shapes to simple polygons
+                    drawError: {
+                        color: '#001ae1', // Color the shape will turn when intersects
+                        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                    },
+                    shapeOptions: {
+                        color: '#001ae1'
+                    }
+                },
+                // disable toolbar item by setting it to false
+                polyline: false,
+                circle: false, // Turns off this drawing tool
+                rectangle: false,
+                marker: false,
+            },
+            edit: {
+                featureGroup: leditableLayers, //REQUIRED!!
+                edit: true,
+                remove: true
+            }
+        };
+        drawControl = new L.Control.Draw(drawPluginOptions);
+        map.addControl(drawControl);
+
+    }
+
+
+    //leditableLayers = new L.FeatureGroup();
+    //map.addLayer(leditableLayers);
 
 
 
-	
-	
+
+
 
 });
 
 map.on('draw:created', function(e) {
-  		var type = e.layerType;
-  		//console.log(type);
-  		layer = e.layer;
-  		
-  		if( type=="circle" && $("#Circle2").is(":checked")==true) {
-    		
+    var type = e.layerType;
+    //console.log(type);
+    layer = e.layer;
+
+    if (type == "circle" && $("#Circle2").is(":checked") == true) {
+
+
+        var des = null;
+        var lev = null;
+
+
+        bootbox.confirm(htmlca(), function(result) {
+			if( result ) {
+            //console.log("inside");
+            des = $('#description').val();
+            ano = $('#anomalyType').find(":selected").val();
+            da= $('#datee').val();
 			
-			var des=null;
-			var lev=null;
-  				
-  			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
-    		
-        		//console.log("inside");
-    			des= $('#description').val();
-    			ano= $('#anomalyType').find(":selected").val();
-  				
-  				console.log(des);
-   			 	content = getPopupContenta(layer,lev,des);
-   			 	var temp = [des,lev,layer._leaflet_id ];
-   			 	//console.log(content);
-   			 	if (content !== null) {
-                	layer.bindPopup(content);
-                	//layer.setPopupContent(content);
-       			 }
-       			 
-       			infoscl.push(temp);
-
-    			//circle.push(layergeo);
-
-				//console.log(circle);
+			if (ano == "") {
+                 return false ;
+            }
 				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
 			}
-			);
-  			
+				
+
+            console.log(des);
+            content = getPopupContenta(layer, lev, des);
+            var temp = [des, ano, layer._leaflet_id,da];
+            //console.log(content);
+            if (content !== null) {
+                layer.bindPopup(content);
+                //layer.setPopupContent(content);
+            }
+
+            infoscl.push(temp);
+
+            //circle.push(layergeo);
+
+            //console.log(circle);
+            
+            }
+            else {
+            	leditableLayers.removeLayer(layer);
+            }
+
+        });
+
+
+
+        leditableLayers.addLayer(layer)
+
+    } 
+    else if (type == "rectangle" && $("#Box2").is(":checked") == true) {
+
+
+        var des = null;
+        var lev = null;
+
+
+       bootbox.confirm(htmlca(), function(result) {
+			if( result ) {
+            //console.log("inside");
+            des = $('#description').val();
+            ano = $('#anomalyType').find(":selected").val();
+			da= $('#datee').val();
 			
+			if (ano == "") {
+                 return false ;
+            }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
+
+            console.log(des);
+            content = getPopupContenta(layer, lev, des);
+            var temp = [des, ano, layer._leaflet_id,da];
+            //console.log(content);
+            if (content !== null) {
+                layer.bindPopup(content);
+                //layer.setPopupContent(content);
+            }
+
+            infosbl.push(temp);
+
+            //circle.push(layergeo);
+
+            //console.log(circle);
+            
+            }
+            else {
+            	leditableLayers.removeLayer(layer);
+            }
+
+        });
+
+        leditableLayers.addLayer(layer)
+
+
+    } 
+    else if (type == "polygon" && $("#Polygon2").is(":checked") == true) {
+
+        var des = null;
+        var lev = null;
+
+
+        bootbox.confirm(htmlca(), function(result) {
+			if( result ) {
+            //console.log("inside");
+            des = $('#description').val();
+            ano = $('#anomalyType').find(":selected").val();
+			da= $('#datee').val();
 			
-			leditableLayers.addLayer(layer)
+			if (ano == "") {
+                 return false ;
+            }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
 
-		}
-		
-		else if( type=="rectangle" && $("#Box2").is(":checked")==true ) {
-		
-		
-			var des=null;
-			var lev=null;
-  			
-  			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
-    		
-        		//console.log("inside");
-    			des= $('#description').val();
-    			ano= $('#anomalyType').find(":selected").val();
-  				
-    			console.log(des);
-   			 	content = getPopupContenta(layer,lev,des);
-   			 	var temp = [des,lev,layer._leaflet_id ];
-   			 	//console.log(content);
-   			 	if (content !== null) {
-                	layer.bindPopup(content);
-                	//layer.setPopupContent(content);
-       			 }
-       			 
-       			infosbl.push(temp);
-
-    			//circle.push(layergeo);
-
-				//console.log(circle);
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
 
 			}
-			);
-		
-		
-  		leditableLayers.addLayer(layer)
-  		
-		
-		}
-		
-		else if( type=="polygon" && $("#Polygon2").is(":checked")==true) {
-		
-			var des=null;
-			var lev=null;
-  			
-  			  		
-  			bootbox.confirm(
-  			"<div class='form-group'>\
-  			<label for='text'>Type</label>\
-			<select class='form-control' id='level'>\
-   				<option value='Road accident' selected >Road accident </option>\
-   				<option value='Road degradation' >Road degradation</option>\
-    			<option value='Criminal insecurity'  >Criminal insecurity</option>\
-    			<option value='Massive gathering'>Massive gathering</option>\
-    			<option value='Natural hazard' >Natural hazard</option>\
-    			<option value='Traffic jam' >Traffic jam</option>\
-    			<option value='Road closure' >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>"
-    		, function(result) {
-    		
-        		//console.log("inside");
-    			des= $('#description').val();
-    			lev= $('#level').find(":selected").val();
-  				
-    			
-    			des= $('#description').val();
-    			ano= $('#anomalyType').find(":selected").val();
-  				
-    			console.log(des);
-   			 	content = getPopupContenta(layer,lev,des);
-   			 	var temp = [des,lev,layer._leaflet_id ];
-   			 	//console.log(content);
-   			 	if (content !== null) {
-                	layer.bindPopup(content);
-                	//layer.setPopupContent(content);
-       			 }
-       			 
-       			infospl.push(temp);
-    			
-			}
-			);
-		
-			leditableLayers.addLayer(layer)
-		}
-		
-		//leditableLayers.addLayer(layer);
+				
 
-	});
-	
-	
-	
- var getPopupContenta = function(layer,level,description) {
+            console.log(des);
+            content = getPopupContenta(layer, lev, des);
+            var temp = [des, ano, layer._leaflet_id,da];
+            //console.log(content);
+            if (content !== null) {
+                layer.bindPopup(content);
+                //layer.setPopupContent(content);
+            }
 
-			if (layer instanceof L.Circle) {
-                
-            var html= '<table>\
+            infospl.push(temp);
+
+            //circle.push(layergeo);
+
+            //console.log(circle);
+            
+            }
+            else {
+            	leditableLayers.removeLayer(layer);
+            }
+
+        });
+
+        leditableLayers.addLayer(layer)
+    }
+
+    //leditableLayers.addLayer(layer);
+
+});
+
+
+
+var getPopupContenta = function(layer, level, description) {
+
+    if (layer instanceof L.Circle) {
+
+        var html = '<table>\
  						 <tr>\
   							  <td>Type of geometry : </td>\
   							  <td> Circle</td>\
   						 </tr>\
  						 <tr>\
    							 <td>Level : </td>\
-    						 <td>'+level+'</td>\
+    						 <td>' + level + '</td>\
   						</tr>\
   						<tr>\
    							 <td>Description : </td>\
-    						 <td>'+description+'</td>\
+    						 <td>' + description + '</td>\
   						</tr>\
   						<tr>\
-   							 <td>Date : </td>\
-    						 <td>'+datem()+'</td>\
+   							 <td>Expiration date : </td>\
+    						 <td>' + datem() + '</td>\
   						</tr>\
 						</table>'
-				return html;
-                
-            }
-            
-             else if (layer instanceof L.Polygon) {
-            
-            	var html= '<table>\
+        return html;
+
+    } else if (layer instanceof L.Polygon) {
+
+        var html = '<table>\
  						 <tr>\
   							  <td>Type of geometry : </td>\
   							  <td> Polygon </td>\
   						 </tr>\
  						 <tr>\
    							 <td>Level : </td>\
-    						 <td>'+level+'</td>\
+    						 <td>' + level + '</td>\
   						</tr>\
   						<tr>\
    							 <td>Description : </td>\
-    						 <td>'+description+'</td>\
+    						 <td>' + description + '</td>\
   						</tr>\
   						<tr>\
-   							 <td>Date : </td>\
-    						 <td>'+datem()+'</td>\
+   							 <td>Expiration date : </td>\
+    						 <td>' + datem() + '</td>\
   						</tr>\
 						</table>'
-				return html;
-            } 
+        return html;
+    } else if (layer instanceof L.Rectangle) {
 
-			 else if (layer instanceof L.Rectangle) {
-            
-            	var html= '<table>\
+        var html = '<table>\
  						 <tr>\
   							  <td>Type of geometry : </td>\
   							  <td> rectangle</td>\
   						 </tr>\
  						 <tr>\
    							 <td>Level : </td>\
-    						 <td>'+level+'</td>\
+    						 <td>' + level + '</td>\
   						</tr>\
   						<tr>\
    							 <td>Description : </td>\
-    						 <td>'+description+'</td>\
+    						 <td>' + description + '</td>\
   						</tr>\
   						<tr>\
-   							 <td>Date : </td>\
-    						 <td>'+datem()+'</td>\
+   							 <td>Expiration date : </td>\
+    						 <td>' + datem() + '</td>\
   						</tr>\
 						</table>'
-				return html;
-            
-            }
-            
-            return null
-        };
-        
+        return html;
+
+    }
+
+    return null
+};
 
 
-map.on('draw:edited', function (e) {
-		
-		/*
+
+map.on('draw:edited', function(e) {
+
+    /*
 		var type = e.layerType;
          var layers = e.layers;
          
@@ -488,13 +518,13 @@ map.on('draw:edited', function (e) {
           	
 
          }); */
-     });
-     
-     
+});
+
+
 
 map.on('draw:deleted', function(e) {
 
-		/*
+    /*
 		var type = e.layerType;
          var layers = e.layers;
 
@@ -542,3 +572,25 @@ map.on('draw:deleted', function(e) {
 		}); */
 
 });
+
+/* ancien modele 
+
+
+  			
+  			"<div class='form-group'>\
+  			<label for='text'>Type</label>\
+			<select class='form-control' id='anomalyType'>\
+   				<option value=1 selected >Missing road element </option>\
+   				<option value=2 >Wrong geometry</option>\
+    			<option value=3  >Missing attribute</option>\
+    			<option value=4 >Wrong attibute</option>\
+    			<option value=5 >Missing POI</option>\
+    			<option value=6 >Wrong POI</option>\
+			</select>\
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description'>\
+				</div>"
+ 
+ */

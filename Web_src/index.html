@@ -10,18 +10,16 @@
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>Route calculation</title>
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" /><!--LEAFLET-->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/> <!--BOOTSTRAP-->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
-		<!--link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css"/-->
-		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css"/>
-		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css"/>
-		<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css"/>
-		<link rel="stylesheet" href="css/leaflet-routing-machine.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+		<link rel="stylesheet" href="css/leaflet.css" /> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.css-->
+		<link rel="stylesheet" href="css/bootstrap.min.css"/> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css-->
+		<link rel="stylesheet" href="css/css/font-awesome.min.css"/> <!--https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css-->
+		<link rel="stylesheet" href="css/MarkerCluster.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css-->
+		<link rel="stylesheet" href="css/MarkerCluster.Default.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css-->
+		<link rel="stylesheet" href="css/easy-button.css"> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css-->
+		<link rel="stylesheet" href="css/leaflet.draw.css"/> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css-->
+		<link rel="stylesheet" href="css/leaflet-routing-machine.css" /> <!--LRM-->
 		<link rel="stylesheet" href="css/template.css"/> <!--TEMPLATE-->
 		<link rel="stylesheet" href="css/context_menu1.css"/>
-		<!--link rel="stylesheet" href="css/Control.OSMGeocoder.css" /-->
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
 		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png"/>
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
@@ -58,14 +56,6 @@
 					</div>
 					<div id="panel-element-204612" class="panel-collapse collapse">
 						<div class="panel-body">
-							<div class="row">
-								<div class="col-xs-offset-1 col-xs-5"> <!-- -1 +5 -->
-									<center><button type="button" class="btn btn-primary btn-xm" id="nigeria">Nigeria</button></center>
-								</div>
-								<div class="col-xs-5"> <!-- + 5 -->
-									<center><button type="button" class="btn btn-primary btn-xm" id="angola">Angola</button></center>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -83,46 +73,6 @@
 									<label for="set_the_route">Set the route</label>
 								</div>
 							</div>
-							<!--div class="row">
-								<div class="col-xs-12">
-									<center>
-										<input type="text" placeholder="Departure" value="" id="dep"/>
-										<button id="godep" type="button" class="btn btn-success">go</button>
-									</center>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<center>
-										<button id="inverse" class="btn btn-default">
-											<img src="img/inverse.png" width="20" />
-										</button>
-									</center>
-								</div>
-							</div><br>
-
-							<div class="row">
-								<div class="col-xs-12">
-									<center>
-										<input type="text" placeholder="Destination" value="" id="dest"/>
-										<button id="godest" type="button" class="btn btn-danger">go</button>
-									</center>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<center>
-										<button id="remove" type="button" class="btn btn-default">remove</button>
-									</center>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<center>
-										<button id="calculate" type="button" class="btn btn-primary" margin="auto">Calculate the route</button>
-									</center>
-								</div>
-							</div-->
 						</div>
 					</div>
 				</div>
@@ -212,28 +162,63 @@
 				<li id="cm_debut">Suppression</li>
 			</ul>
 		</div>
-		<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script><!--LEAFLET-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!--JQUERY-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> <!--BOOTSTRAP-->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
-		<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
-		<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+		<script src="js/leaflet.js"></script> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.js-->
+		<script src="js/jquery.min.js"></script> <!--JQUERY--> <!--https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js-->
+		<script src="js/bootstrap-notify.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js-->
+		<script src="js/bootstrap.min.js"></script> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js-->
+		<script src="js/typeahead.bundle.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js-->
+		<script src="js/handlebars.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js-->
+		<script src="js/list.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js-->
+		<script src="js/leaflet.markercluster.js"></script> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js-->
+		<script src="js/easy-button.js"></script> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js-->
+		<script src="js/leaflet.draw.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js-->
+		<script src="js/bootbox.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js-->
+		<script src="js/leaflet.circle.topolygon-min.js"></script> <!--http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/leaflet.circle.topolygon-min.js-->
+		<!--VARIABLES GLOBALES-->
+		<script type="text/javascript">
+			var circle = new Array(); // warning zones
+			var box = new Array(); // warning zones
+			var polygon = new Array(); // warning zones
+			var circlel = new Array(); // anomalies zones
+			var boxl = new Array(); // anomalies zones
+			var polygonl = new Array(); // anomalies zones
+			var string_circles = "Circles"; // notify
+			var string_boxes = "Boxes"; // notify
+			var string_polygons = "Polygons"; // notify
+			var url = 'http://172.31.56.223/api/server.php'; // url vers l API
+			var warning_zones = new Array(); // liste des warning zones
+			var layer_group_warning_zones; // L.layerGroup
+			var grid = L.layerGroup();
+			var heatPoly = L.layerGroup();
+			var overlayMaps = new Array(); // composant de la couche
+			var Lcontrollayers; // couche de la map
+			var legend;
+			var types_warning_zones = new Array(); // types a recevoir
+			var types_anomalies = new Array(); // types a recevoir
+			var string_warning_zone = "warning_zone"; // parametre
+			var string_anomaly_zone = "anomaly_zone"; // parametre
+			var string_risk_type = "risk_type"; // parametre
+			var string_anomaly_type = "anomaly_type"; // parametre
+			var bbox; // bounding box de la map
+			var DEBUG = true; // console.log
+			var zoom = 12; // set view
+			var geojson = new Object(); // a envoyer
+			var json_countries = new Array(); // a recuperer
+			var latlngstart = new Array(3); //coordinates start 
+			var latlngend = new Array(3); //coordinates end
+			var countrystart = new Array(2); // id + country name start
+			var countryend = new Array(2); // id + country name end
+			var controlPenalty;
+			var position;
+		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-		<script src="http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/leaflet.circle.topolygon-min.js"></script>
 		<script src="js/Control.OSMGeocoder.js"></script>
-		<script src="js/menu.js"></script>
 		<script src="js/template.js"></script>
 		<script src="js/set_the_route.js"></script>
-		<script src="js/selection_of_the_area.js"></script>
+		<script src="js/menu.js"></script>
 		<script src="js/report_a_warning_zone.js"></script>
 		<script src="js/report_an_anomaly.js"></script>
 		<script src="js/codeColor.js"></script>
-		<script src="js/grid.js"></script>
 	</body>
 </html>

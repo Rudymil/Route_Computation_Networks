@@ -1,7 +1,8 @@
-CREATE DATABASE databaseName;
+/*CREATE DATABASE databaseName;
 CREATE EXTENSION postgis;
-CREATE SCHEMA osm;
 
+CREATE ROLE api LOGIN  ENCRYPTED PASSWORD 'apiPassword' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+*/
 CREATE TABLE country(
   id serial,
   name character varying(50) NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE country(
 CREATE TABLE risk(
   id serial,
   name character varying(25) NOT NULL,
+  intensity integer NOT NULL,
   CONSTRAINT risk_pk PRIMARY KEY(id),
   CONSTRAINT risk_unique UNIQUE(name)
 );
@@ -48,15 +50,42 @@ CREATE TABLE anomaly_zone(
   CONSTRAINT anomaly_zone_fk FOREIGN KEY (anomaly_type) REFERENCES anomaly(id)
 );
 
+CREATE TABLE poi_type (
+    id serial,
+    name text NOT NULL,
+    CONSTRAINT poi_type_pk PRIMARY KEY (id),
+    CONSTRAINT poi_type_unique UNIQUE (name)
+);
+
+CREATE TABLE poi (
+    id serial,
+    geom geometry(POINT, 4326),
+    name character varying(255) NOT NULL,
+    poi_type_id integer,
+    layer_poi character varying(50) DEFAULT NULL::character varying,
+    CONSTRAINT poi_pk PRIMARY KEY (id)
+);
+
+ALTER TABLE public.country OWNER TO postgres;
+ALTER TABLE public.warning_zone OWNER TO postgres;
+ALTER TABLE public.anomaly_zone OWNER TO postgres;
+ALTER TABLE public.risk OWNER TO postgres;
+ALTER TABLE public.anomaly OWNER TO postgres;
+ALTER TABLE public.poi_type OWNER TO postgres;
+ALTER TABLE public.poi OWNER TO postgres;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.country TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.warning_zone TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.anomaly_zone TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.risk TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.anomaly TO api;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.poi_type TO api;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.poi TO api;
 
 GRANT USAGE ON SEQUENCE public.country_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.anomaly_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.anomaly_zone_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.risk_id_seq TO api;
 GRANT USAGE ON SEQUENCE public.warning_zone_id_seq TO api;
+GRANT USAGE ON SEQUENCE public.poi_type_id_seq TO api;
+GRANT USAGE ON SEQUENCE public.poi_id_seq TO api;
