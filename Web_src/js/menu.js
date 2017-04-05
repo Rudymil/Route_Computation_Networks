@@ -756,7 +756,8 @@ $("#submit1").click(function() { // envoie toutes les warning zones
                         "type": "Feature",
                         "properties": {
                             "risk_type": infosc[i][1],
-                            "description": infosc[i][0]
+                            "description": infosc[i][0],
+                            "expiration_date": infosc[i][3]
                         },
                         "geometry": {
                             "type": "Polygon",
@@ -776,7 +777,8 @@ $("#submit1").click(function() { // envoie toutes les warning zones
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "risk_type": infosb[i][1],
-                        "description": infosb[i][0]
+                        "description": infosb[i][0],
+                        "expiration_date": infosb[i][3]
                     };
                     box.push(temp);
                 }
@@ -791,7 +793,8 @@ $("#submit1").click(function() { // envoie toutes les warning zones
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "risk_type": infosp[i][1],
-                        "description": infosp[i][0]
+                        "description": infosp[i][0],
+                        "expiration_date": infosp[i][3]
                     };
                     polygon.push(temp);
                 }
@@ -831,7 +834,8 @@ $("#submit2").click(function() { // envoie toutes les anomaly
                         "type": "Feature",
                         "properties": {
                             "anomaly_type": infoscl[i][1],
-                            "description": infoscl[i][0]
+                            "description": infoscl[i][0],
+                            "expiration_date": infoscl[i][3]
                         },
                         "geometry": {
                             "type": "Polygon",
@@ -851,7 +855,8 @@ $("#submit2").click(function() { // envoie toutes les anomaly
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "anomaly_type": infosbl[i][1],
-                        "description": infosbl[i][0]
+                        "description": infosbl[i][0],
+                        "expiration_date": infosbl[i][3]
                     };
                     boxl.push(temp);
                 }
@@ -866,7 +871,8 @@ $("#submit2").click(function() { // envoie toutes les anomaly
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "anomaly_type": infospl[i][1],
-                        "description": infospl[i][0]
+                        "description": infospl[i][0],
+                        "expiration_date": infospl[i][3]
                     }
                     polygonl.push(temp);
                 }
