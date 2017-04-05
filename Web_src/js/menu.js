@@ -649,10 +649,10 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson statut : ", statut);
             }
             notify_ajax_sending_areas_success(statut);
-            if (type == string_risk_type) {
+            if (type == string_warning_zone) {
                 style_layer(string_warning_zone); // changement de style
             }
-            if (type == string_anomaly_type) {
+            if (type == string_anomaly_zone) {
                 style_layer(string_anomaly_zone); // changement de style
             }
         },
@@ -670,12 +670,12 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson statut : ", statut);
             }
             geojson = new Object(); // reinitialisation
-            if (type == string_risk_type) {
+            if (type == string_warning_zone) {
                 circle = new Array();
                 box = new Array();
                 polygon = new Array();
             }
-            if (type == string_anomaly_type) {
+            if (type == string_anomaly_zone) {
                 circlel = new Array();
                 boxl = new Array();
                 polygonl = new Array();
