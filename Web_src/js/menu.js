@@ -920,7 +920,7 @@ function send_ajax_point(point) {
         }
         json["type"] = "Point";
         json["waypoint"] = point[2];
-        json["coordinates"] = [point[0], point[1]];
+        json["coordinates"] = [point[1], point[0]];
         if (DEBUG) {
             console.log("send_ajax_point json : ", json);
         }
