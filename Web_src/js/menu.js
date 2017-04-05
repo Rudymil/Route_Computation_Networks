@@ -526,8 +526,8 @@ function verification(shape, type) {
             }
         }
     } else {
-    	notify_properties_wrong();
-    	return -1;
+        notify_properties_wrong();
+        return -1;
     }
 }
 /**
@@ -892,3 +892,92 @@ $("#submit2").click(function() { // envoie toutes les anomaly
         }
     }
 });
+/**
+ * Ajax request sending one point ("start"|"step"|"end").
+ * @param {array(3)} point - Array containing lat, lng and type ("start"|"step"|"end").
+ */
+function send_ajax_point(point) {
+    if (point.length == 3 && point[0] != null && point[0] != undefined && point[1] != null && point[1] != undefined && point[2] != null && point[2] != undefined) {
+        var json = new Object();
+        if (DEBUG) {
+            console.log("send_ajax_point point[0] : ", point[0]);
+            console.log("send_ajax_point point[1] : ", point[1]);
+            console.log("send_ajax_point point[2] : ", point[2]);
+        }
+        json["type"] = "Point";
+        json["waypoint"] = point[2];
+        json["coordinates"] = [point[0], point[1]];
+        if (DEBUG) {
+            console.log("send_ajax_point json : ", json);
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: 'type=' + JSON.stringify(json),
+            dataType: 'json',
+            success: function(code_json, statut) {
+                if (DEBUG) {
+                    console.log("send_ajax_point code_json : ", code_json);
+                    console.log("send_ajax_point statut : ", statut);
+                }
+            },
+            error: function(resultat, statut, erreur) {
+                if (DEBUG) {
+                    console.log("send_ajax_point resultat : ", resultat);
+                    console.log("send_ajax_point statut : ", statut);
+                    console.log("send_ajax_point erreur : ", erreur);
+                }
+                $.notify({
+                    title: "<strong>Point request</strong>",
+                    message: statut
+                }, {
+                    type: "danger",
+                    placement: {
+                        from: "bottom",
+                        align: "center"
+                    }
+                });
+            },
+            complete: function(resultat, statut) {
+                if (DEBUG) {
+                    console.log("send_ajax_point resultat.status :", resultat.status);
+                }
+                if (resultat.status == '200') {
+                    var reponse = resultat.responseJSON;
+                    if (!$.isEmptyObject(reponse) && reponse != undefined) { // si le resultat json n est pas vide
+                        if (DEBUG) {
+                            console.log("send_ajax_point reponse :", reponse);
+                        }
+                        if (reponse == false) { // si error
+
+                        } else { // sinon
+                            if (DEBUG) {
+                                console.log("send_ajax_point country[0] : ", country[0]);
+                                console.log("send_ajax_point country[1] : ", country[1]);
+                            }
+                            if (country[0] == null || country[0] == undefined && country[1] == null || country[0] == undefined) { // si pas de pays defini
+                                country[0] = reponse["id"];
+                                country[1] = reponse["name"];
+                            } else { // sinon
+                                if (country[0] != reponse["id"] && country[1] != reponse["name"]) { // si different de ce qu on a
+                                } else { // sinon
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    } else {
+        $.notify({
+            title: "<strong>Point</strong>",
+            message: 'wrong'
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
