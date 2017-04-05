@@ -163,3 +163,10 @@ $("#submit1").click(function() {...});
  */
 $("#submit2").click(function() {...});
 ```
+```js
+/**
+ * Ajax request sending one point ("start"|"step"|"end").
+ * @param {array(3)} point - Array containing lat, lng and type ("start"|"step"|"end").
+ */
+function send_ajax_point(point) {...}
+```
