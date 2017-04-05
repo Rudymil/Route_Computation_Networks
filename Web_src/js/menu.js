@@ -976,7 +976,6 @@ function send_ajax_point(point) {
                                 if (countryend[0] != null || countryend[0] != undefined && countryend[1] != null || countryend[0] != undefined) { // si point d arrivee
                                     if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1]) { // si egalite
                                         controlPenalty.spliceWaypoints(0, 1, e.latlng);
-
                                     } else { // sinon
                                         $.notify({
                                             title: "<strong>Localisation</strong>",
@@ -1032,9 +1031,7 @@ function send_ajax_point(point) {
                                 }
                                 if (countrystart[0] != null || countrystart[0] != undefined && countrystart[1] != null || countrystart[0] != undefined && countryend[0] != null || countryend[0] != undefined && countryend[1] != null || countryend[0] != undefined) { // si point de depart et d arrivee
                                     if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1] && countrystart[0] == reponse["id"] && countryend[0] == reponse["id"] && countrystart[1] == reponse["name"] && countryend[1] == reponse["name"]) { // si egalite
-
                                     } else { // sinon
-
                                     }
                                 } else { // sinon
                                     $.notify({
