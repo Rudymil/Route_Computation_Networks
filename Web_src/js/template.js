@@ -36,5 +36,5 @@ $("#map").ready(function() {
         attribution: osmAttrib
     });
     map.addLayer(osm);
-    map.setView([0.0, 0.0], 18);
+    map.setView([0.0, 0.0], 1);
 });
