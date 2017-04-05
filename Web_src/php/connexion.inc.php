@@ -1,6 +1,6 @@
 <?php
-$dbconn = pg_connect("host=localhost port=5432 dbname=dataBaseName user=userName password=*******");
-if (!$dbconn) {
+$conn = new PDO('pgsql:host=localhost;dbname=dataBaseName','userName','Password');
+if (!$conn) {
     die("Erreur de connexion");
 }else{
     //echo "Success...";
