@@ -204,16 +204,20 @@
 			var zoom = 12; // set view
 			var geojson = new Object(); // a envoyer
 			var json_countries = new Array(); // a recuperer
+			var latlngstart = new Array(3); //coordinates start 
+			var latlngend = new Array(3); //coordinates end
+			var countrystart = new Array(2); // id + country name start
+			var countryend = new Array(2); // id + country name end
+			var controlPenalty;
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>
 		<script src="js/Control.OSMGeocoder.js"></script>
-		<script src="js/menu.js"></script>
 		<script src="js/template.js"></script>
 		<script src="js/set_the_route.js"></script>
+		<script src="js/menu.js"></script>
 		<script src="js/report_a_warning_zone.js"></script>
 		<script src="js/report_an_anomaly.js"></script>
 		<script src="js/codeColor.js"></script>
-		<script src="js/grid.js"></script>
 	</body>
 </html>

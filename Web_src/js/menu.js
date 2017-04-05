@@ -1,4 +1,9 @@
-function ajax_types(url, type) { // requete ajax sur les types
+/**
+ * Ajax request asking all the type of risk or anomaly from the DB.
+ * @param {string} url - Url to the Web API.
+ * @param {string} type - Type between risk or anomaly.
+ */
+function ajax_types(url, type) {
     if (DEBUG) {
         console.log("FUNCTION : ajax_types");
         console.log("ajax_types url : ", url);
@@ -45,12 +50,12 @@ function ajax_types(url, type) { // requete ajax sur les types
                     if (type == string_risk_type) {
                         types_warning_zones = json;
                         if (DEBUG) {
-                            console.log("types_warning_zones :", types_warning_zones);
+                            console.log("ajax_types types_warning_zones :", types_warning_zones);
                         }
                     } else if (type == string_anomaly_type) {
                         types_anomalies = json;
                         if (DEBUG) {
-                            console.log("types_anomalies :", types_anomalies);
+                            console.log("ajax_types types_anomalies :", types_anomalies);
                         }
                     }
                 }
@@ -58,8 +63,11 @@ function ajax_types(url, type) { // requete ajax sur les types
         }
     });
 }
-
-function ajax_countries(url) { // requete ajax sur les pays
+/**
+ * Ajax request asking all the countries contained by the BD.
+ * @param {string} url - Url to the Web API.
+ */
+function ajax_countries(url) {
     if (DEBUG) {
         console.log("ajax_countries url : ", url);
     }
@@ -112,11 +120,11 @@ function ajax_countries(url) { // requete ajax sur les pays
                             $("#panel-element-204612>.panel-body").append("<div class='row'><div class='col-xs-12' ><center><button type='button' class='btn btn-primary btn-xm' style='margin-bottom:5px;' id=" + object + ">" + json_countries[object]['properties']['name'] + "</button></center></div></div>"); // ajout du bouton
                             $("#" + object).click(function(event) { // reset view
                                 if (DEBUG) {
-                                    console.log("event.target.id : ", event.target.id);
+                                    console.log("ajax_countries event.target.id : ", event.target.id);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                 }
-                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1],json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
+                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                             });
                         }
                     }
@@ -125,8 +133,10 @@ function ajax_countries(url) { // requete ajax sur les pays
         }
     });
 }
-
-$("body").ready(function() { // lorsque le body est charge
+/**
+ * Executed when the body DOM is ready.
+ */
+$("body").ready(function() {
     if (DEBUG) {
         console.log("EVENT : $('body').ready");
     }
@@ -134,23 +144,25 @@ $("body").ready(function() { // lorsque le body est charge
     ajax_types(url, string_anomaly_type); // recupere les types des anomalies zones
     ajax_countries(url); // recupere la liste des pays
 });
-
-function notify_warning_zones_none() { // notifie qu il n y a pas de warning zones reçues
-    /*$.notify(
-    	{
-    		title: "<strong>Warning zones request</strong>",
-    		message: "none"
-    	},{
-    		type: "info",
-    		placement: {
-    			from: "bottom",
-    			align: "center"
-    		}
-    	}
-    );*/
+/**
+ * Notify using Bootstrap Notify that the area targeted or viewed not contains "warning zones".
+ */
+function notify_warning_zones_none() {
+    $.notify({
+        title: "<strong>Warning zones request</strong>",
+        message: "none"
+    }, {
+        type: "info",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
 }
-
-function remove_warning_zones() { // supprime les warning zones de la carte
+/**
+ * Removed from the map all "warning zones" displayed.
+ */
+function remove_warning_zones() {
     for (element in warning_zones) { // pour chaque warning zones
         if (DEBUG) {
             console.log("element :", element);
@@ -166,8 +178,12 @@ function remove_warning_zones() { // supprime les warning zones de la carte
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
-
-function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la bbox from la BDD
+/**
+ * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
+ * @param {string} url - Url to the Web API.
+ * @param {string} bbox - Bounding box of the map.
+ */
+function add_warning_zones(url, bbox) {
     if (DEBUG) {
         console.log("FUNCTION : add_warning_zones");
         console.log("add_warning_zones url : ", url);
@@ -238,9 +254,9 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                     if (json["features"].length > 0) {
                         for (element in json["features"]) { // pour chaque object du geojson
                             if (DEBUG) {
-                                console.log("element :", element);
-                                console.log("json['features'][element] :", json["features"][element]);
-                                console.log("json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity);
+                                console.log("add_warning_zones element :", element);
+                                console.log("add_warning_zones json['features'][element] :", json["features"][element]);
+                                console.log("add_warning_zones json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity);
                             }
                             var shape = L.geoJSON(json["features"][element]);
                             var colorZone = getColor(json["features"][element]["properties"].intensity);
@@ -248,7 +264,7 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                                 fillColor: colorZone,
                                 color: colorZone
                             });
-                            //shape.addTo(map); // ajout a la map
+                            shape.addTo(map); // ajout a la map
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -290,7 +306,7 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                         	}
                         );*/
                     } else {
-                        notify_warning_zones_none();
+                        //notify_warning_zones_none();
                     }
                 } else {
                     if (DEBUG) {
@@ -299,20 +315,25 @@ function add_warning_zones(url, bbox) { // ajoute toutes les warning zones de la
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
                     }
-                    notify_warning_zones_none();
+                    //notify_warning_zones_none();
                 }
             }
         }
     });
 }
-
-$("#map").ready(function() { // lorsque la carte est chargee
+/**
+ * Executed when the map is ready.
+ */
+$("#map").ready(function() {
     if (DEBUG) {
         console.log("EVENT : $('#map').ready");
     }
-    map.on('dragend', function() { // lorsqu on se deplace dans la carte
+    /**
+     * Executed when the map is moved.
+     */
+    map.on('dragend', function() {
         if (DEBUG) {
-            console.log("zoom :", map.getZoom())
+            console.log("dragend zoom :", map.getZoom())
         }
         if (map.getZoom() > zoom) {
             bbox = map.getBounds().toBBoxString();
@@ -321,9 +342,12 @@ $("#map").ready(function() { // lorsque la carte est chargee
             remove_warning_zones();
         }
     });
-    map.on('zoomend', function() { // lorsqu on zoom dans la carte
+    /**
+     * Executed when the zoom changes.
+     */
+    map.on('zoomend', function() {
         if (DEBUG) {
-            console.log("zoom :", map.getZoom())
+            console.log("zoomend zoom :", map.getZoom())
         }
         if (map.getZoom() > zoom) {
             bbox = map.getBounds().toBBoxString();
@@ -333,14 +357,17 @@ $("#map").ready(function() { // lorsque la carte est chargee
         }
     });
 });
-
-function notify_shape_empty(shape) { // notifie que l object est vide
+/**
+ * Notify using Bootstrap Notify that the leaflet vector layer is empty.
+ * @param {string} element - Type of leaflet vector layer.
+ */
+function notify_shape_empty(element) {
     if (DEBUG) {
         console.log("FUNCTION : notify_shape_empty");
-        console.log("shape : ", shape);
+        console.log("notify_shape_empty element : ", element);
     }
     $.notify({
-        title: "<strong>" + shape + "</strong>",
+        title: "<strong>" + element + "</strong>",
         message: "empty"
     }, {
         type: "danger",
@@ -350,14 +377,17 @@ function notify_shape_empty(shape) { // notifie que l object est vide
         }
     });
 }
-
-function notify_none(shape) { // notifie que rien est a envoyer
+/**
+ * Notify using Bootstrap Notify that the array of leaflet vector layers is empty.
+ * @param {string} collection - Type of leaflet vector layer.
+ */
+function notify_none(collection) {
     if (DEBUG) {
         console.log("FUNCTION : notify_none");
-        console.log("shape : ", shape);
+        console.log("notify_none collection : ", collection);
     }
     $.notify({
-        title: "<strong>" + shape + "</strong>",
+        title: "<strong>" + collection + "</strong>",
         message: "none",
     }, {
         type: "info",
@@ -367,12 +397,14 @@ function notify_none(shape) { // notifie que rien est a envoyer
         }
     });
 }
-
-function notify_ajax_sending_areas_success(code, statut) { // notifie que l envoi a reussi
+/**
+ * Notify using Bootstrap Notify that the zones sending to the DB succeeded.
+ * @param {object.statut} statut - Network code.
+ */
+function notify_ajax_sending_areas_success(statut) {
     if (DEBUG) {
         console.log("FUNCTION : notify_ajax_sending_areas_success");
-        console.log("code : ", code);
-        console.log("statut : ", statut);
+        console.log("notify_ajax_sending_areas_success statut : ", statut);
     }
     $.notify({
         title: "<strong>Sending areas</strong>",
@@ -385,12 +417,14 @@ function notify_ajax_sending_areas_success(code, statut) { // notifie que l envo
         }
     });
 }
-
-function notify_ajax_sending_areas_error(erreur, statut) { // notifie que lenvoi a echoue
+/**
+ * Notify using Bootstrap Notify that the zones sending to the DB failed.
+ * @param {object.statut} statut - Network code.
+ */
+function notify_ajax_sending_areas_error(statut) {
     if (DEBUG) {
         console.log("FUNCTION : notify_ajax_sending_areas_error");
-        console.log("erreur : ", erreur);
-        console.log("statut : ", statut);
+        console.log("notify_ajax_sending_areas_error statut : ", statut);
     }
     $.notify({
         title: "<strong>Sending areas</strong>",
@@ -403,14 +437,123 @@ function notify_ajax_sending_areas_error(erreur, statut) { // notifie que lenvoi
         }
     });
 }
-
-function fill_geojson(circle, box, polygon, type) { // rempli le geojson a partir des shapes en parametres
+/**
+ * Notify using Bootstrap Notify that the "risk_type" into the "properties" is not correct.
+ */
+function notify_risk_type_wrong() {
+    $.notify({
+        title: "<strong>risk_type</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+/**
+ * Notify using Bootstrap Notify that the "anomaly_type" into the "properties" is not correct.
+ */
+function notify_anomaly_type_wrong() {
+    $.notify({
+        title: "<strong>anomaly_type</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+/**
+ * Notify using Bootstrap Notify that the "description" into the "properties" is not correct.
+ */
+function notify_description_wrong() {
+    $.notify({
+        title: "<strong>description</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+/**
+ * Notify using Bootstrap Notify that the "properties" is not correct.
+ */
+function notify_properties_wrong() {
+    $.notify({
+        title: "<strong>properties</strong>",
+        message: 'wrong',
+    }, {
+        type: "danger",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+}
+/**
+ * Check that the "properties" of the shape is correctly written in function of the type.
+ * @param {vector layer} shape - Leaflet vector layer.
+ * @param {string} type - Type of leaflet vector layer.
+ * @return {number} -1 - If the verification reveals an error.
+ */
+function verification(shape, type) {
+    if (shape["properties"] != null) { // si y a des properties
+        if (type == string_risk_type) {
+            if (shape["properties"]["risk_type"] == null || shape["properties"]["risk_type"] == undefined) { // si pas de risque
+                notify_risk_type_wrong();
+                return -1;
+            }
+            if (shape["properties"]["description"] == null || shape["properties"]["description"] == undefined) { // si pas de description
+                notify_description_wrong();
+                return -1;
+            }
+            if (shape["properties"]["expiration_date"] == null || shape["properties"]["expiration_date"] == undefined) { // si pas de date
+                notify_description_wrong();
+                return -1;
+            }
+        }
+        if (type == string_anomaly_type) {
+            if (shape["properties"]["anomaly_type"] == null || shape["properties"]["anomaly_type"] == undefined) { // si pas de type
+                notify_anomaly_type_wrong();
+                return -1;
+            }
+            if (shape["properties"]["description"] == null || shape["properties"]["description"] == undefined) { // si pas de description
+                notify_description_wrong();
+                return -1;
+            }
+            if (shape["properties"]["expiration_date"] == null || shape["properties"]["expiration_date"] == undefined) { // si pas de date
+                notify_description_wrong();
+                return -1;
+            }
+        }
+    } else {
+        notify_properties_wrong();
+        return -1;
+    }
+}
+/**
+ * Check that the "properties" of the shape is correctly written in function of the type.
+ * @param {array} circle - Array containing leaflet vector layers (circles).
+ * @param {array} box - Array containing leaflet vector layers (rectangles).
+ * @param {array} polygon - Array containing leaflet vector layers (polygons).
+ * @param {string} type - Type of leaflet vector layer (warning or anomaly).
+ * @return {number} -1 - If the array contains empty objects.
+ * @return {number} 0 - Else.
+ */
+function fill_geojson(circle, box, polygon, type) {
     if (DEBUG) {
         console.log("FUNCTION : fill_geojson");
-        console.log("circle : ", circle);
-        console.log("box : ", box);
-        console.log("polygon : ", polygon);
-        console.log("geojson : ", geojson);
+        console.log("fill_geojson circle : ", circle);
+        console.log("fill_geojson box : ", box);
+        console.log("fill_geojson polygon : ", polygon);
+        console.log("fill_geojson geojson : ", geojson);
     }
     var features = new Array();
     if (circle.length == 0) {
@@ -421,7 +564,11 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Circle :", circle[element]);
             }
             if (circle[element] !== null) { // si c est pas nul
-                features.push(circle[element]); // complete GeoJSON
+                if (verification(circle[element], type) == -1) { // verification des properties
+                    return -1;
+                } else {
+                    features.push(circle[element]); // complete GeoJSON
+                }
             } else {
                 notify_shape_empty(string_circles);
                 return -1;
@@ -436,7 +583,11 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
                 console.log("Box :", box[element]);
             }
             if (box[element] !== null) { // si c est pas nul
-                features.push(box[element]); // complete GeoJSON
+                if (verification(box[element], type) == -1) { // verification des properties
+                    return -1;
+                } else {
+                    features.push(box[element]); // complete GeoJSON
+                }
             } else {
                 notify_shape_empty(string_boxes);
                 return -1;
@@ -448,10 +599,14 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
     } else {
         for (element in polygon) {
             if (DEBUG) {
-                console.log("Polygon :", polygon[element]);
+                console.log("fill_geojson Polygon :", polygon[element]);
             }
             if (polygon[element] !== null) { // si c est pas nul
-                features.push(polygon[element]); // complete GeoJSON
+                if (verification(polygon[element], type) == -1) { // verification des properties
+                    return -1;
+                } else {
+                    features.push(polygon[element]); // complete GeoJSON
+                }
             } else {
                 notify_shape_empty(string_polygons);
                 return -1;
@@ -463,14 +618,18 @@ function fill_geojson(circle, box, polygon, type) { // rempli le geojson a parti
         geojson["zone_type"] = type;
         geojson["features"] = features;
         if (DEBUG) {
-            console.log("features :", features);
-            console.log("geojson :", geojson);
+            console.log("fill_geojson features :", features);
+            console.log("fill_geojson geojson :", geojson);
         }
     }
     return 0;
 }
-
-function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type a l url en parametre
+/**
+ * Ajax request sending all the zones to the BD by specifying the type.
+ * @param {string} type - Type of leaflet vector layer (warning or anomaly).
+ * @param {string} url - Url to the Web API.
+ */
+function send_ajax_geojson(type, url) {
     if (DEBUG) {
         console.log("FUNCTION : send_ajax_geojson");
         console.log("send_ajax_geojson geojson : ", geojson);
@@ -489,7 +648,13 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
                 console.log("send_ajax_geojson code_json : ", code);
                 console.log("send_ajax_geojson statut : ", statut);
             }
-            notify_ajax_sending_areas_success(code, statut);
+            notify_ajax_sending_areas_success(statut);
+            if (type == string_risk_type) {
+                style_layer(string_warning_zone); // changement de style
+            }
+            if (type == string_anomaly_type) {
+                style_layer(string_anomaly_zone); // changement de style
+            }
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -497,8 +662,7 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
                 console.log("send_ajax_geojson statut : ", statut);
                 console.log("send_ajax_geojson erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(erreur, statut);
-            return -1;
+            notify_ajax_sending_areas_error(statut);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
@@ -506,11 +670,24 @@ function send_ajax_geojson(type, url) { // envoie en ajax le geojson et le type 
                 console.log("send_ajax_geojson statut : ", statut);
             }
             geojson = new Object(); // reinitialisation
+            if (type == string_risk_type) {
+                circle = new Array();
+                box = new Array();
+                polygon = new Array();
+            }
+            if (type == string_anomaly_type) {
+                circlel = new Array();
+                boxl = new Array();
+                polygonl = new Array();
+            }
         }
     });
 }
-
-function style_layer(type) { // modifie le style de la couche
+/**
+ * Change the inner color in black of all the leaflet vector layers corresponding to the type.
+ * @param {string} type - Type of leaflet vector layer (warning or anomaly).
+ */
+function style_layer(type) {
     couche = new L.FeatureGroup();
     if (DEBUG) {
         console.log("FUNCTION : style_layer");
@@ -560,7 +737,8 @@ function style_layer(type) { // modifie le style de la couche
         map.addLayer(couche);
     }
 }
-
+/**
+ */
 function geojsoncircle(ci) {
     var circlejson = new Array();
     var n = ci.length;
@@ -572,7 +750,9 @@ function geojsoncircle(ci) {
     circlejson.push([ci[n - 1].lat, ci[n - 1].lng]);
     return circlejson;
 }
-
+/**
+ * Executed for sending all the "warning zones".
+ */
 $("#submit1").click(function() { // envoie toutes les warning zones
     editableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les warning zones
         if (layer instanceof L.Circle) {
@@ -584,7 +764,8 @@ $("#submit1").click(function() { // envoie toutes les warning zones
                         "type": "Feature",
                         "properties": {
                             "risk_type": infosc[i][1],
-                            "description": infosc[i][0]
+                            "description": infosc[i][0],
+                            "expiration_date": infosc[i][3]
                         },
                         "geometry": {
                             "type": "Polygon",
@@ -604,7 +785,8 @@ $("#submit1").click(function() { // envoie toutes les warning zones
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "risk_type": infosb[i][1],
-                        "description": infosb[i][0]
+                        "description": infosb[i][0],
+                        "expiration_date": infosb[i][3]
                     };
                     box.push(temp);
                 }
@@ -619,7 +801,8 @@ $("#submit1").click(function() { // envoie toutes les warning zones
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "risk_type": infosp[i][1],
-                        "description": infosp[i][0]
+                        "description": infosp[i][0],
+                        "expiration_date": infosp[i][3]
                     };
                     polygon.push(temp);
                 }
@@ -631,26 +814,23 @@ $("#submit1").click(function() { // envoie toutes les warning zones
         console.log("EVENT : $('#submit1').click");
     }
     if (DEBUG) {
-        console.log("Circles :", circle);
-        console.log("Boxes :", box);
-        console.log("Polygons :", polygon);
+        console.log("$('#submit1').click Circles :", circle);
+        console.log("$('#submit1').click Boxes :", box);
+        console.log("$('#submit1').click Polygons :", polygon);
     }
     if (fill_geojson(circle, box, polygon, string_warning_zone) == 0) { // si pas d erreur
         if (DEBUG) {
-            console.log("geojson : ", geojson);
-            console.log(Object.keys(geojson).length);
+            console.log("$('#submit1').click geojson : ", geojson);
+            console.log("$('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
         }
         if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
-            if (send_ajax_geojson(string_warning_zone, url) != -1) { // si pas d'erreur a l envoie
-                circle = new Array();
-                box = new Array();
-                polygon = new Array();
-                style_layer(string_warning_zone);
-            }
+            send_ajax_geojson(string_warning_zone, url);
         }
     }
 });
-
+/**
+ * Executed for sending all the "anomaly zones".
+ */
 $("#submit2").click(function() { // envoie toutes les anomaly
     leditableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les anomalies zones
         if (layer instanceof L.Circle) {
@@ -662,7 +842,8 @@ $("#submit2").click(function() { // envoie toutes les anomaly
                         "type": "Feature",
                         "properties": {
                             "anomaly_type": infoscl[i][1],
-                            "description": infoscl[i][0]
+                            "description": infoscl[i][0],
+                            "expiration_date": infoscl[i][3]
                         },
                         "geometry": {
                             "type": "Polygon",
@@ -682,7 +863,8 @@ $("#submit2").click(function() { // envoie toutes les anomaly
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "anomaly_type": infosbl[i][1],
-                        "description": infosbl[i][0]
+                        "description": infosbl[i][0],
+                        "expiration_date": infosbl[i][3]
                     };
                     boxl.push(temp);
                 }
@@ -697,7 +879,8 @@ $("#submit2").click(function() { // envoie toutes les anomaly
                     var temp = layer.toGeoJSON();
                     temp.properties = {
                         "anomaly_type": infospl[i][1],
-                        "description": infospl[i][0]
+                        "description": infospl[i][0],
+                        "expiration_date": infospl[i][3]
                     }
                     polygonl.push(temp);
                 }
@@ -709,22 +892,175 @@ $("#submit2").click(function() { // envoie toutes les anomaly
         console.log("EVENT : $('#submit1').click");
     }
     if (DEBUG) {
-        console.log("Circles :", circlel);
-        console.log("Boxes :", boxl);
-        console.log("Polygons :", polygonl);
+        console.log("$('#submit1').click Circles :", circlel);
+        console.log("$('#submit1').click Boxes :", boxl);
+        console.log("$('#submit1').click Polygons :", polygonl);
     }
     if (fill_geojson(circlel, boxl, polygonl, string_anomaly_zone) == 0) { // si pas d erreur
         if (DEBUG) {
-            console.log("geojson : ", geojson);
-            console.log(Object.keys(geojson).length);
+            console.log("$('#submit1').click geojson : ", geojson);
+            console.log("$('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
         }
         if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
-            if (send_ajax_geojson(string_anomaly_zone, url) != -1) { // si pas d'erreur a l envoie
-                circlel = new Array();
-                boxl = new Array();
-                polygonl = new Array();
-                style_layer(string_anomaly_zone);
-            }
+            send_ajax_geojson(string_anomaly_zone, url);
         }
     }
 });
+/**
+ * Ajax request sending one point ("start"|"step"|"end").
+ * @param {array(3)} point - Array containing lat, lng and type ("start"|"step"|"end").
+ */
+function send_ajax_point(point) {
+    if (point.length == 3 && point[0] != null && point[0] != undefined && point[1] != null && point[1] != undefined && point[2] != null && point[2] != undefined) {
+        var json = new Object();
+        if (DEBUG) {
+            console.log("send_ajax_point point[0] : ", point[0]);
+            console.log("send_ajax_point point[1] : ", point[1]);
+            console.log("send_ajax_point point[2] : ", point[2]);
+        }
+        json["type"] = "Point";
+        json["waypoint"] = point[2];
+        json["coordinates"] = [point[0], point[1]];
+        if (DEBUG) {
+            console.log("send_ajax_point json : ", json);
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: 'waypoint=' + JSON.stringify(json),
+            dataType: 'json',
+            success: function(code_json, statut) {
+                if (DEBUG) {
+                    console.log("send_ajax_point code_json : ", code_json);
+                    console.log("send_ajax_point statut : ", statut);
+                }
+            },
+            error: function(resultat, statut, erreur) {
+                if (DEBUG) {
+                    console.log("send_ajax_point resultat : ", resultat);
+                    console.log("send_ajax_point statut : ", statut);
+                    console.log("send_ajax_point erreur : ", erreur);
+                }
+                $.notify({
+                    title: "<strong>Point request</strong>",
+                    message: statut
+                }, {
+                    type: "danger",
+                    placement: {
+                        from: "bottom",
+                        align: "center"
+                    }
+                });
+            },
+            complete: function(resultat, statut) {
+                if (DEBUG) {
+                    console.log("send_ajax_point resultat.status :", resultat.status);
+                }
+                if (resultat.status == '200') {
+                    var reponse = resultat.responseJSON;
+                    if (!$.isEmptyObject(reponse) && reponse != undefined) { // si le resultat json n est pas vide
+                        if (DEBUG) {
+                            console.log("send_ajax_point reponse :", reponse);
+                        }
+                        if (reponse == false) { // si error
+                        } else { // sinon
+                            if (point[2] == "start") { // si point de depart
+                                if (DEBUG) {
+                                    console.log("send_ajax_point countrystart[0] : ", countrystart[0]);
+                                    console.log("send_ajax_point countrystart[1] : ", countrystart[1]);
+                                    console.log("send_ajax_point reponse['id'] : ", reponse['id']);
+                                    console.log("send_ajax_point reponse['name'] : ", reponse['name']);
+                                }
+                                countrystart[0] = reponse["id"];
+                                countrystart[1] = reponse["name"];
+                                if (countryend[0] != null || countryend[0] != undefined && countryend[1] != null || countryend[0] != undefined) { // si point d arrivee
+                                    if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1]) { // si egalite
+                                        controlPenalty.spliceWaypoints(0, 1, e.latlng);
+                                    } else { // sinon
+                                        $.notify({
+                                            title: "<strong>Localisation</strong>",
+                                            message: "This position does not exist in the country of destination"
+                                        }, {
+                                            type: "warning",
+                                            placement: {
+                                                from: "bottom",
+                                                align: "center"
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    controlPenalty.spliceWaypoints(0, 1, e.latlng);
+                                }
+                            }
+                            if (point[2] == "end") { // si point d arrivee
+                                if (DEBUG) {
+                                    console.log("send_ajax_point countryend[0] : ", countryend[0]);
+                                    console.log("send_ajax_point countryend[1] : ", countryend[1]);
+                                    console.log("send_ajax_point reponse['id'] : ", reponse['id']);
+                                    console.log("send_ajax_point reponse['name'] : ", reponse['name']);
+                                }
+                                countryend[0] = reponse["id"];
+                                countryend[1] = reponse["name"];
+                                if (countrystart[0] != null || countrystart[0] != undefined && countrystart[1] != null || countrystart[0] != undefined) { // si point de depart
+                                    if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1]) { // si egalite
+                                        controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+                                    } else { // sinon
+                                        $.notify({
+                                            title: "<strong>Localisation</strong>",
+                                            message: "This position does not exist in the country of departure"
+                                        }, {
+                                            type: "warning",
+                                            placement: {
+                                                from: "bottom",
+                                                align: "center"
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+                                }
+                            }
+                            if (point[2] == "step") { // si point intermediaire
+                                if (DEBUG) {
+                                    console.log("send_ajax_point countrystart[0] : ", countrystart[0]);
+                                    console.log("send_ajax_point countrystart[1] : ", countrystart[1]);
+                                    console.log("send_ajax_point countryend[0] : ", countryend[0]);
+                                    console.log("send_ajax_point countryend[1] : ", countryend[1]);
+                                    console.log("send_ajax_point reponse['id'] : ", reponse['id']);
+                                    console.log("send_ajax_point reponse['name'] : ", reponse['name']);
+                                }
+                                if (countrystart[0] != null || countrystart[0] != undefined && countrystart[1] != null || countrystart[0] != undefined && countryend[0] != null || countryend[0] != undefined && countryend[1] != null || countryend[0] != undefined) { // si point de depart et d arrivee
+                                    if (countrystart[0] == countryend[0] && countrystart[1] == countryend[1] && countrystart[0] == reponse["id"] && countryend[0] == reponse["id"] && countrystart[1] == reponse["name"] && countryend[1] == reponse["name"]) { // si egalite
+                                    } else { // sinon
+                                    }
+                                } else { // sinon
+                                    $.notify({
+                                        title: "<strong>Points</strong>",
+                                        message: 'none'
+                                    }, {
+                                        type: "danger",
+                                        placement: {
+                                            from: "bottom",
+                                            align: "center"
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    } else {
+        $.notify({
+            title: "<strong>Point</strong>",
+            message: 'wrong'
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}

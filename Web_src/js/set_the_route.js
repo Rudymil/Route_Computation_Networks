@@ -320,6 +320,16 @@ var controlPenalty = L.Routing.control({
     language: 'en',
     geocoder: L.Control.Geocoder.nominatim(),
     autoRoute: true,
+    createMarker: function(i, wp) {
+        var marker = L.marker(wp.latLng, {
+            draggable: true
+        });
+        marker.on("click", function(e) {
+            marker.bindPopup(e.latlng.lat + ", " + e.latlng.lng);
+            //alert (e.latlng.lat + ", " +e.latlng.lng);
+        });
+        return marker;
+    },
     router: L.Routing.osrmv1({
         serviceUrl: 'http://172.31.57.114:5001/route/v1'
     }),
@@ -341,17 +351,22 @@ function createButton(label, container) {
     return btn;
 }
 
+
 map.on('click', function(e) {
     if ($("#Navigate").is(":checked") == true) {
         var container = L.DomUtil.create('div'),
             startBtn = createButton('Start from this location', container),
             destBtn = createButton('Go to this location', container);
         L.DomEvent.on(startBtn, 'click', function() {
-            controlPenalty.spliceWaypoints(0, 1, e.latlng);
+            //controlPenalty.spliceWaypoints(0, 1, e.latlng);
+            latlngstart = [e.latlng.lat, e.latlng.lng, "start"];
+            send_ajax_point(latlngstart);
             map.closePopup();
         });
         L.DomEvent.on(destBtn, 'click', function() {
-            controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+            //controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+            latlngend = [e.latlng.lat, e.latlng.lng, "end"];
+            send_ajax_point(latlngend);
             map.closePopup();
         });
         L.popup()

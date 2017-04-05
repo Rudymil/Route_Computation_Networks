@@ -17,7 +17,7 @@ function datem() {
         mm = '0' + mm
     }
 
-    today = mm + '/' + dd + '/' + yyyy;
+    today = yyyy+'/'+ mm + '/' + dd;
     return today;
 
 }
@@ -33,7 +33,11 @@ function htmlca() {
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description' required='required'>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required >\
+				</div>\
+				<div class='form-group'>\
+				<label for='usr'>Expiration date: </label> <br>\
+				<input type='date' name='dateex' id='datee'>\
 				</div>	";
 
     for (var i = 0; i < na; i++) {
@@ -57,7 +61,8 @@ $(".radio_button").change(function() { // choix de dessin
         markeraDestination.dragging.enable();	
         }*/
         map.removeControl(drawControl);
-    } else if ($("#Circle2").is(":checked") == true) {
+    }
+    else if ($("#Circle2").is(":checked") == true) {
 
         if (drawControl != null) {
 
@@ -97,7 +102,8 @@ $(".radio_button").change(function() { // choix de dessin
         };
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-    } else if ($("#Box2").is(":checked") == true) {
+    } 
+    else if ($("#Box2").is(":checked") == true) {
 
 
         if (drawControl != null) {
@@ -137,7 +143,8 @@ $(".radio_button").change(function() { // choix de dessin
 
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-    } else if ($("#Polygon2").is(":checked") == true) {
+    } 
+    else if ($("#Polygon2").is(":checked") == true) {
 
 
         if (drawControl != null) {
@@ -208,18 +215,33 @@ map.on('draw:created', function(e) {
 
 
         bootbox.confirm(htmlca(), function(result) {
-
+			if( result ) {
             //console.log("inside");
             des = $('#description').val();
             ano = $('#anomalyType').find(":selected").val();
-
-            if (des == "") {
-                des = "without description";
+            da= $('#datee').val();
+			
+			if (ano == "") {
+                 return false ;
             }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
 
             console.log(des);
             content = getPopupContenta(layer, lev, des);
-            var temp = [des, ano, layer._leaflet_id];
+            var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
                 layer.bindPopup(content);
@@ -231,6 +253,11 @@ map.on('draw:created', function(e) {
             //circle.push(layergeo);
 
             //console.log(circle);
+            
+            }
+            else {
+            	leditableLayers.removeLayer(layer);
+            }
 
         });
 
@@ -238,26 +265,42 @@ map.on('draw:created', function(e) {
 
         leditableLayers.addLayer(layer)
 
-    } else if (type == "rectangle" && $("#Box2").is(":checked") == true) {
+    } 
+    else if (type == "rectangle" && $("#Box2").is(":checked") == true) {
 
 
         var des = null;
         var lev = null;
 
 
-        bootbox.confirm(htmlca(), function(result) {
-
+       bootbox.confirm(htmlca(), function(result) {
+			if( result ) {
             //console.log("inside");
             des = $('#description').val();
             ano = $('#anomalyType').find(":selected").val();
-
-            if (des == "") {
-                des = "without description";
+			da= $('#datee').val();
+			
+			if (ano == "") {
+                 return false ;
             }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
 
             console.log(des);
             content = getPopupContenta(layer, lev, des);
-            var temp = [des, ano, layer._leaflet_id];
+            var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
                 layer.bindPopup(content);
@@ -269,33 +312,52 @@ map.on('draw:created', function(e) {
             //circle.push(layergeo);
 
             //console.log(circle);
+            
+            }
+            else {
+            	leditableLayers.removeLayer(layer);
+            }
 
         });
-
 
         leditableLayers.addLayer(layer)
 
 
-    } else if (type == "polygon" && $("#Polygon2").is(":checked") == true) {
+    } 
+    else if (type == "polygon" && $("#Polygon2").is(":checked") == true) {
 
         var des = null;
         var lev = null;
 
 
         bootbox.confirm(htmlca(), function(result) {
-
-
+			if( result ) {
+            //console.log("inside");
             des = $('#description').val();
             ano = $('#anomalyType').find(":selected").val();
-
-
-            if (des == "") {
-                des = "without description";
+			da= $('#datee').val();
+			
+			if (ano == "") {
+                 return false ;
             }
+				
+			console.log(da);
+            if (des == "") {
+                 return false ;
+            }
+
+			var timestamp=Date.parse(da)
+			console.log(timestamp);
+			if (isNaN(timestamp) )
+			{
+   				 return false;
+
+			}
+				
 
             console.log(des);
             content = getPopupContenta(layer, lev, des);
-            var temp = [des, ano, layer._leaflet_id];
+            var temp = [des, ano, layer._leaflet_id,da];
             //console.log(content);
             if (content !== null) {
                 layer.bindPopup(content);
@@ -303,6 +365,15 @@ map.on('draw:created', function(e) {
             }
 
             infospl.push(temp);
+
+            //circle.push(layergeo);
+
+            //console.log(circle);
+            
+            }
+            else {
+            	leditableLayers.removeLayer(layer);
+            }
 
         });
 

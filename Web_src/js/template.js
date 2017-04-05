@@ -36,11 +36,5 @@ $("#map").ready(function() {
         attribution: osmAttrib
     });
     map.addLayer(osm);
-    // Mettre le bouton pour se geolocaliser
-    /*L.control.locate({
-    	strings: {
-    		title: "Show me where I am, yo!"
-    	}
-    }).addTo(map);*/
-
+    map.setView([0.0, 0.0], 1);
 });
