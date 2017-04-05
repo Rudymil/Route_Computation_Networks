@@ -359,13 +359,24 @@ map.on('click', function(e) {
             destBtn = createButton('Go to this location', container);
         L.DomEvent.on(startBtn, 'click', function() {
             //controlPenalty.spliceWaypoints(0, 1, e.latlng);
+<<<<<<< HEAD
+			latlngstart=[e.latlng.lat,e.latlng.lng,"start"];
+			position=e.latlng;
+			send_ajax_point(latlngstart);
+=======
             latlngstart = [e.latlng.lat, e.latlng.lng, "start"];
             send_ajax_point(latlngstart);
+>>>>>>> 166d5633c0153bddffde37e8c83694ec85ad5819
             map.closePopup();
         });
         L.DomEvent.on(destBtn, 'click', function() {
             //controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
+<<<<<<< HEAD
+            latlngend=[e.latlng.lat,e.latlng.lng,"end"];
+            position=e.latlng;
+=======
             latlngend = [e.latlng.lat, e.latlng.lng, "end"];
+>>>>>>> 166d5633c0153bddffde37e8c83694ec85ad5819
             send_ajax_point(latlngend);
             map.closePopup();
         });
