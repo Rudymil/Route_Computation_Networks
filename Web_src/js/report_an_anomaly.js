@@ -404,7 +404,7 @@ var getPopupContenta = function(layer, level, description) {
     						 <td>' + description + '</td>\
   						</tr>\
   						<tr>\
-   							 <td>Expiration_date : </td>\
+   							 <td>Expiration date : </td>\
     						 <td>' + datem() + '</td>\
   						</tr>\
 						</table>'
@@ -426,7 +426,7 @@ var getPopupContenta = function(layer, level, description) {
     						 <td>' + description + '</td>\
   						</tr>\
   						<tr>\
-   							 <td>Expiration_date : </td>\
+   							 <td>Expiration date : </td>\
     						 <td>' + datem() + '</td>\
   						</tr>\
 						</table>'
@@ -447,7 +447,7 @@ var getPopupContenta = function(layer, level, description) {
     						 <td>' + description + '</td>\
   						</tr>\
   						<tr>\
-   							 <td>Expiration_date : </td>\
+   							 <td>Expiration date : </td>\
     						 <td>' + datem() + '</td>\
   						</tr>\
 						</table>'
