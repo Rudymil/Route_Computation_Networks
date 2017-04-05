@@ -1,7 +1,8 @@
-CREATE DATABASE databaseName;
+/*CREATE DATABASE databaseName;
 CREATE EXTENSION postgis;
-CREATE SCHEMA osm;
 
+CREATE ROLE api LOGIN  ENCRYPTED PASSWORD 'apiPassword' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+*/
 CREATE TABLE country(
   id serial,
   name character varying(50) NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE country(
 CREATE TABLE risk(
   id serial,
   name character varying(25) NOT NULL,
+  intensity integer NOT NULL,
   CONSTRAINT risk_pk PRIMARY KEY(id),
   CONSTRAINT risk_unique UNIQUE(name)
 );
@@ -50,7 +52,9 @@ CREATE TABLE anomaly_zone(
 
 CREATE TABLE poi_type (
     id serial,
-    name text NOT NULL
+    name text NOT NULL,
+    CONSTRAINT poi_type_pk PRIMARY KEY (id),
+    CONSTRAINT poi_type_unique UNIQUE (name)
 );
 
 CREATE TABLE poi (
@@ -58,8 +62,17 @@ CREATE TABLE poi (
     geom geometry(POINT, 4326),
     name character varying(255) NOT NULL,
     poi_type_id integer,
-    layer_poi character varying(50) DEFAULT NULL::character varying
+    layer_poi character varying(50) DEFAULT NULL::character varying,
+    CONSTRAINT poi_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE public.country OWNER TO postgres;
+ALTER TABLE public.warning_zone OWNER TO postgres;
+ALTER TABLE public.anomaly_zone OWNER TO postgres;
+ALTER TABLE public.risk OWNER TO postgres;
+ALTER TABLE public.anomaly OWNER TO postgres;
+ALTER TABLE public.poi_type OWNER TO postgres;
+ALTER TABLE public.poi OWNER TO postgres;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.country TO api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.warning_zone TO api;
