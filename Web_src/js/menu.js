@@ -949,18 +949,33 @@ function send_ajax_point(point) {
                             console.log("send_ajax_point reponse :", reponse);
                         }
                         if (reponse == false) { // si error
-
                         } else { // sinon
-                            if (DEBUG) {
-                                console.log("send_ajax_point country[0] : ", country[0]);
-                                console.log("send_ajax_point country[1] : ", country[1]);
-                            }
-                            if (country[0] == null || country[0] == undefined && country[1] == null || country[0] == undefined) { // si pas de pays defini
-                                country[0] = reponse["id"];
-                                country[1] = reponse["name"];
-                            } else { // sinon
-                                if (country[0] != reponse["id"] && country[1] != reponse["name"]) { // si different de ce qu on a
+                            if (point[2] == "start") { // si point de depart
+                                if (DEBUG) {
+                                    console.log("send_ajax_point countrystart[0] : ", countrystart[0]);
+                                    console.log("send_ajax_point countrystart[1] : ", countrystart[1]);
+                                }
+                                if (countrystart[0] == null || countrystart[0] == undefined && countrystart[1] == null || countrystart[0] == undefined) { // si pas de pays defini
+                                    countrystart[0] = reponse["id"];
+                                    countrystart[1] = reponse["name"];
                                 } else { // sinon
+                                    if (countrystart[0] != reponse["id"] && countrystart[1] != reponse["name"]) { // si different de ce qu on a
+                                    } else { // sinon
+                                    }
+                                }
+                            }
+                            if (point[2] == "end") { // si point d arrivee
+                                if (DEBUG) {
+                                    console.log("send_ajax_point countryend[0] : ", countryend[0]);
+                                    console.log("send_ajax_point countryend[1] : ", countryend[1]);
+                                }
+                                if (countryend[0] == null || countryend[0] == undefined && countryend[1] == null || countryend[0] == undefined) { // si pas de pays defini
+                                    countryend[0] = reponse["id"];
+                                    countryend[1] = reponse["name"];
+                                } else { // sinon
+                                    if (countryend[0] != reponse["id"] && countryend[1] != reponse["name"]) { // si different de ce qu on a
+                                    } else { // sinon
+                                    }
                                 }
                             }
                         }
