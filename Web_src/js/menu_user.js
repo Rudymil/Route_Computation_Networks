@@ -348,42 +348,6 @@ function add_warning_zones(url, bbox) {
     });
 }
 /**
- * Executed when the map is ready.
- */
-$("#map").ready(function() {
-    if (DEBUG) {
-        console.log("EVENT : $('#map').ready");
-    }
-    /**
-     * Executed when the map is moved.
-     */
-    map.on('dragend', function() {
-        if (DEBUG) {
-            console.log("dragend zoom :", map.getZoom())
-        }
-        if (map.getZoom() > zoom) {
-            bbox = map.getBounds().toBBoxString();
-            add_warning_zones(url, bbox);
-        } else {
-            remove_warning_zones();
-        }
-    });
-    /**
-     * Executed when the zoom changes.
-     */
-    map.on('zoomend', function() {
-        if (DEBUG) {
-            console.log("zoomend zoom :", map.getZoom())
-        }
-        if (map.getZoom() > zoom) {
-            bbox = map.getBounds().toBBoxString();
-            add_warning_zones(url, bbox);
-        } else {
-            remove_warning_zones();
-        }
-    });
-});
-/**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
  */
