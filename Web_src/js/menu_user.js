@@ -172,14 +172,39 @@ function remove_warning_zones() {
     }
     warning_zones = []; // on vide les warning zones
     delete overlayMaps["Warning zones"];
-    if (Lcontrollayers != undefined) {
+    if (Lcontrollayers != undefined && legend != undefined) {
         Lcontrollayers.remove();
         legend.remove();
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
 /**
- * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
+ */
+function getPopupContentmenu(couche) {
+    var html = '<table>\
+        <tr>\
+            <td>Name : </td>\
+            <td>' + couche.properties.name + '</td>\
+        </tr>\
+        <tr>\
+            <td>Description : </td>\
+            <td>' + couche.properties.description + '</td>\
+        </tr>\
+        <tr>\
+            <td>ID : </td>\
+            <td>' + couche.properties.id + '</td>\
+        </tr>\
+        <tr>\
+            <td>Intensity : </td>\
+            <td>' + couche.properties.intensity + '</td>\
+        </tr>\
+    </table>'
+    return html;
+}
+/**
+ * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
  * @param {string} bbox - Bounding box of the map.
  */
@@ -264,12 +289,13 @@ function add_warning_zones(url, bbox) {
                                 fillColor: colorZone,
                                 color: colorZone
                             });
+                            shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             shape.addTo(map); // ajout a la map
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-                        if (Lcontrollayers != undefined) {
+                        if (Lcontrollayers != undefined && legend != undefined) {
                             Lcontrollayers.remove();
                             legend.remove();
                         }
@@ -321,42 +347,6 @@ function add_warning_zones(url, bbox) {
         }
     });
 }
-/**
- * Executed when the map is ready.
- */
-$("#map").ready(function() {
-    if (DEBUG) {
-        console.log("EVENT : $('#map').ready");
-    }
-    /**
-     * Executed when the map is moved.
-     */
-    map.on('dragend', function() {
-        if (DEBUG) {
-            console.log("dragend zoom :", map.getZoom())
-        }
-        if (map.getZoom() > zoom) {
-            bbox = map.getBounds().toBBoxString();
-            add_warning_zones(url, bbox);
-        } else {
-            remove_warning_zones();
-        }
-    });
-    /**
-     * Executed when the zoom changes.
-     */
-    map.on('zoomend', function() {
-        if (DEBUG) {
-            console.log("zoomend zoom :", map.getZoom())
-        }
-        if (map.getZoom() > zoom) {
-            bbox = map.getBounds().toBBoxString();
-            add_warning_zones(url, bbox);
-        } else {
-            remove_warning_zones();
-        }
-    });
-});
 /**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
@@ -738,6 +728,8 @@ function style_layer(type) {
     }
 }
 /**
+ * Convert a leaflet circle object to a polygon geojson form.
+ * @return {array} - Of latitude longitude for circle in polygon form.
  */
 function geojsoncircle(ci) {
     var circlejson = new Array();

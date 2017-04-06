@@ -1,4 +1,4 @@
-# Documentation [menu.js](menu.js)
+# Documentation [menu_user.js](menu_user.js)
 ```js
 /**
  * Ajax request asking all the type of risk or anomaly from the DB.
@@ -34,7 +34,14 @@ function remove_warning_zones() {...}
 ```
 ```js
 /**
- * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
+ */
+function getPopupContentmenu(couche) {...}
+```
+```js
+/**
+ * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
  * @param {string} bbox - Bounding box of the map.
  */
@@ -148,6 +155,8 @@ function style_layer(type) {...}
 ```
 ```js
 /**
+ * Convert a leaflet circle object to a polygon geojson form.
+ * @return {array} - Of latitude longitude for circle in polygon form.
  */
 function geojsoncircle(ci) {...}
 ```
