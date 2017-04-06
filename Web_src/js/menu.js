@@ -179,7 +179,8 @@ function remove_warning_zones() {
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
 /**
- *
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
  */
 function getPopupContentmenu(couche) {
     var html = '<table>\
@@ -763,6 +764,8 @@ function style_layer(type) {
     }
 }
 /**
+ * Convert a leaflet circle object to a polygon geojson form.
+ * @return {array} - Of latitude longitude for circle in polygon form.
  */
 function geojsoncircle(ci) {
     var circlejson = new Array();
