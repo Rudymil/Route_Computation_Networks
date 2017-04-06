@@ -28,7 +28,6 @@ function remove_anomaly_zones() {
     delete overlayMaps["Anomaly zones"];
     if (Lcontrollayers != undefined) {
         Lcontrollayers.remove();
-        legend.remove();
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }

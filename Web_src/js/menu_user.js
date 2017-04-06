@@ -172,7 +172,7 @@ function remove_warning_zones() {
     }
     warning_zones = []; // on vide les warning zones
     delete overlayMaps["Warning zones"];
-    if (Lcontrollayers != undefined) {
+    if (Lcontrollayers != undefined && legend != undefined) {
         Lcontrollayers.remove();
         legend.remove();
     }
