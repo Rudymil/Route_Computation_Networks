@@ -1,5 +1,6 @@
 # Organisation
-* [index.html](index.html) (*HTML file of the application*)
+* [index_admin.html](index_admin.html) (*HTML file of the administrator application*)
+* [index_user.html](index_user.html) (*HTML file of the basic user application*)
 * [img](img) (*folder of pictures used*)
 * [css](css) (*folder of style files*)
 * [js](js) (*folder of script files*)

@@ -1,4 +1,4 @@
-# Documentation [menu.js](menu.js)
+# Documentation [menu_user.js](menu_user.js)
 ```js
 /**
  * Ajax request asking all the type of risk or anomaly from the DB.
