@@ -8,14 +8,19 @@ if ($_SERVER["REQUEST_URI"] == "/api/queryMaker.inc.php") {
 function queryMaker($sqlRequest){
   if (isset($_REQUEST["DEBUG"])) {
     print("<h2>SQL Request : </h2>");
-    print($sqlRequest);
+    print("<p>" . $sqlRequest . "</p>");
   }
   # Connect to PostgreSQL database
   include_once("./connexion.inc.php");
   # Try query or error
   $ressource = $conn->query($sqlRequest);
-  if (!$ressource) {
-    error(400, "An SQL error occured !");
+  $lastInfo = $conn->errorInfo();
+  
+  if (!$ressource || $lastInfo[0] != 0) {
+    error(400, "<p>An SQL error occured !<br>" . $lastInfo[2] . "</p>");
+  }
+  elseif (isset($_REQUEST["DEBUG"]) && $lastInfo[0] == 0) {
+    print("<h2>SQL Result : </h2><p>Success !</p>");
   }
   $conn = NULL;
   return $ressource;
@@ -118,17 +123,12 @@ function insertGeoJSONQuery($datajson){
       $sqlRequest .= ";";
     }
   }
-
   queryMaker($sqlRequest);
-
-  if (isset($_REQUEST["DEBUG"])) {
-    print("Success !");
-  }
   return true;
 }
 
 function updateGeoJSONQuery($datajson){
-  if ($_REQUEST["DEBUG"]) {
+  if (isset($_REQUEST["DEBUG"])) {
     print("<h1>Action : Update</h1>");
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
@@ -174,22 +174,19 @@ function updateGeoJSONQuery($datajson){
 
       $sqlRequest .= ";";
 
-      if ($_REQUEST["DEBUG"]) {
+      if (isset($_REQUEST["DEBUG"])) {
         print("<h2>SQL Request : </h2>");
         print("<p>" . $sqlRequest . "</p>");
       }
     }
 
     queryMaker($sqlRequest);
-    if ($_REQUEST["DEBUG"]) {
-      print("Success !");
-    }
   }
   return true;
 }
 
 function checkWaypoint($datajson){
-  if ($_REQUEST["DEBUG"]) {
+  if (isset($_REQUEST["DEBUG"])) {
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
   }
@@ -201,11 +198,6 @@ function checkWaypoint($datajson){
   }
 
   $sqlRequest = "SELECT id, name FROM country WHERE ST_Contains(geom, ST_SetSRID(ST_Point($coordinates[0], $coordinates[1]), 4326));";
-
-  if ($_REQUEST["DEBUG"]) {
-    print("<h2>SQL Request : </h2>");
-    print($sqlRequest);
-  }
 
   $rs = queryMaker($sqlRequest);
   $request_result = $rs->fetch(PDO::FETCH_ASSOC);

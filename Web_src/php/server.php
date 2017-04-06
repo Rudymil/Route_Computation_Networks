@@ -68,7 +68,6 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
   elseif (isset($_GET["expired"]) && $_GET["expired"] == "true") {
     $filterSQL .= " AND expiration_date < NOW()";
   }
-
   //Validated
   if (isset($_GET["validated"]) && $_GET["validated"] == "false") {
     $filterSQL .= " AND expiration_date IS NULL";
@@ -76,6 +75,7 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
   elseif (isset($_GET["validated"]) && $_GET["validated"] == "true") {
     $filterSQL .= " AND expiration_date IS NOT NULL";
   }
+  //Country
   if (isset($_GET["country_id"])) {
     $country_id = $_GET["country_id"];
     $tableSQL .= ", country c ";
@@ -83,7 +83,8 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
     }
   if ($_GET["type"] == "warning_zone") {
     $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, t.name, description, risk_intensity AS intensity FROM warning_zone z, risk t $tableSQL WHERE z.risk_type = t.id $filterSQL;";
-  }elseif ($_GET["type"] == "anomaly_zone") {
+  }
+  elseif ($_GET["type"] == "anomaly_zone") {
     $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, t.name, description FROM anomaly_zone z, anomaly t $tableSQL WHERE z.anomaly_type = t.id $filterSQL;";
   }
   if (isset($_REQUEST["DEBUG"])) {
@@ -148,8 +149,7 @@ elseif (isset($_POST["waypoint"])) {
   $json = json_decode($_POST["waypoint"]);
 
   if ($json->waypoint != "start" && $json->waypoint != "end" && $json->waypoint != "step") {error(400, "Incorrect Data !");}
-  $result = checkWaypoint($json);
-  print $result;
+  print checkWaypoint($json);
 }
 
 //Delete object
