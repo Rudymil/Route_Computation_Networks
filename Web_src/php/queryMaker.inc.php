@@ -217,4 +217,5 @@ function checkWaypoint($datajson){
   }
   else{return false;}
 }
+
 ?>
