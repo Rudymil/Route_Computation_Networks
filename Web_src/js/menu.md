@@ -47,6 +47,7 @@ function getPopupContentmenu(couche) {...}
  */
 function add_warning_zones(url, bbox) {...}
 ```
+```js
 /**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
