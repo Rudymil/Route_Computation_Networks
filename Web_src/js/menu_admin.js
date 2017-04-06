@@ -471,8 +471,8 @@ function add_anomaly_zones(url, bbox) {
                             shape.addTo(map); // ajout a la map
                             anomaly_zones.push(shape); // remplir la anomaly zone
                         }
-                        layer_group_warning_zones = L.layerGroup(anomaly_zones); // groupe des couches anomaly zones
-                        overlayMaps["Anomaly zones"] = layer_group_warning_zones; // menu
+                        layer_group_anomaly_zones = L.layerGroup(anomaly_zones); // groupe des couches anomaly zones
+                        overlayMaps["Anomaly zones"] = layer_group_anomaly_zones; // menu
                         if (Lcontrollayers != undefined) {
                             Lcontrollayers.remove();
                         }
