@@ -295,7 +295,7 @@ function add_warning_zones(url, bbox) {
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-                        if (Lcontrollayers != undefined) {
+                        if (Lcontrollayers != undefined && legend != undefined) {
                             Lcontrollayers.remove();
                             legend.remove();
                         }
