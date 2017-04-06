@@ -15,7 +15,7 @@
 * [leaflet-routing-machine.js](leaflet-routing-machine.js)
 * [list.min.js](list.min.js)
 * [menu_editor.js](menu_editor.js) (*Ajax requests for administrator*) [menu_editor.md](menu_editor.md)
-* [menu.js](menu.js) (*Ajax requests for basic users*) [menu_user.md](menu_user.js)
+* [menu.js](menu.js) (*Ajax requests for basic users*) [menu.md](menu.md)
 * [report_a_warning_zone.js](report_a_warning_zone.js)
 * [report_an_anomaly.js](report_an_anomaly.js)
 * [set_the_route.js](set_the_route.js) [set_the_route.md](set_the_route.md)
