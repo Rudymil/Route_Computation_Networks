@@ -745,7 +745,7 @@ function geojsoncircle(ci) {
 /**
  * Executed for sending all the "warning zones".
  */
-$("#submit1").click(function() { // envoie toutes les warning zones
+$("#submit1").click(function() {
     editableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les warning zones
         if (layer instanceof L.Circle) {
             var n = infosc.length;
@@ -823,7 +823,7 @@ $("#submit1").click(function() { // envoie toutes les warning zones
 /**
  * Executed for sending all the "anomaly zones".
  */
-$("#submit2").click(function() { // envoie toutes les anomaly
+$("#submit2").click(function() {
     leditableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les anomalies zones
         if (layer instanceof L.Circle) {
             var n = infoscl.length;

@@ -1,4 +1,4 @@
-# Documentation [menu_user.js](menu_user.js)
+# Documentation [menu.js](menu.js)
 ```js
 /**
  * Ajax request asking all the type of risk or anomaly from the DB.
@@ -47,25 +47,6 @@ function getPopupContentmenu(couche) {...}
  */
 function add_warning_zones(url, bbox) {...}
 ```
-```js
-/**
- * Executed when the map is ready.
- */
-$("#map").ready(function() {...});
-```
-```js
-/**
- * Executed when the map is moved.
- */
-map.on('dragend', function() {...});
-```
-```js
-/**
- * Executed when the zoom changes.
- */
-map.on('zoomend', function() {...});
-```
-```js
 /**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
