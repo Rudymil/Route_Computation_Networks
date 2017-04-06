@@ -28,9 +28,21 @@ function notify_warning_zones_none() {...}
 ```
 ```js
 /**
+ * Notify using Bootstrap Notify that the area targeted or viewed not contains "anomaly zones".
+ */
+function notify_anomaly_zones_none() {...}
+```
+```js
+/**
  * Removed from the map all "warning zones" displayed.
  */
 function remove_warning_zones() {...}
+```
+```js
+/**
+ * Removed from the map all "anomaly zones" displayed.
+ */
+function remove_anomaly_zones() {...}
 ```
 ```js
 /**
@@ -41,7 +53,14 @@ function getPopupContentmenu(couche) {...}
 ```
 ```js
 /**
- * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
+ */
+function getPopupContentmenu_anomaly(couche) {...}
+```
+```js
+/**
+ * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
  * @param {string} bbox - Bounding box of the map.
  */
@@ -49,21 +68,17 @@ function add_warning_zones(url, bbox) {...}
 ```
 ```js
 /**
+ * Ajax request asking all the anomaly zones from the BD and contained into the bounding box of the map.
+ * @param {string} url - Url to the Web API.
+ * @param {string} bbox - Bounding box of the map.
+ */
+function add_anomaly_zones(url, bbox) {...}
+```
+```js
+/**
  * Executed when the map is ready.
  */
 $("#map").ready(function() {...});
-```
-```js
-/**
- * Executed when the map is moved.
- */
-map.on('dragend', function() {...});
-```
-```js
-/**
- * Executed when the zoom changes.
- */
-map.on('zoomend', function() {...});
 ```
 ```js
 /**

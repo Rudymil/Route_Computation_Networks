@@ -41,7 +41,7 @@ function getPopupContentmenu(couche) {...}
 ```
 ```js
 /**
- * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
+ * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
  * @param {string} bbox - Bounding box of the map.
  */
