@@ -238,6 +238,27 @@ function getPopupContentmenu(couche) {
     return html;
 }
 /**
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
+ */
+function getPopupContentmenu_anomaly(couche) {
+    var html = '<table>\
+        <tr>\
+            <td>Name : </td>\
+            <td>' + couche.properties.name + '</td>\
+        </tr>\
+        <tr>\
+            <td>Description : </td>\
+            <td>' + couche.properties.description + '</td>\
+        </tr>\
+        <tr>\
+            <td>ID : </td>\
+            <td>' + couche.properties.id + '</td>\
+        </tr>\
+    </table>'
+    return html;
+}
+/**
  * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
  * @param {string} bbox - Bounding box of the map.
@@ -467,7 +488,7 @@ function add_anomaly_zones(url, bbox) {
                                 fillColor: 'blue',
                                 color: 'blue'
                             });
-                            shape.bindPopup(getPopupContentmenu(json["features"][element]));
+                            shape.bindPopup(getPopupContentmenu_anomaly(json["features"][element]));
                             shape.addTo(map); // ajout a la map
                             anomaly_zones.push(shape); // remplir la anomaly zone
                         }
