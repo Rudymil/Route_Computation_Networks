@@ -2,6 +2,8 @@ var map, featureList, boroughSearch = [],
     theaterSearch = [],
     museumSearch = [];
 
+$("#sidebar").hide();
+    
 $("#list-btn").click(function() {
     animateSidebar();
     return false;
