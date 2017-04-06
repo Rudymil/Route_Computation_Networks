@@ -352,7 +352,7 @@ function add_warning_zones(url, bbox) {
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
                         if (Lcontrollayers != undefined) {
                             Lcontrollayers.remove();
-                            legend.remove();
+                            //legend.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
