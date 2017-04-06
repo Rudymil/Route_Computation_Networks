@@ -178,30 +178,29 @@ function remove_warning_zones() {
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
-
-
+/**
+ *
+ */
 function getPopupContentmenu(couche) {
-	
- var html = '<table>\
- 						 <tr>\
-  							  <td>Name : </td>\
-  							  <td>'+ couche.properties.name +'</td>\
-  						 </tr>\
- 						 <tr>\
-   							 <td>Description : </td>\
-    						 <td>' + couche.properties.description + '</td>\
-  						</tr>\
-  						<tr>\
-   							 <td>ID : </td>\
-    						 <td>' + couche.properties.id + '</td>\
-  						</tr>\
-  						<tr>\
-   							 <td>Intensity : </td>\
-    						 <td>' + couche.properties.intensity + '</td>\
-  						</tr>\
-						</table>'
-        return html;
-        
+    var html = '<table>\
+        <tr>\
+            <td>Name : </td>\
+            <td>' + couche.properties.name + '</td>\
+        </tr>\
+        <tr>\
+            <td>Description : </td>\
+            <td>' + couche.properties.description + '</td>\
+        </tr>\
+        <tr>\
+            <td>ID : </td>\
+            <td>' + couche.properties.id + '</td>\
+        </tr>\
+        <tr>\
+            <td>Intensity : </td>\
+            <td>' + couche.properties.intensity + '</td>\
+        </tr>\
+    </table>'
+    return html;
 }
 /**
  * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
