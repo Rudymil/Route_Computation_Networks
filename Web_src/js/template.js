@@ -3,7 +3,7 @@ var map, featureList, boroughSearch = [],
     museumSearch = [];
 
 $("#sidebar").hide();
-    
+
 $("#list-btn").click(function() {
     animateSidebar();
     return false;
