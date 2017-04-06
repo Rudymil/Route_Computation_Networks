@@ -354,34 +354,8 @@ $("#map").ready(function() {
     if (DEBUG) {
         console.log("EVENT : $('#map').ready");
     }
-    /**
-     * Executed when the map is moved.
-     */
-    map.on('dragend', function() {
-        if (DEBUG) {
-            console.log("dragend zoom :", map.getZoom())
-        }
-        if (map.getZoom() > zoom) {
-            bbox = map.getBounds().toBBoxString();
-            add_warning_zones(url, bbox);
-        } else {
-            remove_warning_zones();
-        }
-    });
-    /**
-     * Executed when the zoom changes.
-     */
-    map.on('zoomend', function() {
-        if (DEBUG) {
-            console.log("zoomend zoom :", map.getZoom())
-        }
-        if (map.getZoom() > zoom) {
-            bbox = map.getBounds().toBBoxString();
-            add_warning_zones(url, bbox);
-        } else {
-            remove_warning_zones();
-        }
-    });
+    bbox = map.getBounds().toBBoxString();
+    add_warning_zones(url, bbox);
 });
 /**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
