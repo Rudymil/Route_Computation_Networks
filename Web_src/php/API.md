@@ -31,7 +31,7 @@ Les données disponibles via l'API ainsi que leur méthode et format d'envoi et/
 |risk|JSON|#NA|
 |anomaly_type|JSON|#NA|
 |warning_zone|GeoJSON|GeoJSON|
-|anomaly_zone|GeoJSON|#NA|
+|anomaly_zone|GeoJSON|GeoJSON|
 
 *Exemple de lecture concernant les warning_zone :*
 
@@ -44,15 +44,14 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
 
 - warning_zone=[GeoJSON]
 - anomaly_zone=[GeoJSON]
-- waypoint=[GeoJSON]
 
 ## Update data
 
 Pour mettre à jour des entitées existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
 
 - action=update
-- type=warning_zone
-- warning_zone=[GeoJSON]
+- type={warning_zone|anomaly_zone}
+- {warning_zone|anomaly_zone}=[GeoJSON]
 
 ## Delete data
 
@@ -66,7 +65,9 @@ Pour supprimer des données stockées en base, les requêtes sont à effectuer e
 
 Exemples de formats de données JSON & GeoJSON utilisés.
 
-### JSON
+### Retours de l'API (SELECT)
+
+#### JSON
 
 **risk|anomaly_zone**
 ```json
@@ -76,13 +77,39 @@ Exemples de formats de données JSON & GeoJSON utilisés.
 ]
 ```
 
-### GeoJSON en POST
+#### GeoJSON
+
+**country**
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.00001,
+          -10.00001
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "name": "Pays 1"
+      }
+    },
+    {another feature}
+  ]
+}
+```
 
 **warning_zone** 
 
 ```json
 {
   "type": "FeatureCollection",
+  "zone_type": "warning_zone",
   "features": [
     {
       "type": "Feature",
@@ -99,9 +126,10 @@ Exemples de formats de données JSON & GeoJSON utilisés.
         ]
       },
       "properties": {
-        "id": 130,
-        "name": "Risque 1",
-        "description": "without description",
+        "id": #,
+        "name": "type de risque",
+        "description": "Lorem ipsum dolor sit amet",
+        "intensity": #,
         "expiration_date": "2017-06-01"
       }
     },
@@ -131,9 +159,9 @@ Exemples de formats de données JSON & GeoJSON utilisés.
         ]
       },
       "properties": {
-        "id": 1,
-        "name": "Anomalie 1",
-        "description": "Manque la nouvelle route du golf et le restaurant",
+        "id":#,
+        "name": "type d'anomalie",
+        "description": "Lorem ipsum dolor sit amet",
         "expiration_date": "2017-06-01"
       }
     },
@@ -142,7 +170,81 @@ Exemples de formats de données JSON & GeoJSON utilisés.
 }
 ```
 
-### GeoJSON en GET (Update)
+### GeoJSON en POST (INSERT)
+
+**warning_zone** 
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.254404067993, -8.8440258142784],
+            [13.254404067993, -8.8402941462384],
+            [13.265390396118, -8.8402941462384],
+            [13.265390396118, -8.8440258142784],
+            [13.254404067993, -8.8440258142784]
+          ]
+        ]
+      },
+      "properties": {
+        "risk_type": #,
+        "description": "Lorem ipsum dolor sit amet",
+        "expiration_date": "2017-06-01"
+      }
+    },
+    {another feature}
+  ]
+}
+```
+
+**anomaly_zone** 
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.254404067993, -8.8440258142784],
+            [13.254404067993, -8.8402941462384],
+            [13.265390396118, -8.8402941462384],
+            [13.265390396118, -8.8440258142784],
+            [13.254404067993, -8.8440258142784]
+          ]
+        ]
+      },
+      "properties": {
+        "anomaly_zone": #,
+        "description": "Lorem ipsum dolor sit amet",
+        "expiration_date": "2017-06-01"
+      }
+    },
+    {another feature}
+  ]
+}
+```
+
+**waypoint** 
+
+```json
+{
+  "type": "Point",
+  "waypoint": {"start"|"step"|"end"},
+  "coordinates": [8.097, 9.592]
+}
+```
+
+### GeoJSON en POST (UPDATE)
 
 **warning_zone** 
 
@@ -166,10 +268,10 @@ Exemples de formats de données JSON & GeoJSON utilisés.
         ]
       },
       "properties": {
-        "id": 5,
-        "risk_type": 1,
-        "description": "test",
-        "intensity": 60,
+        "id": #,
+        "risk_type": #,
+        "description": "Lorem ipsum dolor sit amet",
+        "intensity": #,
         "expiration_date": "2017-06-01"
       }
     },
@@ -178,13 +280,35 @@ Exemples de formats de données JSON & GeoJSON utilisés.
 }
 ```
 
-**waypoint** 
+**anomaly_zone** 
 
 ```json
 {
-  "type": "Point",
-  "waypoint": {"start"|"step"|"end"},
-  "coordinates": [8.097, 9.592]
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.254404067993, -8.8440258142784],
+            [13.254404067993, -8.8402941462384],
+            [13.265390396118, -8.8402941462384],
+            [13.265390396118, -8.8440258142784],
+            [13.254404067993, -8.8440258142784]
+          ]
+        ]
+      },
+      "properties": {
+        "id":#,
+        "anomaly_zone": #,
+        "description": "Lorem ipsum dolor sit amet",
+        "expiration_date": "2017-06-01"
+      }
+    },
+    {another feature}
+  ]
 }
 ```
 
