@@ -399,7 +399,14 @@ var geoloc = L.easyButton({
         onClick: function(control) {
             //alert("test");
             control._map.on('locationfound', function(e) {
-                controlPenalty.spliceWaypoints(0, 1, e.latlng);
+                latlngstart=[e.latlng.lat,e.latlng.lng,"start"];
+				position=e.latlng;
+				send_ajax_point(latlngstart);
+				spanstart=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+				spanstart.addClass("start");
+				spanend=$( ".leaflet-routing-geocoder" ).last().find("span");
+				spanend.addClass("end");
+                //controlPenalty.spliceWaypoints(0, 1, e.latlng);
                 //map.closePopup();
             });
             control._map.on('locationerror', function(e) {

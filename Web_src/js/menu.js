@@ -124,18 +124,11 @@ function ajax_countries(url) {
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                 }
-                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6); <<
-                                << << < HEAD
+                                map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                                 spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
                                 spanstart.addClass("start");
                                 spanend = $(".leaflet-routing-geocoder").last().find("span");
-                                spanend.addClass("end"); ===
-                                === =
-                                a = $(".leaflet-routing-geocoder").eq(0).find("span");
-                                a.addClass("start");
-                                b = $(".leaflet-routing-geocoder").last().find("span");
-                                b.addClass("end"); >>>
-                                >>> > 772 a09647858e182bc1f0c7f0c838876caaf6d43
+                                spanend.addClass("end");
                             });
                         }
                     }
