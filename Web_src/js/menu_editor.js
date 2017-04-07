@@ -17,14 +17,14 @@ function notify_anomaly_zones_none() {
  * Removed from the map all "anomaly zones" displayed.
  */
 function remove_anomaly_zones() {
-    for (element in anomaly_zones) { // pour chaque warning zones
+    for (element in anomaly_zones) { // pour chaque anomalies zones
         if (DEBUG) {
             console.log("element :", element);
             console.log("anomaly_zones[element] :", anomaly_zones[element]);
         }
-        anomaly_zones[element].removeFrom(map); // on enleve les warning zones de la map
+        anomaly_zones[element].removeFrom(map); // on enleve les anomalies zones de la map
     }
-    anomaly_zones = new Array(); // on vide les warning zones
+    anomaly_zones = new Array(); // on vide les anomalies zones
     delete overlayMaps["Anomaly zones"];
     if (Lcontrollayers != undefined || Lcontrollayers != null) {
         Lcontrollayers.remove();
