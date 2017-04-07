@@ -35,7 +35,8 @@ $("#map").ready(function() {
     var osm = new L.TileLayer(osmUrl, {
         minZoom: 1,
         maxZoom: 18,
-        attribution: osmAttrib
+        attribution: osmAttrib,
+        tap: false
     });
     map.addLayer(osm);
     map.setView([0.0, 0.0], 1);
