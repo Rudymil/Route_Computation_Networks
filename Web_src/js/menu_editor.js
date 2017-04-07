@@ -150,7 +150,7 @@ function add_anomaly_zones(url, bbox) {
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
-                        }); //.addTo(map); // ne pas oublier le null
+                        }).addTo(map); // ne pas oublier le null
                         /*$.notify(
                         	{
                         		title: "<strong>Anomaly zones request</strong>",
