@@ -145,7 +145,7 @@ function add_anomaly_zones(url, bbox) {
                         }
                         layer_group_anomaly_zones = L.layerGroup(anomaly_zones); // groupe des couches anomaly zones
                         overlayMaps["Anomaly zones"] = layer_group_anomaly_zones; // menu
-                        if (Lcontrollayers != undefined) {
+                        if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
@@ -330,13 +330,15 @@ function add_warning_zones(url, bbox) {
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-                        if (Lcontrollayers != undefined && legend != undefined) {
+                        if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
-                            legend.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
                         }).addTo(map); // ne pas oublier le null
+                        if (legend != undefined || legend != null) {
+                            legend.remove();
+                        }
                         legend = L.control({
                             position: 'bottomleft'
                         }); // ajout de la legende
