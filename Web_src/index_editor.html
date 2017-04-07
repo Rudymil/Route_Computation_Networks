@@ -169,37 +169,6 @@
 				<li id="cm_debut">Suppression</li>
 			</ul>
 		</div>
-		<script>
-			export var eventConstructors = true;
-			export var mouseEventConstructor = true;
-			export var touchConstructor = true;
-			export var touchEventConstructor = true;
-			export var pointerEventConstructor = true;
-			export var mouse = !!('MouseEvent' in window);
-			export var touch = !!('TouchEvent' in window);
-			export var pointer = !!('PointerEvent' in window);
-			export var phantomjs = phantomjs;
-			export var ie = ie;
-			export var ielt9 = ie && !document.addEventListener;
-			export var edge = 'msLaunchUri' in navigator && !('documentMode' in document);
-			export var webkit = webkit;
-			export var gecko = gecko;
-			export var android = ua.indexOf('android') !== -1;
-			export var android23 = android23;
-			export var chrome = chrome;
-			export var safari = !chrome && !phantomjs && ua.indexOf('safari') !== -1;
-			export var INTERVAL = 1;
-			export var MINIMAL = 2;
-			export var INSTANT = 3;
-			export var FRAME = 4;
-			export var FASTFRAME = 5;
-			import IvansFinger from './IvansIndexFinger.js';
-			import * as capabilities from './Capabilities.js';
-			import Finger from './Finger.js';
-			import * as enums from './Enums.js';
-			import {} from './CustomEventPolyfill.js';
-		</script>
-		<script src="js/IvansIndexFinger.js"></script>
 		<script src="js/leaflet.js"></script> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.js-->
 		<script src="js/jquery.min.js"></script> <!--JQUERY--> <!--https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js-->
 		<script src="js/bootstrap-notify.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js-->
@@ -274,11 +243,5 @@
 		<script src="js/report_a_warning_zone.js"></script>
 		<script src="js/report_an_anomaly.js"></script>
 		<script src="js/codeColor.js"></script>
-		<script src="js/Capabilities.js"></script>
-		<script src="js/CustomEventPolyfill.js"></script>
-		<script src="js/Enums.js"></script>
-		<script src="js/Finger.js"></script>
-		<script src="js/Hand.js"></script>
-		<script src="js/prosthetic-hand.js"></script>
 	</body>
 </html>
