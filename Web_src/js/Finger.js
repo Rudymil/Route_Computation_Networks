@@ -1,5 +1,5 @@
-import IvansFinger from './IvansIndexFinger.js';
-import * as capabilities from './Capabilities.js';
+// import IvansFinger from './IvansIndexFinger.js';
+// import * as capabilities from './Capabilities.js';
 
 
 // Self-incrementing identifier for touch ID and pointer ID.

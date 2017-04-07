@@ -7,7 +7,7 @@
 // `true` if the browser can run `new Event()`.
 // If `false`, then the library will resort to the (deprecated) `window.createEvent()`
 // and `event.initMouseEvent()`. This is needed for legacy browsers and PhantomJS.
-export var eventConstructors = true;
+// export var eventConstructors = true;
 
 try {
     var foo = new Touch({
@@ -20,7 +20,7 @@ try {
 }
 
 // mouseEventConstructor, for MouseEvent
-export var mouseEventConstructor = true;
+// export var mouseEventConstructor = true;
 
 try {
     var foo = new MouseEvent('mousedown');
@@ -30,7 +30,7 @@ try {
 
 
 // touchConstructor, for Touch
-export var touchConstructor = true;
+// export var touchConstructor = true;
 
 try {
     var foo = new Touch({
@@ -44,7 +44,7 @@ try {
 
 // touchEventConstructor, for TouchEvent
 // Weirdly, Safari on iOS has Touch constructor but no TouchEvent constructor.
-export var touchEventConstructor = true;
+// export var touchEventConstructor = true;
 
 try {
     var foo = new TouchEvent('touchdown')
@@ -54,7 +54,7 @@ try {
 
 
 // pointerEventConstructor, for PointerEvent
-export var pointerEventConstructor = true;
+// export var pointerEventConstructor = true;
 
 try {
     var foo = new PointerEvent('pointerdown');
@@ -64,13 +64,13 @@ try {
 
 
 // mouse: `true` if the browser implements `MouseEvent`
-export var mouse = !!('MouseEvent' in window);
+// export var mouse = !!('MouseEvent' in window);
 
 // touch: `true` if the browser implements `TouchEvent`
-export var touch = !!('TouchEvent' in window);
+// export var touch = !!('TouchEvent' in window);
 
 // pointer: `true` if the browser implements `PointerEvent`
-export var pointer = !!('PointerEvent' in window);
+// export var pointer = !!('PointerEvent' in window);
 
 
 
@@ -85,13 +85,13 @@ var ua = navigator.userAgent.toLowerCase(),
     chrome = ua.indexOf('chrome') !== -1,
     gecko = ua.indexOf('gecko') !== -1 && !webkit && !window.opera && !ie;
 
-export var phantomjs = phantomjs;
-export var ie = ie;
-export var ielt9 = ie && !document.addEventListener;
-export var edge = 'msLaunchUri' in navigator && !('documentMode' in document);
-export var webkit = webkit;
-export var gecko = gecko;
-export var android = ua.indexOf('android') !== -1;
-export var android23 = android23;
-export var chrome = chrome;
-export var safari = !chrome && !phantomjs && ua.indexOf('safari') !== -1;
+// export var phantomjs = phantomjs;
+// export var ie = ie;
+// export var ielt9 = ie && !document.addEventListener;
+// export var edge = 'msLaunchUri' in navigator && !('documentMode' in document);
+// export var webkit = webkit;
+// export var gecko = gecko;
+// export var android = ua.indexOf('android') !== -1;
+// export var android23 = android23;
+// export var chrome = chrome;
+// export var safari = !chrome && !phantomjs && ua.indexOf('safari') !== -1;

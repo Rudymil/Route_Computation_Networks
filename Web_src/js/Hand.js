@@ -1,7 +1,7 @@
-import Finger from './Finger.js';
-import * as enums from './Enums.js';
-import * as capabilities from './Capabilities.js';
-import {} from './CustomEventPolyfill.js';
+// import Finger from './Finger.js';
+// import * as enums from './Enums.js';
+// import * as capabilities from './Capabilities.js';
+// import {} from './CustomEventPolyfill.js';
 
 // 🖑class Hand
 // Represents a set of `Finger`s, capable of performing synthetic touch gestures
