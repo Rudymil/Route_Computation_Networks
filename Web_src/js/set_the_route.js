@@ -313,10 +313,10 @@ latlng[1]=temp[1];
 //latlng[1][1]=lngdes;
 }*/
 
-a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-a.addClass("start");
-b=$( ".leaflet-routing-geocoder" ).last().find("span");
-b.addClass("end");
+spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+spanstart.addClass("start");
+spanend = $(".leaflet-routing-geocoder").last().find("span");
+spanend.addClass("end");
 
 var controlPenalty = L.Routing.control({
     waypoints: [null],
@@ -364,24 +364,24 @@ map.on('click', function(e) {
             destBtn = createButton('Go to this location', container);
         L.DomEvent.on(startBtn, 'click', function() {
             //controlPenalty.spliceWaypoints(0, 1, e.latlng);
-			latlngstart=[e.latlng.lat,e.latlng.lng,"start"];
-			position=e.latlng;
+            latlngstart = [e.latlng.lat, e.latlng.lng, "start"];
+            position = e.latlng;
             send_ajax_point(latlngstart);
-            a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-			a.addClass("start");
-			b=$( ".leaflet-routing-geocoder" ).last().find("span");
-			b.addClass("end");
+            spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+            spanstart.addClass("start");
+            spanend = $(".leaflet-routing-geocoder").last().find("span");
+            spanend.addClass("end");
             map.closePopup();
         });
         L.DomEvent.on(destBtn, 'click', function() {
             //controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, e.latlng);
-            latlngend=[e.latlng.lat,e.latlng.lng,"end"];
-            position=e.latlng;
+            latlngend = [e.latlng.lat, e.latlng.lng, "end"];
+            position = e.latlng;
             send_ajax_point(latlngend);
-            a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-			a.addClass("start");
-			b=$( ".leaflet-routing-geocoder" ).last().find("span");
-			b.addClass("end");
+            spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+            spanstart.addClass("start");
+            spanend = $(".leaflet-routing-geocoder").last().find("span");
+            spanend.addClass("end");
             map.closePopup();
         });
         L.popup()
@@ -427,36 +427,36 @@ geoloc.addTo(map);
 
 
 
-$(document).on('click','.leaflet-routing-remove-waypoint.start',function(){
-          //alert("start");
-          countrystart = new Array(2);
-          a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-          a.addClass("start");
-          b=$( ".leaflet-routing-geocoder" ).last().find("span");
-		  b.addClass("end");
- }); 
- 
- 
+$(document).on('click', '.leaflet-routing-remove-waypoint.start', function() {
+    //alert("start");
+    countrystart = new Array(2);
+    spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+    spanstart.addClass("start");
+    spanend = $(".leaflet-routing-geocoder").last().find("span");
+    spanend.addClass("end");
+});
 
-$(document).on('click','.leaflet-routing-remove-waypoint.end',function(){
-          //alert("end");
-          countryend = new Array(2); 
-          a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-          a.addClass("start");
-          b=$( ".leaflet-routing-geocoder" ).last().find("span");
-          b.addClass("end");
- });
- 
- 
- $(document).on('click','.leaflet-routing-add-waypoint',function(){
-		  //alert("test");
-          a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-          a.addClass("start");
-          b=$( ".leaflet-routing-geocoder" ).last().find("span");
-		  b.addClass("end");
- }); 
- 
- 
+
+
+$(document).on('click', '.leaflet-routing-remove-waypoint.end', function() {
+    //alert("end");
+    countryend = new Array(2);
+    spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+    spanstart.addClass("start");
+    spanend = $(".leaflet-routing-geocoder").last().find("span");
+    spanend.addClass("end");
+});
+
+
+$(document).on('click', '.leaflet-routing-add-waypoint', function() {
+    //alert("test");
+    spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+    spanstart.addClass("start");
+    spanend = $(".leaflet-routing-geocoder").last().find("span");
+    spanend.addClass("end");
+});
+
+
 /*var c=$( ".leaflet-routing-geocoder" ).eq(0).find("input");
  $(document).on('click', c ,function(){
 		  alert("test");
