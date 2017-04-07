@@ -24,35 +24,6 @@ else {
   header('Content-type: application/json');
 }
 
-/*** GET ***
- - zones
-    type=warning_zone && !action
-    type=anomaly_zone && !action
-      bbox
-      expired={true|false}
-      validated={true|false}
- - country
-    type=country
- - types
-    type=risk_type
-    type=anomaly_type
-
- - delete
-    action=delete && type=warning_zone && id=#
-    action=delete && type=anomaly_zone && id=#
-
-***/
-
-/*** POST ***
- - waypoint
-    $json->waypoint={start|step|end}
- - zones
-    warning_zone : $json->zone_type=warning_zone && $json->properties->risk_type && $json->properties->description
-      action=update && $json->properties->intensity
-    anomaly_zone : $json->zone_type=anomaly_zone
-      action=update
-***/
-
 //GET zones
 if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] == "anomaly_zone") && !isset($_GET["action"])) {
   $tableSQL = "";
@@ -116,32 +87,28 @@ elseif (isset($_GET["type"]) && ($_GET["type"] == "risk_type" || $_GET["type"] =
 }
 
 //POST zones
-elseif (isset($_POST["warning_zone"])) {
-  $json = json_decode($_POST["warning_zone"]);
-  if ($json->zone_type != "warning_zone") {error(400, "Incorrect Data !");}
+elseif (isset($_POST["warning_zone"]) || isset($_POST["anomaly_zone"])) {
+  if (isset($_POST["warning_zone"])) {
+    $json = json_decode($_POST["warning_zone"]);
+    if ($json->zone_type != "warning_zone") {error(400, "Incorrect Data !");}
+  }
+  if (isset($_POST["anomaly_zone"])) {
+    $json = json_decode($_POST["anomaly_zone"]);
+    if ($json->zone_type != "anomaly_zone") {error(400, "Incorrect Data !");}
+  }
 
-  //Update
+  foreach ($json->features as $key => $value) {
+    if (isset($_POST["warning_zone"]) && (!isset($value->properties->risk_type) || !isset($value->properties->description))) {error(400, "Incorrect Data !");}
+    if (isset($_POST["warning_zone"]) && isset($_POST["action"]) && $_POST["action"] == "update" && !isset($value->properties->intensity)) {error(400, "Incorrect Data !");}
+    if (isset($_POST["anomaly_zone"]) && (!isset($value->properties->anomaly_type) || !isset($value->properties->description))) {error(400, "Incorrect Data !");}
+  }
+
   if (isset($_POST["action"]) && $_POST["action"] == "update") {
-    foreach ($json->features as $key => $value) {
-      if (!isset($value->properties->risk_type) || !isset($value->properties->description) || !isset($value->properties->intensity)) {error(400, "Incorrect Data !");}
-    }
     print updateGeoJSONQuery($json);
   }
-  //Insert
   else {
-    foreach ($json->features as $key => $value) {
-      if (!isset($value->properties->risk_type) || !isset($value->properties->description)) {error(400, "Incorrect Data !");}
-    }
     print insertGeoJSONQuery($json);
   }
-}
-elseif (isset($_POST["anomaly_zone"])) {
-  $json = json_decode($_POST["anomaly_zone"]);
-  if ($json->zone_type != "anomaly_zone") {error(400, "Incorrect Data !");}
-  foreach ($json->features as $key => $value) {
-    if (!isset($value->properties->anomaly_type) || !isset($value->properties->description)) {error(400, "Incorrect Data !");}
-  }
-  print insertGeoJSONQuery($json);
 }
 
 //Check waypoints
@@ -164,6 +131,4 @@ elseif (isset($_GET["action"]) && isset($_GET["type"]) && isset($_GET["id"]) && 
 else{
   error(400, "No data received !");
 }
-
-
 ?>

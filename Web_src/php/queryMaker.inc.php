@@ -164,8 +164,6 @@ function updateGeoJSONQuery($datajson){
       $geom = json_encode($geometry);
 
       $properties = $features[$i]->properties;
-      $risk_type = $properties->risk_type;
-      $intensity = $properties->intensity;
       $description = addslashes($properties->description);
 
       $sqlRequest .= $data->zone_type . " SET";
@@ -177,15 +175,16 @@ function updateGeoJSONQuery($datajson){
       }
 
       if($data->zone_type == "warning_zone") {
+        $risk_type = $properties->risk_type;
+        $intensity = $properties->intensity;
         $sqlRequest .= ", risk_type = " . $risk_type;
         $sqlRequest .= ", risk_intensity = " . $intensity;
-        if (isset($properties->validation_date)) {
-          $validation_date = testDate($properties->validation_date);
-          $sqlRequest .= ", validation_date = " . $validation_date;
+        if (isset($properties->validated)) {
+          $sqlRequest .= ", validation_date = NOW()";
         }
       }
       elseif($data->zone_type == "anomaly_zone") {
-        $sqlRequest .= ", anomaly_type = " . $anomaly_type;
+        $sqlRequest .= ", anomaly_type = " . $properties->anomaly_type;
       }
       $sqlRequest .= ", description = '" . $description . "'";
 
