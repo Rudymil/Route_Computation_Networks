@@ -272,7 +272,8 @@ Exemples de formats de données JSON & GeoJSON utilisés.
         "risk_type": #,
         "description": "Lorem ipsum dolor sit amet",
         "intensity": #,
-        "expiration_date": "2017-06-01"
+        "expiration_date": "2017-06-01",
+        "validated": {true|false}
       }
     },
     {another feature}
