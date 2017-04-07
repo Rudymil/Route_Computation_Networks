@@ -1,6 +1,6 @@
 # Organisation
 * [index_editor.html](index_editor.html) (*HTML file of the editor's application*)
-* [index_user.html](index_user.html) (*HTML file of the basic user's application*)
+* [index.html](index.html) (*HTML file of the basic user's application*)
 * [img](img) (*folder of pictures used*)
 * [css](css) (*folder of style files*)
 * [js](js) (*folder of script files*)
