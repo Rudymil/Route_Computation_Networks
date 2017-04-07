@@ -190,7 +190,7 @@
 			var layer_group_warning_zones; // L.layerGroup
 			var overlayMaps = new Array(); // composant de la couche
 			var Lcontrollayers; // couche de la map
-			var legend; // legende d'intensite des warning zones
+			var legend; // legende d'intensite des warning zones 
 			var types_warning_zones = new Array(); // types a recevoir
 			var types_anomalies = new Array(); // types a recevoir
 			var string_warning_zone = "warning_zone"; // parametre
@@ -202,12 +202,14 @@
 			var zoom = 12; // set view
 			var geojson = new Object(); // a envoyer
 			var json_countries = new Array(); // a recuperer
-			var latlngstart = new Array(3); //coordinates start
+			var latlngstart = new Array(3); //coordinates start 
 			var latlngend = new Array(3); //coordinates end
 			var countrystart = new Array(2); // id + country name start
 			var countryend = new Array(2); // id + country name end
 			var controlPenalty;
 			var position;
+			var a;
+			var b;
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>

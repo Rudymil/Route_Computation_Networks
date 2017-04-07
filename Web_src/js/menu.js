@@ -125,6 +125,10 @@ function ajax_countries(url) {
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                 }
                                 map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
+                                a = $(".leaflet-routing-geocoder").eq(0).find("span");
+                                a.addClass("start");
+                                b = $(".leaflet-routing-geocoder").last().find("span");
+                                b.addClass("end");
                             });
                         }
                     }
@@ -776,6 +780,9 @@ function send_ajax_point(point) {
                                                 align: "center"
                                             }
                                         });
+                                        countrystart[0] = countryend[0];
+                                        countrystart[1] = countryend[1];
+
                                     }
                                 } else {
                                     controlPenalty.spliceWaypoints(0, 1, position);
@@ -805,6 +812,8 @@ function send_ajax_point(point) {
                                                 align: "center"
                                             }
                                         });
+                                        countryend[0] = countrystart[0];
+                                        countryend[1] = countrystart[1];
                                     }
                                 } else {
                                     controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, position);

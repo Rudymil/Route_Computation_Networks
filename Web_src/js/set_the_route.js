@@ -313,6 +313,11 @@ latlng[1]=temp[1];
 //latlng[1][1]=lngdes;
 }*/
 
+a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+a.addClass("start");
+b=$( ".leaflet-routing-geocoder" ).last().find("span");
+b.addClass("end");
+
 var controlPenalty = L.Routing.control({
     waypoints: [null],
     routeWhileDragging: true,
@@ -362,6 +367,10 @@ map.on('click', function(e) {
 			latlngstart=[e.latlng.lat,e.latlng.lng,"start"];
 			position=e.latlng;
             send_ajax_point(latlngstart);
+            a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+			a.addClass("start");
+			b=$( ".leaflet-routing-geocoder" ).last().find("span");
+			b.addClass("end");
             map.closePopup();
         });
         L.DomEvent.on(destBtn, 'click', function() {
@@ -369,6 +378,10 @@ map.on('click', function(e) {
             latlngend=[e.latlng.lat,e.latlng.lng,"end"];
             position=e.latlng;
             send_ajax_point(latlngend);
+            a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+			a.addClass("start");
+			b=$( ".leaflet-routing-geocoder" ).last().find("span");
+			b.addClass("end");
             map.closePopup();
         });
         L.popup()
@@ -412,10 +425,7 @@ var geoloc = L.easyButton({
 
 geoloc.addTo(map);
 
-var a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
-  a.addClass("start");
-  var b=$( ".leaflet-routing-geocoder" ).last().find("span");
-  b.addClass("end");
+
 
 $(document).on('click','.leaflet-routing-remove-waypoint.start',function(){
           //alert("start");
@@ -445,3 +455,10 @@ $(document).on('click','.leaflet-routing-remove-waypoint.end',function(){
           b=$( ".leaflet-routing-geocoder" ).last().find("span");
 		  b.addClass("end");
  }); 
+ 
+ 
+/*var c=$( ".leaflet-routing-geocoder" ).eq(0).find("input");
+ $(document).on('click', c ,function(){
+		  alert("test");
+          
+ });*/
