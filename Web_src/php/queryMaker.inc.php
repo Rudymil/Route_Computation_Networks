@@ -5,14 +5,29 @@ if ($_SERVER["REQUEST_URI"] == "/api/queryMaker.inc.php") {
   error(403, "Invalid request URI !");
 }
 
-function selectGeoJSONQuery($sqlRequest) {
+function queryMaker($sqlRequest){
+  if (isset($_REQUEST["DEBUG"])) {
+    print("<h2>SQL Request : </h2>");
+    print("<p>" . $sqlRequest . "</p>");
+  }
   # Connect to PostgreSQL database
   include_once("./connexion.inc.php");
   # Try query or error
-  $rs = $conn->query($sqlRequest);
-  if (!$rs) {
-    exit("An SQL error occured.\n");
+  $ressource = $conn->query($sqlRequest);
+  $lastInfo = $conn->errorInfo();
+  
+  if (!$ressource || $lastInfo[0] != 0) {
+    error(400, "<p>An SQL error occured !<br>" . $lastInfo[2] . "</p>");
   }
+  elseif (isset($_REQUEST["DEBUG"]) && $lastInfo[0] == 0) {
+    print("<h2>SQL Result : </h2><p>Success !</p>");
+  }
+  $conn = NULL;
+  return $ressource;
+}
+
+function selectGeoJSONQuery($sqlRequest) {
+  $rs = queryMaker($sqlRequest);
 
   # Build GeoJSON feature collection array
   $geojson = array(
@@ -36,19 +51,11 @@ function selectGeoJSONQuery($sqlRequest) {
       array_push($geojson['features'], $feature);
   }
 
-  $conn = NULL;
   return json_encode($geojson, JSON_NUMERIC_CHECK);
 }
 
 function selectJSONQuery($sqlRequest) {
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
-  # Try query or error
-  $rs = $conn->query($sqlRequest);
-  $conn = NULL;
-  if (!$rs) {
-    exit("An SQL error occured.\n");
-  }
+  $rs = queryMaker($sqlRequest);
 
   # Build GeoJSON feature collection array
   $json = array();
@@ -62,25 +69,16 @@ function selectJSONQuery($sqlRequest) {
 }
 
 function deleteQuery($sqlRequest) {
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
-  # Try query or error
-  $rs = $conn->query($sqlRequest);
-  $conn = NULL;
-  if (!$rs) {
-    exit("An SQL error occured.\n");
-  }else {
-    print("true");
-  }
+  queryMaker($sqlRequest);
+  return true;
 }
 
 function insertGeoJSONQuery($datajson){
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+  if (isset($_REQUEST["DEBUG"])) {
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
   }
 
-  //$data = json_decode($datajson);
   $data = $datajson;
   $zone_type = $data->zone_type;
   $nbrOfFeatures = sizeOf($data->features);
@@ -114,6 +112,7 @@ function insertGeoJSONQuery($datajson){
       $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($risk_type) . ", (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . "), '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
     }elseif ($data->zone_type == "anomaly_zone") {
       $anomaly_type = $properties->anomaly_type;
+      $expiration_date = $properties->expiration_date;
       $description  = $properties->description;
       $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($anomaly_type) . ", '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
     }
@@ -124,40 +123,20 @@ function insertGeoJSONQuery($datajson){
       $sqlRequest .= ";";
     }
   }
-
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
-    print("<h2>SQL Request : </h2>");
-    print($sqlRequest);
-  }
-
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
-
-  $rs = $conn->query($sqlRequest);
-  if (!$rs) {
-    exit("An SQL error occured.\n");
-  }
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
-    print("Success !");
-  }
-  $conn = NULL;
-  print(true);
+  queryMaker($sqlRequest);
+  return true;
 }
 
 function updateGeoJSONQuery($datajson){
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+  if (isset($_REQUEST["DEBUG"])) {
     print("<h1>Action : Update</h1>");
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
   }
 
-  //$data = json_decode($datajson);
   $data = $datajson;
   $zone_type = $data->zone_type;
   $features = $data->features;
-
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
 
   if ($data->zone_type == "warning_zone" || $data->zone_type == "anomaly_zone") {
     for ($i=0; $i < sizeOf($features); $i++){
@@ -195,25 +174,19 @@ function updateGeoJSONQuery($datajson){
 
       $sqlRequest .= ";";
 
-      if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+      if (isset($_REQUEST["DEBUG"])) {
         print("<h2>SQL Request : </h2>");
         print("<p>" . $sqlRequest . "</p>");
       }
     }
 
-    $rs = $conn->query($sqlRequest);
-    if (!$rs) {
-        exit("An SQL error occured.\n");
-    }
-    if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
-      print("Success !");
-    }
+    queryMaker($sqlRequest);
   }
-  $conn = NULL;
+  return true;
 }
 
 function checkWaypoint($datajson){
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
+  if (isset($_REQUEST["DEBUG"])) {
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
   }
@@ -226,19 +199,7 @@ function checkWaypoint($datajson){
 
   $sqlRequest = "SELECT id, name FROM country WHERE ST_Contains(geom, ST_SetSRID(ST_Point($coordinates[0], $coordinates[1]), 4326));";
 
-  if (isset($_GET["DEBUG"]) || isset($_POST["DEBUG"])) {
-    print("<h2>SQL Request : </h2>");
-    print($sqlRequest);
-  }
-
-  # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
-
-  $rs = $conn->query($sqlRequest);
-  if (!$rs) {
-    exit("An SQL error occured.\n");
-  }
-  $conn = NULL;
+  $rs = queryMaker($sqlRequest);
   $request_result = $rs->fetch(PDO::FETCH_ASSOC);
 
   if(sizeOf($request_result["id"]) == 1){
@@ -248,4 +209,5 @@ function checkWaypoint($datajson){
   }
   else{return false;}
 }
+
 ?>

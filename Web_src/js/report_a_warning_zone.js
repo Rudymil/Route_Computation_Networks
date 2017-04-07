@@ -30,7 +30,7 @@ function hmtlcw() {
     var debutw = "<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='level'>\
-				<option value='' disabled selected>Select the warning zone</option>";
+				<option value=null disabled selected>Select the warning zone</option>";
     var finw = "</select>\
 			</div>\
 			<div class='form-group'>\
@@ -240,7 +240,7 @@ map.on('draw:created', function(e) {
             	lev = $('#level').val();
 				da= $('#datee').val();
 				
-				if (lev == "") {
+				if (lev == null) {
                  return false ;
             	}
 				
@@ -258,7 +258,7 @@ map.on('draw:created', function(e) {
 				}
 
             	//console.log(des);
-            	content = getPopupContentw(layer, lev, des);
+            	content = getPopupContentw(layer, lev, des,da);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
            	 	if (content !== null) {
@@ -291,15 +291,14 @@ map.on('draw:created', function(e) {
         var des = null;
         var lev = null;
 
-
+ 
         bootbox.confirm(hmtlcw(), function(result) {
 			if ( result ) {
-            	//console.log("inside");
             	des = $('#description').val();
-            	lev = $('#level').find(":selected").val();
+            	lev = $('#level').val();
 				da= $('#datee').val();
 				
-				if (lev == "") {
+				if (lev == null) {
                  return false ;
             	}
 				
@@ -316,12 +315,8 @@ map.on('draw:created', function(e) {
 
 				}
 
-            	if (des == "") {
-            	    return false;
-            	}
-
             	console.log(des);
-            	content = getPopupContentw(layer, lev, des);
+            	content = getPopupContentw(layer, lev, des,da);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
@@ -351,10 +346,10 @@ map.on('draw:created', function(e) {
         bootbox.confirm(hmtlcw(), function(result) {
 			if ( result ) {
             	des = $('#description').val();
-            	lev = $('#level').find(":selected").val();
+            	lev = $('#level').val();
 				da= $('#datee').val();
 				
-				if (lev == "") {
+				if (lev == null) {
                  return false ;
             	}
 				
@@ -370,14 +365,9 @@ map.on('draw:created', function(e) {
    				 	return false;
 
 				}
-				
-
-            	if (des == "") {
-                	return false ;
-            	}
 
            		console.log(des);
-            	content = getPopupContentw(layer, lev, des);
+            	content = getPopupContentw(layer, lev, des,da);
             	var temp = [des, lev, layer._leaflet_id,da];
             	//console.log(content);
             	if (content !== null) {
@@ -410,7 +400,7 @@ map.on('draw:created', function(e) {
 });
 
 
-var getPopupContentw = function(layer, level, description) {
+var getPopupContentw = function(layer, level, description,d) {
 
     if (layer instanceof L.Circle) {
 
@@ -429,7 +419,7 @@ var getPopupContentw = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
@@ -451,7 +441,7 @@ var getPopupContentw = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;
@@ -472,7 +462,7 @@ var getPopupContentw = function(layer, level, description) {
   						</tr>\
   						<tr>\
    							 <td>Expiration date : </td>\
-    						 <td>' + datem() + '</td>\
+    						 <td>' + d + '</td>\
   						</tr>\
 						</table>'
         return html;

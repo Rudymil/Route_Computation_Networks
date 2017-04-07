@@ -22,44 +22,6 @@ $("body").ready(function() {...});
 ```
 ```js
 /**
- * Notify using Bootstrap Notify that the area targeted or viewed not contains "warning zones".
- */
-function notify_warning_zones_none() {...}
-```
-```js
-/**
- * Removed from the map all "warning zones" displayed.
- */
-function remove_warning_zones() {...}
-```
-```js
-/**
- * Ajax request asking all the countries from the BD and contained into the bounding box of the map.
- * @param {string} url - Url to the Web API.
- * @param {string} bbox - Bounding box of the map.
- */
-function add_warning_zones(url, bbox) {...}
-```
-```js
-/**
- * Executed when the map is ready.
- */
-$("#map").ready(function() {...});
-```
-```js
-/**
- * Executed when the map is moved.
- */
-map.on('dragend', function() {...});
-```
-```js
-/**
- * Executed when the zoom changes.
- */
-map.on('zoomend', function() {...});
-```
-```js
-/**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
  */
@@ -148,6 +110,8 @@ function style_layer(type) {...}
 ```
 ```js
 /**
+ * Convert a leaflet circle object to a polygon geojson form.
+ * @return {array} - Of latitude longitude for circle in polygon form.
  */
 function geojsoncircle(ci) {...}
 ```

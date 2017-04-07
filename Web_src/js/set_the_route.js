@@ -411,3 +411,37 @@ var geoloc = L.easyButton({
 });
 
 geoloc.addTo(map);
+
+var a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+  a.addClass("start");
+  var b=$( ".leaflet-routing-geocoder" ).last().find("span");
+  b.addClass("end");
+
+$(document).on('click','.leaflet-routing-remove-waypoint.start',function(){
+          //alert("start");
+          countrystart = new Array(2);
+          a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+          a.addClass("start");
+          b=$( ".leaflet-routing-geocoder" ).last().find("span");
+		  b.addClass("end");
+ }); 
+ 
+ 
+
+$(document).on('click','.leaflet-routing-remove-waypoint.end',function(){
+          //alert("end");
+          countryend = new Array(2); 
+          a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+          a.addClass("start");
+          b=$( ".leaflet-routing-geocoder" ).last().find("span");
+          b.addClass("end");
+ });
+ 
+ 
+ $(document).on('click','.leaflet-routing-add-waypoint',function(){
+		  //alert("test");
+          a=$( ".leaflet-routing-geocoder" ).eq(0).find("span");
+          a.addClass("start");
+          b=$( ".leaflet-routing-geocoder" ).last().find("span");
+		  b.addClass("end");
+ }); 
