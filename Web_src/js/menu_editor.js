@@ -24,7 +24,7 @@ function remove_anomaly_zones() {
         }
         anomaly_zones[element].removeFrom(map); // on enleve les warning zones de la map
     }
-    anomaly_zones = []; // on vide les warning zones
+    anomaly_zones = new Array(); // on vide les warning zones
     delete overlayMaps["Anomaly zones"];
     if (Lcontrollayers != undefined && legend != undefined) {
         Lcontrollayers.remove();
@@ -125,7 +125,7 @@ function add_anomaly_zones(url, bbox) {
                             anomaly_zones[element].removeFrom(map); // on enleve les anomaly zones de la map
                         }
                     }
-                    anomaly_zones = []; // on vide les anomaly zones
+                    anomaly_zones = new Array(); // on vide les anomaly zones
                     if (json["features"].length > 0) {
                         for (element in json["features"]) { // pour chaque object du geojson
                             if (DEBUG) {
@@ -205,7 +205,7 @@ function remove_warning_zones() {
         }
         warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
     }
-    warning_zones = []; // on vide les warning zones
+    warning_zones = new Array(); // on vide les warning zones
     delete overlayMaps["Warning zones"];
     if (Lcontrollayers != undefined && legend != undefined) {
         Lcontrollayers.remove();
@@ -310,7 +310,7 @@ function add_warning_zones(url, bbox) {
                             warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
                         }
                     }
-                    warning_zones = []; // on vide les warning zones
+                    warning_zones = new Array(); // on vide les warning zones
                     if (json["features"].length > 0) {
                         for (element in json["features"]) { // pour chaque object du geojson
                             if (DEBUG) {
