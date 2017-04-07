@@ -148,20 +148,20 @@ function add_anomaly_zones(url, bbox) {
                             Lcontrollayers.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
-                            position: 'topleft'
-                        })//.addTo(map); // ne pas oublier le null
-                        /*$.notify(
-                        	{
-                        		title: "<strong>Anomaly zones request</strong>",
-                        		message: 'received'
-                        	},{
-                        		type: "success",
-                        		placement: {
-                        			from: "bottom",
-                        			align: "center"
-                        		}
-                        	}
-                        );*/
+                                position: 'topleft'
+                            }) //.addTo(map); // ne pas oublier le null
+                            /*$.notify(
+                            	{
+                            		title: "<strong>Anomaly zones request</strong>",
+                            		message: 'received'
+                            	},{
+                            		type: "success",
+                            		placement: {
+                            			from: "bottom",
+                            			align: "center"
+                            		}
+                            	}
+                            );*/
                     } else {
                         //notify_anomaly_zones_none();
                     }
@@ -171,6 +171,10 @@ function add_anomaly_zones(url, bbox) {
                     }
                     if (anomaly_zones.length > 0) {
                         remove_anomaly_zones();
+                        if (Lcontrollayers != undefined && legend != undefined) {
+                            Lcontrollayers.remove();
+                            legend.remove();
+                        }
                     }
                     //notify_anomaly_zones_none();
                 }
@@ -374,6 +378,10 @@ function add_warning_zones(url, bbox) {
                     }
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
+                        if (Lcontrollayers != undefined && legend != undefined) {
+                            Lcontrollayers.remove();
+                            legend.remove();
+                        }
                     }
                     //notify_warning_zones_none();
                 }

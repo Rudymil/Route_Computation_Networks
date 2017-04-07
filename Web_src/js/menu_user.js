@@ -194,6 +194,10 @@ function add_warning_zones(url, bbox) {
                     }
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
+                        if (Lcontrollayers != undefined && legend != undefined) {
+                            Lcontrollayers.remove();
+                            legend.remove();
+                        }
                     }
                     //notify_warning_zones_none();
                 }
