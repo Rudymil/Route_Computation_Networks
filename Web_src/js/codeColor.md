@@ -1,12 +1,25 @@
+# Documentation [codeColor.js](codeColor.js)
 ```js
-function codeColorRed(value){...};
-```  
-Couleur rgb .
+/**
+ * Created a rgb scale
+ * @param {number} value - Value of intensity between 0 and 1
+ * @return {string} -Value of the color in rgb
+ */
+function codeColorRed(value){...}
+```
 ```js
-function heatMapColorforValue(value){...};
-```  
-Couleur hsl.  
+/**
+ * Created a hsl scale
+ * @param {number} value - Value of intensity between 0 and 1
+ * @return {string} -Value of the color in hsl
+ */
+function heatMapColorforValue(value){...}
+```
 ```js
-function getColor(value){...};
-```  
-Echelle de couleur tous les 10.
+/**
+ * Created a orange scale for every 10 from 0 to 100
+ * @param {number} value - Value of intensity between 0 and 100
+ * @return {string} -Value of the color in hexadecimale color
+ */
+getColor(value){...}
+```
