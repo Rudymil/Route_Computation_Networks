@@ -197,11 +197,9 @@
 			var anomaly_zones = new Array(); // liste des anomaly zones
 			var layer_group_warning_zones; // L.layerGroup
 			var layer_group_anomaly_zones; // L.layerGroup
-			var grid = L.layerGroup();
-			var heatPoly = L.layerGroup();
 			var overlayMaps = new Array(); // composant de la couche
 			var Lcontrollayers; // couche de la map
-			var legend;
+			var legend; // legende d intensite des warning zones
 			var types_warning_zones = new Array(); // types a recevoir
 			var types_anomalies = new Array(); // types a recevoir
 			var string_warning_zone = "warning_zone"; // parametre
@@ -213,7 +211,7 @@
 			var zoom = 12; // set view
 			var geojson = new Object(); // a envoyer
 			var json_countries = new Array(); // a recuperer
-			var latlngstart = new Array(3); //coordinates start 
+			var latlngstart = new Array(3); //coordinates start
 			var latlngend = new Array(3); //coordinates end
 			var countrystart = new Array(2); // id + country name start
 			var countryend = new Array(2); // id + country name end
