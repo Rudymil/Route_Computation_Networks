@@ -149,20 +149,20 @@ function add_anomaly_zones(url, bbox) {
                             Lcontrollayers.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
-                                position: 'topleft'
-                            }) //.addTo(map); // ne pas oublier le null
-                            /*$.notify(
-                            	{
-                            		title: "<strong>Anomaly zones request</strong>",
-                            		message: 'received'
-                            	},{
-                            		type: "success",
-                            		placement: {
-                            			from: "bottom",
-                            			align: "center"
-                            		}
-                            	}
-                            );*/
+                            position: 'topleft'
+                        }); //.addTo(map); // ne pas oublier le null
+                        /*$.notify(
+                        	{
+                        		title: "<strong>Anomaly zones request</strong>",
+                        		message: 'received'
+                        	},{
+                        		type: "success",
+                        		placement: {
+                        			from: "bottom",
+                        			align: "center"
+                        		}
+                        	}
+                        );*/
                     } else {
                         //notify_anomaly_zones_none();
                     }
@@ -336,7 +336,7 @@ function add_warning_zones(url, bbox) {
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
-                        }).addTo(map); // ne pas oublier le null
+                        }); //.addTo(map); // ne pas oublier le null
                         legend = L.control({
                             position: 'bottomleft'
                         }); // ajout de la legende
