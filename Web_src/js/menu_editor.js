@@ -26,8 +26,9 @@ function remove_anomaly_zones() {
     }
     anomaly_zones = []; // on vide les warning zones
     delete overlayMaps["Anomaly zones"];
-    if (Lcontrollayers != undefined) {
+    if (Lcontrollayers != undefined && legend != undefined) {
         Lcontrollayers.remove();
+        legend.remove();
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
@@ -171,10 +172,6 @@ function add_anomaly_zones(url, bbox) {
                     }
                     if (anomaly_zones.length > 0) {
                         remove_anomaly_zones();
-                        if (Lcontrollayers != undefined && legend != undefined) {
-                            Lcontrollayers.remove();
-                            legend.remove();
-                        }
                     }
                     //notify_anomaly_zones_none();
                 }
@@ -378,10 +375,6 @@ function add_warning_zones(url, bbox) {
                     }
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
-                        if (Lcontrollayers != undefined && legend != undefined) {
-                            Lcontrollayers.remove();
-                            legend.remove();
-                        }
                     }
                     //notify_warning_zones_none();
                 }
