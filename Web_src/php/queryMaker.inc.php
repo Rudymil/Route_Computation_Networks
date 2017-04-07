@@ -15,7 +15,7 @@ function queryMaker($sqlRequest){
   # Try query or error
   $ressource = $conn->query($sqlRequest);
   $lastInfo = $conn->errorInfo();
-  
+
   if (!$ressource || $lastInfo[0] != 0) {
     error(400, "<p>An SQL error occured !<br>" . $lastInfo[2] . "</p>");
   }
@@ -24,6 +24,19 @@ function queryMaker($sqlRequest){
   }
   $conn = NULL;
   return $ressource;
+}
+
+function testDate($date){
+  if($date){
+    $date = addslashes($date);
+    if ($date < date("Y-m-d")) {
+      error(400, "<p>Incorrect Data !<br>date not valid</p>");
+    }
+    return "'" . $date . "'";
+  }
+  else {
+    return "null";
+  }
 }
 
 function selectGeoJSONQuery($sqlRequest) {
@@ -105,16 +118,16 @@ function insertGeoJSONQuery($datajson){
 
       $geom = json_encode($geometry);
     }
+
+    $expiration_date = testDate($properties->expiration_date);
+    $description = $properties->description;
+
     if ($data->zone_type == "warning_zone") {
       $risk_type = $properties->risk_type;
-      $expiration_date = $properties->expiration_date;
-      $description = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($risk_type) . ", (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . "), '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($risk_type) . ", (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . "), '" . addslashes($description) . "', " . $expiration_date . ")";
     }elseif ($data->zone_type == "anomaly_zone") {
       $anomaly_type = $properties->anomaly_type;
-      $expiration_date = $properties->expiration_date;
-      $description  = $properties->description;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($anomaly_type) . ", '" . addslashes($description) . "', '" . addslashes($expiration_date) . "')";
+      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($anomaly_type) . ", '" . addslashes($description) . "', " . $expiration_date . ")";
     }
     if($i < sizeOf($features) - 1){
       $sqlRequest .= ", ";
@@ -154,30 +167,31 @@ function updateGeoJSONQuery($datajson){
       $risk_type = $properties->risk_type;
       $intensity = $properties->intensity;
       $description = addslashes($properties->description);
-      $expiration_date = addslashes($properties->expiration_date);
 
       $sqlRequest .= $data->zone_type . " SET";
       $sqlRequest .= " geom = ST_GeomFromGeoJSON('" . $geom . "')";
 
+      if (isset($properties->expiration_date)) {
+        $expiration_date = testDate($properties->expiration_date);
+        $sqlRequest .= ", expiration_date = " . $expiration_date;
+      }
+
       if($data->zone_type == "warning_zone") {
         $sqlRequest .= ", risk_type = " . $risk_type;
         $sqlRequest .= ", risk_intensity = " . $intensity;
-        $sqlRequest .= ", validation_date = NOW()";
+        if (isset($properties->validation_date)) {
+          $validation_date = testDate($properties->validation_date);
+          $sqlRequest .= ", validation_date = " . $validation_date;
+        }
       }
-      elseif($data->zone_type == "warning_zone") {
+      elseif($data->zone_type == "anomaly_zone") {
         $sqlRequest .= ", anomaly_type = " . $anomaly_type;
       }
       $sqlRequest .= ", description = '" . $description . "'";
-      $sqlRequest .= ", expiration_date = '" . $expiration_date . "'";
 
       $sqlRequest .= " WHERE id = " . $properties->id;
 
       $sqlRequest .= ";";
-
-      if (isset($_REQUEST["DEBUG"])) {
-        print("<h2>SQL Request : </h2>");
-        print("<p>" . $sqlRequest . "</p>");
-      }
     }
 
     queryMaker($sqlRequest);
