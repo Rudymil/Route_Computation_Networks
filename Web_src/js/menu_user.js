@@ -24,7 +24,7 @@ function remove_warning_zones() {
         }
         warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
     }
-    warning_zones = []; // on vide les warning zones
+    warning_zones = new Array(); // on vide les warning zones
     delete overlayMaps["Warning zones"];
     if (Lcontrollayers != undefined && legend != undefined) {
         Lcontrollayers.remove();
@@ -129,7 +129,7 @@ function add_warning_zones(url, bbox) {
                             warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
                         }
                     }
-                    warning_zones = []; // on vide les warning zones
+                    warning_zones = new Array(); // on vide les warning zones
                     if (json["features"].length > 0) {
                         for (element in json["features"]) { // pour chaque object du geojson
                             if (DEBUG) {
