@@ -780,14 +780,16 @@ function send_ajax_point(point) {
                                                 align: "center"
                                             }
                                         });
-                                        countrystart[0] = countryend[0];
-                                        countrystart[1] = countryend[1];
-
+                                        if ($(".leaflet-routing-geocoder").eq(0).find("input").val() == '') {
+                                            countrystart = new Array(2);
+                                        } else {
+                                            countrystart[0] = countryend[0];
+                                            countrystart[1] = countryend[1];
+                                        }
                                     }
                                 } else {
                                     controlPenalty.spliceWaypoints(0, 1, position);
                                 }
-
                             }
                             if (point[2] == "end") { // si point d arrivee
                                 if (DEBUG) {
@@ -812,8 +814,13 @@ function send_ajax_point(point) {
                                                 align: "center"
                                             }
                                         });
-                                        countryend[0] = countrystart[0];
-                                        countryend[1] = countrystart[1];
+
+                                        if ($(".leaflet-routing-geocoder").last().find("input").val() == '') {
+                                            countryend = new Array(2);
+                                        } else {
+                                            countryend[0] = countrystart[0];
+                                            countryend[1] = countrystart[1];
+                                        }
                                     }
                                 } else {
                                     controlPenalty.spliceWaypoints(controlPenalty.getWaypoints().length - 1, 1, position);
