@@ -26,8 +26,10 @@ function remove_warning_zones() {
     }
     warning_zones = new Array(); // on vide les warning zones
     delete overlayMaps["Warning zones"];
-    if (Lcontrollayers != undefined && legend != undefined) {
+    if (Lcontrollayers != undefined || Lcontrollayers != null) {
         Lcontrollayers.remove();
+    }
+    if (legend != undefined || legend != null) {
         legend.remove();
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
@@ -149,13 +151,15 @@ function add_warning_zones(url, bbox) {
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
-                        if (Lcontrollayers != undefined && legend != undefined) {
+                        if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
-                            legend.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
                         }).addTo(map); // ne pas oublier le null
+                        if (legend != undefined || legend != null) {
+                            legend.remove();
+                        }
                         legend = L.control({
                             position: 'bottomleft'
                         }); // ajout de la legende
