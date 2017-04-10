@@ -520,3 +520,127 @@ function add_warning_zones(url, bbox) {
         }
     });
 }
+/**
+ * Send to the DB all the update for one type.
+ * @param {string} type - Type of the GeoJSON to update.
+ */
+function send_ajax_update (type) {
+	if (DEBUG) {
+        console.log("send_ajax_update");
+        console.log("send_ajax_update type :", type);
+    }
+    geojson["type"] = "FeatureCollection";
+    geojson["zone_type"] = type;
+    if (type == string_warning_zone){
+		geojson["features"] = wzupdate;
+    }
+    if (type == string_anomaly_zone){
+		geojson["features"] = azupdate;
+    }
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: 'action=update' + type + '=' + JSON.stringify(geojson), // object -> string
+        dataType: 'json',
+        success: function(code, statut) {
+            if (DEBUG) {
+                console.log("send_ajax_update code_json : ", code);
+                console.log("send_ajax_update statut : ", statut);
+            }
+            notify_ajax_sending_areas_success(statut);
+        },
+        error: function(resultat, statut, erreur) {
+            if (DEBUG) {
+                console.log("send_ajax_update resultat : ", resultat);
+                console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_update erreur : ", erreur);
+            }
+            notify_ajax_sending_areas_error(statut);
+        },
+        complete: function(resultat, statut) {
+            if (DEBUG) {
+                console.log("send_ajax_update resultat : ", resultat);
+                console.log("send_ajax_update statut : ", statut);
+            }
+        }
+    });
+}
+/**
+ * Send to the DB one id for one type.
+ * @param {string} id - Id of the GeoJSON to delete.
+ * @param {string} type - Type of GeoJSON to delete.
+ */
+function send_ajax_delete(id, type) {
+	if (DEBUG) {
+        console.log("send_ajax_delete");
+        console.log("send_ajax_delete id :", id);
+        console.log("send_ajax_delete type :", type);
+    }
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: 'action=delete' + type + '=' + id,
+        dataType: 'json',
+        success: function(code, statut) {
+            if (DEBUG) {
+                console.log("send_ajax_update code_json : ", code);
+                console.log("send_ajax_update statut : ", statut);
+            }
+            notify_ajax_sending_areas_success(statut);
+        },
+        error: function(resultat, statut, erreur) {
+            if (DEBUG) {
+                console.log("send_ajax_update resultat : ", resultat);
+                console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_update erreur : ", erreur);
+            }
+            notify_ajax_sending_areas_error(statut);
+        },
+        complete: function(resultat, statut) {
+            if (DEBUG) {
+                console.log("send_ajax_update resultat : ", resultat);
+                console.log("send_ajax_update statut : ", statut);
+            }
+        }
+    });
+}
+/**
+ * Executed for sending all the updates.
+ */
+$("#submit3").click(function() {
+    if (DEBUG) {
+        console.log("EVENT : $('#submit3').click");
+        console.log("EVENT : $('#submit3').click wzupdate :", wzupdate);
+        console.log("EVENT : $('#submit3').click azupdate :", azupdate);
+        console.log("EVENT : $('#submit3').click wzdelete :", wzdelete);
+        console.log("EVENT : $('#submit3').click azdelete :", azdelete);
+    }
+    if (wzupdate == null) { // si pas de warning zones a MAJ
+        notify_none("Warning zones updated");
+    } else {
+        send_ajax_update(string_warning_zone); = new Array();
+        wzupdate = new Array();
+    }
+    if (azupdate == null) { // si pas d anomaly zones a MAJ
+        notify_none("Anomaly zones updated");
+    } else {
+        send_ajax_update(string_anomaly_zone);
+        azupdate = new Array();
+    }
+    if (wzdelete == null) { // si pas de warning zones a supprimer
+        notify_none("Warning zones deleted");
+    } else {
+        for (element in wzdelete) {
+            send_ajax_delete(element, string_warning_zone);
+        }
+        wzdelete = new Array();
+    }
+    if (azdelete == null) { // si pas d anomaly zones a supprimer
+        notify_none("Warning zones deleted");
+    } else {
+        for (element in azdelete) {
+            send_ajax_delete(element, string_anomaly_zone);
+        }
+        azdelete = new Array();
+    }
+});
