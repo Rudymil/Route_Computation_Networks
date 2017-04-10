@@ -637,9 +637,13 @@ $("#submit3").click(function() {
     if (DEBUG) {
         console.log("EVENT : $('#submit3').click");
         console.log("EVENT : $('#submit3').click wzupdate :", wzupdate);
+        console.log("EVENT : $('#submit3').click wzupdate.length :", wzupdate.length);
         console.log("EVENT : $('#submit3').click azupdate :", azupdate);
+        console.log("EVENT : $('#submit3').click azupdate.length :", azupdate.length);
         console.log("EVENT : $('#submit3').click wzdelete :", wzdelete);
+        console.log("EVENT : $('#submit3').click wzdelete.length :", wzdelete.length);
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
+        console.log("EVENT : $('#submit3').click azdelete.length :", azdelete.length);
     }
     nb_MAJ = nb_MAJ + wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
     $.notify({
