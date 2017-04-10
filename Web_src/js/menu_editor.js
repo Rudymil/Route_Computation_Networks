@@ -580,11 +580,12 @@ function send_ajax_update(type) {
             notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
+            nb_MAJ = nb_MAJ + resultat.responseJSON;
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat.responseJSON);
+                console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_update nb_MAJ : ", nb_MAJ);
                 console.log("send_ajax_update statut : ", statut);
             }
-            nb_MAJ = nb_MAJ + resultat.responseJSON;
         }
     });
 }
@@ -620,11 +621,12 @@ function send_ajax_delete(id, type) {
             notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
+            nb_MAJ = nb_MAJ + resultat.responseJSON;
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat.responseJSON);
+                console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_update nb_MAJ : ", nb_MAJ);
                 console.log("send_ajax_update statut : ", statut);
             }
-            nb_MAJ = nb_MAJ + resultat.responseJSON;
         }
     });
 }
