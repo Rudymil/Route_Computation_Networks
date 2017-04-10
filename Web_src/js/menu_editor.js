@@ -581,7 +581,7 @@ function send_ajax_update(type) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat);
+                console.log("send_ajax_update resultat : ", resultat.responseJSON);
                 console.log("send_ajax_update statut : ", statut);
             }
             nb_MAJ = nb_MAJ + resultat.responseJSON;
@@ -621,7 +621,7 @@ function send_ajax_delete(id, type) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat);
+                console.log("send_ajax_update resultat : ", resultat.responseJSON);
                 console.log("send_ajax_update statut : ", statut);
             }
             nb_MAJ = nb_MAJ + resultat.responseJSON;

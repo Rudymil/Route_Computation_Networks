@@ -457,7 +457,7 @@ function send_ajax_geojson(type, url) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_geojson resultat : ", resultat);
+                console.log("send_ajax_geojson resultat : ", resultat.responseJSON);
                 console.log("send_ajax_geojson statut : ", statut);
             }
             geojson = new Object(); // reinitialisation
