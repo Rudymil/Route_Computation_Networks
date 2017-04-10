@@ -361,6 +361,7 @@ function add_warning_zones(url, bbox) {
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
+                            shape.addTo(map); // ajout a la map 
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -484,6 +485,7 @@ function add_warning_zones(url, bbox) {
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
+                            shape.addTo(map); // ajout a la map 
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
