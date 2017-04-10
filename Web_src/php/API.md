@@ -45,13 +45,22 @@ Pour envoyer des données au backend et les stocker en base, les requêtes sont 
 - warning_zone=[GeoJSON]
 - anomaly_zone=[GeoJSON]
 
+**Contrôle :**
+Seules les zones se situant dans un pays présent en base pourront être créées.
+
+**Retour :**
+La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets créés en base.
+
 ## Update data
 
-Pour mettre à jour des entitées existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
+Pour mettre à jour des entités existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
 
 - action=update
 - type={warning_zone|anomaly_zone}
 - {warning_zone|anomaly_zone}=[GeoJSON]
+
+**Retour :**
+La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets modifiés en base.
 
 ## Delete data
 
@@ -60,6 +69,9 @@ Pour supprimer des données stockées en base, les requêtes sont à effectuer e
 - action=delete
 - type=[warning_zone|anomaly_zone]
 - id={identifiant de l'objet}
+
+**Retour :**
+La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets supprimés.
 
 ## Formats
 
