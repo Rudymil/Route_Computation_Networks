@@ -3,8 +3,8 @@ map.addLayer(featureLayera);
 drawControla = new L.Control.Draw({
     edit: {
         featureGroup: featureLayera,
-        edit: true,
-        remove: true
+        edit: false,
+        remove: false
     },
     draw: {
         polygon: false,
@@ -18,8 +18,8 @@ featureLayerw = new L.FeatureGroup();
 drawControlw = new L.Control.Draw({
     edit: {
         featureGroup: featureLayerw,
-        edit: true,
-        remove: true
+        edit: false,
+        remove: false
     },
     draw: {
         polygon: false,
@@ -169,7 +169,9 @@ function add_anomaly_zones(url, bbox) {
                                 fillColor: 'blue',
                                 color: 'blue'
                             });
-                            featureLayera.addLayer(shape)
+
+                            featureLayera.addLayer(shape);
+
 
                             /*var colorZone = getColor(json["features"][element]["properties"].intensity);
                             
@@ -578,7 +580,7 @@ function send_ajax_delete(id, type) {
     }
     $.ajax({
         url: url,
-        type: 'POST',
+        type: 'GET',
         data: 'action=delete' + type + '=' + id,
         dataType: 'json',
         success: function(code, statut) {
@@ -615,31 +617,31 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click wzdelete :", wzdelete);
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
     }
-    if (wzupdate == null) { // si pas de warning zones a MAJ
+    if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
         notify_none("Warning zones updated");
     } else {
         send_ajax_update(string_warning_zone);
         wzupdate = new Array();
     }
-    if (azupdate == null) { // si pas d anomaly zones a MAJ
+    if (azupdate == null || azupdate.length <= 0) { // si pas d anomaly zones a MAJ
         notify_none("Anomaly zones updated");
     } else {
         send_ajax_update(string_anomaly_zone);
         azupdate = new Array();
     }
-    if (wzdelete == null) { // si pas de warning zones a supprimer
+    if (wzdelete == null || wzdelete.length <= 0) { // si pas de warning zones a supprimer
         notify_none("Warning zones deleted");
     } else {
         for (element in wzdelete) {
-            send_ajax_delete(element, string_warning_zone);
+            send_ajax_delete(wzdelete[element], string_warning_zone);
         }
         wzdelete = new Array();
     }
-    if (azdelete == null) { // si pas d anomaly zones a supprimer
+    if (azdelete == null || azdelete.length <= 0) { // si pas d anomaly zones a supprimer
         notify_none("Warning zones deleted");
     } else {
         for (element in azdelete) {
-            send_ajax_delete(element, string_anomaly_zone);
+            send_ajax_delete(azdelete[element], string_anomaly_zone);
         }
         azdelete = new Array();
     }
