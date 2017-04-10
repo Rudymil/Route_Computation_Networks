@@ -1,5 +1,10 @@
 <?php
-include_once("./queryMaker.inc.php");
+if ($_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
+  include_once("./queryMaker-test.inc.php");
+}
+else {
+  include_once("./queryMaker.inc.php");
+}
 include_once("./error.inc.php");
 
 //Deny none https access ***ACTIVATE IN PRODUCTION***
@@ -41,10 +46,10 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
   }
   //Validated
   if (isset($_GET["validated"]) && $_GET["validated"] == "false") {
-    $filterSQL .= " AND expiration_date IS NULL";
+    $filterSQL .= " AND validation_date IS NULL";
   }
   elseif (isset($_GET["validated"]) && $_GET["validated"] == "true") {
-    $filterSQL .= " AND expiration_date IS NOT NULL";
+    $filterSQL .= " AND validation_date IS NOT NULL";
   }
   //Country
   if (isset($_GET["country_id"])) {
