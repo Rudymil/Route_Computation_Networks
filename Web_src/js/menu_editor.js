@@ -618,7 +618,7 @@ $("#submit3").click(function() {
     if (wzupdate == null) { // si pas de warning zones a MAJ
         notify_none("Warning zones updated");
     } else {
-        send_ajax_update(string_warning_zone); = new Array();
+        send_ajax_update(string_warning_zone);
         wzupdate = new Array();
     }
     if (azupdate == null) { // si pas d anomaly zones a MAJ
