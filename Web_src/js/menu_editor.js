@@ -646,7 +646,8 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
         console.log("EVENT : $('#submit3').click azdelete.length :", azdelete.length);
     }
-    nb_MAJ = nb_MAJ + wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
+    nb_MAJ = 0;
+    nb_MAJ = wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
     $.notify({
         title: "<strong>Number of objects sent</strong>",
         message: nb_MAJ
