@@ -569,7 +569,7 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update code_json : ", code);
                 console.log("send_ajax_update statut : ", statut);
             }
-            notify_ajax_sending_areas_success(statut);
+            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -584,6 +584,7 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update resultat : ", resultat);
                 console.log("send_ajax_update statut : ", statut);
             }
+            nb_MAJ = nb_MAJ + resultat.responseJSON;
         }
     });
 }
@@ -608,7 +609,7 @@ function send_ajax_delete(id, type) {
                 console.log("send_ajax_update code_json : ", code);
                 console.log("send_ajax_update statut : ", statut);
             }
-            notify_ajax_sending_areas_success(statut);
+            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -623,6 +624,7 @@ function send_ajax_delete(id, type) {
                 console.log("send_ajax_update resultat : ", resultat);
                 console.log("send_ajax_update statut : ", statut);
             }
+            nb_MAJ = nb_MAJ + resultat.responseJSON;
         }
     });
 }
@@ -637,20 +639,32 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click wzdelete :", wzdelete);
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
     }
+    nb_MAJ = wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
+    $.notify({
+        title: "<strong>Number of objects sent</strong>",
+        message: nb_MAJ
+    }, {
+        type: "info",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
+    nb_MAJ = 0;
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
-        notify_none("Warning zones updated");
+        //notify_none("Warning zones updated");
     } else {
         send_ajax_update(string_warning_zone);
         wzupdate = new Array();
     }
     if (azupdate == null || azupdate.length <= 0) { // si pas d anomaly zones a MAJ
-        notify_none("Anomaly zones updated");
+        //notify_none("Anomaly zones updated");
     } else {
         send_ajax_update(string_anomaly_zone);
         azupdate = new Array();
     }
     if (wzdelete == null || wzdelete.length <= 0) { // si pas de warning zones a supprimer
-        notify_none("Warning zones deleted");
+        //notify_none("Warning zones deleted");
     } else {
         for (element in wzdelete) {
             send_ajax_delete(wzdelete[element], string_warning_zone);
@@ -658,11 +672,21 @@ $("#submit3").click(function() {
         wzdelete = new Array();
     }
     if (azdelete == null || azdelete.length <= 0) { // si pas d anomaly zones a supprimer
-        notify_none("Warning zones deleted");
+        //notify_none("Warning zones deleted");
     } else {
         for (element in azdelete) {
             send_ajax_delete(azdelete[element], string_anomaly_zone);
         }
         azdelete = new Array();
     }
+    $.notify({
+        title: "<strong>Number of objects modified</strong>",
+        message: nb_MAJ
+    }, {
+        type: "info",
+        placement: {
+            from: "bottom",
+            align: "center"
+        }
+    });
 });
