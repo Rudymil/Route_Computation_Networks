@@ -542,7 +542,7 @@ function send_ajax_update(type) {
     $.ajax({
         url: url,
         type: 'POST',
-        data: 'action=update' + type + '=' + JSON.stringify(geojson), // object -> string
+        data: 'action=update&' + type + '=' + JSON.stringify(geojson), // object -> string
         dataType: 'json',
         success: function(code, statut) {
             if (DEBUG) {
@@ -581,7 +581,7 @@ function send_ajax_delete(id, type) {
     $.ajax({
         url: url,
         type: 'GET',
-        data: 'action=delete' + type + '=' + id,
+        data: 'action=delete&' + type + '=' + id,
         dataType: 'json',
         success: function(code, statut) {
             if (DEBUG) {
