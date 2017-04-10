@@ -210,16 +210,16 @@ function notify_ajax_sending_areas_success(statut) {
 }
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB failed.
- * @param {object.statut} statut - Network code.
+ * @param {object.responseText} resultat - Response return.
  */
-function notify_ajax_sending_areas_error(statut) {
+function notify_ajax_sending_areas_error(resultat) {
     if (DEBUG) {
         console.log("FUNCTION : notify_ajax_sending_areas_error");
-        console.log("notify_ajax_sending_areas_error statut : ", statut);
+        console.log("notify_ajax_sending_areas_error resultat.responseText : ", resultat.responseText);
     }
     $.notify({
         title: "<strong>Sending areas</strong>",
-        message: statut,
+        message: resultat.responseText,
     }, {
         type: "danger",
         placement: {
@@ -439,7 +439,7 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson code_json : ", code);
                 console.log("send_ajax_geojson statut : ", statut);
             }
-            notify_ajax_sending_areas_success(statut);
+            notify_ajax_sending_areas_success(resultat);
             if (type == string_warning_zone) {
                 style_layer(string_warning_zone); // changement de style
             }
@@ -453,7 +453,7 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson statut : ", statut);
                 console.log("send_ajax_geojson erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(statut);
+            notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {

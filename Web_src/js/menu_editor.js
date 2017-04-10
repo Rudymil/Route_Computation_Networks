@@ -577,7 +577,7 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update statut : ", statut);
                 console.log("send_ajax_update erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(statut);
+            notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
@@ -617,7 +617,7 @@ function send_ajax_delete(id, type) {
                 console.log("send_ajax_update statut : ", statut);
                 console.log("send_ajax_update erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(statut);
+            notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
@@ -639,7 +639,7 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click wzdelete :", wzdelete);
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
     }
-    nb_MAJ = 0 + wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
+    nb_MAJ = nb_MAJ + wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
     $.notify({
         title: "<strong>Number of objects sent</strong>",
         message: nb_MAJ
@@ -689,4 +689,5 @@ $("#submit3").click(function() {
             align: "center"
         }
     });
+    nb_MAJ = 0;
 });

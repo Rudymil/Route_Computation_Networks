@@ -44,9 +44,9 @@ function notify_ajax_sending_areas_success(statut) {...}
 ```js
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB failed.
- * @param {object.statut} statut - Network code.
+ * @param {object.responseText} resultat - Response return.
  */
-function notify_ajax_sending_areas_error(statut) {...}
+function notify_ajax_sending_areas_error(resultat) {...}
 ```
 ```js
 /**
