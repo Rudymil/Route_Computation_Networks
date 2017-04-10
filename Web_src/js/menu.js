@@ -45,7 +45,7 @@ function ajax_types(url, type) {
                 var json = resultat.responseJSON;
                 if (!$.isEmptyObject(json)) { // si le resultat json n est pas vide
                     if (DEBUG) {
-                        console.log("json : ", json);
+                        console.log("ajax_types json : ", json);
                     }
                     if (type == string_risk_type) {
                         types_warning_zones = json;
