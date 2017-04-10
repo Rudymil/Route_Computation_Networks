@@ -581,7 +581,7 @@ function send_ajax_delete(id, type) {
     $.ajax({
         url: url,
         type: 'GET',
-        data: 'action=delete&' + type + '=' + id,
+        data: 'action=delete&type=' + type + '&id=' + id,
         dataType: 'json',
         success: function(code, statut) {
             if (DEBUG) {
