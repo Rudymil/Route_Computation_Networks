@@ -73,7 +73,7 @@ function add_warning_zones(url, bbox) {
     $.ajax({
         url: url,
         type: 'GET',
-        data: 'type=' + string_warning_zone + '&bbox=' + bbox,
+        data: 'type=' + string_warning_zone + '&bbox=' + bbox + '&validated=true',
         dataType: 'json',
         success: function(code_json, statut) {
             if (DEBUG) {

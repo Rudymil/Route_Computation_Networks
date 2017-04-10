@@ -53,3 +53,24 @@ function getPopupContentmenu(couche) {...}
  */
 function add_warning_zones(url, bbox) {...}
 ```
+```js
+/**
+ * Send to the DB all the update for one type.
+ * @param {string} type - Type of the GeoJSON to update.
+ */
+function send_ajax_update (type) {...}
+```
+```js
+/**
+ * Send to the DB one id for one type.
+ * @param {string} id - Id of the GeoJSON to delete.
+ * @param {string} type - Type of GeoJSON to delete.
+ */
+function send_ajax_delete(id, type) {...}
+```
+```js
+/**
+ * Executed for sending all the updates and deletes.
+ */
+$("#submit3").click(function() {...});
+```
