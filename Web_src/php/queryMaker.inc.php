@@ -1,5 +1,4 @@
 <?php
-include_once("./error.inc.php");
 //Restrict script access only by Web API
 if ($_SERVER["REQUEST_URI"] == "/api/queryMaker.inc.php") {
   error(403, "Invalid request URI !");
@@ -126,11 +125,9 @@ function insertGeoJSONQuery($datajson){
   $features = $data->features;
 
   if ($data->zone_type == "warning_zone") {
-    //$sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description, expiration_date) VALUES ";
     $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description, expiration_date) SELECT zone.geom, zone.risk_type, zone.risk_intensity, zone.description, zone.expiration_date FROM country c, (";
 
   }elseif ($data->zone_type == "anomaly_zone") {
-    //$sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description, expiration_date) VALUES ";
     $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description, expiration_date) SELECT zone.geom, zone.anomaly_type, zone.description, zone.expiration_date FROM country c, (";
   }else {
     error(400, "Incorrect Data !");
@@ -198,7 +195,7 @@ function updateGeoJSONQuery($datajson){
       $properties = $features[$i]->properties;
       $description = addslashes($properties->description);
 
-      $sqlRequest .= $data->zone_type . " SET";
+      $sqlRequest .= $data->zone_type . " AS zone SET";
       $sqlRequest .= " geom = ST_GeomFromGeoJSON('" . $geom . "')";
 
       if (isset($properties->expiration_date)) {
@@ -220,7 +217,8 @@ function updateGeoJSONQuery($datajson){
       }
       $sqlRequest .= ", description = '" . $description . "'";
 
-      $sqlRequest .= " WHERE id = " . $properties->id;
+      $sqlRequest .= " FROM country";
+      $sqlRequest .= " WHERE ST_Contains(country.geom, ST_GeomFromGeoJSON('" . $geom . "')) AND zone.id = " . $properties->id;
 
       $sqlRequest .= ";";
       $rs = queryMaker($sqlRequest);
