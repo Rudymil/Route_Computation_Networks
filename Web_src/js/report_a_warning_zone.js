@@ -66,7 +66,9 @@ $(".radio_button").change(function() { // choix de dessin
         markerDeparture.dragging.enable();
         markeraDestination.dragging.enable();	
         }*/
-        map.removeControl(drawControl);
+        if ( drawControl != null ) {
+			map.removeControl(drawControl);
+		}
     } else if ($("#Circle1").is(":checked") == true) {
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
         //$("#dep").prop('disabled', true);
@@ -253,7 +255,8 @@ map.on('draw:created', function(e) {
 				console.log(timestamp);
 				if (isNaN(timestamp) )
 				{
-   				 	return false;
+   				 	//return false;
+   				 	da=null;
 
 				}
 
@@ -311,7 +314,8 @@ map.on('draw:created', function(e) {
 				console.log(timestamp);
 				if (isNaN(timestamp) )
 				{
-   				 	return false;
+   				 	//return false;
+   				 	da=null;
 
 				}
 
@@ -362,7 +366,8 @@ map.on('draw:created', function(e) {
 				console.log(timestamp);
 				if (isNaN(timestamp) )
 				{
-   				 	return false;
+   				 	//return false;
+   				 	da=null;
 
 				}
 

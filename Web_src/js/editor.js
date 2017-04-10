@@ -1,9 +1,13 @@
 //var warning_zones = new Array(); // liste des warning zones
 //var anomaly_zones = new Array(); // liste des anomaly zones
 
-$(".radio_button").change(function() {
+$(".radio_button").change(function(e) {
 	
 	if ( $("#warning").is(":checked") ) {
+		
+		featureLayerw.on('click', function(e) {  
+			e.layer.closePopup();	
+		});
 		
 		if( drawControla !=null ) {
 			map.removeControl(drawControla);
@@ -29,6 +33,10 @@ $(".radio_button").change(function() {
 	}
 	else if (  $("#anomaly").is(":checked") ) {
 		
+		featureLayera.on('click', function(e) {  
+			e.layer.closePopup();	
+		});
+		
 		if( drawControla !=null ) {
 			map.removeControl(drawControla);
 		}
@@ -39,7 +47,7 @@ $(".radio_button").change(function() {
 		drawControla = new L.Control.Draw({     
 										edit: {
 											featureGroup: featureLayera,
-											edit: true,
+											edit: false,
 											remove: true
 											},
 										draw: {
@@ -52,6 +60,8 @@ $(".radio_button").change(function() {
 		
 	}
 	else {
+		
+		map.openPopup();
 		
 		if( drawControla !=null ) {
 			map.removeControl(drawControla);
@@ -83,10 +93,10 @@ map.on('draw:edited', function(e) {
 	else if (  $("#anomaly").is(":checked") ) {
 		layers.eachLayer(function (layer) {
 			
-			console.log(layer);
-			var temp = layer.toGeoJSON();
+			//console.log(layer);
+			//var temp = layer.toGeoJSON();
 			//console.log(JSON.stringify(temp));
-			azupdate.push(temp);
+			//azupdate.push(temp);
 		});
 		
 	}
