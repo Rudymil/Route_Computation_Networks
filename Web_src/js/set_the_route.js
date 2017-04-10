@@ -340,6 +340,32 @@ spanstart.addClass("start");
 spanend = $(".leaflet-routing-geocoder").last().find("span");
 spanend.addClass("end");
 
+
+function makeIcon(i, n) {
+  var url = 'img/marker-via-icon-2x.png';
+  var markerList = ['img/marker-start-icon-2x.png', 'img/marker-end-icon-2x.png'];
+  if (i === 0) {
+    return L.icon({
+      iconUrl: markerList[0],
+      iconSize: [20, 56],
+      iconAnchor: [10, 28]
+    });
+  }
+  if (i === n - 1) {
+    return L.icon({
+      iconUrl: markerList[1],
+      iconSize: [20, 56],
+      iconAnchor: [10, 28]
+    });
+  } else {
+    return L.icon({
+      iconUrl: url,
+      iconSize: [20, 56],
+      iconAnchor: [10, 28]
+    });
+  }
+}
+
 var controlPenalty = L.Routing.control({
     waypoints: [null],
     routeWhileDragging: true,
@@ -349,7 +375,8 @@ var controlPenalty = L.Routing.control({
     autoRoute: true,
     createMarker: function(i, wp) {
         var marker = L.marker(wp.latLng, {
-            draggable: true
+            draggable: true,
+             icon: makeIcon(i, controlPenalty.getWaypoints().length)
         });
         marker.on("click", function(e) {
             marker.bindPopup(e.latlng.lat + ", " + e.latlng.lng);
