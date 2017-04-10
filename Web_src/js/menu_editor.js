@@ -14,8 +14,6 @@ drawControla = new L.Control.Draw({
         marker: false
     }
 }).addTo(map);
-
-
 featureLayerw = new L.FeatureGroup();
 drawControlw = new L.Control.Draw({
     edit: {
@@ -31,8 +29,6 @@ drawControlw = new L.Control.Draw({
         marker: false
     }
 }).addTo(map);
-
-
 /**
  * Notify using Bootstrap Notify that the area targeted or viewed not contains "anomaly zones".
  */
@@ -486,10 +482,10 @@ function add_warning_zones(url, bbox) {
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
                             shape.addTo(map); // ajout a la map 
-                            warning_zones.push(shape); // remplir la warning zone
+                            warning_nonchecked.push(shape); // remplir la warning zone
                         }
-                        layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
-                        overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
+                        layer_group_warning_nonchecked = L.layerGroup(warning_nonchecked); // groupe des couches warning zones
+                        overlayMaps["Warning zones to check"] = layer_group_warning_nonchecked; // menu
                         if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
                         }

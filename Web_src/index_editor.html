@@ -212,9 +212,11 @@
 			var string_polygons = "Polygons"; // notify
 			var url = 'https://172.31.56.223/api/server.php'; // url vers l API
 			var warning_zones = new Array(); // liste des warning zones
+			var warning_nonchecked = new Array(); // liste des warning zones non verifiees
 			var anomaly_zones = new Array(); // liste des anomaly zones
 			var layer_group_warning_zones; // L.layerGroup
 			var layer_group_anomaly_zones; // L.layerGroup
+			var layer_group_warning_nonchecked; // L.layerGroup
 			var overlayMaps = new Array(); // composant de la couche
 			var Lcontrollayers; // couche de la map
 			var legend; // legende d intensite des warning zones 
