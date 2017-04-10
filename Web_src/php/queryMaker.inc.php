@@ -11,7 +11,7 @@ function queryMaker($sqlRequest){
     print("<p>" . $sqlRequest . "</p>");
   }
   # Connect to PostgreSQL database
-  include_once("./connexion.inc.php");
+  include("./connexion.inc.php");
   # Try query or error
   $ressource = $conn->query($sqlRequest);
   $lastInfo = $conn->errorInfo();
@@ -20,6 +20,9 @@ function queryMaker($sqlRequest){
     error(400, "<p>An SQL error occured !<br>" . $lastInfo[2] . "</p>");
   }
   elseif (isset($_REQUEST["DEBUG"]) && $lastInfo[0] == 0) {
+    if (isset($_REQUEST["DEBUG"])) {
+      print("<p><b>Count :</b> " . $ressource->rowCount() . "</p>");
+    }
     print("<h2>SQL Result : </h2><p>Success !</p>");
   }
   $conn = NULL;
@@ -37,6 +40,31 @@ function testDate($date){
   else {
     return "null";
   }
+}
+
+function checkWaypoint($datajson){
+  if (isset($_REQUEST["DEBUG"])) {
+    print("<h2>The data JSON :</h2>");
+    print(json_encode($datajson));
+  }
+
+  $coordinates = $datajson->coordinates;
+
+  if (sizeOf($coordinates) != 2) {
+    error(400, "Incorrect Data !");
+  }
+
+  $sqlRequest = "SELECT id, name FROM country WHERE ST_Contains(geom, ST_SetSRID(ST_Point($coordinates[0], $coordinates[1]), 4326));";
+
+  $rs = queryMaker($sqlRequest);
+  $request_result = $rs->fetch(PDO::FETCH_ASSOC);
+
+  if(sizeOf($request_result["id"]) == 1){
+    $countryId = $request_result["id"];
+    $countryName = $request_result["name"];
+    return json_encode($request_result, JSON_NUMERIC_CHECK);
+  }
+  else{return false;}
 }
 
 function selectGeoJSONQuery($sqlRequest) {
@@ -82,8 +110,8 @@ function selectJSONQuery($sqlRequest) {
 }
 
 function deleteQuery($sqlRequest) {
-  queryMaker($sqlRequest);
-  return true;
+  $rs = queryMaker($sqlRequest);
+  return $rs->rowCount();
 }
 
 function insertGeoJSONQuery($datajson){
@@ -98,9 +126,12 @@ function insertGeoJSONQuery($datajson){
   $features = $data->features;
 
   if ($data->zone_type == "warning_zone") {
-    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description, expiration_date) VALUES ";
+    //$sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description, expiration_date) VALUES ";
+    $sqlRequest = "INSERT INTO warning_zone(geom, risk_type, risk_intensity, description, expiration_date) SELECT zone.geom, zone.risk_type, zone.risk_intensity, zone.description, zone.expiration_date FROM country c, (";
+
   }elseif ($data->zone_type == "anomaly_zone") {
-    $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description, expiration_date) VALUES ";
+    //$sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description, expiration_date) VALUES ";
+    $sqlRequest = "INSERT INTO anomaly_zone(geom, anomaly_type, description, expiration_date) SELECT zone.geom, zone.anomaly_type, zone.description, zone.expiration_date FROM country c, (";
   }else {
     error(400, "Incorrect Data !");
   }
@@ -124,20 +155,20 @@ function insertGeoJSONQuery($datajson){
 
     if ($data->zone_type == "warning_zone") {
       $risk_type = $properties->risk_type;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($risk_type) . ", (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . "), '" . addslashes($description) . "', " . $expiration_date . ")";
+      $sqlRequest .= "(SELECT ST_GeomFromGeoJSON('$geom') AS geom, " . addslashes($risk_type) . " AS risk_type, (SELECT intensity FROM risk WHERE id = " . addslashes($risk_type) . ") AS risk_intensity, '" . addslashes($description) . "' AS description, " . $expiration_date . "::date AS expiration_date)";
     }elseif ($data->zone_type == "anomaly_zone") {
       $anomaly_type = $properties->anomaly_type;
-      $sqlRequest .= "(ST_GeomFromGeoJSON('$geom'), " . addslashes($anomaly_type) . ", '" . addslashes($description) . "', " . $expiration_date . ")";
+      $sqlRequest .= "(SELECT ST_GeomFromGeoJSON('$geom') AS geom, " . addslashes($anomaly_type) . " AS anomaly_type, '" . addslashes($description) . "' AS description, " . $expiration_date . "::date AS expiration_date)";
     }
     if($i < sizeOf($features) - 1){
-      $sqlRequest .= ", ";
+      $sqlRequest .= " UNION ";
     }
     else {
-      $sqlRequest .= ";";
+      $sqlRequest .= ") AS zone WHERE ST_Contains(c.geom, zone.geom);";
     }
   }
-  queryMaker($sqlRequest);
-  return true;
+  $rs = queryMaker($sqlRequest);
+  return $rs->rowCount();
 }
 
 function updateGeoJSONQuery($datajson){
@@ -152,6 +183,7 @@ function updateGeoJSONQuery($datajson){
   $features = $data->features;
 
   if ($data->zone_type == "warning_zone" || $data->zone_type == "anomaly_zone") {
+    $count = 0;
     for ($i=0; $i < sizeOf($features); $i++){
       $sqlRequest = "UPDATE ";
       $geometry = $features[$i]->geometry;
@@ -191,36 +223,13 @@ function updateGeoJSONQuery($datajson){
       $sqlRequest .= " WHERE id = " . $properties->id;
 
       $sqlRequest .= ";";
+      $rs = queryMaker($sqlRequest);
+      $count += $rs->rowCount();
     }
 
-    queryMaker($sqlRequest);
+    return $count;
   }
-  return true;
-}
-
-function checkWaypoint($datajson){
-  if (isset($_REQUEST["DEBUG"])) {
-    print("<h2>The data JSON :</h2>");
-    print(json_encode($datajson));
-  }
-
-  $coordinates = $datajson->coordinates;
-
-  if (sizeOf($coordinates) != 2) {
-    error(400, "Incorrect Data !");
-  }
-
-  $sqlRequest = "SELECT id, name FROM country WHERE ST_Contains(geom, ST_SetSRID(ST_Point($coordinates[0], $coordinates[1]), 4326));";
-
-  $rs = queryMaker($sqlRequest);
-  $request_result = $rs->fetch(PDO::FETCH_ASSOC);
-
-  if(sizeOf($request_result["id"]) == 1){
-    $countryId = $request_result["id"];
-    $countryName = $request_result["name"];
-    return json_encode($request_result, JSON_NUMERIC_CHECK);
-  }
-  else{return false;}
+  return false;
 }
 
 ?>
