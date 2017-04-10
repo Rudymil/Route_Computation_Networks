@@ -56,7 +56,6 @@ La valeur retournée par l'API sera le nombre d'entités affectées, ici le nomb
 Pour mettre à jour des entités existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
 
 - action=update
-- type={warning_zone|anomaly_zone}
 - {warning_zone|anomaly_zone}=[GeoJSON]
 
 **Retour :**
