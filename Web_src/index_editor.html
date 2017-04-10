@@ -239,10 +239,14 @@
 			var position;
 			var spanstart;
 			var spanend;
-			var featureLayera;
-			var featureLayerw;
-			var drawControla;
+			var featureLayera = new L.FeatureGroup(); // toolbar for editing updating for anomalies zones
+			var featureLayerw = new L.FeatureGroup(); // toolbar for editing updating for warnings zones
+			var drawControla; 
 			var drawControlw;
+			var wzupdate = new Array();
+			var azupdate = new Array();
+			var wzdelete = new Array();
+			var azdelete = new Array();
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>
