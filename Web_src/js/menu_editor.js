@@ -636,6 +636,7 @@ function send_ajax_delete(id, type) {
 $("#submit3").click(function() {
     if (DEBUG) {
         console.log("EVENT : $('#submit3').click");
+        console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
         console.log("EVENT : $('#submit3').click wzupdate :", wzupdate);
         console.log("EVENT : $('#submit3').click wzupdate.length :", wzupdate.length);
         console.log("EVENT : $('#submit3').click azupdate :", azupdate);
