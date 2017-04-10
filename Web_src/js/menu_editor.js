@@ -1,3 +1,38 @@
+featureLayera = new L.FeatureGroup();
+map.addLayer(featureLayera);
+drawControla = new L.Control.Draw({
+    edit: {
+        featureGroup: featureLayera,
+        edit: true,
+        remove: true
+    },
+    draw: {
+        polygon: false,
+        polyline: false,
+        rectangle: false,
+        circle: false,
+        marker: false
+    }
+}).addTo(map);
+
+
+featureLayerw = new L.FeatureGroup();
+drawControlw = new L.Control.Draw({
+    edit: {
+        featureGroup: featureLayerw,
+        edit: true,
+        remove: true
+    },
+    draw: {
+        polygon: false,
+        polyline: false,
+        rectangle: false,
+        circle: false,
+        marker: false
+    }
+}).addTo(map);
+
+
 /**
  * Notify using Bootstrap Notify that the area targeted or viewed not contains "anomaly zones".
  */
@@ -132,19 +167,28 @@ function add_anomaly_zones(url, bbox) {
                                 console.log("add_anomaly_zones json['features'][element] :", json["features"][element]);
                                 console.log("add_anomaly_zones json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity);
                             }
-                            var shape = L.geoJSON(json["features"][element]);
-                            var colorZone = getColor(json["features"][element]["properties"].intensity);
+                            var shape = L.geoJSON(json["features"][element]).getLayers()[0];
+                            shape.bindPopup(getPopupContentmenu_anomaly(json["features"][element]));
                             shape.setStyle({ // transforme en layer et change le style
                                 fillColor: 'blue',
                                 color: 'blue'
                             });
-                            shape.bindPopup(getPopupContentmenu_anomaly(json["features"][element]));
+                            featureLayera.addLayer(shape)
+
+                            /*var colorZone = getColor(json["features"][element]["properties"].intensity);
+                            
+                            
+                            
                             shape.addTo(map); // ajout a la map
+                            */
+
                             anomaly_zones.push(shape); // remplir la anomaly zone
                         }
                         layer_group_anomaly_zones = L.layerGroup(anomaly_zones); // groupe des couches anomaly zones
                         overlayMaps["Anomaly zones"] = layer_group_anomaly_zones; // menu
-                        if (Lcontrollayers != undefined || Lcontrollayers != null) {
+
+
+                        if (Lcontrollayers != undefined) {
                             Lcontrollayers.remove();
                         }
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
@@ -319,14 +363,14 @@ function add_warning_zones(url, bbox) {
                                 console.log("add_warning_zones json['features'][element] :", json["features"][element]);
                                 console.log("add_warning_zones json['features'][element]['properties'].intensity :", json["features"][element]["properties"].intensity);
                             }
-                            var shape = L.geoJSON(json["features"][element]);
+                            var shape = L.geoJSON(json["features"][element]).getLayers()[0];
                             var colorZone = getColor(json["features"][element]["properties"].intensity);
                             shape.setStyle({ // transforme en layer et change le style
                                 fillColor: colorZone,
                                 color: colorZone
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
-                            shape.addTo(map); // ajout a la map
+                            featureLayerw.addLayer(shape);
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
