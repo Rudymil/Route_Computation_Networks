@@ -69,7 +69,7 @@ function remove_anomaly_zones() {
 function getPopupContentmenu_anomaly(couche) {
     var html = '<table>\
         <tr>\
-            <td>ID : </td>\
+            <td>Anomaly type : </td>\
             <td>' + couche.properties.anomaly_type + '</td>\
         </tr>\
         <tr>\
@@ -77,7 +77,7 @@ function getPopupContentmenu_anomaly(couche) {
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>ID : </td>\
+            <td>Expiration date : </td>\
             <td>' + couche.properties.expiration_date + '</td>\
         </tr>\
         <tr>\
@@ -271,11 +271,11 @@ function remove_warning_zones() {
 function getPopupContentmenu(couche) {
     var html = '<table>\
         <tr>\
-            <td>Name : </td>\
+            <td>Description : </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>Description : </td>\
+            <td>Expiration Date : </td>\
             <td>' + couche.properties.expiration_date + '</td>\
         </tr>\
         <tr>\
@@ -287,15 +287,15 @@ function getPopupContentmenu(couche) {
             <td>' + couche.properties.intensity + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity : </td>\
+            <td>Name : </td>\
             <td>' + couche.properties.name + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity : </td>\
+            <td>Risk type : </td>\
             <td>' + couche.properties.risk_type + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity : </td>\
+            <td>Validation date : </td>\
             <td>' + couche.properties.validation_date + '</td>\
         </tr>\
     </table>'
