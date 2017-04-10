@@ -524,18 +524,18 @@ function add_warning_zones(url, bbox) {
  * Send to the DB all the update for one type.
  * @param {string} type - Type of the GeoJSON to update.
  */
-function send_ajax_update (type) {
-	if (DEBUG) {
+function send_ajax_update(type) {
+    if (DEBUG) {
         console.log("send_ajax_update");
         console.log("send_ajax_update type :", type);
     }
     geojson["type"] = "FeatureCollection";
     geojson["zone_type"] = type;
-    if (type == string_warning_zone){
-		geojson["features"] = wzupdate;
+    if (type == string_warning_zone) {
+        geojson["features"] = wzupdate;
     }
-    if (type == string_anomaly_zone){
-		geojson["features"] = azupdate;
+    if (type == string_anomaly_zone) {
+        geojson["features"] = azupdate;
     }
     $.ajax({
         url: url,
@@ -571,7 +571,7 @@ function send_ajax_update (type) {
  * @param {string} type - Type of GeoJSON to delete.
  */
 function send_ajax_delete(id, type) {
-	if (DEBUG) {
+    if (DEBUG) {
         console.log("send_ajax_delete");
         console.log("send_ajax_delete id :", id);
         console.log("send_ajax_delete type :", type);
@@ -605,7 +605,7 @@ function send_ajax_delete(id, type) {
     });
 }
 /**
- * Executed for sending all the updates.
+ * Executed for sending all the updates and deletes.
  */
 $("#submit3").click(function() {
     if (DEBUG) {
