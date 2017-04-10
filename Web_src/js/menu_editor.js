@@ -646,16 +646,17 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
         console.log("EVENT : $('#submit3').click azdelete.length :", azdelete.length);
     }
+    /*nb_MAJ = wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
     $.notify({
         title: "<strong>Number of objects sent</strong>",
-        message: wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length
+        message: nb_MAJ
     }, {
         type: "info",
         placement: {
             from: "bottom",
             align: "center"
         }
-    });
+    });*/
     nb_MAJ = 0;
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
         //notify_none("Warning zones updated");
@@ -685,7 +686,7 @@ $("#submit3").click(function() {
         }
         azdelete = new Array();
     }
-    $.notify({
+    /*$.notify({
         title: "<strong>Number of objects modified</strong>",
         message: nb_MAJ
     }, {
@@ -695,5 +696,5 @@ $("#submit3").click(function() {
             align: "center"
         }
     });
-    nb_MAJ = 0;
+    nb_MAJ = 0;*/
 });
