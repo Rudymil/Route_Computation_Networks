@@ -148,11 +148,34 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-12"> <!-- 12 -->
-						<center>
-							<button id="submit3" type="button" class="btn btn-primary" margin="auto">Update</button>
-						</center>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874537"><center>Edition</center></a>
+					</div>
+					<div id="panel-element-874537" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="warning" name="draw" value="warning">
+										<label for="Warning Zones">Warning Zones</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="anomaly" name="draw" value="anomaly">
+										<label for="Anomaly Zones">Anomaly Zones</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12"> <!-- 12 -->
+										<center>
+											<button id="submit3" type="button" class="btn btn-primary" margin="auto">Update</button>
+										</center>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -162,11 +185,6 @@
 			<ul>
 				<li id="cm_debut">Définir comme Début</li>
 				<li id="cm_fin">Définir comme Fin</li>
-			</ul>
-		</div>
-		<div id="context_menu2">
-			<ul>
-				<li id="cm_debut">Suppression</li>
 			</ul>
 		</div>
 		<script src="js/leaflet.js"></script> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.js-->
