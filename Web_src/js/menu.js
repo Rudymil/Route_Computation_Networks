@@ -28,7 +28,7 @@ function ajax_types(url, type) {
             }
             $.notify({
                 title: "<strong>" + type + " request</strong>",
-                message: statut
+                message: resultat.responseText
             }, {
                 type: "danger",
                 placement: {
@@ -90,7 +90,7 @@ function ajax_countries(url) {
             }
             $.notify({
                 title: "<strong>Countries request</strong>",
-                message: statut
+                message: resultat.responseText
             }, {
                 type: "danger",
                 placement: {
@@ -736,7 +736,7 @@ function send_ajax_point(point) {
                 }
                 $.notify({
                     title: "<strong>Point request</strong>",
-                    message: "Out of the area"
+                    message: resultat.responseText
                 }, {
                     type: "danger",
                     placement: {

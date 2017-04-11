@@ -131,10 +131,10 @@ function add_anomaly_zones(url, bbox) {
                 console.log("add_anomaly_zones statut : ", statut);
                 console.log("add_anomaly_zones erreur : ", erreur);
             }
-            /*$.notify(
+            $.notify(
             	{
             		title: "<strong>Anomaly zones request</strong>",
-            		message: statut
+            		message: resultat.responseText
             	},{
             		type: "danger",
             		placement: {
@@ -142,7 +142,7 @@ function add_anomaly_zones(url, bbox) {
             			align: "center"
             		}
             	}
-            );*/
+            );
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -324,7 +324,7 @@ function add_warning_zones(url, bbox) {
             }
             /*$.notify(
                 {
-                    title: "<strong>Warning zones request</strong>",
+                    title: "<strong>Warning zones validated request</strong>",
                     message: statut
                 },{
                     type: "success",
@@ -341,10 +341,10 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            /*$.notify(
+            $.notify(
                 {
-                    title: "<strong>Warning zones request</strong>",
-                    message: statut
+                    title: "<strong>Warning zones validated request</strong>",
+                    message: resultat.responseText
                 },{
                     type: "danger",
                     placement: {
@@ -352,7 +352,7 @@ function add_warning_zones(url, bbox) {
                         align: "center"
                     }
                 }
-            );*/
+            );
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -448,7 +448,7 @@ function add_warning_zones(url, bbox) {
             }
             /*$.notify(
                 {
-                    title: "<strong>Warning zones request</strong>",
+                    title: "<strong>Warning zones not checked request</strong>",
                     message: statut
                 },{
                     type: "success",
@@ -465,10 +465,10 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            /*$.notify(
+            $.notify(
                 {
-                    title: "<strong>Warning zones request</strong>",
-                    message: statut
+                    title: "<strong>Warning zones not checked request</strong>",
+                    message: resultat.responseText
                 },{
                     type: "danger",
                     placement: {
@@ -476,7 +476,7 @@ function add_warning_zones(url, bbox) {
                         align: "center"
                     }
                 }
-            );*/
+            );
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
