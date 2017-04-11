@@ -578,9 +578,10 @@ function send_ajax_update(type) {
         complete: function(resultat, statut) {
             if (DEBUG) {
                 console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
             }
             if (resultat.status == '200') {
-                if (!$.isEmptyObject(resultat.responseJSON) && resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat json n est pas vide
+                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
                     /*$.notify({
                         title: "<strong>Number of objects modified</strong>",
                         message: resultat.responseJSON
@@ -638,9 +639,10 @@ function send_ajax_delete(id, type) {
         complete: function(resultat, statut) {
             if (DEBUG) {
                 console.log("send_ajax_delete statut : ", statut);
+                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
             }
             if (resultat.status == '200') {
-                if (!$.isEmptyObject(resultat.responseJSON) && resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat json n est pas vide
+                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
                     /*$.notify({
                         title: "<strong>Number of objects modified</strong>",
                         message: resultat.responseJSON
