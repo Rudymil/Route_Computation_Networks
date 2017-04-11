@@ -611,10 +611,10 @@ function notify_nb_sent(nb_sent) {
  * @param {number} nb_sent - Number of shapes sent.
  */
 function notify_nb_add(nb_add, nb_sent) {
-    if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
+    if (nb_add != NaN && nb_add == nb_sent) { // si egalite
         $.notify({
             title: "<strong>Number of objects added</strong>",
-            message: nb_MAJ
+            message: nb_add
         }, {
             type: "info",
             placement: {
@@ -622,10 +622,10 @@ function notify_nb_add(nb_add, nb_sent) {
                 align: "center"
             }
         });
-    } else if (nb_MAJ == NaN) { // si Not a Number
+    } else if (nb_add == NaN) { // si Not a Number
         $.notify({
             title: "<strong>Number of objects added</strong>",
-            message: nb_MAJ
+            message: nb_add
         }, {
             type: "danger",
             placement: {
@@ -633,10 +633,10 @@ function notify_nb_add(nb_add, nb_sent) {
                 align: "center"
             }
         });
-    } else if (nb_MAJ != nb_sent) { // si pas egal
+    } else if (nb_add != nb_sent) { // si pas egal
         $.notify({
             title: "<strong>Number of objects added</strong>",
-            message: nb_MAJ
+            message: nb_add
         }, {
             type: "warning",
             placement: {
