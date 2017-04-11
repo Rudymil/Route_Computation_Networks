@@ -577,7 +577,6 @@ function send_ajax_update(type) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
                 console.log("send_ajax_update statut : ", statut);
             }
             if (resultat.status == '200') {
@@ -592,6 +591,9 @@ function send_ajax_update(type) {
                             align: "center"
                         }
                     });*/
+                    if (DEBUG) {
+                        console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                    }
                     return parseInt(resultat.responseJSON);
                 } else {
                     return -1; // error
@@ -635,7 +637,6 @@ function send_ajax_delete(id, type) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
                 console.log("send_ajax_delete statut : ", statut);
             }
             if (resultat.status == '200') {
@@ -650,6 +651,9 @@ function send_ajax_delete(id, type) {
                             align: "center"
                         }
                     });*/
+                    if (DEBUG) {
+                        console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                    }
                     return parseInt(resultat.responseJSON);
                 } else {
                     return -1; // error
