@@ -296,7 +296,7 @@ function notify_properties_wrong() {
  */
 function verification(shape, type) {
     if (shape["properties"] != null) { // si y a des properties
-        if (type == string_risk_type) {
+        if (type == string_warning_zone) {
             if (shape["properties"]["risk_type"] == null || shape["properties"]["risk_type"] == undefined) { // si pas de risque
                 notify_risk_type_wrong();
                 return -1;
@@ -310,7 +310,7 @@ function verification(shape, type) {
                 return -1;
             }*/
         }
-        if (type == string_anomaly_type) {
+        if (type == string_anomaly_zone) {
             if (shape["properties"]["anomaly_type"] == null || shape["properties"]["anomaly_type"] == undefined) { // si pas de type
                 notify_anomaly_type_wrong();
                 return -1;
@@ -435,7 +435,7 @@ function send_ajax_geojson(type, url) {
         url: url,
         type: 'POST',
         data: type + '=' + JSON.stringify(geojson), // object -> string
-        dataType: 'json',
+        dataType: 'text',
         success: function(code, statut) {
             if (DEBUG) {
                 console.log("send_ajax_geojson code_json : ", code);
@@ -459,7 +459,7 @@ function send_ajax_geojson(type, url) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_geojson resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_geojson resultat.responseText : ", resultat.responseText);
                 console.log("send_ajax_geojson statut : ", statut);
             }
             if (resultat.status == '200') {
@@ -474,10 +474,10 @@ function send_ajax_geojson(type, url) {
                     boxl = new Array();
                     polygonl = new Array();
                 }
-                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
                     /*$.notify({
                         title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseJSON
+                        message: resultat.responseText
                     }, {
                         type: "info",
                         placement: {
@@ -486,9 +486,9 @@ function send_ajax_geojson(type, url) {
                         }
                     });*/
                     if (DEBUG) {
-                        console.log("send_ajax_geojson resultat.responseJSON : ", resultat.responseJSON);
+                        console.log("send_ajax_geojson resultat.responseText : ", resultat.responseText);
                     }
-                    return parseInt(resultat.responseJSON);
+                    return parseInt(resultat.responseText);
                 } else {
                     return -1; // error
                 }
@@ -875,14 +875,25 @@ function send_ajax_point(point) {
             complete: function(resultat, statut) {
                 if (DEBUG) {
                     console.log("send_ajax_point resultat.status :", resultat.status);
+                    console.log("send_ajax_point resultat.responseJSON :", resultat.responseJSON);
                 }
                 if (resultat.status == '200') {
                     var reponse = resultat.responseJSON;
-                    if (!$.isEmptyObject(reponse) && reponse != undefined) { // si le resultat json n est pas vide
+                    if (reponse != undefined && reponse != null) { // si le resultat json n est pas vide
                         if (DEBUG) {
                             console.log("send_ajax_point reponse :", reponse);
                         }
-                        if (reponse == false) { // si error
+                        if (reponse == 0) { // si error
+                            $.notify({
+                                title: "<strong>Point request</strong>",
+                                message: "Out of the area"
+                            }, {
+                                type: "danger",
+                                placement: {
+                                    from: "bottom",
+                                    align: "center"
+                                }
+                            });
                         } else { // sinon
                             if (point[2] == "start") { // si point de depart
                                 if (DEBUG) {
