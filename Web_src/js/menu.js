@@ -439,7 +439,7 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson code_json : ", code);
                 console.log("send_ajax_geojson statut : ", statut);
             }
-            notify_ajax_sending_areas_success(resultat);
+            notify_ajax_sending_areas_success(statut);
             if (type == string_warning_zone) {
                 style_layer(string_warning_zone); // changement de style
             }
