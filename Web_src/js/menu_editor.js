@@ -686,16 +686,25 @@ $("#submit3").click(function() {
         }
     });
     nb_MAJ = 0;
+    if (DEBUG) {
+        console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+    }
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
         //notify_none("Warning zones updated");
     } else {
         nb_MAJ = nb_MAJ + send_ajax_update(string_warning_zone);
+        if (DEBUG) {
+            console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+        }
         wzupdate = new Array();
     }
     if (azupdate == null || azupdate.length <= 0) { // si pas d anomaly zones a MAJ
         //notify_none("Anomaly zones updated");
     } else {
         nb_MAJ = nb_MAJ + send_ajax_update(string_anomaly_zone);
+        if (DEBUG) {
+            console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+        }
         azupdate = new Array();
     }
     if (wzdelete == null || wzdelete.length <= 0) { // si pas de warning zones a supprimer
@@ -703,6 +712,9 @@ $("#submit3").click(function() {
     } else {
         for (element in wzdelete) {
             nb_MAJ = nb_MAJ + send_ajax_delete(wzdelete[element], string_warning_zone);
+            if (DEBUG) {
+                console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+            }
         }
         wzdelete = new Array();
     }
@@ -711,6 +723,9 @@ $("#submit3").click(function() {
     } else {
         for (element in azdelete) {
             nb_MAJ = nb_MAJ + send_ajax_delete(azdelete[element], string_anomaly_zone);
+            if (DEBUG) {
+                console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+            }
         }
         azdelete = new Array();
     }
