@@ -698,7 +698,7 @@ $("#submit3").click(function() {
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
         //notify_none("Warning zones updated");
     } else {
-        nb_MAJ = nb_MAJ + send_ajax_update(string_warning_zone);
+        nb_MAJ = nb_MAJ + parseInt(send_ajax_update(string_warning_zone));
         if (DEBUG) {
             console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
         }
@@ -707,7 +707,7 @@ $("#submit3").click(function() {
     if (azupdate == null || azupdate.length <= 0) { // si pas d anomaly zones a MAJ
         //notify_none("Anomaly zones updated");
     } else {
-        nb_MAJ = nb_MAJ + send_ajax_update(string_anomaly_zone);
+        nb_MAJ = nb_MAJ + parseInt(send_ajax_update(string_anomaly_zone));
         if (DEBUG) {
             console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
         }
@@ -717,7 +717,7 @@ $("#submit3").click(function() {
         //notify_none("Warning zones deleted");
     } else {
         for (element in wzdelete) {
-            nb_MAJ = nb_MAJ + send_ajax_delete(wzdelete[element], string_warning_zone);
+            nb_MAJ = nb_MAJ + parseInt(send_ajax_delete(wzdelete[element], string_warning_zone));
             if (DEBUG) {
                 console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
             }
@@ -728,7 +728,7 @@ $("#submit3").click(function() {
         //notify_none("Warning zones deleted");
     } else {
         for (element in azdelete) {
-            nb_MAJ = nb_MAJ + send_ajax_delete(azdelete[element], string_anomaly_zone);
+            nb_MAJ = nb_MAJ + parseInt(send_ajax_delete(azdelete[element], string_anomaly_zone));
             if (DEBUG) {
                 console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
             }
