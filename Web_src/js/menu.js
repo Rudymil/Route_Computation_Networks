@@ -459,7 +459,7 @@ function send_ajax_geojson(type, url) {
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_geojson resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_geojson resultat.responseText : ", resultat.responseText);
                 console.log("send_ajax_geojson statut : ", statut);
             }
             if (resultat.status == '200') {
@@ -474,10 +474,10 @@ function send_ajax_geojson(type, url) {
                     boxl = new Array();
                     polygonl = new Array();
                 }
-                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
                     /*$.notify({
                         title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseJSON
+                        message: resultat.responseText
                     }, {
                         type: "info",
                         placement: {
@@ -486,9 +486,9 @@ function send_ajax_geojson(type, url) {
                         }
                     });*/
                     if (DEBUG) {
-                        console.log("send_ajax_geojson resultat.responseJSON : ", resultat.responseJSON);
+                        console.log("send_ajax_geojson resultat.responseText : ", resultat.responseText);
                     }
-                    return parseInt(resultat.responseJSON);
+                    return parseInt(resultat.responseText);
                 } else {
                     return -1; // error
                 }

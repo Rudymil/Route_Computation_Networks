@@ -578,13 +578,13 @@ function send_ajax_update(type) {
         complete: function(resultat, statut) {
             if (DEBUG) {
                 console.log("send_ajax_update statut : ", statut);
-                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_delete resultat.responseText : ", resultat.responseText);
             }
             if (resultat.status == '200') {
-                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
                     /*$.notify({
                         title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseJSON
+                        message: resultat.responseText
                     }, {
                         type: "info",
                         placement: {
@@ -593,9 +593,9 @@ function send_ajax_update(type) {
                         }
                     });*/
                     if (DEBUG) {
-                        console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                        console.log("send_ajax_delete resultat.responseText : ", resultat.responseText);
                     }
-                    return parseInt(resultat.responseJSON);
+                    return parseInt(resultat.responseText);
                 } else {
                     return -1; // error
                 }
@@ -639,13 +639,13 @@ function send_ajax_delete(id, type) {
         complete: function(resultat, statut) {
             if (DEBUG) {
                 console.log("send_ajax_delete statut : ", statut);
-                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_delete resultat.responseText : ", resultat.responseText);
             }
             if (resultat.status == '200') {
-                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
                     /*$.notify({
                         title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseJSON
+                        message: resultat.responseText
                     }, {
                         type: "info",
                         placement: {
@@ -654,9 +654,9 @@ function send_ajax_delete(id, type) {
                         }
                     });*/
                     if (DEBUG) {
-                        console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                        console.log("send_ajax_delete resultat.responseText : ", resultat.responseText);
                     }
-                    return parseInt(resultat.responseJSON);
+                    return parseInt(resultat.responseText);
                 } else {
                     return -1; // error
                 }
