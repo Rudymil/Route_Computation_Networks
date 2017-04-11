@@ -131,18 +131,16 @@ function add_anomaly_zones(url, bbox) {
                 console.log("add_anomaly_zones statut : ", statut);
                 console.log("add_anomaly_zones erreur : ", erreur);
             }
-            $.notify(
-            	{
-            		title: "<strong>Anomaly zones request</strong>",
-            		message: resultat.responseText
-            	},{
-            		type: "danger",
-            		placement: {
-            			from: "bottom",
-            			align: "center"
-            		}
-            	}
-            );
+            $.notify({
+                title: "<strong>Anomaly zones request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
+                }
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -341,18 +339,16 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            $.notify(
-                {
-                    title: "<strong>Warning zones validated request</strong>",
-                    message: resultat.responseText
-                },{
-                    type: "danger",
-                    placement: {
-                        from: "bottom",
-                        align: "center"
-                    }
+            $.notify({
+                title: "<strong>Warning zones validated request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
                 }
-            );
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -465,18 +461,16 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            $.notify(
-                {
-                    title: "<strong>Warning zones not checked request</strong>",
-                    message: resultat.responseText
-                },{
-                    type: "danger",
-                    placement: {
-                        from: "bottom",
-                        align: "center"
-                    }
+            $.notify({
+                title: "<strong>Warning zones not checked request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
                 }
-            );
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -586,6 +580,16 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update nb_MAJ : ", nb_MAJ);
                 console.log("send_ajax_update statut : ", statut);
             }
+            $.notify({
+                title: "<strong>Number of objects modified</strong>",
+                message: resultat.responseJSON
+            }, {
+                type: "info",
+                placement: {
+                    from: "bottom",
+                    align: "center"
+                }
+            });
         }
     });
 }
@@ -627,6 +631,16 @@ function send_ajax_delete(id, type) {
                 console.log("send_ajax_update nb_MAJ : ", nb_MAJ);
                 console.log("send_ajax_update statut : ", statut);
             }
+            $.notify({
+                title: "<strong>Number of objects modified</strong>",
+                message: resultat.responseJSON
+            }, {
+                type: "info",
+                placement: {
+                    from: "bottom",
+                    align: "center"
+                }
+            });
         }
     });
 }
