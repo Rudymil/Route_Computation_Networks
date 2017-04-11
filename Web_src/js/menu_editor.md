@@ -74,9 +74,9 @@ function send_ajax_delete(id, type) {...}
 ```
 ```js
 /**
- * Show the number of shapes modified.
- * @param {number} nb_MAJ - Number of shapes modified.
- * @param {number} nb_sent - Number of shapes sent.
+ * Show the number of zones modified.
+ * @param {number} nb_MAJ - Number of zones modified.
+ * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_MAJ(nb_MAJ, nb_sent) {...}
 ```

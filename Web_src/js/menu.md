@@ -119,18 +119,18 @@ function geojsoncircle(ci) {...}
 ```
 ```js
 /**
- * Show the number of shapes sent.
- * @param {number} nb_sent - Number of shapes sent.
+ * Show the number of zones sent.
+ * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_sent(nb_sent) {...}
 ```
 ```js
 /**
- * Show the number of shapes added.
- * @param {number} nb_add - Number of shapes added.
- * @param {number} nb_sent - Number of shapes sent.
+ * Show the number of zones added.
+ * @param {number} nb_add - Number of zones added.
+ * @param {number} nb_sent - Number of zones sent.
  */
-function notify_nb_add(nb_add,nb_sent) {...}
+function notify_nb_add(nb_add, nb_sent) {...}
 ```
 ```js
 /**

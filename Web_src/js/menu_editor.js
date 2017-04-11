@@ -665,14 +665,14 @@ function send_ajax_delete(id, type) {
     });
 }
 /**
- * Show the number of shapes modified.
- * @param {number} nb_MAJ - Number of shapes modified.
- * @param {number} nb_sent - Number of shapes sent.
+ * Show the number of zones modified.
+ * @param {number} nb_MAJ - Number of zones modified.
+ * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_MAJ(nb_MAJ, nb_sent) {
     if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
         $.notify({
-            title: "<strong>Number of objects modified</strong>",
+            title: "<strong>Number of zones modified</strong>",
             message: nb_MAJ
         }, {
             type: "success",
@@ -683,7 +683,7 @@ function notify_nb_MAJ(nb_MAJ, nb_sent) {
         });
     } else if (nb_MAJ == NaN) { // si Not a Number
         $.notify({
-            title: "<strong>Number of objects modified</strong>",
+            title: "<strong>Number of zones modified</strong>",
             message: nb_MAJ
         }, {
             type: "danger",
@@ -694,7 +694,7 @@ function notify_nb_MAJ(nb_MAJ, nb_sent) {
         });
     } else if (nb_MAJ != nb_sent) { // si pas egal
         $.notify({
-            title: "<strong>Number of objects modified</strong>",
+            title: "<strong>Number of zones modified</strong>",
             message: nb_MAJ
         }, {
             type: "warning",

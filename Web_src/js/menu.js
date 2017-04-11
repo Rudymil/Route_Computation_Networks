@@ -566,13 +566,13 @@ function geojsoncircle(ci) {
     return circlejson;
 }
 /**
- * Show the number of shapes sent.
- * @param {number} nb_sent - Number of shapes sent.
+ * Show the number of zones sent.
+ * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_sent(nb_sent) {
     if (nb_sent > 0) {
         $.notify({
-            title: "<strong>Number of objects sent</strong>",
+            title: "<strong>Number of zones sent</strong>",
             message: nb_sent
         }, {
             type: "success",
@@ -583,7 +583,7 @@ function notify_nb_sent(nb_sent) {
         });
     } else if (nb_sent == 0) {
         $.notify({
-            title: "<strong>Number of objects sent</strong>",
+            title: "<strong>Number of zones sent</strong>",
             message: nb_sent
         }, {
             type: "info",
@@ -594,7 +594,7 @@ function notify_nb_sent(nb_sent) {
         });
     } else {
         $.notify({
-            title: "<strong>Number of objects sent</strong>",
+            title: "<strong>Number of zones sent</strong>",
             message: nb_sent
         }, {
             type: "danger",
@@ -606,14 +606,14 @@ function notify_nb_sent(nb_sent) {
     }
 }
 /**
- * Show the number of shapes added.
- * @param {number} nb_add - Number of shapes added.
- * @param {number} nb_sent - Number of shapes sent.
+ * Show the number of zones added.
+ * @param {number} nb_add - Number of zones added.
+ * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_add(nb_add, nb_sent) {
     if (nb_add != NaN && nb_add == nb_sent) { // si egalite
         $.notify({
-            title: "<strong>Number of objects added</strong>",
+            title: "<strong>Number of zones added</strong>",
             message: nb_add
         }, {
             type: "success",
@@ -624,7 +624,7 @@ function notify_nb_add(nb_add, nb_sent) {
         });
     } else if (nb_add == NaN) { // si Not a Number
         $.notify({
-            title: "<strong>Number of objects added</strong>",
+            title: "<strong>Number of zones added</strong>",
             message: nb_add
         }, {
             type: "danger",
@@ -635,7 +635,7 @@ function notify_nb_add(nb_add, nb_sent) {
         });
     } else if (nb_add != nb_sent) { // si pas egal
         $.notify({
-            title: "<strong>Number of objects added</strong>",
+            title: "<strong>Number of zones added</strong>",
             message: nb_add
         }, {
             type: "warning",
