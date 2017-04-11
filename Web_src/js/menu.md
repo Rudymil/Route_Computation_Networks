@@ -98,6 +98,8 @@ function fill_geojson(circle, box, polygon, type) {...}
  * Ajax request sending all the zones to the BD by specifying the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
  * @param {string} url - Url to the Web API.
+ * @return {number} resultat.responseJSON - Number of lines added into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_geojson(type, url) {...}
 ```
