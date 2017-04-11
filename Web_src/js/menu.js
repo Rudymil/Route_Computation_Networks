@@ -879,7 +879,7 @@ function send_ajax_point(point) {
                 }
                 if (resultat.status == '200') {
                     var reponse = resultat.responseJSON;
-                    if (!$.isEmptyObject(reponse) && reponse != undefined) { // si le resultat json n est pas vide
+                    if (reponse != undefined && reponse != null) { // si le resultat json n est pas vide
                         if (DEBUG) {
                             console.log("send_ajax_point reponse :", reponse);
                         }
