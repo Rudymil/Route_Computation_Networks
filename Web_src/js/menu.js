@@ -875,6 +875,7 @@ function send_ajax_point(point) {
             complete: function(resultat, statut) {
                 if (DEBUG) {
                     console.log("send_ajax_point resultat.status :", resultat.status);
+                    console.log("send_ajax_point resultat.responseJSON :", resultat.responseJSON);
                 }
                 if (resultat.status == '200') {
                     var reponse = resultat.responseJSON;
