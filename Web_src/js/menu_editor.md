@@ -58,6 +58,7 @@ function add_warning_zones(url, bbox) {...}
  * Send to the DB all the update for one type.
  * @param {string} type - Type of the GeoJSON to update.
  * @return {number} resultat.responseJSON - Number of lines modified into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_update (type) {...}
 ```
@@ -67,6 +68,7 @@ function send_ajax_update (type) {...}
  * @param {string} id - Id of the GeoJSON to delete.
  * @param {string} type - Type of GeoJSON to delete.
  * @return {number} resultat.responseJSON - Number of lines modified into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_delete(id, type) {...}
 ```

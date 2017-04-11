@@ -540,6 +540,7 @@ function add_warning_zones(url, bbox) {
  * Send to the DB all the update for one type.
  * @param {string} type - Type of the GeoJSON to update.
  * @return {number} resultat.responseJSON - Number of lines modified into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_update(type) {
     if (DEBUG) {
@@ -575,22 +576,27 @@ function send_ajax_update(type) {
             notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
-            nb_MAJ = nb_MAJ + resultat.responseJSON;
             if (DEBUG) {
                 console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
                 console.log("send_ajax_update statut : ", statut);
             }
-            /*$.notify({
-                title: "<strong>Number of objects modified</strong>",
-                message: resultat.responseJSON
-            }, {
-                type: "info",
-                placement: {
-                    from: "bottom",
-                    align: "center"
+            if (resultat.status == '200') {
+                if (!$.isEmptyObject(resultat.responseJSON) && resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat json n est pas vide
+                    /*$.notify({
+                        title: "<strong>Number of objects modified</strong>",
+                        message: resultat.responseJSON
+                    }, {
+                        type: "info",
+                        placement: {
+                            from: "bottom",
+                            align: "center"
+                        }
+                    });*/
+                    return resultat.responseJSON;
+                } else {
+                    return -1; // error
                 }
-            });*/
-            return resultat.responseJSON;
+            }
         }
     });
 }
@@ -599,6 +605,7 @@ function send_ajax_update(type) {
  * @param {string} id - Id of the GeoJSON to delete.
  * @param {string} type - Type of GeoJSON to delete.
  * @return {number} resultat.responseJSON - Number of lines modified into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_delete(id, type) {
     if (DEBUG) {
@@ -613,36 +620,41 @@ function send_ajax_delete(id, type) {
         dataType: 'json',
         success: function(code, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update code_json : ", code);
-                console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_delete code_json : ", code);
+                console.log("send_ajax_delete statut : ", statut);
             }
             //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat);
-                console.log("send_ajax_update statut : ", statut);
-                console.log("send_ajax_update erreur : ", erreur);
+                console.log("send_ajax_delete resultat : ", resultat);
+                console.log("send_ajax_delete statut : ", statut);
+                console.log("send_ajax_delete erreur : ", erreur);
             }
             notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
-            nb_MAJ = nb_MAJ + resultat.responseJSON;
             if (DEBUG) {
-                console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
-                console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                console.log("send_ajax_delete statut : ", statut);
             }
-            /*$.notify({
-                title: "<strong>Number of objects modified</strong>",
-                message: resultat.responseJSON
-            }, {
-                type: "info",
-                placement: {
-                    from: "bottom",
-                    align: "center"
+            if (resultat.status == '200') {
+                if (!$.isEmptyObject(resultat.responseJSON) && resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat json n est pas vide
+                    /*$.notify({
+                        title: "<strong>Number of objects modified</strong>",
+                        message: resultat.responseJSON
+                    }, {
+                        type: "info",
+                        placement: {
+                            from: "bottom",
+                            align: "center"
+                        }
+                    });*/
+                    return resultat.responseJSON;
+                } else {
+                    return -1; // error
                 }
-            });*/
-            return resultat.responseJSON;
+            }
         }
     });
 }
