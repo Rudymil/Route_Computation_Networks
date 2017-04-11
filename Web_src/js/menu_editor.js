@@ -665,13 +665,54 @@ function send_ajax_delete(id, type) {
     });
 }
 /**
+ * Show the number of shapes modified.
+ * @param {number} nb_MAJ - Number of shapes modified.
+ * @param {number} nb_sent - Number of shapes sent.
+ */
+function notify_nb_MAJ(nb_MAJ, nb_sent) {
+    if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
+        $.notify({
+            title: "<strong>Number of objects modified</strong>",
+            message: nb_MAJ
+        }, {
+            type: "info",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_MAJ == NaN) { // si Not a Number
+        $.notify({
+            title: "<strong>Number of objects modified</strong>",
+            message: nb_MAJ
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_MAJ != nb_sent) { // si pas egal
+        $.notify({
+            title: "<strong>Number of objects modified</strong>",
+            message: nb_MAJ
+        }, {
+            type: "warning",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
+/**
  * Executed for sending all the updates and deletes.
  */
 $("#submit3").click(function() {
-    var nb_MAJ = wzupdate.length + azupdate.length + wzdelete.length + azdelete.length;
+    var nb_sent = wzupdate.length + azupdate.length + wzdelete.length + azdelete.length;
     if (DEBUG) {
         console.log("EVENT : $('#submit3').click");
-        console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+        console.log("EVENT : $('#submit3').click nb_sent :", nb_sent);
         console.log("EVENT : $('#submit3').click wzupdate :", wzupdate);
         console.log("EVENT : $('#submit3').click wzupdate.length :", wzupdate.length);
         console.log("EVENT : $('#submit3').click azupdate :", azupdate);
@@ -681,17 +722,8 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
         console.log("EVENT : $('#submit3').click azdelete.length :", azdelete.length);
     }
-    $.notify({
-        title: "<strong>Number of objects sent</strong>",
-        message: nb_MAJ
-    }, {
-        type: "info",
-        placement: {
-            from: "bottom",
-            align: "center"
-        }
-    });
-    nb_MAJ = 0;
+    notify_nb_sent(nb_sent);
+    var nb_MAJ = 0;
     if (DEBUG) {
         console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
     }
@@ -735,14 +767,5 @@ $("#submit3").click(function() {
         }
         azdelete = new Array();
     }
-    $.notify({
-        title: "<strong>Number of objects modified</strong>",
-        message: nb_MAJ
-    }, {
-        type: "info",
-        placement: {
-            from: "bottom",
-            align: "center"
-        }
-    });
+    notify_nb_MAJ(nb_MAJ, nb_sent);
 });

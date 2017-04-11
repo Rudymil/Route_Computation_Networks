@@ -60,7 +60,7 @@ function add_warning_zones(url, bbox) {...}
  * @return {number} resultat.responseJSON - Number of lines modified into the DB.
  * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
-function send_ajax_update (type) {...}
+function send_ajax_update(type) {...}
 ```
 ```js
 /**
@@ -71,6 +71,14 @@ function send_ajax_update (type) {...}
  * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_delete(id, type) {...}
+```
+```js
+/**
+ * Show the number of shapes modified.
+ * @param {number} nb_MAJ - Number of shapes modified.
+ * @param {number} nb_sent - Number of shapes sent.
+ */
+function notify_nb_MAJ(nb_MAJ, nb_sent) {...}
 ```
 ```js
 /**

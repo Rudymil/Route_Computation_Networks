@@ -566,6 +566,87 @@ function geojsoncircle(ci) {
     return circlejson;
 }
 /**
+ * Show the number of shapes sent.
+ * @param {number} nb_sent - Number of shapes sent.
+ */
+function notify_nb_sent(nb_sent) {
+    if (nb_sent > 0) {
+        $.notify({
+            title: "<strong>Number of objects sent</strong>",
+            message: nb_sent
+        }, {
+            type: "success",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_sent = 0) {
+        $.notify({
+            title: "<strong>Number of objects sent</strong>",
+            message: nb_sent
+        }, {
+            type: "info",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else {
+        $.notify({
+            title: "<strong>Number of objects sent</strong>",
+            message: nb_sent
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
+/**
+ * Show the number of shapes added.
+ * @param {number} nb_add - Number of shapes added.
+ * @param {number} nb_sent - Number of shapes sent.
+ */
+function notify_nb_add(nb_add,nb_sent) {
+    if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
+        $.notify({
+            title: "<strong>Number of objects added</strong>",
+            message: nb_MAJ
+        }, {
+            type: "info",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_MAJ == NaN) { // si Not a Number
+        $.notify({
+            title: "<strong>Number of objects added</strong>",
+            message: nb_MAJ
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_MAJ != nb_sent) { // si pas egal
+        $.notify({
+            title: "<strong>Number of objects added</strong>",
+            message: nb_MAJ
+        }, {
+            type: "warning",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
+/**
  * Executed for sending all the "warning zones".
  */
 $("#submit1").click(function() {
@@ -627,50 +708,32 @@ $("#submit1").click(function() {
     });
     if (DEBUG) {
         console.log("EVENT : $('#submit1').click");
-        console.log("EVENT : $('#submit1').click nb_add :", nb_add);
     }
-    var nb_add = circle.length + box.length + polygon.length;
+    var nb_sent = circle.length + box.length + polygon.length;
     if (DEBUG) {
-        console.log("$('#submit1').click circle :", circle);
-        console.log("$('#submit1').click circle.length :", circle.length);
-        console.log("$('#submit1').click box :", box);
-        console.log("$('#submit1').click box.length :", box.length);
-        console.log("$('#submit1').click polygon :", polygon);
-        console.log("$('#submit1').click polygon.length :", polygon.length);
+        console.log("EVENT : $('#submit1').click nb_sent :", nb_sent);
+        console.log("EVENT : $('#submit1').click circle :", circle);
+        console.log("EVENT : $('#submit1').click circle.length :", circle.length);
+        console.log("EVENT : $('#submit1').click box :", box);
+        console.log("EVENT : $('#submit1').click box.length :", box.length);
+        console.log("EVENT : $('#submit1').click polygon :", polygon);
+        console.log("EVENT : $('#submit1').click polygon.length :", polygon.length);
     }
     if (fill_geojson(circle, box, polygon, string_warning_zone) == 0) { // si pas d erreur
-        $.notify({
-            title: "<strong>Number of objects sent</strong>",
-            message: nb_add
-        }, {
-            type: "info",
-            placement: {
-                from: "bottom",
-                align: "center"
-            }
-        });
-        nb_add = 0;
+        notify_nb_sent(nb_sent);
+        var nb_add = 0;
         if (DEBUG) {
-            console.log("$('#submit1').click geojson : ", geojson);
-            console.log("$('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
-	        console.log("EVENT : $('#submit1').click nb_add :", nb_add);
+            console.log("EVENT : $('#submit1').click geojson : ", geojson);
+            console.log("EVENT : $('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
+            console.log("EVENT : $('#submit1').click nb_add :", nb_add);
         }
         if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
             nb_add = nb_add + parseInt(send_ajax_geojson(string_warning_zone, url));
         }
         if (DEBUG) {
-	        console.log("EVENT : $('#submit1').click nb_add :", nb_add);
-	    }
-        $.notify({
-            title: "<strong>Number of objects added</strong>",
-            message: nb_add
-        }, {
-            type: "info",
-            placement: {
-                from: "bottom",
-                align: "center"
-            }
-        });
+            console.log("EVENT : $('#submit1').click nb_add :", nb_add);
+        }
+        notify_nb_add(nb_add,nb_sent);
     }
 });
 /**
@@ -736,49 +799,33 @@ $("#submit2").click(function() {
     if (DEBUG) {
         console.log("EVENT : $('#submit2').click");
     }
-    var nb_add = circlel.length + boxl.length + polygonl.length;
+    var nb_sent = circlel.length + boxl.length + polygonl.length;
     if (DEBUG) {
-        console.log("$('#submit2').click circlel :", circlel);
-        console.log("$('#submit2').click circlel.length :", circlel.length);
-        console.log("$('#submit2').click boxl :", boxl);
-        console.log("$('#submit2').click boxl.length :", boxl.length);
-        console.log("$('#submit2').click polygonl :", polygonl);
-        console.log("$('#submit2').click polygonl.length :", polygonl.length);
+        console.log("EVENT : $('#submit2').click nb_sent :", nb_sent);
+        console.log("EVENT : $('#submit2').click circlel :", circlel);
+        console.log("EVENT : $('#submit2').click circlel.length :", circlel.length);
+        console.log("EVENT : $('#submit2').click boxl :", boxl);
+        console.log("EVENT : $('#submit2').click boxl.length :", boxl.length);
+        console.log("EVENT : $('#submit2').click polygonl :", polygonl);
+        console.log("EVENT : $('#submit2').click polygonl.length :", polygonl.length);
     }
     if (fill_geojson(circlel, boxl, polygonl, string_anomaly_zone) == 0) { // si pas d erreur
-        $.notify({
-            title: "<strong>Number of objects sent</strong>",
-            message: nb_add
-        }, {
-            type: "info",
-            placement: {
-                from: "bottom",
-                align: "center"
-            }
-        });
-        nb_add = 0;
+        notify_nb_sent(nb_sent);
+        var nb_add = 0;
         if (DEBUG) {
-            console.log("$('#submit2').click geojson : ", geojson);
-            console.log("$('#submit2').click Object.keys(geojson).length : ", Object.keys(geojson).length);
+            console.log("EVENT : $('#submit2').click geojson : ", geojson);
+            console.log("EVENT : $('#submit2').click Object.keys(geojson).length : ", Object.keys(geojson).length);
             console.log("EVENT : $('#submit2').click nb_add :", nb_add);
         }
         if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
             nb_add = nb_add + parseInt(send_ajax_geojson(string_anomaly_zone, url));
         }
         if (DEBUG) {
-	        console.log("EVENT : $('#submit2').click nb_add :", nb_add);
-	    }
-        $.notify({
-            title: "<strong>Number of objects added</strong>",
-            message: nb_add
-        }, {
-            type: "info",
-            placement: {
-                from: "bottom",
-                align: "center"
-            }
-        });
+            console.log("EVENT : $('#submit2').click nb_add :", nb_add);
+        }
+        notify_nb_add(nb_add,nb_sent);
     }
+}
 });
 /**
  * Ajax request sending one point ("start"|"step"|"end").

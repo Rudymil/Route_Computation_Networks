@@ -119,6 +119,21 @@ function geojsoncircle(ci) {...}
 ```
 ```js
 /**
+ * Show the number of shapes sent.
+ * @param {number} nb_sent - Number of shapes sent.
+ */
+function notify_nb_sent(nb_sent) {...}
+```
+```js
+/**
+ * Show the number of shapes added.
+ * @param {number} nb_add - Number of shapes added.
+ * @param {number} nb_sent - Number of shapes sent.
+ */
+function notify_nb_add(nb_add,nb_sent) {...}
+```
+```js
+/**
  * Executed for sending all the "warning zones".
  */
 $("#submit1").click(function() {...});
