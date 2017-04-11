@@ -882,7 +882,17 @@ function send_ajax_point(point) {
                         if (DEBUG) {
                             console.log("send_ajax_point reponse :", reponse);
                         }
-                        if (reponse == false) { // si error
+                        if (reponse == 0) { // si error
+                            $.notify({
+                                title: "<strong>Point request</strong>",
+                                message: "Out of the area"
+                            }, {
+                                type: "danger",
+                                placement: {
+                                    from: "bottom",
+                                    align: "center"
+                                }
+                            });
                         } else { // sinon
                             if (point[2] == "start") { // si point de depart
                                 if (DEBUG) {
