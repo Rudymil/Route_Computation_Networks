@@ -60,7 +60,9 @@ $(".radio_button").change(function() { // choix de dessin
         markerDeparture.dragging.enable();
         markeraDestination.dragging.enable();	
         }*/
-        map.removeControl(drawControl);
+        if ( drawControl != null ) {
+			map.removeControl(drawControl);
+		}
     }
     else if ($("#Circle2").is(":checked") == true) {
 
@@ -234,7 +236,8 @@ map.on('draw:created', function(e) {
 			console.log(timestamp);
 			if (isNaN(timestamp) )
 			{
-   				 return false;
+   				 //return false;
+   				 da=null;
 
 			}
 				
@@ -293,7 +296,8 @@ map.on('draw:created', function(e) {
 			console.log(timestamp);
 			if (isNaN(timestamp) )
 			{
-   				 return false;
+   				 //return false;
+   				 da=null;
 
 			}
 				
@@ -350,7 +354,8 @@ map.on('draw:created', function(e) {
 			console.log(timestamp);
 			if (isNaN(timestamp) )
 			{
-   				 return false;
+   				 //return false;
+   				 da=null;
 
 			}
 				

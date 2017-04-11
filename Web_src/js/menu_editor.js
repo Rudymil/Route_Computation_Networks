@@ -131,18 +131,16 @@ function add_anomaly_zones(url, bbox) {
                 console.log("add_anomaly_zones statut : ", statut);
                 console.log("add_anomaly_zones erreur : ", erreur);
             }
-            /*$.notify(
-            	{
-            		title: "<strong>Anomaly zones request</strong>",
-            		message: statut
-            	},{
-            		type: "danger",
-            		placement: {
-            			from: "bottom",
-            			align: "center"
-            		}
-            	}
-            );*/
+            $.notify({
+                title: "<strong>Anomaly zones request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
+                }
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -324,7 +322,7 @@ function add_warning_zones(url, bbox) {
             }
             /*$.notify(
                 {
-                    title: "<strong>Warning zones request</strong>",
+                    title: "<strong>Warning zones validated request</strong>",
                     message: statut
                 },{
                     type: "success",
@@ -341,18 +339,16 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            /*$.notify(
-                {
-                    title: "<strong>Warning zones request</strong>",
-                    message: statut
-                },{
-                    type: "danger",
-                    placement: {
-                        from: "bottom",
-                        align: "center"
-                    }
+            $.notify({
+                title: "<strong>Warning zones validated request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
                 }
-            );*/
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -448,7 +444,7 @@ function add_warning_zones(url, bbox) {
             }
             /*$.notify(
                 {
-                    title: "<strong>Warning zones request</strong>",
+                    title: "<strong>Warning zones not checked request</strong>",
                     message: statut
                 },{
                     type: "success",
@@ -465,18 +461,16 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            /*$.notify(
-                {
-                    title: "<strong>Warning zones request</strong>",
-                    message: statut
-                },{
-                    type: "danger",
-                    placement: {
-                        from: "bottom",
-                        align: "center"
-                    }
+            $.notify({
+                title: "<strong>Warning zones not checked request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
                 }
-            );*/
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
@@ -545,6 +539,8 @@ function add_warning_zones(url, bbox) {
 /**
  * Send to the DB all the update for one type.
  * @param {string} type - Type of the GeoJSON to update.
+ * @return {number} resultat.responseJSON - Number of lines modified into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_update(type) {
     if (DEBUG) {
@@ -569,7 +565,7 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update code_json : ", code);
                 console.log("send_ajax_update statut : ", statut);
             }
-            notify_ajax_sending_areas_success(statut);
+            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -577,12 +573,32 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update statut : ", statut);
                 console.log("send_ajax_update erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(statut);
+            notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat);
                 console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+            }
+            if (resultat.status == '200') {
+                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                    /*$.notify({
+                        title: "<strong>Number of objects modified</strong>",
+                        message: resultat.responseJSON
+                    }, {
+                        type: "info",
+                        placement: {
+                            from: "bottom",
+                            align: "center"
+                        }
+                    });*/
+                    if (DEBUG) {
+                        console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                    }
+                    return parseInt(resultat.responseJSON);
+                } else {
+                    return -1; // error
+                }
             }
         }
     });
@@ -591,6 +607,8 @@ function send_ajax_update(type) {
  * Send to the DB one id for one type.
  * @param {string} id - Id of the GeoJSON to delete.
  * @param {string} type - Type of GeoJSON to delete.
+ * @return {number} resultat.responseJSON - Number of lines modified into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_delete(id, type) {
     if (DEBUG) {
@@ -605,64 +623,149 @@ function send_ajax_delete(id, type) {
         dataType: 'json',
         success: function(code, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update code_json : ", code);
-                console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_delete code_json : ", code);
+                console.log("send_ajax_delete statut : ", statut);
             }
-            notify_ajax_sending_areas_success(statut);
+            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat);
-                console.log("send_ajax_update statut : ", statut);
-                console.log("send_ajax_update erreur : ", erreur);
+                console.log("send_ajax_delete resultat : ", resultat);
+                console.log("send_ajax_delete statut : ", statut);
+                console.log("send_ajax_delete erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(statut);
+            notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_update resultat : ", resultat);
-                console.log("send_ajax_update statut : ", statut);
+                console.log("send_ajax_delete statut : ", statut);
+                console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+            }
+            if (resultat.status == '200') {
+                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                    /*$.notify({
+                        title: "<strong>Number of objects modified</strong>",
+                        message: resultat.responseJSON
+                    }, {
+                        type: "info",
+                        placement: {
+                            from: "bottom",
+                            align: "center"
+                        }
+                    });*/
+                    if (DEBUG) {
+                        console.log("send_ajax_delete resultat.responseJSON : ", resultat.responseJSON);
+                    }
+                    return parseInt(resultat.responseJSON);
+                } else {
+                    return -1; // error
+                }
             }
         }
     });
 }
 /**
+ * Show the number of zones modified.
+ * @param {number} nb_MAJ - Number of zones modified.
+ * @param {number} nb_sent - Number of zones sent.
+ */
+function notify_nb_MAJ(nb_MAJ, nb_sent) {
+    if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
+        $.notify({
+            title: "<strong>Number of zones modified</strong>",
+            message: nb_MAJ
+        }, {
+            type: "success",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_MAJ == NaN) { // si Not a Number
+        $.notify({
+            title: "<strong>Number of zones modified</strong>",
+            message: nb_MAJ
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_MAJ != nb_sent) { // si pas egal
+        $.notify({
+            title: "<strong>Number of zones modified</strong>",
+            message: nb_MAJ
+        }, {
+            type: "warning",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
+/**
  * Executed for sending all the updates and deletes.
  */
 $("#submit3").click(function() {
+    var nb_sent = wzupdate.length + azupdate.length + wzdelete.length + azdelete.length;
     if (DEBUG) {
         console.log("EVENT : $('#submit3').click");
+        console.log("EVENT : $('#submit3').click nb_sent :", nb_sent);
         console.log("EVENT : $('#submit3').click wzupdate :", wzupdate);
+        console.log("EVENT : $('#submit3').click wzupdate.length :", wzupdate.length);
         console.log("EVENT : $('#submit3').click azupdate :", azupdate);
+        console.log("EVENT : $('#submit3').click azupdate.length :", azupdate.length);
         console.log("EVENT : $('#submit3').click wzdelete :", wzdelete);
+        console.log("EVENT : $('#submit3').click wzdelete.length :", wzdelete.length);
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
+        console.log("EVENT : $('#submit3').click azdelete.length :", azdelete.length);
+    }
+    notify_nb_sent(nb_sent);
+    var nb_MAJ = 0;
+    if (DEBUG) {
+        console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
     }
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
-        notify_none("Warning zones updated");
+        //notify_none("Warning zones updated");
     } else {
-        send_ajax_update(string_warning_zone);
+        nb_MAJ = nb_MAJ + parseInt(send_ajax_update(string_warning_zone));
+        if (DEBUG) {
+            console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+        }
         wzupdate = new Array();
     }
     if (azupdate == null || azupdate.length <= 0) { // si pas d anomaly zones a MAJ
-        notify_none("Anomaly zones updated");
+        //notify_none("Anomaly zones updated");
     } else {
-        send_ajax_update(string_anomaly_zone);
+        nb_MAJ = nb_MAJ + parseInt(send_ajax_update(string_anomaly_zone));
+        if (DEBUG) {
+            console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+        }
         azupdate = new Array();
     }
     if (wzdelete == null || wzdelete.length <= 0) { // si pas de warning zones a supprimer
-        notify_none("Warning zones deleted");
+        //notify_none("Warning zones deleted");
     } else {
         for (element in wzdelete) {
-            send_ajax_delete(wzdelete[element], string_warning_zone);
+            nb_MAJ = nb_MAJ + parseInt(send_ajax_delete(wzdelete[element], string_warning_zone));
+            if (DEBUG) {
+                console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+            }
         }
         wzdelete = new Array();
     }
     if (azdelete == null || azdelete.length <= 0) { // si pas d anomaly zones a supprimer
-        notify_none("Warning zones deleted");
+        //notify_none("Warning zones deleted");
     } else {
         for (element in azdelete) {
-            send_ajax_delete(azdelete[element], string_anomaly_zone);
+            nb_MAJ = nb_MAJ + parseInt(send_ajax_delete(azdelete[element], string_anomaly_zone));
+            if (DEBUG) {
+                console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
+            }
         }
         azdelete = new Array();
     }
+    notify_nb_MAJ(nb_MAJ, nb_sent);
 });

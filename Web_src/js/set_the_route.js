@@ -339,7 +339,7 @@ spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
 spanstart.addClass("start");
 spanend = $(".leaflet-routing-geocoder").last().find("span");
 spanend.addClass("end");
-
+var posinit;
 
 function makeIcon(i, n) {
   var url = 'img/marker-via-icon-2x.png';
@@ -364,24 +364,52 @@ function makeIcon(i, n) {
       iconAnchor: [10, 28]
     });
   }
-}
+};
+
+function pos(i,n) {
+	if (i === 0) {
+    return "start";
+  }
+  if (i === n - 1) {
+    return "end"
+  } else {
+    return "step";
+  }
+};
 
 var controlPenalty = L.Routing.control({
     waypoints: [null],
     routeWhileDragging: true,
     show: true,
     language: 'en',
-    geocoder: L.Control.Geocoder.nominatim(),
+    geocoder: L.Control.Geocoder.nominatim(), 
     autoRoute: true,
     createMarker: function(i, wp) {
         var marker = L.marker(wp.latLng, {
             draggable: true,
-             icon: makeIcon(i, controlPenalty.getWaypoints().length)
+            icon: makeIcon(i, controlPenalty.getWaypoints().length)
         });
         marker.on("click", function(e) {
             marker.bindPopup(e.latlng.lat + ", " + e.latlng.lng);
             //alert (e.latlng.lat + ", " +e.latlng.lng);
         });
+		
+        marker.on ("dragstart", function(ev){
+			posinit= this.getLatLng();
+		});
+		
+        marker.on ("dragend", function(ev){
+			
+			var latlng = [ev.target.getLatLng().lat, ev.target.getLatLng().lng, pos(i,controlPenalty.getWaypoints().length)];
+            position = ev.target.getLatLng();
+            send_ajax_point(latlng);
+            spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+            spanstart.addClass("start");
+            spanend = $(".leaflet-routing-geocoder").last().find("span");
+            spanend.addClass("end");
+            marker.setLatLng(posinit).update();
+		});
+			
         return marker;
     },
     router: L.Routing.osrmv1({

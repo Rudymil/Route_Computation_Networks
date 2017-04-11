@@ -44,9 +44,9 @@ function notify_ajax_sending_areas_success(statut) {...}
 ```js
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB failed.
- * @param {object.statut} statut - Network code.
+ * @param {object.responseText} resultat - Response return.
  */
-function notify_ajax_sending_areas_error(statut) {...}
+function notify_ajax_sending_areas_error(resultat) {...}
 ```
 ```js
 /**
@@ -98,6 +98,8 @@ function fill_geojson(circle, box, polygon, type) {...}
  * Ajax request sending all the zones to the BD by specifying the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
  * @param {string} url - Url to the Web API.
+ * @return {number} resultat.responseJSON - Number of lines added into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_geojson(type, url) {...}
 ```
@@ -114,6 +116,21 @@ function style_layer(type) {...}
  * @return {array} - Of latitude longitude for circle in polygon form.
  */
 function geojsoncircle(ci) {...}
+```
+```js
+/**
+ * Show the number of zones sent.
+ * @param {number} nb_sent - Number of zones sent.
+ */
+function notify_nb_sent(nb_sent) {...}
+```
+```js
+/**
+ * Show the number of zones added.
+ * @param {number} nb_add - Number of zones added.
+ * @param {number} nb_sent - Number of zones sent.
+ */
+function notify_nb_add(nb_add, nb_sent) {...}
 ```
 ```js
 /**

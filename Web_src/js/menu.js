@@ -28,7 +28,7 @@ function ajax_types(url, type) {
             }
             $.notify({
                 title: "<strong>" + type + " request</strong>",
-                message: statut
+                message: resultat.responseText
             }, {
                 type: "danger",
                 placement: {
@@ -90,7 +90,7 @@ function ajax_countries(url) {
             }
             $.notify({
                 title: "<strong>Countries request</strong>",
-                message: statut
+                message: resultat.responseText
             }, {
                 type: "danger",
                 placement: {
@@ -210,16 +210,16 @@ function notify_ajax_sending_areas_success(statut) {
 }
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB failed.
- * @param {object.statut} statut - Network code.
+ * @param {object.responseText} resultat - Response return.
  */
-function notify_ajax_sending_areas_error(statut) {
+function notify_ajax_sending_areas_error(resultat) {
     if (DEBUG) {
         console.log("FUNCTION : notify_ajax_sending_areas_error");
-        console.log("notify_ajax_sending_areas_error statut : ", statut);
+        console.log("notify_ajax_sending_areas_error resultat.responseText : ", resultat.responseText);
     }
     $.notify({
         title: "<strong>Sending areas</strong>",
-        message: statut,
+        message: resultat.responseText,
     }, {
         type: "danger",
         placement: {
@@ -348,7 +348,7 @@ function fill_geojson(circle, box, polygon, type) {
     }
     var features = new Array();
     if (circle.length == 0) {
-        notify_none(string_circles);
+        //notify_none(string_circles);
     } else {
         for (element in circle) {
             if (DEBUG) {
@@ -367,7 +367,7 @@ function fill_geojson(circle, box, polygon, type) {
         }
     }
     if (box.length == 0) {
-        notify_none(string_boxes);
+        //notify_none(string_boxes);
     } else {
         for (element in box) {
             if (DEBUG) {
@@ -386,7 +386,7 @@ function fill_geojson(circle, box, polygon, type) {
         }
     }
     if (polygon.length == 0) {
-        notify_none(string_polygons);
+        //notify_none(string_polygons);
     } else {
         for (element in polygon) {
             if (DEBUG) {
@@ -419,6 +419,8 @@ function fill_geojson(circle, box, polygon, type) {
  * Ajax request sending all the zones to the BD by specifying the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
  * @param {string} url - Url to the Web API.
+ * @return {number} resultat.responseJSON - Number of lines added into the DB.
+ * @return {number} -1 - If resultat.responseJSON is empty or NaN.
  */
 function send_ajax_geojson(type, url) {
     if (DEBUG) {
@@ -439,7 +441,7 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson code_json : ", code);
                 console.log("send_ajax_geojson statut : ", statut);
             }
-            notify_ajax_sending_areas_success(statut);
+            //notify_ajax_sending_areas_success(statut);
             if (type == string_warning_zone) {
                 style_layer(string_warning_zone); // changement de style
             }
@@ -453,23 +455,43 @@ function send_ajax_geojson(type, url) {
                 console.log("send_ajax_geojson statut : ", statut);
                 console.log("send_ajax_geojson erreur : ", erreur);
             }
-            notify_ajax_sending_areas_error(statut);
+            notify_ajax_sending_areas_error(resultat);
         },
         complete: function(resultat, statut) {
             if (DEBUG) {
-                console.log("send_ajax_geojson resultat : ", resultat);
+                console.log("send_ajax_geojson resultat.responseJSON : ", resultat.responseJSON);
                 console.log("send_ajax_geojson statut : ", statut);
             }
-            geojson = new Object(); // reinitialisation
-            if (type == string_warning_zone) {
-                circle = new Array();
-                box = new Array();
-                polygon = new Array();
-            }
-            if (type == string_anomaly_zone) {
-                circlel = new Array();
-                boxl = new Array();
-                polygonl = new Array();
+            if (resultat.status == '200') {
+                geojson = new Object(); // reinitialisation
+                if (type == string_warning_zone) {
+                    circle = new Array();
+                    box = new Array();
+                    polygon = new Array();
+                }
+                if (type == string_anomaly_zone) {
+                    circlel = new Array();
+                    boxl = new Array();
+                    polygonl = new Array();
+                }
+                if (resultat.responseJSON != undefined && resultat.responseJSON != NaN) { // si le resultat.responseJSON est defini
+                    /*$.notify({
+                        title: "<strong>Number of objects modified</strong>",
+                        message: resultat.responseJSON
+                    }, {
+                        type: "info",
+                        placement: {
+                            from: "bottom",
+                            align: "center"
+                        }
+                    });*/
+                    if (DEBUG) {
+                        console.log("send_ajax_geojson resultat.responseJSON : ", resultat.responseJSON);
+                    }
+                    return parseInt(resultat.responseJSON);
+                } else {
+                    return -1; // error
+                }
             }
         }
     });
@@ -544,6 +566,87 @@ function geojsoncircle(ci) {
     return circlejson;
 }
 /**
+ * Show the number of zones sent.
+ * @param {number} nb_sent - Number of zones sent.
+ */
+function notify_nb_sent(nb_sent) {
+    if (nb_sent > 0) {
+        $.notify({
+            title: "<strong>Number of zones sent</strong>",
+            message: nb_sent
+        }, {
+            type: "success",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_sent == 0) {
+        $.notify({
+            title: "<strong>Number of zones sent</strong>",
+            message: nb_sent
+        }, {
+            type: "info",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else {
+        $.notify({
+            title: "<strong>Number of zones sent</strong>",
+            message: nb_sent
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
+/**
+ * Show the number of zones added.
+ * @param {number} nb_add - Number of zones added.
+ * @param {number} nb_sent - Number of zones sent.
+ */
+function notify_nb_add(nb_add, nb_sent) {
+    if (nb_add != NaN && nb_add == nb_sent) { // si egalite
+        $.notify({
+            title: "<strong>Number of zones added</strong>",
+            message: nb_add
+        }, {
+            type: "success",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_add == NaN) { // si Not a Number
+        $.notify({
+            title: "<strong>Number of zones added</strong>",
+            message: nb_add
+        }, {
+            type: "danger",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    } else if (nb_add != nb_sent) { // si pas egal
+        $.notify({
+            title: "<strong>Number of zones added</strong>",
+            message: nb_add
+        }, {
+            type: "warning",
+            placement: {
+                from: "bottom",
+                align: "center"
+            }
+        });
+    }
+}
+/**
  * Executed for sending all the "warning zones".
  */
 $("#submit1").click(function() {
@@ -606,19 +709,31 @@ $("#submit1").click(function() {
     if (DEBUG) {
         console.log("EVENT : $('#submit1').click");
     }
+    var nb_sent = circle.length + box.length + polygon.length;
     if (DEBUG) {
-        console.log("$('#submit1').click Circles :", circle);
-        console.log("$('#submit1').click Boxes :", box);
-        console.log("$('#submit1').click Polygons :", polygon);
+        console.log("EVENT : $('#submit1').click nb_sent :", nb_sent);
+        console.log("EVENT : $('#submit1').click circle :", circle);
+        console.log("EVENT : $('#submit1').click circle.length :", circle.length);
+        console.log("EVENT : $('#submit1').click box :", box);
+        console.log("EVENT : $('#submit1').click box.length :", box.length);
+        console.log("EVENT : $('#submit1').click polygon :", polygon);
+        console.log("EVENT : $('#submit1').click polygon.length :", polygon.length);
     }
     if (fill_geojson(circle, box, polygon, string_warning_zone) == 0) { // si pas d erreur
+        notify_nb_sent(nb_sent);
+        var nb_add = 0;
         if (DEBUG) {
-            console.log("$('#submit1').click geojson : ", geojson);
-            console.log("$('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
+            console.log("EVENT : $('#submit1').click geojson : ", geojson);
+            console.log("EVENT : $('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
+            console.log("EVENT : $('#submit1').click nb_add :", nb_add);
         }
         if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
-            send_ajax_geojson(string_warning_zone, url);
+            nb_add = nb_add + parseInt(send_ajax_geojson(string_warning_zone, url));
         }
+        if (DEBUG) {
+            console.log("EVENT : $('#submit1').click nb_add :", nb_add);
+        }
+        notify_nb_add(nb_add, nb_sent);
     }
 });
 /**
@@ -682,21 +797,33 @@ $("#submit2").click(function() {
         }
     });
     if (DEBUG) {
-        console.log("EVENT : $('#submit1').click");
+        console.log("EVENT : $('#submit2').click");
     }
+    var nb_sent = circlel.length + boxl.length + polygonl.length;
     if (DEBUG) {
-        console.log("$('#submit1').click Circles :", circlel);
-        console.log("$('#submit1').click Boxes :", boxl);
-        console.log("$('#submit1').click Polygons :", polygonl);
+        console.log("EVENT : $('#submit2').click nb_sent :", nb_sent);
+        console.log("EVENT : $('#submit2').click circlel :", circlel);
+        console.log("EVENT : $('#submit2').click circlel.length :", circlel.length);
+        console.log("EVENT : $('#submit2').click boxl :", boxl);
+        console.log("EVENT : $('#submit2').click boxl.length :", boxl.length);
+        console.log("EVENT : $('#submit2').click polygonl :", polygonl);
+        console.log("EVENT : $('#submit2').click polygonl.length :", polygonl.length);
     }
     if (fill_geojson(circlel, boxl, polygonl, string_anomaly_zone) == 0) { // si pas d erreur
+        notify_nb_sent(nb_sent);
+        var nb_add = 0;
         if (DEBUG) {
-            console.log("$('#submit1').click geojson : ", geojson);
-            console.log("$('#submit1').click Object.keys(geojson).length : ", Object.keys(geojson).length);
+            console.log("EVENT : $('#submit2').click geojson : ", geojson);
+            console.log("EVENT : $('#submit2').click Object.keys(geojson).length : ", Object.keys(geojson).length);
+            console.log("EVENT : $('#submit2').click nb_add :", nb_add);
         }
         if (!$.isEmptyObject(geojson) && Object.keys(geojson).length != 0) { // si le geojson est plein
-            send_ajax_geojson(string_anomaly_zone, url);
+            nb_add = nb_add + parseInt(send_ajax_geojson(string_anomaly_zone, url));
         }
+        if (DEBUG) {
+            console.log("EVENT : $('#submit2').click nb_add :", nb_add);
+        }
+        notify_nb_add(nb_add, nb_sent);
     }
 });
 /**
@@ -736,7 +863,7 @@ function send_ajax_point(point) {
                 }
                 $.notify({
                     title: "<strong>Point request</strong>",
-                    message: "Out of the area"
+                    message: resultat.responseText
                 }, {
                     type: "danger",
                     placement: {

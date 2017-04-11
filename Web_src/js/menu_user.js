@@ -99,18 +99,16 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones statut : ", statut);
                 console.log("add_warning_zones erreur : ", erreur);
             }
-            /*$.notify(
-            	{
-            		title: "<strong>Warning zones request</strong>",
-            		message: statut
-            	},{
-            		type: "danger",
-            		placement: {
-            			from: "bottom",
-            			align: "center"
-            		}
-            	}
-            );*/
+            $.notify({
+                title: "<strong>Warning zones request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
+                }
+            });
         },
         complete: function(resultat, statut) {
             if (resultat.status == '200') {
