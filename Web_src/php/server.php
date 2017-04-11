@@ -1,10 +1,5 @@
 <?php
-//TO DEV ***Delete IN PRODUCTION***
-if ($_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
-  include_once("./queryMaker-test.inc.php");
-}else {
-  include_once("./queryMaker.inc.php");
-}
+include_once("./queryMaker.inc.php");
 include_once("./error.inc.php");
 
 //Deny none https access ***ACTIVATE IN PRODUCTION***

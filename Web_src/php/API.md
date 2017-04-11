@@ -56,7 +56,11 @@ La valeur retournée par l'API sera le nombre d'entités affectées, ici le nomb
 Pour mettre à jour des entités existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
 
 - action=update
+- type={warning_zone|anomaly_zone}
 - {warning_zone|anomaly_zone}=[GeoJSON]
+
+**Contrôle :**
+Seules les zones dont la géométrie se situe dans un pays présent en base pourront être mise à jour.
 
 **Retour :**
 La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets modifiés en base.
@@ -139,9 +143,11 @@ Exemples de formats de données JSON & GeoJSON utilisés.
       "properties": {
         "id": #,
         "name": "type de risque",
+        "risk_type": #,
         "description": "Lorem ipsum dolor sit amet",
         "intensity": #,
-        "expiration_date": "2017-06-01"
+        "expiration_date": {"YYYY-MM-DD"|null},
+        "validation_date": {"YYYY-MM-DD"|null}
       }
     },
     {another feature}
@@ -172,8 +178,9 @@ Exemples de formats de données JSON & GeoJSON utilisés.
       "properties": {
         "id":#,
         "name": "type d'anomalie",
+        "anomaly_type": #,
         "description": "Lorem ipsum dolor sit amet",
-        "expiration_date": "2017-06-01"
+        "expiration_date": {"YYYY-MM-DD"|null}
       }
     },
     {another feature}
