@@ -592,7 +592,7 @@ function send_ajax_update(type) {
                             align: "center"
                         }
                     });*/
-                    return resultat.responseJSON;
+                    return parseInt(resultat.responseJSON);
                 } else {
                     return -1; // error
                 }
@@ -650,7 +650,7 @@ function send_ajax_delete(id, type) {
                             align: "center"
                         }
                     });*/
-                    return resultat.responseJSON;
+                    return parseInt(resultat.responseJSON);
                 } else {
                     return -1; // error
                 }
@@ -685,6 +685,7 @@ $("#submit3").click(function() {
             align: "center"
         }
     });
+    nb_MAJ = 0;
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
         //notify_none("Warning zones updated");
     } else {
