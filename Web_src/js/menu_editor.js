@@ -559,7 +559,7 @@ function send_ajax_update(type) {
         url: url,
         type: 'POST',
         data: 'action=update&' + type + '=' + JSON.stringify(geojson), // object -> string
-        dataType: 'json',
+        dataType: 'text',
         success: function(code, statut) {
             if (DEBUG) {
                 console.log("send_ajax_update code_json : ", code);
@@ -620,7 +620,7 @@ function send_ajax_delete(id, type) {
         url: url,
         type: 'GET',
         data: 'action=delete&type=' + type + '&id=' + id,
-        dataType: 'json',
+        dataType: 'text',
         success: function(code, statut) {
             if (DEBUG) {
                 console.log("send_ajax_delete code_json : ", code);

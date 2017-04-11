@@ -435,7 +435,7 @@ function send_ajax_geojson(type, url) {
         url: url,
         type: 'POST',
         data: type + '=' + JSON.stringify(geojson), // object -> string
-        dataType: 'json',
+        dataType: 'text',
         success: function(code, statut) {
             if (DEBUG) {
                 console.log("send_ajax_geojson code_json : ", code);
