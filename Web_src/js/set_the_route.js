@@ -342,39 +342,39 @@ spanend.addClass("end");
 var posinit;
 
 function makeIcon(i, n) {
-  var url = 'img/marker-via-icon-2x.png';
-  var markerList = ['img/marker-start-icon-2x.png', 'img/marker-end-icon-2x.png'];
-  if (i === 0) {
-    return L.icon({
-      iconUrl: markerList[0],
-      iconSize: [20, 56],
-      iconAnchor: [10, 28]
-    });
-  }
-  if (i === n - 1) {
-    return L.icon({
-      iconUrl: markerList[1],
-      iconSize: [20, 56],
-      iconAnchor: [10, 28]
-    });
-  } else {
-    return L.icon({
-      iconUrl: url,
-      iconSize: [20, 56],
-      iconAnchor: [10, 28]
-    });
-  }
+    var url = 'img/marker-via-icon-2x.png';
+    var markerList = ['img/marker-start-icon-2x.png', 'img/marker-end-icon-2x.png'];
+    if (i === 0) {
+        return L.icon({
+            iconUrl: markerList[0],
+            iconSize: [20, 56],
+            iconAnchor: [10, 28]
+        });
+    }
+    if (i === n - 1) {
+        return L.icon({
+            iconUrl: markerList[1],
+            iconSize: [20, 56],
+            iconAnchor: [10, 28]
+        });
+    } else {
+        return L.icon({
+            iconUrl: url,
+            iconSize: [20, 56],
+            iconAnchor: [10, 28]
+        });
+    }
 };
 
-function pos(i,n) {
-	if (i === 0) {
-    return "start";
-  }
-  if (i === n - 1) {
-    return "end"
-  } else {
-    return "step";
-  }
+function pos(i, n) {
+    if (i === 0) {
+        return "start";
+    }
+    if (i === n - 1) {
+        return "end"
+    } else {
+        return "step";
+    }
 };
 
 var controlPenalty = L.Routing.control({
@@ -382,7 +382,7 @@ var controlPenalty = L.Routing.control({
     routeWhileDragging: true,
     show: true,
     language: 'en',
-    geocoder: L.Control.Geocoder.nominatim(), 
+    geocoder: L.Control.Geocoder.nominatim(),
     autoRoute: true,
     createMarker: function(i, wp) {
         var marker = L.marker(wp.latLng, {
@@ -393,14 +393,14 @@ var controlPenalty = L.Routing.control({
             marker.bindPopup(e.latlng.lat + ", " + e.latlng.lng);
             //alert (e.latlng.lat + ", " +e.latlng.lng);
         });
-		
-        marker.on ("dragstart", function(ev){
-			posinit= this.getLatLng();
-		});
-		
-        marker.on ("dragend", function(ev){
-			
-			var latlng = [ev.target.getLatLng().lat, ev.target.getLatLng().lng, pos(i,controlPenalty.getWaypoints().length)];
+
+        marker.on("dragstart", function(ev) {
+            posinit = this.getLatLng();
+        });
+
+        marker.on("dragend", function(ev) {
+
+            var latlng = [ev.target.getLatLng().lat, ev.target.getLatLng().lng, pos(i, controlPenalty.getWaypoints().length)];
             position = ev.target.getLatLng();
             send_ajax_point(latlng);
             spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
@@ -408,8 +408,8 @@ var controlPenalty = L.Routing.control({
             spanend = $(".leaflet-routing-geocoder").last().find("span");
             spanend.addClass("end");
             marker.setLatLng(posinit).update();
-		});
-			
+        });
+
         return marker;
     },
     router: L.Routing.osrmv1({
