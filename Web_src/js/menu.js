@@ -296,7 +296,7 @@ function notify_properties_wrong() {
  */
 function verification(shape, type) {
     if (shape["properties"] != null) { // si y a des properties
-        if (type == string_risk_type) {
+        if (type == string_warning_zone) {
             if (shape["properties"]["risk_type"] == null || shape["properties"]["risk_type"] == undefined) { // si pas de risque
                 notify_risk_type_wrong();
                 return -1;
@@ -310,7 +310,7 @@ function verification(shape, type) {
                 return -1;
             }*/
         }
-        if (type == string_anomaly_type) {
+        if (type == string_anomaly_zone) {
             if (shape["properties"]["anomaly_type"] == null || shape["properties"]["anomaly_type"] == undefined) { // si pas de type
                 notify_anomaly_type_wrong();
                 return -1;
