@@ -539,6 +539,7 @@ function add_warning_zones(url, bbox) {
 /**
  * Send to the DB all the update for one type.
  * @param {string} type - Type of the GeoJSON to update.
+ * @return {number} resultat.responseJSON - Number of lines modified into the DB.
  */
 function send_ajax_update(type) {
     if (DEBUG) {
@@ -577,10 +578,9 @@ function send_ajax_update(type) {
             nb_MAJ = nb_MAJ + resultat.responseJSON;
             if (DEBUG) {
                 console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
-                console.log("send_ajax_update nb_MAJ : ", nb_MAJ);
                 console.log("send_ajax_update statut : ", statut);
             }
-            $.notify({
+            /*$.notify({
                 title: "<strong>Number of objects modified</strong>",
                 message: resultat.responseJSON
             }, {
@@ -589,7 +589,8 @@ function send_ajax_update(type) {
                     from: "bottom",
                     align: "center"
                 }
-            });
+            });*/
+            return resultat.responseJSON;
         }
     });
 }
@@ -597,6 +598,7 @@ function send_ajax_update(type) {
  * Send to the DB one id for one type.
  * @param {string} id - Id of the GeoJSON to delete.
  * @param {string} type - Type of GeoJSON to delete.
+ * @return {number} resultat.responseJSON - Number of lines modified into the DB.
  */
 function send_ajax_delete(id, type) {
     if (DEBUG) {
@@ -628,10 +630,9 @@ function send_ajax_delete(id, type) {
             nb_MAJ = nb_MAJ + resultat.responseJSON;
             if (DEBUG) {
                 console.log("send_ajax_update resultat.responseJSON : ", resultat.responseJSON);
-                console.log("send_ajax_update nb_MAJ : ", nb_MAJ);
                 console.log("send_ajax_update statut : ", statut);
             }
-            $.notify({
+            /*$.notify({
                 title: "<strong>Number of objects modified</strong>",
                 message: resultat.responseJSON
             }, {
@@ -640,7 +641,8 @@ function send_ajax_delete(id, type) {
                     from: "bottom",
                     align: "center"
                 }
-            });
+            });*/
+            return resultat.responseJSON;
         }
     });
 }
@@ -648,6 +650,7 @@ function send_ajax_delete(id, type) {
  * Executed for sending all the updates and deletes.
  */
 $("#submit3").click(function() {
+    var nb_MAJ = wzupdate.length + azupdate.length + wzdelete.length + azdelete.length;
     if (DEBUG) {
         console.log("EVENT : $('#submit3').click");
         console.log("EVENT : $('#submit3').click nb_MAJ :", nb_MAJ);
@@ -660,7 +663,6 @@ $("#submit3").click(function() {
         console.log("EVENT : $('#submit3').click azdelete :", azdelete);
         console.log("EVENT : $('#submit3').click azdelete.length :", azdelete.length);
     }
-    /*nb_MAJ = wzupdate.length + azupdate.length + wzdelete.length.length + azdelete.length;
     $.notify({
         title: "<strong>Number of objects sent</strong>",
         message: nb_MAJ
@@ -670,25 +672,24 @@ $("#submit3").click(function() {
             from: "bottom",
             align: "center"
         }
-    });*/
-    nb_MAJ = 0;
+    });
     if (wzupdate == null || wzupdate.length <= 0) { // si pas de warning zones a MAJ
         //notify_none("Warning zones updated");
     } else {
-        send_ajax_update(string_warning_zone);
+        nb_MAJ = nb_MAJ + send_ajax_update(string_warning_zone);
         wzupdate = new Array();
     }
     if (azupdate == null || azupdate.length <= 0) { // si pas d anomaly zones a MAJ
         //notify_none("Anomaly zones updated");
     } else {
-        send_ajax_update(string_anomaly_zone);
+        nb_MAJ = nb_MAJ + send_ajax_update(string_anomaly_zone);
         azupdate = new Array();
     }
     if (wzdelete == null || wzdelete.length <= 0) { // si pas de warning zones a supprimer
         //notify_none("Warning zones deleted");
     } else {
         for (element in wzdelete) {
-            send_ajax_delete(wzdelete[element], string_warning_zone);
+            nb_MAJ = nb_MAJ + send_ajax_delete(wzdelete[element], string_warning_zone);
         }
         wzdelete = new Array();
     }
@@ -696,11 +697,11 @@ $("#submit3").click(function() {
         //notify_none("Warning zones deleted");
     } else {
         for (element in azdelete) {
-            send_ajax_delete(azdelete[element], string_anomaly_zone);
+            nb_MAJ = nb_MAJ + send_ajax_delete(azdelete[element], string_anomaly_zone);
         }
         azdelete = new Array();
     }
-    /*$.notify({
+    $.notify({
         title: "<strong>Number of objects modified</strong>",
         message: nb_MAJ
     }, {
@@ -710,5 +711,4 @@ $("#submit3").click(function() {
             align: "center"
         }
     });
-    nb_MAJ = 0;*/
 });
