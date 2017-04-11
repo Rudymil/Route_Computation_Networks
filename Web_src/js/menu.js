@@ -610,7 +610,7 @@ function notify_nb_sent(nb_sent) {
  * @param {number} nb_add - Number of shapes added.
  * @param {number} nb_sent - Number of shapes sent.
  */
-function notify_nb_add(nb_add,nb_sent) {
+function notify_nb_add(nb_add, nb_sent) {
     if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
         $.notify({
             title: "<strong>Number of objects added</strong>",
@@ -733,7 +733,7 @@ $("#submit1").click(function() {
         if (DEBUG) {
             console.log("EVENT : $('#submit1').click nb_add :", nb_add);
         }
-        notify_nb_add(nb_add,nb_sent);
+        notify_nb_add(nb_add, nb_sent);
     }
 });
 /**
@@ -823,9 +823,8 @@ $("#submit2").click(function() {
         if (DEBUG) {
             console.log("EVENT : $('#submit2').click nb_add :", nb_add);
         }
-        notify_nb_add(nb_add,nb_sent);
+        notify_nb_add(nb_add, nb_sent);
     }
-}
 });
 /**
  * Ajax request sending one point ("start"|"step"|"end").
