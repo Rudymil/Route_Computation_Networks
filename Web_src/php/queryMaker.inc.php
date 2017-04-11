@@ -63,7 +63,7 @@ function checkWaypoint($datajson){
     $countryName = $request_result["name"];
     return json_encode($request_result, JSON_NUMERIC_CHECK);
   }
-  else{return false;}
+  else{return 0;}
 }
 
 function selectGeoJSONQuery($sqlRequest) {
@@ -90,7 +90,7 @@ function selectGeoJSONQuery($sqlRequest) {
       # Add feature arrays to feature collection array
       array_push($geojson['features'], $feature);
   }
-
+  //header('Content-type: application/json');
   return json_encode($geojson, JSON_NUMERIC_CHECK);
 }
 
@@ -105,11 +105,13 @@ function selectJSONQuery($sqlRequest) {
       # Add feature arrays to feature collection array
       array_push($json, $row);
   }
+  //header('Content-type: application/json');
   return json_encode($json, JSON_NUMERIC_CHECK);
 }
 
 function deleteQuery($sqlRequest) {
   $rs = queryMaker($sqlRequest);
+  //header('Content-type: text/html; charset=utf-8');
   return $rs->rowCount();
 }
 
@@ -174,6 +176,7 @@ function updateGeoJSONQuery($datajson){
     print("<h2>The data JSON :</h2>");
     print(json_encode($datajson));
   }
+  //header('Content-type: text/html; charset=utf-8');
 
   $data = $datajson;
   $zone_type = $data->zone_type;
