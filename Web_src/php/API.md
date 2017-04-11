@@ -10,7 +10,7 @@ Le mode **DEBUG** est activable en ajoutant la variable DEBUG dans l'URL sans va
 Les différents paramètres de l'API sont :
 
 - **DEBUG** : permet d'activer le mode debug,
-- **type** : spécifie le type d'objet demandé, au choix parmi : {warning_zone|anomaly_zone|risk_type|anomaly_type|country}
+- **type** : spécifie le type d'objet demandé, au choix parmi : {warning_zone|anomaly_zone|risk_type|anomaly_type|country|poi}
 - **warning_zone**
 - **anomaly_zone**
 - **waypoint**
@@ -27,7 +27,8 @@ Les données disponibles via l'API ainsi que leur méthode et format d'envoi et/
 |Données|GET|POST|
 |---|---|---|
 |country|GeoJSON|#NA|
-|waypoint|#NA|GeoJSON|
+|waypoint|GeoJSON|#NA|
+|poi|#NA|GeoJSON|
 |risk|JSON|#NA|
 |anomaly_type|JSON|#NA|
 |warning_zone|GeoJSON|GeoJSON|
@@ -112,6 +113,32 @@ Exemples de formats de données JSON & GeoJSON utilisés.
       "properties": {
         "id": 1,
         "name": "Pays 1"
+      }
+    },
+    {another feature}
+  ]
+}
+```
+
+**poi**
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.00001,
+          -10.00001
+        ]
+      },
+      "properties": {
+        "id": #,
+        "name": "name of POI",
+        "type": "category"
       }
     },
     {another feature}

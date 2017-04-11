@@ -1,5 +1,10 @@
 <?php
-include_once("./queryMaker.inc.php");
+//TO DEV ***Delete IN PRODUCTION***
+if ($_SERVER["REMOTE_ADDR"] == "127.0.0.1") {
+  include_once("./queryMaker-test.inc.php");
+}else {
+  include_once("./queryMaker.inc.php");
+}
 include_once("./error.inc.php");
 
 //Deny none https access ***ACTIVATE IN PRODUCTION***
@@ -58,18 +63,23 @@ if (isset($_GET["type"]) && ($_GET["type"] == "warning_zone" || $_GET["type"] ==
   elseif ($_GET["type"] == "anomaly_zone") {
     $zones_list = "SELECT z.id, ST_AsGeoJSON(z.geom) AS geojson, description, t.name, anomaly_type, expiration_date FROM anomaly_zone z, anomaly t $tableSQL WHERE z.anomaly_type = t.id $filterSQL;";
   }
-  if (isset($_REQUEST["DEBUG"])) {
-    print("<p><strong>Query :</strong> " . $zones_list . "</p>");
-  }
   print(selectGeoJSONQuery($zones_list));
 }
 
 //GET country
 elseif (isset($_GET["type"]) && $_GET["type"] == "country") {
   $types_list = "SELECT id, name, ST_asGeoJSON(ST_Centroid(geom)) AS geojson FROM country ORDER BY name;";
-  if (isset($_REQUEST["DEBUG"])) {
-    print("<p><strong>Query :</strong> " . $types_list . "</p>");
+  print(selectGeoJSONQuery($types_list));
+}
+
+//GET privatePOI
+elseif (isset($_GET["type"]) && $_GET["type"] == "poi") {
+  $filterSQL = "";
+  if (isset($_GET["bbox"])) {
+    $bBox = explode(",", $_GET["bbox"]); //southWest lng/lat / northEast lng/lat
+    $filterSQL .= " AND ST_Contains(ST_SetSRID(ST_MakeBox2D(ST_Point($bBox[0], $bBox[1]), ST_Point($bBox[2], $bBox[3])),4326), poi.geom)";
   }
+  $types_list = "SELECT poi.id, ST_asGeoJSON(poi.geom) AS geojson, poi.name, t.name AS type FROM poi, poi_type t WHERE poi.poi_type_id = t.id $filterSQL ORDER BY t.name, poi.name;";
   print(selectGeoJSONQuery($types_list));
 }
 
@@ -79,9 +89,6 @@ elseif (isset($_GET["type"]) && ($_GET["type"] == "risk_type" || $_GET["type"] =
     $types_list = "SELECT id, name FROM risk ORDER BY name;";
   }elseif ($_GET["type"] == "anomaly_type") {
     $types_list = "SELECT id, name FROM anomaly ORDER BY name;";
-  }
-  if (isset($_REQUEST["DEBUG"])) {
-    print("<p><strong>Query :</strong> " . $types_list . "</p>");
   }
   print(selectJSONQuery($types_list));
 }
