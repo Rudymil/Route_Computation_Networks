@@ -581,7 +581,7 @@ function notify_nb_sent(nb_sent) {
                 align: "center"
             }
         });
-    } else if (nb_sent = 0) {
+    } else if (nb_sent == 0) {
         $.notify({
             title: "<strong>Number of objects sent</strong>",
             message: nb_sent
