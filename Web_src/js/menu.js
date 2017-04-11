@@ -569,7 +569,6 @@ function geojsoncircle(ci) {
  * Executed for sending all the "warning zones".
  */
 $("#submit1").click(function() {
-    var nb_add = circle.length + box.length + polygon.length;
     editableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les warning zones
         if (layer instanceof L.Circle) {
             var n = infosc.length;
@@ -630,6 +629,7 @@ $("#submit1").click(function() {
         console.log("EVENT : $('#submit1').click");
         console.log("EVENT : $('#submit1').click nb_add :", nb_add);
     }
+    var nb_add = circle.length + box.length + polygon.length;
     if (DEBUG) {
         console.log("$('#submit1').click circle :", circle);
         console.log("$('#submit1').click circle.length :", circle.length);
@@ -677,7 +677,6 @@ $("#submit1").click(function() {
  * Executed for sending all the "anomaly zones".
  */
 $("#submit2").click(function() {
-    var nb_add = circlel.length + boxl.length + polygonl.length;
     leditableLayers.eachLayer(function(layer) { // stockage des couches dans les variables globales pour les anomalies zones
         if (layer instanceof L.Circle) {
             var n = infoscl.length;
@@ -737,6 +736,7 @@ $("#submit2").click(function() {
     if (DEBUG) {
         console.log("EVENT : $('#submit2').click");
     }
+    var nb_add = circlel.length + boxl.length + polygonl.length;
     if (DEBUG) {
         console.log("$('#submit2').click circlel :", circlel);
         console.log("$('#submit2').click circlel.length :", circlel.length);
