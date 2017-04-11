@@ -616,7 +616,7 @@ function notify_nb_add(nb_add, nb_sent) {
             title: "<strong>Number of objects added</strong>",
             message: nb_add
         }, {
-            type: "info",
+            type: "success",
             placement: {
                 from: "bottom",
                 align: "center"

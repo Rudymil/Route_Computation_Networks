@@ -675,7 +675,7 @@ function notify_nb_MAJ(nb_MAJ, nb_sent) {
             title: "<strong>Number of objects modified</strong>",
             message: nb_MAJ
         }, {
-            type: "info",
+            type: "success",
             placement: {
                 from: "bottom",
                 align: "center"
