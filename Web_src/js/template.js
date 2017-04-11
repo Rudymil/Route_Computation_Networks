@@ -1,7 +1,7 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
     var mobile = (/iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
     $('.test').css('display', 'none');
-});
+});*/
 
 var map, featureList, boroughSearch = [],
     theaterSearch = [],

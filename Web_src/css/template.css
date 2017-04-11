@@ -147,6 +147,9 @@ input[type="radio"], input[type="checkbox"] {
 	.navbar .navbar-brand {
 		font-size: 18px;
 	}
+	.test {
+		display: none;
+	}
 }
 @media (max-width: 767px){
 	#sidebar {
@@ -160,6 +163,9 @@ input[type="radio"], input[type="checkbox"] {
 	}
 	.dropdown-menu a i{
 		color: #FFFFFF;
+	}
+	.test {
+		display: none;
 	}
 }
 /* Print Handling */
