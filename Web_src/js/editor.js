@@ -11,17 +11,13 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
   				<label for='usr'>Description:</label>\
   				<input type='text' class='form-control' id='description' value='" + description + "'>\
 				</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Name:</label>\
-  				<input type='text' class='form-control' id='name' value='" + name + "'>\
-				</div>\
 				<div class='form-group'>\
   				<label for='usr'>Intensity :</label>\
-  				<input type='number' class='form-control' id='intensity' value='" + intensity + "'>\
+  				<input type='number' step='5' min='0' max='100' class='form-control' id='intensity' value='" + intensity + "'>\
 				</div>\
 				<div class='form-group'>\
   				<label for='usr'>Expiration date :</label>\
-  				<input type='date' class='form-control' id='datev' value='" + expirationDate + "'>\
+  				<input type='text' id='datev' value='" + expirationDate + "'>\
 				</div>\
 				<div class='form-group'>\
 					<label for='text'>Validation date :</label>\
@@ -30,7 +26,18 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 					<option value=true> true</option>\
 					<option value=false>false</option>\
 				</select>\
-				</div>";
+				</div>\
+				<script>\
+				$(function() {\
+					if ( $('#ui-datepicker-div').length ) {\
+						$('#ui-datepicker-div').remove();\
+					}\
+					$( '#datev' ).datepicker({inline: true,\
+							showOtherMonths: true,\
+							dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
+							dateFormat: 'yy-mm-dd'});\
+				 });\
+				</script>";
 
     for (var i = 0; i < nw; i++) {
         console.log(" types_warning_zones : " + types_warning_zones[i].id + " id geojson : " + id);

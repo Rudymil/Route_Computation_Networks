@@ -28,12 +28,11 @@ function animateSidebar() {
 map = new L.Map('map');
 
 $("#map").ready(function() {
-    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-    var osm = new L.TileLayer(osmUrl, {
+    osm = new L.TileLayer(url_tiles_Angola, {
         minZoom: 1,
         maxZoom: 18,
-        attribution: osmAttrib
+        attribution: Attrib,
+        id: "osm-bright" // "klokantech-basic"
     });
     map.addLayer(osm);
     map.setView([0.0, 0.0], 1);

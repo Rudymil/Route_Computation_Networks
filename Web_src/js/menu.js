@@ -123,7 +123,17 @@ function ajax_countries(url) {
                                     console.log("ajax_countries event.target.id : ", event.target.id);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
+                                    console.log("ajax_countries liste_url[json_countries[event.target.id]['properties']['name']] : ", liste_url[json_countries[event.target.id]['properties']['name']]);
                                 }
+                                map.removeLayer(osm);
+                                current_country = json_countries[event.target.id]['properties']['name']; // pays actuel choisi
+                                osm = new L.TileLayer(liste_url[json_countries[event.target.id]['properties']['name']], {
+                                    minZoom: 1,
+                                    maxZoom: 18,
+                                    attribution: Attrib,
+                                    id: "osm-bright" // "klokantech-basic"
+                                });
+                                map.addLayer(osm);
                                 map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                                 spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
                                 spanstart.addClass("start");

@@ -84,10 +84,6 @@ function getPopupContentmenu_anomaly(couche) {
             <td>ID : </td>\
             <td>' + couche.properties.id + '</td>\
         </tr>\
-        <tr>\
-            <td>Name : </td>\
-            <td>' + couche.properties.name + '</td>\
-        </tr>\
     </table>'
     return html;
 }
@@ -283,10 +279,6 @@ function getPopupContentmenu(couche) {
         <tr>\
             <td>Intensity : </td>\
             <td>' + couche.properties.intensity + '</td>\
-        </tr>\
-        <tr>\
-            <td>Name : </td>\
-            <td>' + couche.properties.name + '</td>\
         </tr>\
         <tr>\
             <td>Risk type : </td>\

@@ -20,6 +20,7 @@
 		<link rel="stylesheet" href="css/leaflet-routing-machine.css" /> <!--LRM-->
 		<link rel="stylesheet" href="css/template.css"/> <!--TEMPLATE-->
 		<link rel="stylesheet" href="css/context_menu1.css"/>
+		<link rel = "stylesheet" href = "css/jquery-ui.css"><!-- calendar -->
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
 		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png"/>
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
@@ -199,6 +200,8 @@
 		<script src="js/lib/leaflet.draw.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/lib/leaflet.draw.js-->
 		<script src="js/lib/bootbox.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/lib/bootbox.min.js-->
 		<script src="js/lib/leaflet.circle.topolygon-min.js"></script> <!--http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/lib/leaflet.circle.topolygon-min.js-->
+		<script src="js/lib/jquery-1.10.2.js"></script> <!-- calendar -->
+		<script src="js/lib/jquery-ui.js"></script> <!-- calendar -->
 		<!--VARIABLES GLOBALES-->
 		<script type="text/javascript">
 			var circle = new Array(); // warning zones
@@ -211,6 +214,14 @@
 			var string_boxes = "Boxes"; // notify
 			var string_polygons = "Polygons"; // notify
 			var url = 'https://172.31.56.223/api/server.php'; // url vers l API
+    		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    		var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    		var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
+			var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
+			var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
+			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria};
+			var osm; // couche des tuiles
+			var current_country; // pays choisi
 			var warning_zones = new Array(); // liste des warning zones
 			var warning_nonchecked = new Array(); // liste des warning zones non verifiees
 			var anomaly_zones = new Array(); // liste des anomaly zones
@@ -227,7 +238,7 @@
 			var string_risk_type = "risk_type"; // parametre
 			var string_anomaly_type = "anomaly_type"; // parametre
 			var bbox; // bounding box de la map
-			var DEBUG = false; // console.log
+			var DEBUG = true; // console.log
 			var zoom = 12; // set view
 			var geojson = new Object(); // a envoyer
 			var json_countries = new Array(); // a recuperer
