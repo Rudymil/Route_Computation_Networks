@@ -42,6 +42,7 @@
 * [context_menu1.css](context_menu1.css)
 * [Control.OSMGeocoder.css](Control.OSMGeocoder.css)
 * [easy-button.css](easy-button.css)
+* [jquery-ui.css](jquery-ui.css)
 * [leaflet.css](leaflet.css)
 * [leaflet.draw.css](leaflet.draw.css)
 * [leaflet-routing-machine.css](leaflet-routing-machine.css)
