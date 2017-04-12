@@ -31,7 +31,8 @@ $("#map").ready(function() {
     var osm = new L.TileLayer(url_tiles_Angola, {
         minZoom: 1,
         maxZoom: 18,
-        attribution: Attrib
+        attribution: Attrib,
+        id: "osm-bright" // "klokantech-basic"
     });
     map.addLayer(osm);
     map.setView([0.0, 0.0], 1);
