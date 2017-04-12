@@ -40,7 +40,18 @@ function hmtlcw() {
 				<div class='form-group'>\
 				<label for='usr'>Expiration date: </label> <br>\
 				<input type='date' name='dateex' id='datee' placeholder='2008-08-29' >\
-				</div>";
+				</div>\
+				<script>\
+				$(function() {\
+					if ( $('#ui-datepicker-div').length ) {\
+						$('#ui-datepicker-div').remove();\
+					}\
+					$( '#datee' ).datepicker({inline: true,\
+					showOtherMonths: true,\
+					dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
+					dateFormat: 'yy-mm-dd'});\
+					});\
+				</script>";
 
     for (var i = 0; i < nw; i++) {
 

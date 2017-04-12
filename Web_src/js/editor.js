@@ -2,10 +2,10 @@
 //var anomaly_zones = new Array(); // liste des anomaly zones
 function hmtlcwe(description, name, intensity, validationDate, expirationDate, id) {
     var nw = types_warning_zones.length;
-    var debutw = "<div class='form-group'>\
+    var string1 = "<div class='form-group'>\
 			<label for='text'>Type :</label>\
 			<select class='form-control' id='risk'>";
-    var finw = "</select>\
+    var string2 = "</select>\
 			</div>\
 			<div class='form-group'>\
   				<label for='usr'>Description:</label>\
@@ -17,16 +17,21 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 				</div>\
 				<div class='form-group'>\
   				<label for='usr'>Expiration date :</label>\
-  				<input type='text' id='datev' value='" + expirationDate + "'>\
-				</div>\
-				<div class='form-group'>\
-					<label for='text'>Validation date :</label>\
-					<select class='form-control' id='datee'>\
-					<option value=" + validationDate + "  selected >" + validationDate + "</option>\
-					<option value=true> true</option>\
-					<option value=false>false</option>\
-				</select>\
-				</div>\
+  				<input type='text' id='datee' value='" + expirationDate + "'>\
+				</div>";
+    if (isNaN(validationDate)) {
+        var string3 = "<div class='form-group'>\
+						<label for='text'>Validation date :</label>\
+						<label for='text'>" + validationDate + "</label>\
+					</div>";
+    } else {
+        var string3 = " <div class='form-group'>\
+						<label for='usr'>Expiration date :</label>\
+						<input type='text' id='datev' value='" + validationDate + "'>\
+					</select>";
+    }
+
+    var string4 = "</div>\
 				<script>\
 				$(function() {\
 					if ( $('#ui-datepicker-div').length ) {\
@@ -36,22 +41,27 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 							showOtherMonths: true,\
 							dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
 							dateFormat: 'yy-mm-dd'});\
+					$( '#datee' ).datepicker({inline: true,\
+							showOtherMonths: true,\
+							dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
+							dateFormat: 'yy-mm-dd'});\
 				 });\
 				</script>";
+    var options = "";
 
     for (var i = 0; i < nw; i++) {
         console.log(" types_warning_zones : " + types_warning_zones[i].id + " id geojson : " + id);
         if (types_warning_zones[i].id == id) {
             console.log(" inside ");
 
-            debutw = debutw + "<option value=" + types_warning_zones[i].id + " selected >" + types_warning_zones[i].name + "</option>";
+            options = options + "<option value=" + types_warning_zones[i].id + " selected >" + types_warning_zones[i].name + "</option>";
         } else {
             //console.log(" types_warning_zones : " + types_warning_zones[i].id  + " id geojson : " + id );
-            debutw = debutw + "<option value=" + types_warning_zones[i].id + " >" + types_warning_zones[i].name + "</option>";
+            options = options + "<option value=" + types_warning_zones[i].id + " >" + types_warning_zones[i].name + "</option>";
         }
     }
 
-    var htmlw = debutw + finw;
+    var htmlw = string1 + options + string2 + string3 + string4;
 
     return htmlw;
 }
