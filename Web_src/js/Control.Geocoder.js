@@ -353,8 +353,7 @@
                             icon: data[i].icon,
                             name: data[i].display_name,
                             html: this.options.htmlTemplate ?
-                                this.options.htmlTemplate(data[i]) :
-                                undefined,
+                                this.options.htmlTemplate(data[i]) : undefined,
                             bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
                             center: L.latLng(data[i].lat, data[i].lon),
                             properties: data[i]
@@ -380,8 +379,7 @@
                     result.push({
                         name: data.display_name,
                         html: this.options.htmlTemplate ?
-                            this.options.htmlTemplate(data) :
-                            undefined,
+                            this.options.htmlTemplate(data) : undefined,
                         center: loc,
                         bounds: L.latLngBounds(loc, loc),
                         properties: data
