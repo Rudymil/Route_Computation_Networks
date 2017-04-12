@@ -2,18 +2,19 @@
 * [lib/bootbox.min.js](lib/bootbox.min.js)
 * [lib/bootstrap.min.js](lib/bootstrap.min.js)
 * [lib/bootstrap-notify.min.js](lib/bootstrap-notify.min.js)
+* [lib/handlebars.min.js](lib/handlebars.min.js)
+* [lib/jquery.min.js](lib/jquery.min.js)
+* [lib/list.min.js](lib/list.min.js)
+* [lib/typeahead.bundle.min.js](lib/typeahead.bundle.min.js)
 * [codeColor.js](codeColor.js) [codeColor.md](codeColor.md)
 * [Control.Geocoder.js](Control.Geocoder.js)
 * [Control.OSMGeocoder.js](Control.OSMGeocoder.js)
 * [easy-button.js](easy-button.js)
-* [lib/handlebars.min.js](lib/handlebars.min.js)
-* [lib/jquery.min.js](lib/jquery.min.js)
 * [leaflet.circle.topolygon-min.js](leaflet.circle.topolygon-min.js)
 * [leaflet.draw.js](leaflet.draw.js)
 * [leaflet.js](leaflet.js)
 * [leaflet.markercluster.js](leaflet.markercluster.js)
 * [leaflet-routing-machine.js](leaflet-routing-machine.js)
-* [lib/list.min.js](lib/list.min.js)
 * [menu_editor.js](menu_editor.js) (*Ajax requests for editor*) [menu_editor.md](menu_editor.md)
   * Recover Warning Zones from the DB
   * Recover Anomaly Zones from the DB
@@ -31,4 +32,3 @@
 * [template.js](template.js) (*Basic JS functions of the model*)
   * Animation functions
   * Initialisation of the map
-* [lib/typeahead.bundle.min.js](lib/typeahead.bundle.min.js)
