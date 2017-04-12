@@ -22,12 +22,12 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
     if (isNaN(validationDate)) {
         var string3 = "<div class='form-group'>\
 						<label for='text'>Validation date :</label>\
-						<label for='text'>" + validationDate + "</label>\
+						<input type='text' id='datev' value=" + validationDate + " readonly>\
 					</div>";
     } else {
         var string3 = " <div class='form-group'>\
 						<label for='usr'>Expiration date :</label>\
-						<input type='text' id='datev' value='" + validationDate + "'>\
+						<input type='text' id='datev' value='" + validationDate + "' readonly>\
 					</select>";
     }
 
