@@ -28,7 +28,7 @@ function animateSidebar() {
 map = new L.Map('map');
 
 $("#map").ready(function() {
-    var osm = new L.TileLayer(url_tiles_Angola, {
+    osm = new L.TileLayer(url_tiles_Angola, {
         minZoom: 1,
         maxZoom: 18,
         attribution: Attrib,

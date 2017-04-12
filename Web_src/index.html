@@ -186,7 +186,9 @@
     		var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
 			var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
 			var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
-			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria};
+			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria}; // liste des url
+			var osm; // couche des tuiles
+			var current_country; // pays choisi
 			var warning_zones = new Array(); // liste des warning zones
 			var layer_group_warning_zones; // L.layerGroup
 			var overlayMaps = new Array(); // composant de la couche

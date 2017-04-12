@@ -125,7 +125,8 @@ function ajax_countries(url) {
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                     console.log("ajax_countries liste_url[json_countries[event.target.id]['properties']['name']] : ", liste_url[json_countries[event.target.id]['properties']['name']]);
                                 }
-                                var osm = new L.TileLayer(liste_url[json_countries[event.target.id]['properties']['name']], {
+                                current_country = json_countries[event.target.id]['properties']['name'];
+                                osm = new L.TileLayer(liste_url[json_countries[event.target.id]['properties']['name']], {
                                     minZoom: 1,
                                     maxZoom: 18,
                                     attribution: Attrib,
