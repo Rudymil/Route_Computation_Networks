@@ -10,13 +10,13 @@
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>Route calculation</title>
-		<link rel="stylesheet" href="css/leaflet.css" /> <!--LEAFLET-->
-		<link rel="stylesheet" href="css/bootstrap.min.css"/> <!--BOOTSTRAP-->
-		<link rel="stylesheet" href="css/css/font-awesome.min.css"/>
-		<link rel="stylesheet" href="css/MarkerCluster.css"/>
-		<link rel="stylesheet" href="css/MarkerCluster.Default.css"/>
-		<link rel="stylesheet" href="css/easy-button.css">
-		<link rel="stylesheet" href="css/leaflet.draw.css"/>
+		<link rel="stylesheet" href="css/leaflet.css" /> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.css-->
+		<link rel="stylesheet" href="css/bootstrap.min.css"/> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css-->
+		<link rel="stylesheet" href="css/css/font-awesome.min.css"/> <!--https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css-->
+		<link rel="stylesheet" href="css/MarkerCluster.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css-->
+		<link rel="stylesheet" href="css/MarkerCluster.Default.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css-->
+		<link rel="stylesheet" href="css/easy-button.css"> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css-->
+		<link rel="stylesheet" href="css/leaflet.draw.css"/> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css-->
 		<link rel="stylesheet" href="css/leaflet-routing-machine.css" /> <!--LRM-->
 		<link rel="stylesheet" href="css/template.css"/> <!--TEMPLATE-->
 		<link rel="stylesheet" href="css/context_menu1.css"/>
@@ -188,75 +188,75 @@
 				<li id="cm_fin">Définir comme Fin</li>
 			</ul>
 		</div>
-		<script src="js/lib/leaflet.js"></script> <!--LEAFLET-->
-		<script src="js/lib/jquery.min.js"></script> <!--JQUERY-->
-		<script src="js/lib/bootstrap-notify.min.js"></script>
-		<script src="js/lib/bootstrap.min.js"></script> <!--BOOTSTRAP-->
-		<script src="js/lib/typeahead.bundle.min.js"></script>
-		<script src="js/lib/handlebars.min.js"></script>
-		<script src="js/lib/list.min.js"></script>
-		<script src="js/lib/leaflet.markercluster.js"></script>
-		<script src="js/easy-button.js"></script>
-		<script src="js/lib/leaflet.draw.js"></script>
-		<script src="js/lib/bootbox.min.js"></script>
-		<script src="js/lib/leaflet.circle.topolygon-min.js"></script>
+		<script src="js/lib/leaflet.js"></script> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/lib/leaflet.js-->
+		<script src="js/lib/jquery.min.js"></script> <!--JQUERY--> <!--https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/lib/jquery.min.js-->
+		<script src="js/lib/bootstrap-notify.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/lib/bootstrap-notify.min.js-->
+		<script src="js/lib/bootstrap.min.js"></script> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/lib/bootstrap.min.js-->
+		<script src="js/lib/typeahead.bundle.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/lib/typeahead.bundle.min.js-->
+		<script src="js/lib/handlebars.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/lib/handlebars.min.js-->
+		<script src="js/lib/list.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/lib/list.min.js-->
+		<script src="js/lib/leaflet.markercluster.js"></script> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/lib/leaflet.markercluster.js-->
+		<script src="js/easy-button.js"></script> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js-->
+		<script src="js/lib/leaflet.draw.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/lib/leaflet.draw.js-->
+		<script src="js/lib/bootbox.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/lib/bootbox.min.js-->
+		<script src="js/lib/leaflet.circle.topolygon-min.js"></script> <!--http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/lib/leaflet.circle.topolygon-min.js-->
 		<script src="js/lib/jquery-ui.js"></script> <!-- calendar -->
 		<!--VARIABLES GLOBALES-->
 		<script type="text/javascript">
-			var circle = new Array(); // warning zones
-			var box = new Array(); // warning zones
-			var polygon = new Array(); // warning zones
-			var circlel = new Array(); // anomalies zones
-			var boxl = new Array(); // anomalies zones
-			var polygonl = new Array(); // anomalies zones
-			var string_circles = "Circles"; // notify
-			var string_boxes = "Boxes"; // notify
-			var string_polygons = "Polygons"; // notify
-			var url = 'https://172.31.56.223/api/server.php'; // url vers l API
-			var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-			var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-			var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
-			var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
-			var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
-			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria};
-			var osm; // couche des tuiles
-			var current_country; // pays choisi
-			var warning_zones = new Array(); // liste des warning zones
-			var warning_nonchecked = new Array(); // liste des warning zones non verifiees
-			var anomaly_zones = new Array(); // liste des anomaly zones
-			var layer_group_warning_zones; // L.layerGroup
-			var layer_group_anomaly_zones; // L.layerGroup
-			var layer_group_warning_nonchecked; // L.layerGroup
-			var overlayMaps = new Array(); // composant de la couche
-			var Lcontrollayers; // couche de la map
-			var legend; // legende d intensite des warning zones
-			var types_warning_zones = new Array(); // types a recevoir
-			var types_anomalies = new Array(); // types a recevoir
-			var string_warning_zone = "warning_zone"; // parametre
-			var string_anomaly_zone = "anomaly_zone"; // parametre
-			var string_risk_type = "risk_type"; // parametre
-			var string_anomaly_type = "anomaly_type"; // parametre
-			var bbox; // bounding box de la map
-			var DEBUG = true; // console.log
-			var zoom = 12; // set view
-			var geojson = new Object(); // a envoyer
-			var json_countries = new Array(); // a recuperer
-			var latlngstart = new Array(3); //coordinates start
-			var latlngend = new Array(3); //coordinates end
-			var countrystart = new Array(2); // id + country name start
-			var countryend = new Array(2); // id + country name end
-			var controlPenalty;
-			var position;
-			var spanstart;
-			var spanend;
-			var featureLayera = new L.FeatureGroup(); // toolbar for editing updating for anomalies zones
-			var featureLayerw = new L.FeatureGroup(); // toolbar for editing updating for warnings zones
-			var drawControla;
-			var drawControlw;
-			var wzupdate = new Array();
-			var azupdate = new Array();
-			var wzdelete = new Array();
-			var azdelete = new Array();
+		var circle = new Array(); // warning zones
+		var box = new Array(); // warning zones
+		var polygon = new Array(); // warning zones
+		var circlel = new Array(); // anomalies zones
+		var boxl = new Array(); // anomalies zones
+		var polygonl = new Array(); // anomalies zones
+		var string_circles = "Circles"; // notify
+		var string_boxes = "Boxes"; // notify
+		var string_polygons = "Polygons"; // notify
+		var url = 'https://172.31.56.223/api/server.php'; // url vers l API
+		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+		var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
+		var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
+		var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
+		var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria};
+		var osm; // couche des tuiles
+		var current_country; // pays choisi
+		var warning_zones = new Array(); // liste des warning zones
+		var warning_nonchecked = new Array(); // liste des warning zones non verifiees
+		var anomaly_zones = new Array(); // liste des anomaly zones
+		var layer_group_warning_zones; // L.layerGroup
+		var layer_group_anomaly_zones; // L.layerGroup
+		var layer_group_warning_nonchecked; // L.layerGroup
+		var overlayMaps = new Array(); // composant de la couche
+		var Lcontrollayers; // couche de la map
+		var legend; // legende d intensite des warning zones
+		var types_warning_zones = new Array(); // types a recevoir
+		var types_anomalies = new Array(); // types a recevoir
+		var string_warning_zone = "warning_zone"; // parametre
+		var string_anomaly_zone = "anomaly_zone"; // parametre
+		var string_risk_type = "risk_type"; // parametre
+		var string_anomaly_type = "anomaly_type"; // parametre
+		var bbox; // bounding box de la map
+		var DEBUG = true; // console.log
+		var zoom = 12; // set view
+		var geojson = new Object(); // a envoyer
+		var json_countries = new Array(); // a recuperer
+		var latlngstart = new Array(3); //coordinates start
+		var latlngend = new Array(3); //coordinates end
+		var countrystart = new Array(2); // id + country name start
+		var countryend = new Array(2); // id + country name end
+		var controlPenalty;
+		var position;
+		var spanstart;
+		var spanend;
+		var featureLayera = new L.FeatureGroup(); // toolbar for editing updating for anomalies zones
+		var featureLayerw = new L.FeatureGroup(); // toolbar for editing updating for warnings zones
+		var drawControla;
+		var drawControlw;
+		var wzupdate = new Array();
+		var azupdate = new Array();
+		var wzdelete = new Array();
+		var azdelete = new Array();
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>
