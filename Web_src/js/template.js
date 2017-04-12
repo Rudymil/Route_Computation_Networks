@@ -35,5 +35,5 @@ $("#map").ready(function() {
         id: "osm-bright" // "klokantech-basic"
     });
     map.addLayer(osm);
-    map.setView([0.0, 0.0], 1);
+    map.setView([15.0, 10.0], 2);
 });
