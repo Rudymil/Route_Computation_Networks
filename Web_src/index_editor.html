@@ -203,60 +203,60 @@
 		<script src="js/lib/jquery-ui.js"></script> <!-- calendar -->
 		<!--VARIABLES GLOBALES-->
 		<script type="text/javascript">
-			var circle = new Array(); // warning zones
-			var box = new Array(); // warning zones
-			var polygon = new Array(); // warning zones
-			var circlel = new Array(); // anomalies zones
-			var boxl = new Array(); // anomalies zones
-			var polygonl = new Array(); // anomalies zones
-			var string_circles = "Circles"; // notify
-			var string_boxes = "Boxes"; // notify
-			var string_polygons = "Polygons"; // notify
-			var url = 'https://172.31.56.223/api/server.php'; // url vers l API
-			var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-			var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-			var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
-			var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
-			var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
-			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria};
-			var osm; // couche des tuiles
-			var current_country; // pays choisi
-			var warning_zones = new Array(); // liste des warning zones
-			var warning_nonchecked = new Array(); // liste des warning zones non verifiees
-			var anomaly_zones = new Array(); // liste des anomaly zones
-			var layer_group_warning_zones; // L.layerGroup
-			var layer_group_anomaly_zones; // L.layerGroup
-			var layer_group_warning_nonchecked; // L.layerGroup
-			var overlayMaps = new Array(); // composant de la couche
-			var Lcontrollayers; // couche de la map
-			var legend; // legende d intensite des warning zones
-			var types_warning_zones = new Array(); // types a recevoir
-			var types_anomalies = new Array(); // types a recevoir
-			var string_warning_zone = "warning_zone"; // parametre
-			var string_anomaly_zone = "anomaly_zone"; // parametre
-			var string_risk_type = "risk_type"; // parametre
-			var string_anomaly_type = "anomaly_type"; // parametre
-			var bbox; // bounding box de la map
-			var DEBUG = true; // console.log
-			var zoom = 12; // set view
-			var geojson = new Object(); // a envoyer
-			var json_countries = new Array(); // a recuperer
-			var latlngstart = new Array(3); //coordinates start
-			var latlngend = new Array(3); //coordinates end
-			var countrystart = new Array(2); // id + country name start
-			var countryend = new Array(2); // id + country name end
-			var controlPenalty;
-			var position;
-			var spanstart;
-			var spanend;
-			var featureLayera = new L.FeatureGroup(); // toolbar for editing updating for anomalies zones
-			var featureLayerw = new L.FeatureGroup(); // toolbar for editing updating for warnings zones
-			var drawControla;
-			var drawControlw;
-			var wzupdate = new Array();
-			var azupdate = new Array();
-			var wzdelete = new Array();
-			var azdelete = new Array();
+		var circle = new Array(); // warning zones
+		var box = new Array(); // warning zones
+		var polygon = new Array(); // warning zones
+		var circlel = new Array(); // anomalies zones
+		var boxl = new Array(); // anomalies zones
+		var polygonl = new Array(); // anomalies zones
+		var string_circles = "Circles"; // notify
+		var string_boxes = "Boxes"; // notify
+		var string_polygons = "Polygons"; // notify
+		var url = 'https://172.31.56.223/api/server.php'; // url vers l API
+		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+		var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
+		var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
+		var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
+		var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria};
+		var osm; // couche des tuiles
+		var current_country; // pays choisi
+		var warning_zones = new Array(); // liste des warning zones
+		var warning_nonchecked = new Array(); // liste des warning zones non verifiees
+		var anomaly_zones = new Array(); // liste des anomaly zones
+		var layer_group_warning_zones; // L.layerGroup
+		var layer_group_anomaly_zones; // L.layerGroup
+		var layer_group_warning_nonchecked; // L.layerGroup
+		var overlayMaps = new Array(); // composant de la couche
+		var Lcontrollayers; // couche de la map
+		var legend; // legende d intensite des warning zones
+		var types_warning_zones = new Array(); // types a recevoir
+		var types_anomalies = new Array(); // types a recevoir
+		var string_warning_zone = "warning_zone"; // parametre
+		var string_anomaly_zone = "anomaly_zone"; // parametre
+		var string_risk_type = "risk_type"; // parametre
+		var string_anomaly_type = "anomaly_type"; // parametre
+		var bbox; // bounding box de la map
+		var DEBUG = true; // console.log
+		var zoom = 12; // set view
+		var geojson = new Object(); // a envoyer
+		var json_countries = new Array(); // a recuperer
+		var latlngstart = new Array(3); //coordinates start
+		var latlngend = new Array(3); //coordinates end
+		var countrystart = new Array(2); // id + country name start
+		var countryend = new Array(2); // id + country name end
+		var controlPenalty;
+		var position;
+		var spanstart;
+		var spanend;
+		var featureLayera = new L.FeatureGroup(); // toolbar for editing updating for anomalies zones
+		var featureLayerw = new L.FeatureGroup(); // toolbar for editing updating for warnings zones
+		var drawControla;
+		var drawControlw;
+		var wzupdate = new Array();
+		var azupdate = new Array();
+		var wzdelete = new Array();
+		var azdelete = new Array();
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>
