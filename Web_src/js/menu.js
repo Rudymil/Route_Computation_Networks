@@ -123,6 +123,7 @@ function ajax_countries(url) {
                                     console.log("ajax_countries event.target.id : ", event.target.id);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
+                                    console.log("ajax_countries liste_url[event.target.id] : ", liste_url[event.target.id]);
                                 }
                                 map.removeLayer(osm);
                                 var osm = new L.TileLayer(liste_url[event.target.id], {
