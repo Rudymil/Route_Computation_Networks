@@ -17,7 +17,7 @@ function datem() {
         mm = '0' + mm
     }
 
-    today = yyyy+'/'+ mm + '/' + dd;
+    today = yyyy + '/' + mm + '/' + dd;
     return today;
 
 }
@@ -60,11 +60,10 @@ $(".radio_button").change(function() { // choix de dessin
         markerDeparture.dragging.enable();
         markeraDestination.dragging.enable();	
         }*/
-        if ( drawControl != null ) {
-			map.removeControl(drawControl);
-		}
-    }
-    else if ($("#Circle2").is(":checked") == true) {
+        if (drawControl != null) {
+            map.removeControl(drawControl);
+        }
+    } else if ($("#Circle2").is(":checked") == true) {
 
         if (drawControl != null) {
 
@@ -104,8 +103,7 @@ $(".radio_button").change(function() { // choix de dessin
         };
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-    } 
-    else if ($("#Box2").is(":checked") == true) {
+    } else if ($("#Box2").is(":checked") == true) {
 
 
         if (drawControl != null) {
@@ -145,8 +143,7 @@ $(".radio_button").change(function() { // choix de dessin
 
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-    } 
-    else if ($("#Polygon2").is(":checked") == true) {
+    } else if ($("#Polygon2").is(":checked") == true) {
 
 
         if (drawControl != null) {
@@ -217,49 +214,47 @@ map.on('draw:created', function(e) {
 
 
         bootbox.confirm(htmlca(), function(result) {
-			if( result ) {
-            //console.log("inside");
-            des = $('#description').val();
-            ano = $('#anomalyType').val();
-            da= $('#datee').val();
-			
-			if (ano == null) {
-                 return false ;
-            }
-				
-			console.log(da);
-            if (des == "") {
-                 return false ;
-            }
+            if (result) {
+                //console.log("inside");
+                des = $('#description').val();
+                ano = $('#anomalyType').val();
+                da = $('#datee').val();
 
-			var timestamp=Date.parse(da)
-			console.log(timestamp);
-			if (isNaN(timestamp) )
-			{
-   				 //return false;
-   				 da=null;
+                if (ano == null) {
+                    return false;
+                }
 
-			}
-				
+                console.log(da);
+                if (des == "") {
+                    return false;
+                }
 
-            console.log(des);
-            content = getPopupContenta(layer, ano, des,da);
-            var temp = [des, ano, layer._leaflet_id,da];
-            //console.log(content);
-            if (content !== null) {
-                layer.bindPopup(content);
-                //layer.setPopupContent(content);
-            }
+                var timestamp = Date.parse(da)
+                console.log(timestamp);
+                if (isNaN(timestamp)) {
+                    //return false;
+                    da = null;
 
-            infoscl.push(temp);
+                }
 
-            //circle.push(layergeo);
 
-            //console.log(circle);
-            
-            }
-            else {
-            	leditableLayers.removeLayer(layer);
+                console.log(des);
+                content = getPopupContenta(layer, ano, des, da);
+                var temp = [des, ano, layer._leaflet_id, da];
+                //console.log(content);
+                if (content !== null) {
+                    layer.bindPopup(content);
+                    //layer.setPopupContent(content);
+                }
+
+                infoscl.push(temp);
+
+                //circle.push(layergeo);
+
+                //console.log(circle);
+
+            } else {
+                leditableLayers.removeLayer(layer);
             }
 
         });
@@ -268,116 +263,110 @@ map.on('draw:created', function(e) {
 
         leditableLayers.addLayer(layer)
 
-    } 
-    else if (type == "rectangle" && $("#Box2").is(":checked") == true) {
+    } else if (type == "rectangle" && $("#Box2").is(":checked") == true) {
 
-
-        var des = null;
-        var lev = null;
-
-
-       bootbox.confirm(htmlca(), function(result) {
-			if( result ) {
-            //console.log("inside");
-            des = $('#description').val();
-            ano = $('#anomalyType').val();
-			da= $('#datee').val();
-			
-			if (ano == null) {
-                 return false ;
-            }
-				
-			console.log(ano);
-            if (des == "") {
-                 return false ;
-            }
-
-			var timestamp=Date.parse(da)
-			console.log(timestamp);
-			if (isNaN(timestamp) )
-			{
-   				 //return false;
-   				 da=null;
-
-			}
-				
-
-            console.log(des);
-            content = getPopupContenta(layer, ano, des,da);
-            var temp = [des, ano, layer._leaflet_id,da];
-            //console.log(content);
-            if (content !== null) {
-                layer.bindPopup(content);
-                //layer.setPopupContent(content);
-            }
-
-            infosbl.push(temp);
-
-            //circle.push(layergeo);
-
-            //console.log(circle);
-            
-            }
-            else {
-            	leditableLayers.removeLayer(layer);
-            }
-
-        });
-
-        leditableLayers.addLayer(layer)
-
-
-    } 
-    else if (type == "polygon" && $("#Polygon2").is(":checked") == true) {
 
         var des = null;
         var lev = null;
 
 
         bootbox.confirm(htmlca(), function(result) {
-			if( result ) {
-            //console.log("inside");
-            des = $('#description').val();
-            ano = $('#anomalyType').val();
-			da= $('#datee').val();
-			
-			if (ano == null) {
-                 return false ;
+            if (result) {
+                //console.log("inside");
+                des = $('#description').val();
+                ano = $('#anomalyType').val();
+                da = $('#datee').val();
+
+                if (ano == null) {
+                    return false;
+                }
+
+                console.log(ano);
+                if (des == "") {
+                    return false;
+                }
+
+                var timestamp = Date.parse(da)
+                console.log(timestamp);
+                if (isNaN(timestamp)) {
+                    //return false;
+                    da = null;
+
+                }
+
+
+                console.log(des);
+                content = getPopupContenta(layer, ano, des, da);
+                var temp = [des, ano, layer._leaflet_id, da];
+                //console.log(content);
+                if (content !== null) {
+                    layer.bindPopup(content);
+                    //layer.setPopupContent(content);
+                }
+
+                infosbl.push(temp);
+
+                //circle.push(layergeo);
+
+                //console.log(circle);
+
+            } else {
+                leditableLayers.removeLayer(layer);
             }
-				
-			console.log(ano);
-            if (des == "") {
-                 return false ;
-            }
 
-			var timestamp=Date.parse(da)
-			console.log(timestamp);
-			if (isNaN(timestamp) )
-			{
-   				 //return false;
-   				 da=null;
+        });
 
-			}
-				
+        leditableLayers.addLayer(layer)
 
-            console.log(des);
-            content = getPopupContenta(layer, ano, des,da);
-            var temp = [des, ano, layer._leaflet_id,da];
-            //console.log(content);
-            if (content !== null) {
-                layer.bindPopup(content);
-                //layer.setPopupContent(content);
-            }
 
-            infospl.push(temp);
+    } else if (type == "polygon" && $("#Polygon2").is(":checked") == true) {
 
-            //circle.push(layergeo);
+        var des = null;
+        var lev = null;
 
-            //console.log(circle);
-            
-            }
-            else {
-            	leditableLayers.removeLayer(layer);
+
+        bootbox.confirm(htmlca(), function(result) {
+            if (result) {
+                //console.log("inside");
+                des = $('#description').val();
+                ano = $('#anomalyType').val();
+                da = $('#datee').val();
+
+                if (ano == null) {
+                    return false;
+                }
+
+                console.log(ano);
+                if (des == "") {
+                    return false;
+                }
+
+                var timestamp = Date.parse(da)
+                console.log(timestamp);
+                if (isNaN(timestamp)) {
+                    //return false;
+                    da = null;
+
+                }
+
+
+                console.log(des);
+                content = getPopupContenta(layer, ano, des, da);
+                var temp = [des, ano, layer._leaflet_id, da];
+                //console.log(content);
+                if (content !== null) {
+                    layer.bindPopup(content);
+                    //layer.setPopupContent(content);
+                }
+
+                infospl.push(temp);
+
+                //circle.push(layergeo);
+
+                //console.log(circle);
+
+            } else {
+                leditableLayers.removeLayer(layer);
             }
 
         });
@@ -391,7 +380,7 @@ map.on('draw:created', function(e) {
 
 
 
-var getPopupContenta = function(layer, level, description,d) {
+var getPopupContenta = function(layer, level, description, d) {
 
     if (layer instanceof L.Circle) {
 

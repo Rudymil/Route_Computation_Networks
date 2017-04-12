@@ -28,5 +28,7 @@
 * [report_a_warning_zone.js](report_a_warning_zone.js)
 * [report_an_anomaly.js](report_an_anomaly.js)
 * [set_the_route.js](set_the_route.js) [set_the_route.md](set_the_route.md)
-* [template.js](template.js)
+* [template.js](template.js) (*Basic JS functions of the model*)
+  * Animation functions
+  * Initialisation of the map
 * [typeahead.bundle.min.js](typeahead.bundle.min.js)
