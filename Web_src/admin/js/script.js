@@ -118,10 +118,10 @@ function printInfoWarningZone(warning_zone){
       output += "</div>";
       output += "<div class='row'>";
       output += "<div class='col-md-6 col-md-offset-3'>";
-      output += "<button id='validationButton' class='btn btn-success' type='submit' onclick='validate("+JSON.stringify(warning_zone.feature.properties)+")'>";
+      output += "<button id='validationButton' class='btn btn-success' type='submit' onclick='validate("+JSON.stringify(warning_zone.feature)+")'>";
       output += "Valid";
       output += "</button>";
-      output += "<button id='refutationButton' class='btn btn-danger pull-right' type='submit' onclick='refutation("+JSON.stringify(warning_zone.feature.properties)+")'>";
+      output += "<button id='refutationButton' class='btn btn-danger pull-right' type='submit' onclick='refutation("+JSON.stringify(warning_zone.feature)+")'>";
       output += "Refuse";
       output += "</button>";
       output += "</div>";
@@ -137,6 +137,11 @@ function printInfoWarningZone(warning_zone){
 
 function validate(warning_zone){
   console.log("validation in progress for ", warning_zone);
+
+  // warning_zone.properties.description = "romain";
+  warning_zone.properties.validated = true;
+
+  featuresUpdate(string_warning_zone, new Array(warning_zone));
   removeWarningZoneFromList(warning_zone);
 }
 
@@ -147,7 +152,7 @@ function refutation(warning_zone){
 
 function removeWarningZoneFromList(warning_zone){
   warning_nonchecked = warning_nonchecked.filter(function( obj ) {
-      return obj.feature.properties.id !== warning_zone.id;
+      return obj.feature.properties.id !== warning_zone.properties.id;
   });
   refreshWarningZone();
 }
@@ -158,6 +163,7 @@ function refreshWarningZone(){
 
 
 function featuresUpdate(type, featuresUpdate) {
+    var geojson = new Object();
     geojson["type"] = "FeatureCollection";
     geojson["zone_type"] = type;
     geojson["features"] = featuresUpdate;
