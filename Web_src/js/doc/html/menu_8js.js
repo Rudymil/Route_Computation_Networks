@@ -1,0 +1,25 @@
+var menu_8js =
+[
+    [ "ajax_countries", "menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6", null ],
+    [ "ajax_types", "menu_8js.html#a08ee4a14e90168d356d098f09df227d1", null ],
+    [ "eachLayer", "menu_8js.html#a8fcb0db3ae80ef6b24ce5faa3631dd35", null ],
+    [ "fill_geojson", "menu_8js.html#a086cf485479113ccad1519a40de55f89", null ],
+    [ "geojsoncircle", "menu_8js.html#a89e24655986a4115a9743ad23c2f6756", null ],
+    [ "if", "menu_8js.html#a6efad01f39c8299b206ff474db1a1a9e", null ],
+    [ "notify_ajax_sending_areas_error", "menu_8js.html#a7a4fd3cd9f4f1102cf8eb0c6fc6e108c", null ],
+    [ "notify_ajax_sending_areas_success", "menu_8js.html#a91221d6232a6231d39e5cf2a0fcf96ca", null ],
+    [ "notify_anomaly_type_wrong", "menu_8js.html#afee5a0ad119e4537bfce8c737c2790c2", null ],
+    [ "notify_description_wrong", "menu_8js.html#a915bd50d39b84a8b1b9536c179c27eb6", null ],
+    [ "notify_nb_add", "menu_8js.html#a1d7713fb6116f63c96376f26635ac25d", null ],
+    [ "notify_nb_sent", "menu_8js.html#a4e01a9802afd340196771eaadba4360f", null ],
+    [ "notify_none", "menu_8js.html#aa05a28966bad8cedb05f095ce0ba1c0d", null ],
+    [ "notify_properties_wrong", "menu_8js.html#ae772566c5466bbb9a283961c4a9dc1aa", null ],
+    [ "notify_risk_type_wrong", "menu_8js.html#a56c8216af45a64234951daa5e6710384", null ],
+    [ "notify_shape_empty", "menu_8js.html#a7c79493974b05df5eab192d1cfa681f0", null ],
+    [ "ready", "menu_8js.html#a8597c65429c1b0b65fa4409a1a58fb7a", null ],
+    [ "send_ajax_geojson", "menu_8js.html#ac7b1cb56a49b0e77e867984b1f02c588", null ],
+    [ "send_ajax_point", "menu_8js.html#a73636ff5801d8bc3d1c7dc65d2594829", null ],
+    [ "style_layer", "menu_8js.html#ae4b209abbc8e0960d6c53230428a9a9d", null ],
+    [ "verification", "menu_8js.html#a26ac2273d70d39269820d8f0ae8d86e6", null ],
+    [ "nb_sent", "menu_8js.html#ae4bc3ed492fb805f4c89ffdff4f0a1fd", null ]
+];
