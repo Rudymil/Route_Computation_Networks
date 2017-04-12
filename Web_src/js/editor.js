@@ -20,13 +20,13 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
   				<input type='number' class='form-control' id='intensity' value='" + intensity + "'>\
 				</div>\
 				<div class='form-group'>\
-  				<label for='usr'>Validation date :</label>\
-  				<input type='date' class='form-control' id='datev' value='" + validationDate + "'>\
+  				<label for='usr'>Expiration date :</label>\
+  				<input type='date' class='form-control' id='datev' value='" + expirationDate + "'>\
 				</div>\
 				<div class='form-group'>\
-					<label for='text'>Expiration date :</label>\
+					<label for='text'>Validation date :</label>\
 					<select class='form-control' id='datee'>\
-					<option value=" + expirationDate + "  selected >" + expirationDate + "</option>\
+					<option value=" + validationDate + "  selected >" + validationDate + "</option>\
 					<option value=true> true</option>\
 					<option value=false>false</option>\
 				</select>\
@@ -54,9 +54,9 @@ $(".radio_button").change(function(e) {
 
     if ($("#warning").is(":checked")) {
 
-        featureLayerw.on('click', function(e) {
-            e.layer.closePopup();
-        });
+        /*featureLayerw.on('click', function(e) {  
+        	e.layer.closePopup();	
+        });*/
 
         if (drawControla != null) {
             map.removeControl(drawControla);
@@ -87,9 +87,9 @@ $(".radio_button").change(function(e) {
 
     } else if ($("#anomaly").is(":checked")) {
 
-        featureLayera.on('click', function(e) {
-            e.layer.closePopup();
-        });
+        /*featureLayera.on('click', function(e) {  
+        	e.layer.closePopup();	
+        });*/
 
         if (drawControla != null) {
             map.removeControl(drawControla);
@@ -117,9 +117,9 @@ $(".radio_button").change(function(e) {
 
     } else {
 
-        featureLayerw.on('click', function(e) {
-            e.layer.openPopup();
-        });
+        /*featureLayerw.on('click', function(e) {  
+        	e.layer.openPopup();	
+        });*/
 
         if (drawControla != null) {
             map.removeControl(drawControla);
@@ -140,6 +140,7 @@ map.on('draw:editstart', function(e) {
     featureLayerw.on('click', function(e) {
         if ($("#warning").is(":checked")) {
             console.log(e);
+            e.layer.closePopup();
             var layer = e.layer;
             var layerjson = layer.toGeoJSON();
             console.log(JSON.stringify(layerjson));
