@@ -83,7 +83,7 @@ function printInfoWarningZone(warning_zone){
       output += warning_zone.feature.properties.name;
       output += "</h3>";
       output += "<span class='pull-right'>";
-      output += warning_zone.feature.properties.validation_date;
+      output += warning_zone.feature.properties.expiration_date;
       output += "</span>";
       output += "</div>";
       output += "</div>";
@@ -154,4 +154,27 @@ function removeWarningZoneFromList(warning_zone){
 
 function refreshWarningZone(){
   parseWarningZones(warning_nonchecked);
+}
+
+
+function featuresUpdate(type, featuresUpdate) {
+    geojson["type"] = "FeatureCollection";
+    geojson["zone_type"] = type;
+    geojson["features"] = featuresUpdate;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: 'action=update&' + type + '=' + JSON.stringify(geojson),
+        dataType: 'text',
+        complete: function(resultat, statut) {
+            if (resultat.status == '200') {
+                if (resultat.responseText != undefined && resultat.responseText != NaN) {
+                  // si le resultat.responseText est defini
+                    return parseInt(resultat.responseText);
+                } else {
+                    return -1; // error
+                }
+            }
+        }
+    });
 }
