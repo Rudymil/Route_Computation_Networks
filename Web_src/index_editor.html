@@ -62,6 +62,95 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204613">
+							<center>Set the route</center>
+						</a>
+					</div>
+					<div id="panel-element-204613" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+									<input type="radio" class="radio_button" id="Navigate" name="draw" value="set_the_route" checked>
+									<label for="set_the_route">Set the route</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874535"><center>Report a warning zone</center></a>
+					</div>
+					<div id="panel-element-874535" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="panel-body">
+								<div class="row test">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Circle1" name="draw" value="Circle1">
+										<label for="Circle">Circle</label>
+									</div>
+								</div>
+								<div class="row test">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Box1" name="draw" value="Box1">
+										<label for="Box">Box</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Polygon1" name="draw" value="Polygon1">
+										<label for="Polygon">Polygon</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12"> <!-- 12 -->
+										<center>
+											<button id="submit1" type="button" class="btn btn-danger" margin="auto">Submit</button>
+										</center>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874536"><center>Report an anomaly</center></a>
+					</div>
+					<div id="panel-element-874536" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="panel-body">
+								<div class="row test">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Circle2" name="draw" value="Circle2">
+										<label for="Circle">Circle</label>
+									</div>
+								</div>
+								<div class="row test">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Box2" name="draw" value="Box2">
+										<label for="Box">Box</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+										<input type="radio" class="radio_button" id="Polygon2" name="draw" value="Polygon2">
+										<label for="Polygon">Polygon</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12"> <!-- 12 -->
+										<center>
+											<button id="submit2" type="button" class="btn btn-info" margin="auto">Submit</button>
+										</center>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
 						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-874537"><center>Edition</center></a>
 					</div>
 					<div id="panel-element-874537" class="panel-collapse collapse">
@@ -111,9 +200,7 @@
 		<script src="js/lib/leaflet.draw.js"></script>
 		<script src="js/lib/bootbox.min.js"></script>
 		<script src="js/lib/leaflet.circle.topolygon-min.js"></script>
-		<script src="js/lib/jquery-1.10.2.js"></script> <!-- calendar -->
 		<script src="js/lib/jquery-ui.js"></script> <!-- calendar -->
-
 		<!--VARIABLES GLOBALES-->
 		<script type="text/javascript">
 			var circle = new Array(); // warning zones
@@ -172,6 +259,7 @@
 			var azdelete = new Array();
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
+		<script src="js/Control.Geocoder.js"></script>
 		<script src="js/Control.OSMGeocoder.js"></script>
 		<script src="js/template.js"></script>
 		<script src="js/set_the_route.js"></script>
@@ -190,6 +278,8 @@
 			    add_anomaly_zones(url, bbox);
 			});
 		</script>
+		<script src="js/report_a_warning_zone.js"></script>
+		<script src="js/report_an_anomaly.js"></script>
 		<script src="js/codeColor.js"></script>
 		<script src="js/editor.js"></script>
 	</body>
