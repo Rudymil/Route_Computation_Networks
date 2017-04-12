@@ -1,0 +1,15 @@
+#warning_zone_info .panel-heading{
+    cursor: pointer;
+}
+
+#warning_zone_info .panel-heading span {
+	margin-top: -20px;
+	font-size: 15px;
+}
+
+
+#warning_zone_info {
+  max-height:300px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
