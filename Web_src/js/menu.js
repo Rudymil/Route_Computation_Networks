@@ -124,6 +124,13 @@ function ajax_countries(url) {
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][0] : ", json_countries[event.target.id]['geometry']['coordinates'][0]);
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                 }
+                                map.removeLayer(osm);
+                                osm = new L.TileLayer(liste_url[event.target.id], {
+                                    minZoom: 1,
+                                    maxZoom: 18,
+                                    attribution: osmAttrib,
+                                    id:"osm-bright" // "klokantech-basic"
+                                }).addTo(map);
                                 map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                                 spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
                                 spanstart.addClass("start");
