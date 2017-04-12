@@ -1,0 +1,5 @@
+<map id="notify_ajax_sending_areas_error" name="notify_ajax_sending_areas_error">
+<area shape="rect" id="node2" href="$menu_8js.html#ac7b1cb56a49b0e77e867984b1f02c588" title="send_ajax_geojson" alt="" coords="191,5,324,32"/>
+<area shape="rect" id="node3" href="$menu__editor_8js.html#af6d12474e147a9840602120960b09cd7" title="send_ajax_update" alt="" coords="194,56,321,83"/>
+<area shape="rect" id="node4" href="$menu__editor_8js.html#a06b18bd8e8103168c0cf65a4ad6b5574" title="send_ajax_delete" alt="" coords="196,107,319,133"/>
+</map>
