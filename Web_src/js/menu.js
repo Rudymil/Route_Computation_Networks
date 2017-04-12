@@ -128,8 +128,7 @@ function ajax_countries(url) {
                                 var osm = new L.TileLayer(liste_url[event.target.id], {
                                     minZoom: 1,
                                     maxZoom: 18,
-                                    attribution: osmAttrib,
-                                    id:"osm-bright" // "klokantech-basic"
+                                    attribution: Attrib
                                 });
                                 map.addLayer(osm);
                                 map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
