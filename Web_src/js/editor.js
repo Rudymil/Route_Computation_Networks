@@ -65,6 +65,9 @@ $(".radio_button").change(function(e) {
 		if( drawControlw !=null ) {
 			map.removeControl(drawControlw);
 		}
+		if ( drawControl != null ) {
+			map.removeControl(drawControl);
+		}
 		
 		drawControlw = new L.Control.Draw({     
 										edit: {
@@ -95,7 +98,9 @@ $(".radio_button").change(function(e) {
 		if( drawControlw !=null ) {
 			map.removeControl(drawControlw);
 		}
-		
+		if ( drawControl != null ) {
+			map.removeControl(drawControl);
+		}
 		drawControla = new L.Control.Draw({     
 										edit: {
 											featureGroup: featureLayera,
