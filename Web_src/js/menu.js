@@ -63,6 +63,8 @@ function ajax_types(url, type) {
         }
     });
 }
+
+
 /**
  * Ajax request asking all the countries contained by the BD.
  * @param {string} url - Url to the Web API.
@@ -147,6 +149,7 @@ function ajax_countries(url) {
         }
     });
 }
+
 /**
  * Executed when the body DOM is ready.
  */
@@ -158,6 +161,8 @@ $("body").ready(function() {
     ajax_types(url, string_anomaly_type); // recupere les types des anomalies zones
     ajax_countries(url); // recupere la liste des pays
 });
+
+
 /**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
@@ -178,6 +183,8 @@ function notify_shape_empty(element) {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the array of leaflet vector layers is empty.
  * @param {string} collection - Type of leaflet vector layer.
@@ -198,6 +205,8 @@ function notify_none(collection) {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB succeeded.
  * @param {object.statut} statut - Network code.
@@ -218,6 +227,8 @@ function notify_ajax_sending_areas_success(statut) {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB failed.
  * @param {object.responseText} resultat - Response return.
@@ -238,6 +249,8 @@ function notify_ajax_sending_areas_error(resultat) {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the "risk_type" into the "properties" is not correct.
  */
@@ -253,6 +266,8 @@ function notify_risk_type_wrong() {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the "anomaly_type" into the "properties" is not correct.
  */
@@ -268,6 +283,8 @@ function notify_anomaly_type_wrong() {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the "description" into the "properties" is not correct.
  */
@@ -283,6 +300,8 @@ function notify_description_wrong() {
         }
     });
 }
+
+
 /**
  * Notify using Bootstrap Notify that the "properties" is not correct.
  */
@@ -298,6 +317,8 @@ function notify_properties_wrong() {
         }
     });
 }
+
+
 /**
  * Check that the "properties" of the shape is correctly written in function of the type.
  * @param {vector layer} shape - Leaflet vector layer.
@@ -339,6 +360,8 @@ function verification(shape, type) {
         return -1;
     }
 }
+
+
 /**
  * Check that the "properties" of the shape is correctly written in function of the type.
  * @param {array} circle - Array containing leaflet vector layers (circles).
@@ -425,6 +448,8 @@ function fill_geojson(circle, box, polygon, type) {
     }
     return 0;
 }
+
+
 /**
  * Ajax request sending all the zones to the BD by specifying the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
@@ -485,16 +510,6 @@ function send_ajax_geojson(type, url) {
                     polygonl = new Array();
                 }
                 if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
-                    /*$.notify({
-                        title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseText
-                    }, {
-                        type: "info",
-                        placement: {
-                            from: "bottom",
-                            align: "center"
-                        }
-                    });*/
                     if (DEBUG) {
                         console.log("send_ajax_geojson resultat.responseText : ", resultat.responseText);
                     }
@@ -506,6 +521,8 @@ function send_ajax_geojson(type, url) {
         }
     });
 }
+
+
 /**
  * Change the inner color in black of all the leaflet vector layers corresponding to the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
@@ -551,7 +568,7 @@ function style_layer(type) {
                 color: '#0033ff', // bleu
                 fillColor: '#140004' // noir
             });
-            couche.addLayer(layer); // ajout a la map	
+            couche.addLayer(layer); // ajout a la map
         });
         leditableLayers.clearLayers();
         if (DEBUG) {
@@ -560,6 +577,8 @@ function style_layer(type) {
         map.addLayer(couche);
     }
 }
+
+
 /**
  * Convert a leaflet circle object to a polygon geojson form.
  * @return {array} - Of latitude longitude for circle in polygon form.
@@ -575,6 +594,8 @@ function geojsoncircle(ci) {
     circlejson.push([ci[n - 1].lat, ci[n - 1].lng]);
     return circlejson;
 }
+
+
 /**
  * Show the number of zones sent.
  * @param {number} nb_sent - Number of zones sent.
@@ -615,6 +636,8 @@ function notify_nb_sent(nb_sent) {
         });
     }
 }
+
+
 /**
  * Show the number of zones added.
  * @param {number} nb_add - Number of zones added.
@@ -656,6 +679,8 @@ function notify_nb_add(nb_add, nb_sent) {
         });
     }
 }
+
+
 /**
  * Executed for sending all the "warning zones".
  */
@@ -746,6 +771,8 @@ $("#submit1").click(function() {
         notify_nb_add(nb_add, nb_sent);
     }
 });
+
+
 /**
  * Executed for sending all the "anomaly zones".
  */
@@ -836,6 +863,8 @@ $("#submit2").click(function() {
         notify_nb_add(nb_add, nb_sent);
     }
 });
+
+
 /**
  * Ajax request sending one point ("start"|"step"|"end").
  * @param {array(3)} point - Array containing lat, lng and type ("start"|"step"|"end").
