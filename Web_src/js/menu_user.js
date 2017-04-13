@@ -45,15 +45,15 @@ function remove_warning_zones() {
 function getPopupContentmenu(couche) {
     var html = '<table>\
         <tr>\
-            <td>Description : </td>\
+            <td>Description: </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>ID : </td>\
+            <td>ID: </td>\
             <td>' + couche.properties.id + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity : </td>\
+            <td>Intensity: </td>\
             <td>' + couche.properties.intensity + '</td>\
         </tr>\
     </table>'
