@@ -9,6 +9,7 @@ $(document).on('click', '#warning_zone_info .panel-heading', function(e) {
     }
 });
 
+
 $(document).ready(function() {
     $(".leaflet-routing-geocoders ").after("<div id='warning_zone_info' class='pull-right'></div>");
     $(".radio_button").change(function(e) {
@@ -32,6 +33,7 @@ function clearLeafletRoutingGeocoders() {
     $("#warning_zone_info").show();
 }
 
+
 /**
  * clearWarningZoneInfo
  */
@@ -41,6 +43,7 @@ function clearWarningZoneInfo() {
     $(".leaflet-routing-geocoders ").show();
 }
 
+
 /**
  * [parseWarningZones description]
  * @param  {array} warning_nonchecked
@@ -48,20 +51,19 @@ function clearWarningZoneInfo() {
  */
 function parseWarningZones(warning_nonchecked) {
     var output = "";
-    console.log(warning_nonchecked);
     if (warning_nonchecked.length > 0) {
         output += "<div class='panel-group'>";
         for (var zone in warning_nonchecked) {
             warning_zone = warning_nonchecked[zone];
             output += printInfoWarningZone(warning_zone);
         }
-
         output += "</div>";
     } else {
         output += "<p> No warning zone to validate </p>";
     }
     $('#warning_zone_info').html(output);
 }
+
 
 /**
  * centering
@@ -72,6 +74,7 @@ function centering(center) {
         duration: 0.8
     });
 }
+
 
 /**
  * printInfoWarningZone
@@ -89,7 +92,6 @@ function printInfoWarningZone(warning_zone) {
             output += warning_zone.feature.properties.name;
             output += "</h3>";
             output += "<span class='pull-right'>";
-            console.log(warning_zone.feature.properties.expiration_date );
             if (warning_zone.feature.properties.expiration_date != null) {
               output += warning_zone.feature.properties.expiration_date;
             }
@@ -119,7 +121,6 @@ function printInfoWarningZone(warning_zone) {
             output += "</dd>";
             output += "</dl>";
             output += "</div>";
-
             output += "</div>";
             output += "</div>";
         }
