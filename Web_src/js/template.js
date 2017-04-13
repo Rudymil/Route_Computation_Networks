@@ -2,6 +2,17 @@ var map, featureList, boroughSearch = [],
     theaterSearch = [],
     museumSearch = [];
 
+/**
+ * animateSidebar
+ */
+function animateSidebar() {
+    $("#sidebar").animate({
+        width: "toggle"
+    }, 350, function() {
+        map.invalidateSize();
+    });
+}
+
 $("#list-btn").click(function() {
     animateSidebar();
     return false;
@@ -16,14 +27,6 @@ $("#sidebar-hide-btn").click(function() {
     animateSidebar();
     return false;
 });
-
-function animateSidebar() {
-    $("#sidebar").animate({
-        width: "toggle"
-    }, 350, function() {
-        map.invalidateSize();
-    });
-}
 
 map = new L.Map('map');
 
