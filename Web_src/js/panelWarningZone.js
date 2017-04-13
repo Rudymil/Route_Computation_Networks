@@ -29,11 +29,13 @@ $(document).ready(function() {
 function clearLeafletRoutingGeocoders(){
   $(".leaflet-routing-geocoders ").hide();
   $(".warning_zone_info").html("");
+  $( ".leaflet-routing-container" ).addClass( "changedStyle" );
   $("#warning_zone_info").show();
 }
 
 function clearWarningZoneInfo(){
   $("#warning_zone_info").hide();
+  $( ".leaflet-routing-container" ).removeClass( "changedStyle" );
   $(".leaflet-routing-geocoders ").show();
 }
 
