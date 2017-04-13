@@ -2,6 +2,17 @@ var map, featureList, boroughSearch = [],
     theaterSearch = [],
     museumSearch = [];
 
+/**
+ * animateSidebar
+ */
+function animateSidebar() {
+    $("#sidebar").animate({
+        width: "toggle"
+    }, 350, function() {
+        map.invalidateSize();
+    });
+}
+
 $("#list-btn").click(function() {
     animateSidebar();
     return false;
@@ -17,24 +28,15 @@ $("#sidebar-hide-btn").click(function() {
     return false;
 });
 
-function animateSidebar() {
-    $("#sidebar").animate({
-        width: "toggle"
-    }, 350, function() {
-        map.invalidateSize();
-    });
-}
-
 map = new L.Map('map');
 
 $("#map").ready(function() {
-    var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-    var osm = new L.TileLayer(osmUrl, {
+    osm = new L.TileLayer(url_tiles_Angola, {
         minZoom: 1,
         maxZoom: 18,
-        attribution: osmAttrib
+        attribution: Attrib,
+        id: "osm-bright" // "klokantech-basic"
     });
     map.addLayer(osm);
-    map.setView([0.0, 0.0], 1);
+    map.setView([15.0, 10.0], 2);
 });

@@ -5,26 +5,28 @@ var infosc = new Array();
 var infosp = new Array();
 var infosb = new Array();
 
+/**
+ * Get the current date in yyyy/mm/dd format
+ * @return {date} today [yyyy/mm/dd]
+ */
 function datem() {
-
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
-
     if (dd < 10) {
         dd = '0' + dd
     }
-
     if (mm < 10) {
         mm = '0' + mm
     }
-
-    today = yyyy + '/' + mm + '/' + dd;
-    return today;
-
+    return yyyy + '/' + mm + '/' + dd;
 }
 
+/**
+ * [hmtlcw description]
+ * @return {html}
+ */
 function hmtlcw() {
     var nw = types_warning_zones.length;
     var debutw = "<div class='form-group'>\
@@ -32,63 +34,50 @@ function hmtlcw() {
 			<select class='form-control' id='level'>\
 				<option value=null disabled selected>Select the warning zone</option>";
     var finw = "</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description' required >\
-				</div>\
-				<div class='form-group'>\
-				<label for='usr'>Expiration date: </label> <br>\
-				<input type='date' name='dateex' id='datee' placeholder='2008-08-29' >\
-				</div>";
+                </div>\
+                <div class='form-group'>\
+                	<label for='usr'>Description:</label>\
+                	<input type='text' class='form-control' id='description' placeholder='Description' required >\
+                </div>\
+                <div class='form-group'>\
+                  <label for='usr'>Expiration date: </label> <br>\
+                  <input type='date' name='dateex' id='datee' placeholder='2008-08-29' >\
+                </div>\
+                <script>\
+                $(function() {\
+                	if ( $('#ui-datepicker-div').length ) {\
+                		$('#ui-datepicker-div').remove();\
+                	}\
+                	$( '#datee' ).datepicker({inline: true,\
+                	showOtherMonths: true,\
+                	dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
+                	dateFormat: 'yy-mm-dd'});\
+                	});\
+                </script>";
 
     for (var i = 0; i < nw; i++) {
-
         debutw = debutw + "<option value=" + types_warning_zones[i].id + " >" + types_warning_zones[i].name + "</option>";
     }
-
-    var htmlw = debutw + finw;
-
-    return htmlw;
+    return debutw + finw;
 }
+
+
 editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
 $(".radio_button").change(function() { // choix de dessin
-
-    //console.log("kqsdqsdqs");
-
     if ($("#Navigate").is(":checked")) {
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "visible");
-        //$("#dep").prop('disabled', true);
-        //$("#dest").prop('disabled', true);
-        /*if( markeraDestination != null && markeraDestination != null ){
-        markerDeparture.dragging.enable();
-        markeraDestination.dragging.enable();	
-        }*/
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
+        // CIRCLE
     } else if ($("#Circle1").is(":checked") == true) {
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
-        //$("#dep").prop('disabled', true);
-        //$("#dest").prop('disabled', true);
-        /*if( markerDeparture != null ) {	
-        markerDeparture.dragging.disable();	
-        }
-        if( markeraDestination != null ) {
-        markeraDestination.dragging.disable();
-        }	
-        */
-
         if (drawControl != null) {
-
             map.removeControl(drawControl);
         }
         // Initialise the FeatureGroup to store editable layers
-
-
-
         var drawPluginOptions = {
             position: 'topleft',
             draw: {
@@ -109,30 +98,14 @@ $(".radio_button").change(function() { // choix de dessin
                 remove: true
             }
         };
-
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-
+        // BOX
     } else if ($("#Box1").is(":checked") == true) {
-
-
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
-        //$("#dep").prop('disabled', true);
-        //$("#dest").prop('disabled', true);
-        /*
-        if( markerDeparture != null ) {	
-        markerDeparture.dragging.disable();	
-        }
-        if( markeraDestination != null ) {
-        markeraDestination.dragging.disable();
-        }	
-        */
-        //editableLayers = new L.FeatureGroup();
-        //map.addLayer(editableLayers);
-
         var drawPluginOptions = {
             position: 'topleft',
             draw: {
@@ -155,26 +128,12 @@ $(".radio_button").change(function() { // choix de dessin
         };
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
+        // POLYGON
     } else if ($("#Polygon1").is(":checked") == true) {
-
-
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
-        //$("#dep").prop('disabled', true);
-        //$("#dest").prop('disabled', true);
-        /*if( markerDeparture != null ) {	
-        markerDeparture.dragging.disable();	
-        }
-        if( markeraDestination != null ) {
-        markeraDestination.dragging.disable();
-        }*/
-        // Initialise the FeatureGroup to store editable layers
-
-        //editableLayers = new L.FeatureGroup();
-        //map.addLayer(editableLayers);
-
         var drawPluginOptions = {
             position: 'topleft',
             draw: {
@@ -480,22 +439,22 @@ map.on('draw:edited', function(e) {
     /*
 		var type = e.layerType;
          var layers = e.layers;
-         
+
          var nc=circle.length;
          var np=polygon.length;
          var nb=box.length;
-         
-         
-         
-         
+
+
+
+
          layers.eachLayer(function (layer) {
          	var ic=0;
          	var ip=0;
          	var ib=0;
-         	
+
           	while ( ic<nc ) {
           		if( layer._leaflet_id == circle[ic].properties.id ) {
-       
+
           				circle[ic].properties.radius=layer._mRadius;
 
           				var tempjson=layer.toGeoJSON();
@@ -503,8 +462,8 @@ map.on('draw:edited', function(e) {
 
           		}
           		ic++;
-          	} 
-          	
+          	}
+
           	while ( ib<nb ) {
           		if( layer._leaflet_id == box[ib].properties.id ) {
 
@@ -515,8 +474,8 @@ map.on('draw:edited', function(e) {
 
           		}
           		ib++;
-          	} 
-          	
+          	}
+
           	while ( ip<np ) {
           		if( layer._leaflet_id == polygon[ip].properties.id ) {
 
@@ -527,12 +486,12 @@ map.on('draw:edited', function(e) {
 
           		}
           		ip++;
-          	} 
-          	
-          	
-		
+          	}
+
+
+
          });
-         
+
          */
 });
 
@@ -541,7 +500,7 @@ map.on('draw:edited', function(e) {
 map.on('draw:deleted', function(e) {
 
 
-    /* 
+    /*
 		var type = e.layerType;
          var layers = e.layers;
 
@@ -553,9 +512,9 @@ map.on('draw:deleted', function(e) {
 			var ic=0;
          	var ip=0;
          	var ib=0;
-         	
 
-			while(ic<nc) {	
+
+			while(ic<nc) {
 
 				if( layer._leaflet_id == circle[ic].properties.id ) {
 
@@ -564,8 +523,8 @@ map.on('draw:deleted', function(e) {
 				}
 				else { ic++; }
 			}
-			
-			while(ib<nb) {	
+
+			while(ib<nb) {
 
 				if( layer._leaflet_id == box[ib].properties.id ) {
 
@@ -574,8 +533,8 @@ map.on('draw:deleted', function(e) {
 				}
 				else { ib++; }
 			}
-			
-			while(ip<np) {	
+
+			while(ip<np) {
 
 				if( layer._leaflet_id == polygon[ip].properties.id ) {
 
@@ -584,8 +543,8 @@ map.on('draw:deleted', function(e) {
 				}
 				else { ip++; }
 			}
-			
-		
+
+
 		}); */
 
 });

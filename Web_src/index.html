@@ -10,16 +10,17 @@
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>Route calculation</title>
-		<link rel="stylesheet" href="css/leaflet.css" /> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.css-->
-		<link rel="stylesheet" href="css/bootstrap.min.css"/> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css-->
-		<link rel="stylesheet" href="css/css/font-awesome.min.css"/> <!--https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css-->
-		<link rel="stylesheet" href="css/MarkerCluster.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css-->
-		<link rel="stylesheet" href="css/MarkerCluster.Default.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css-->
-		<link rel="stylesheet" href="css/easy-button.css"> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css-->
-		<link rel="stylesheet" href="css/leaflet.draw.css"/> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css-->
-		<link rel="stylesheet" href="css/leaflet-routing-machine.css" /> <!--LRM-->
+		<link rel="stylesheet" href="css/css-lib/leaflet.css" /> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.css-->
+		<link rel="stylesheet" href="css/css-lib/bootstrap.min.css"/> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css-->
+		<link rel="stylesheet" href="css/css-lib/font-awesome.min.css"/> <!--https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css-->
+		<link rel="stylesheet" href="css/css-lib/MarkerCluster.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css-->
+		<link rel="stylesheet" href="css/css-lib/MarkerCluster.Default.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css-->
+		<link rel="stylesheet" href="css/css-lib/easy-button.css"> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css-->
+		<link rel="stylesheet" href="css/css-lib/leaflet.draw.css"/> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css-->
+		<link rel="stylesheet" href="css/css-lib/leaflet-routing-machine.css" /> <!--LRM-->
 		<link rel="stylesheet" href="css/template.css"/> <!--TEMPLATE-->
 		<link rel="stylesheet" href="css/context_menu1.css"/>
+		<link rel="stylesheet" href="css/css-lib/jquery-ui.css"><!-- calendar -->
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
 		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png"/>
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
@@ -157,18 +158,19 @@
 				<li id="cm_fin">Définir comme Fin</li>
 			</ul>
 		</div>
-		<script src="js/leaflet.js"></script> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.js-->
-		<script src="js/jquery.min.js"></script> <!--JQUERY--> <!--https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js-->
-		<script src="js/bootstrap-notify.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js-->
-		<script src="js/bootstrap.min.js"></script> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js-->
-		<script src="js/typeahead.bundle.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js-->
-		<script src="js/handlebars.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js-->
-		<script src="js/list.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js-->
-		<script src="js/leaflet.markercluster.js"></script> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js-->
+		<script src="js/lib/leaflet.js"></script> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/lib/leaflet.js-->
+		<script src="js/lib/jquery.min.js"></script> <!--JQUERY--> <!--https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/lib/jquery.min.js-->
+		<script src="js/lib/bootstrap-notify.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/lib/bootstrap-notify.min.js-->
+		<script src="js/lib/bootstrap.min.js"></script> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/lib/bootstrap.min.js-->
+		<script src="js/lib/typeahead.bundle.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/lib/typeahead.bundle.min.js-->
+		<script src="js/lib/handlebars.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/lib/handlebars.min.js-->
+		<script src="js/lib/list.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/lib/list.min.js-->
+		<script src="js/lib/leaflet.markercluster.js"></script> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/lib/leaflet.markercluster.js-->
 		<script src="js/easy-button.js"></script> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js-->
-		<script src="js/leaflet.draw.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js-->
-		<script src="js/bootbox.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js-->
-		<script src="js/leaflet.circle.topolygon-min.js"></script> <!--http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/leaflet.circle.topolygon-min.js-->
+		<script src="js/lib/leaflet.draw.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/lib/leaflet.draw.js-->
+		<script src="js/lib/bootbox.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/lib/bootbox.min.js-->
+		<script src="js/lib/leaflet.circle.topolygon-min.js"></script> <!--http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/lib/leaflet.circle.topolygon-min.js-->
+		<script src="js/lib/jquery-ui.js"></script> <!-- calendar -->
 		<!--VARIABLES GLOBALES-->
 		<script type="text/javascript">
 			var circle = new Array(); // warning zones
@@ -181,11 +183,19 @@
 			var string_boxes = "Boxes"; // notify
 			var string_polygons = "Polygons"; // notify
 			var url = 'https://172.31.56.223/api/server.php'; // url vers l API
+    		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    		var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    		var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
+			var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
+			var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
+			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria}; // liste des url
+			var osm; // couche des tuiles
+			var current_country; // pays choisi
 			var warning_zones = new Array(); // liste des warning zones
 			var layer_group_warning_zones; // L.layerGroup
 			var overlayMaps = new Array(); // composant de la couche
 			var Lcontrollayers; // couche de la map
-			var legend; // legende d intensite des warning zones 
+			var legend; // legende d intensite des warning zones
 			var types_warning_zones = new Array(); // types a recevoir
 			var types_anomalies = new Array(); // types a recevoir
 			var string_warning_zone = "warning_zone"; // parametre
@@ -193,11 +203,11 @@
 			var string_risk_type = "risk_type"; // parametre
 			var string_anomaly_type = "anomaly_type"; // parametre
 			var bbox; // bounding box de la map
-			var DEBUG = false; // console.log
+			var DEBUG = true; // console.log
 			var zoom = 12; // set view
 			var geojson = new Object(); // a envoyer
 			var json_countries = new Array(); // a recuperer
-			var latlngstart = new Array(3); //coordinates start 
+			var latlngstart = new Array(3); //coordinates start
 			var latlngend = new Array(3); //coordinates end
 			var countrystart = new Array(2); // id + country name start
 			var countryend = new Array(2); // id + country name end

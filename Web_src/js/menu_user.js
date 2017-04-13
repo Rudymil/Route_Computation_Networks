@@ -13,6 +13,8 @@ function notify_warning_zones_none() {
         }
     });
 }
+
+
 /**
  * Removed from the map all "warning zones" displayed.
  */
@@ -34,6 +36,8 @@ function remove_warning_zones() {
     }
     //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
+
+
 /**
  * Build the html content for the layers extracted from the database.
  * @return {string} - Of informations about the layer in hmtl form.
@@ -41,24 +45,21 @@ function remove_warning_zones() {
 function getPopupContentmenu(couche) {
     var html = '<table>\
         <tr>\
-            <td>Name : </td>\
-            <td>' + couche.properties.name + '</td>\
-        </tr>\
-        <tr>\
-            <td>Description : </td>\
+            <td>Description: </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>ID : </td>\
+            <td>ID: </td>\
             <td>' + couche.properties.id + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity : </td>\
+            <td>Intensity: </td>\
             <td>' + couche.properties.intensity + '</td>\
         </tr>\
     </table>'
     return html;
 }
+
 /**
  * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
@@ -80,18 +81,6 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones code_json : ", code_json);
                 console.log("add_warning_zones statut : ", statut);
             }
-            /*$.notify(
-            	{
-            		title: "<strong>Warning zones request</strong>",
-            		message: statut
-            	},{
-            		type: "success",
-            		placement: {
-            			from: "bottom",
-            			align: "center"
-            		}
-            	}
-            );*/
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -175,20 +164,6 @@ function add_warning_zones(url, bbox) {
                             return div;
                         };
                         legend.addTo(map);
-                        /*$.notify(
-                        	{
-                        		title: "<strong>Warning zones request</strong>",
-                        		message: 'received'
-                        	},{
-                        		type: "success",
-                        		placement: {
-                        			from: "bottom",
-                        			align: "center"
-                        		}
-                        	}
-                        );*/
-                    } else {
-                        //notify_warning_zones_none();
                     }
                 } else {
                     if (DEBUG) {
@@ -197,7 +172,6 @@ function add_warning_zones(url, bbox) {
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
                     }
-                    //notify_warning_zones_none();
                 }
             }
         }

@@ -1,0 +1,43 @@
+#warning_zone_info {
+  width:100%;
+}
+
+#warning_zone_info .panel-heading{
+  width:100%;
+  
+  cursor: pointer;
+}
+
+#warning_zone_info .panel-heading span {
+	margin-top: -20px;
+
+	font-size: 15px;
+}
+
+.leaflet-routing-container.changedStyle {
+  background-color:inherit;
+
+  max-height: 70em;
+  width:25em;
+
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.panel .dl-horizontal dt {
+  width: 40%;
+
+  margin-left:0%;
+
+  white-space: normal;
+}
+
+.panel .dl-horizontal dd {
+  width: 50%;
+
+  margin-left:45%;
+}
