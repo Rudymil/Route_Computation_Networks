@@ -1,5 +1,6 @@
 #warning_zone_info .panel-heading{
     cursor: pointer;
+    width:100%;
 }
 
 #warning_zone_info .panel-heading span {
@@ -9,11 +10,27 @@
 
 
 #warning_zone_info {
-  max-height:300px;
-  overflow: scroll;
-  overflow-x: hidden;
+  width:100%;
 }
 
 .leaflet-routing-container.changedStyle {
   background-color:inherit;
+  max-height: 70em;
+
+  width:25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.panel .dl-horizontal dt {
+  margin-left:0%;
+  width: 40%;
+  white-space: normal;
+}
+.panel .dl-horizontal dd {
+  margin-left:45%;
+  width: 50%;
 }

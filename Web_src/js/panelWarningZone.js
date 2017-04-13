@@ -89,19 +89,16 @@ function printInfoWarningZone(warning_zone) {
             output += warning_zone.feature.properties.name;
             output += "</h3>";
             output += "<span class='pull-right'>";
-            output += warning_zone.feature.properties.expiration_date;
+            console.log(warning_zone.feature.properties.expiration_date );
+            if (warning_zone.feature.properties.expiration_date != null) {
+              output += warning_zone.feature.properties.expiration_date;
+            }
             output += "</span>";
             output += "</div>";
             output += "</div>";
             output += "<div class='panel-body collapse'>";
             output += "<div class='row'>";
             output += "<dl class='dl-horizontal'>";
-            output += "<dt>";
-            output += "Type de risque : ";
-            output += "</dt>";
-            output += "<dd>";
-            output += warning_zone.feature.properties.risk_type;
-            output += "</dd>";
             output += "<dt>";
             output += "Description :";
             output += "</dt>";
