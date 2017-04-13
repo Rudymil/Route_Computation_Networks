@@ -74,7 +74,7 @@
 }
 
 .leaflet-routing-icon {
-    background-image: url('../img/leaflet.routing.icons.png');
+    background-image: url('../../img/leaflet.routing.icons.png');
     -webkit-background-size: 240px 20px;
     background-size: 240px 20px;
     background-repeat: no-repeat;
@@ -193,7 +193,7 @@
     text-align: center;
     cursor: pointer;
     color: #ccc;
-    background: white;../img/
+    background: white;../../img/
     padding-bottom: 16px;
     margin-top: -16px;
     padding-right: 4px;
@@ -228,7 +228,7 @@
     display: block;
     width: 26px;
     height: 23px;
-    background-image: url('../img/routing-icon.png');
+    background-image: url('../../img/routing-icon.png');
 }
 
 .leaflet-routing-container-hide .leaflet-routing-collapse-btn:after {
