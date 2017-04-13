@@ -45,6 +45,7 @@ function clearWarningZoneInfo() {
  */
 function parseWarningZones(warning_nonchecked) {
     var output = "";
+    console.log(warning_nonchecked);
     if (warning_nonchecked.length > 0) {
         output += "<div class='panel-group'>";
         for (var zone in warning_nonchecked) {
@@ -78,7 +79,6 @@ function printInfoWarningZone(warning_zone) {
     var output = "";
     if (warning_zone.hasOwnProperty("feature")) {
         if (warning_zone.feature.hasOwnProperty("properties")) {
-
             output += "<div class='panel panel-primary'>";
             output += "<div class='panel-heading panel-collapsed' onclick=centering(" + JSON.stringify(warning_zone.getBounds().getCenter()) + ")>";
             output += "<div>";
