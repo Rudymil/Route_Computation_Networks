@@ -7,7 +7,7 @@ $(document).on('click', '#warning_zone_info .panel-heading', function(e) {
         $this.parents('.panel').find('.panel-body').slideDown();
         $this.removeClass('panel-collapsed');
     }
-})
+});
 
 $(document).ready(function() {
     $(".leaflet-routing-geocoders ").after("<div id='warning_zone_info' class='pull-right'></div>");
@@ -21,12 +21,14 @@ $(document).ready(function() {
     });
 });
 
+
 /**
  * clearLeafletRoutingGeocoders
  */
 function clearLeafletRoutingGeocoders() {
     $(".leaflet-routing-geocoders ").hide();
     $(".warning_zone_info").html("");
+    $( ".leaflet-routing-container" ).addClass( "changedStyle" );
     $("#warning_zone_info").show();
 }
 
@@ -35,6 +37,7 @@ function clearLeafletRoutingGeocoders() {
  */
 function clearWarningZoneInfo() {
     $("#warning_zone_info").hide();
+    $( ".leaflet-routing-container" ).removeClass( "changedStyle" );
     $(".leaflet-routing-geocoders ").show();
 }
 

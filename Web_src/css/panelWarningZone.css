@@ -13,3 +13,7 @@
   overflow: scroll;
   overflow-x: hidden;
 }
+
+.leaflet-routing-container.changedStyle {
+  background-color:inherit;
+}
