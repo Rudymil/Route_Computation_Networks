@@ -1,23 +1,25 @@
-#warning_zone_info .panel-heading{
-    cursor: pointer;
-    width:100%;
-}
-
-#warning_zone_info .panel-heading span {
-	margin-top: -20px;
-	font-size: 15px;
-}
-
-
 #warning_zone_info {
   width:100%;
 }
 
+#warning_zone_info .panel-heading{
+  width:100%;
+  
+  cursor: pointer;
+}
+
+#warning_zone_info .panel-heading span {
+	margin-top: -20px;
+
+	font-size: 15px;
+}
+
 .leaflet-routing-container.changedStyle {
   background-color:inherit;
-  max-height: 70em;
 
+  max-height: 70em;
   width:25em;
+
   padding-left: 0.5em;
   padding-right: 0.5em;
 
@@ -25,12 +27,17 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
 .panel .dl-horizontal dt {
-  margin-left:0%;
   width: 40%;
+
+  margin-left:0%;
+
   white-space: normal;
 }
+
 .panel .dl-horizontal dd {
-  margin-left:45%;
   width: 50%;
+
+  margin-left:45%;
 }
