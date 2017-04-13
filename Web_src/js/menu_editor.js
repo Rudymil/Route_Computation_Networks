@@ -69,19 +69,19 @@ function remove_anomaly_zones() {
 function getPopupContentmenu_anomaly(couche) {
     var html = '<table>\
         <tr>\
-            <td>Anomaly type : </td>\
+            <td>Anomaly type: </td>\
             <td>' + couche.properties.anomaly_type + '</td>\
         </tr>\
         <tr>\
-            <td>Description : </td>\
+            <td>Description: </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>Expiration date : </td>\
+            <td>Expiration date: </td>\
             <td>' + couche.properties.expiration_date + '</td>\
         </tr>\
         <tr>\
-            <td>ID : </td>\
+            <td>ID: </td>\
             <td>' + couche.properties.id + '</td>\
         </tr>\
     </table>'
@@ -108,18 +108,6 @@ function add_anomaly_zones(url, bbox) {
                 console.log("add_anomaly_zones code_json : ", code_json);
                 console.log("add_anomaly_zones statut : ", statut);
             }
-            /*$.notify(
-            	{
-            		title: "<strong>Warning zones request</strong>",
-            		message: statut
-            	},{
-            		type: "success",
-            		placement: {
-            			from: "bottom",
-            			align: "center"
-            		}
-            	}
-            );*/
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -173,15 +161,6 @@ function add_anomaly_zones(url, bbox) {
                             });
 
                             featureLayera.addLayer(shape);
-
-
-                            /*var colorZone = getColor(json["features"][element]["properties"].intensity);
-                            
-                            
-                            
-                            shape.addTo(map); // ajout a la map
-                            */
-
                             anomaly_zones.push(shape); // remplir la anomaly zone
                         }
                         layer_group_anomaly_zones = L.layerGroup(anomaly_zones); // groupe des couches anomaly zones
@@ -194,20 +173,6 @@ function add_anomaly_zones(url, bbox) {
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
                         }).addTo(map); // ne pas oublier le null
-                        /*$.notify(
-                        	{
-                        		title: "<strong>Anomaly zones request</strong>",
-                        		message: 'received'
-                        	},{
-                        		type: "success",
-                        		placement: {
-                        			from: "bottom",
-                        			align: "center"
-                        		}
-                        	}
-                        );*/
-                    } else {
-                        //notify_anomaly_zones_none();
                     }
                 } else {
                     if (DEBUG) {
@@ -216,12 +181,12 @@ function add_anomaly_zones(url, bbox) {
                     if (anomaly_zones.length > 0) {
                         remove_anomaly_zones();
                     }
-                    //notify_anomaly_zones_none();
                 }
             }
         }
     });
 }
+
 /**
  * Notify using Bootstrap Notify that the area targeted or viewed not contains "warning zones".
  */
@@ -237,6 +202,7 @@ function notify_warning_zones_none() {
         }
     });
 }
+
 /**
  * Removed from the map all "warning zones" displayed.
  */
@@ -256,8 +222,8 @@ function remove_warning_zones() {
     if (legend != undefined || legend != null) {
         legend.remove();
     }
-    //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
 }
+
 /**
  * Build the html content for the layers extracted from the database.
  * @return {string} - Of informations about the layer in hmtl form.
@@ -265,27 +231,27 @@ function remove_warning_zones() {
 function getPopupContentmenu(couche) {
     var html = '<table>\
         <tr>\
-            <td>Description : </td>\
+            <td>Description: </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>Expiration Date : </td>\
+            <td>Expiration Date: </td>\
             <td>' + couche.properties.expiration_date + '</td>\
         </tr>\
         <tr>\
-            <td>ID : </td>\
+            <td>ID: </td>\
             <td>' + couche.properties.id + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity : </td>\
+            <td>Intensity: </td>\
             <td>' + couche.properties.intensity + '</td>\
         </tr>\
         <tr>\
-            <td>Risk type : </td>\
+            <td>Risk type: </td>\
             <td>' + couche.properties.risk_type + '</td>\
         </tr>\
         <tr>\
-            <td>Validation date : </td>\
+            <td>Validation date: </td>\
             <td>' + couche.properties.validation_date + '</td>\
         </tr>\
     </table>'
@@ -312,18 +278,6 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones code_json : ", code_json);
                 console.log("add_warning_zones statut : ", statut);
             }
-            /*$.notify(
-                {
-                    title: "<strong>Warning zones validated request</strong>",
-                    message: statut
-                },{
-                    type: "success",
-                    placement: {
-                        from: "bottom",
-                        align: "center"
-                    }
-                }
-            );*/
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -367,7 +321,7 @@ function add_warning_zones(url, bbox) {
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
-                            shape.addTo(map); // ajout a la map 
+                            shape.addTo(map); // ajout a la map
                             warning_zones.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
@@ -397,20 +351,6 @@ function add_warning_zones(url, bbox) {
                             return div;
                         };
                         legend.addTo(map);
-                        /*$.notify(
-                            {
-                                title: "<strong>Warning zones request</strong>",
-                                message: 'received'
-                            },{
-                                type: "success",
-                                placement: {
-                                    from: "bottom",
-                                    align: "center"
-                                }
-                            }
-                        );*/
-                    } else {
-                        //notify_warning_zones_none();
                     }
                 } else {
                     if (DEBUG) {
@@ -419,7 +359,6 @@ function add_warning_zones(url, bbox) {
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
                     }
-                    //notify_warning_zones_none();
                 }
             }
         }
@@ -434,18 +373,6 @@ function add_warning_zones(url, bbox) {
                 console.log("add_warning_zones code_json : ", code_json);
                 console.log("add_warning_zones statut : ", statut);
             }
-            /*$.notify(
-                {
-                    title: "<strong>Warning zones not checked request</strong>",
-                    message: statut
-                },{
-                    type: "success",
-                    placement: {
-                        from: "bottom",
-                        align: "center"
-                    }
-                }
-            );*/
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -489,7 +416,7 @@ function add_warning_zones(url, bbox) {
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
-                            shape.addTo(map); // ajout a la map 
+                            shape.addTo(map); // ajout a la map
                             warning_nonchecked.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_nonchecked = L.layerGroup(warning_nonchecked); // groupe des couches warning zones
@@ -500,20 +427,6 @@ function add_warning_zones(url, bbox) {
                         Lcontrollayers = L.control.layers(null, overlayMaps, {
                             position: 'topleft'
                         }).addTo(map); // ne pas oublier le null
-                        /*$.notify(
-                            {
-                                title: "<strong>Warning zones request</strong>",
-                                message: 'received'
-                            },{
-                                type: "success",
-                                placement: {
-                                    from: "bottom",
-                                    align: "center"
-                                }
-                            }
-                        );*/
-                    } else {
-                        //notify_warning_zones_none();
                     }
                 } else {
                     if (DEBUG) {
@@ -522,7 +435,6 @@ function add_warning_zones(url, bbox) {
                     if (warning_zones.length > 0) {
                         remove_warning_zones();
                     }
-                    //notify_warning_zones_none();
                 }
             }
         }
@@ -557,7 +469,6 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update code_json : ", code);
                 console.log("send_ajax_update statut : ", statut);
             }
-            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -574,16 +485,6 @@ function send_ajax_update(type) {
             }
             if (resultat.status == '200') {
                 if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
-                    /*$.notify({
-                        title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseText
-                    }, {
-                        type: "info",
-                        placement: {
-                            from: "bottom",
-                            align: "center"
-                        }
-                    });*/
                     if (DEBUG) {
                         console.log("send_ajax_delete resultat.responseText : ", resultat.responseText);
                     }
@@ -595,6 +496,7 @@ function send_ajax_update(type) {
         }
     });
 }
+
 /**
  * Send to the DB one id for one type.
  * @param {string} id - Id of the GeoJSON to delete.
@@ -618,7 +520,6 @@ function send_ajax_delete(id, type) {
                 console.log("send_ajax_delete code_json : ", code);
                 console.log("send_ajax_delete statut : ", statut);
             }
-            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -635,16 +536,6 @@ function send_ajax_delete(id, type) {
             }
             if (resultat.status == '200') {
                 if (resultat.responseText != undefined && resultat.responseText != NaN) { // si le resultat.responseText est defini
-                    /*$.notify({
-                        title: "<strong>Number of objects modified</strong>",
-                        message: resultat.responseText
-                    }, {
-                        type: "info",
-                        placement: {
-                            from: "bottom",
-                            align: "center"
-                        }
-                    });*/
                     if (DEBUG) {
                         console.log("send_ajax_delete resultat.responseText : ", resultat.responseText);
                     }
