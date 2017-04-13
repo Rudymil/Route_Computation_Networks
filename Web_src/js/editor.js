@@ -121,7 +121,6 @@ $(".radio_button").change(function(e) {
 map.on('draw:editstart', function(e) {
     console.log(e);
     featureLayerw.on('click', function(e) {
-        // WARNING
         if ($("#warning").is(":checked")) {
             console.log(e);
             e.layer.closePopup();
@@ -129,54 +128,55 @@ map.on('draw:editstart', function(e) {
             var layerjson = layer.toGeoJSON();
             console.log(JSON.stringify(layerjson));
             bootbox.confirm(hmtlcwe(layerjson.properties.description, layerjson.properties.name,
-                    layerjson.properties.intensity, layerjson.properties.validation_date,
-                    layerjson.properties.expiration_date, layerjson.properties.risk_type), function(result) {
-                    if (result) {
-                        //console.log("inside");
-                        var des = $('#description').val();
-                        var risk = $('#risk').val();
-                        var dae = $('#datee').val();
-                        var dav = $('#datev').val();
-                        var name = $('#name').val();
-                        var inte = $('#intensity').val();
+                layerjson.properties.intensity, layerjson.properties.validation_date,
+                layerjson.properties.expiration_date, layerjson.properties.risk_type), function(result) {
+                if (result) {
+                    var des = $('#description').val();
+                    var risk = $('#risk').val();
+                    var dae = $('#datee').val();
+                    var dav = $('#datev').val();
+                    var name = $('#name').val();
+                    var inte = $('#intensity').val();
 
-                        if (des == "") {
-                            return false;
-                        }
-                        var timestamp = Date.parse(dav)
-                        if (isNaN(timestamp)) {
-                            return false;
-                        }
-                        if (name == "") {
-                            return false;
-                        }
-                        if (isNaN(parseFloat(inte)) || !isFinite(inte) || inte < 0) {
-                            return false;
-                        }
-                        console.log(dae + ' != ' + layerjson.properties.expiration_date);
-                        console.log(layerjson.properties.description + ' != ' + des);
-                        console.log(layerjson.properties.name + ' != ' + name);
-                        console.log(layerjson.properties.intensity + ' != ' + inte);
-                        console.log(layerjson.properties.risk_type + ' != ' + risk);
-                        console.log(layerjson.properties.validation_date + ' != ' + dav);
+                    if (des == "") {
+                        return false;
+                    }
+                    var timestamp = Date.parse(dav)
+                    if (isNaN(timestamp)) {
+                        return false;
+                    }
+                    if (name == "") {
+                        return false;
+                    }
+                    if (isNaN(parseFloat(inte)) || !isFinite(inte) || inte < 0) {
+                        return false;
+                    }
+                    console.log(dae + ' != ' + layerjson.properties.expiration_date);
+                    console.log(layerjson.properties.description + ' != ' + des);
+                    console.log(layerjson.properties.name + ' != ' + name);
+                    console.log(layerjson.properties.intensity + ' != ' + inte);
+                    console.log(layerjson.properties.risk_type + ' != ' + risk);
+                    console.log(layerjson.properties.validation_date + ' != ' + dav);
 
-                        if (layerjson.properties.description != des ||
-                            layerjson.properties.name != name ||
-                            layerjson.properties.intensity != inte ||
-                            layerjson.properties.risk_type != risk ||
-                            layerjson.properties.validation_date != dav ||
-                            layerjson.properties.expiration_date != dae
-                        ) {
-                            layerjson.properties.description = des;
-                            layerjson.properties.name = name;
-                            layerjson.properties.intensity = inte;
-                            layerjson.properties.risk_type = risk;
-                            layerjson.properties.validation_date = dav;
-                            layerjson.properties.expiration_date = dae;
-                            wzupdate.push(layerjson);
-                        }
-                    });
-            }
+                    if (layerjson.properties.description != des ||
+                        layerjson.properties.name != name ||
+                        layerjson.properties.intensity != inte ||
+                        layerjson.properties.risk_type != risk ||
+                        layerjson.properties.validation_date != dav ||
+                        layerjson.properties.expiration_date != dae
+                    ) {
+
+                        layerjson.properties.description = des;
+                        layerjson.properties.name = name;
+                        layerjson.properties.intensity = inte;
+                        layerjson.properties.risk_type = risk;
+                        layerjson.properties.validation_date = dav;
+                        layerjson.properties.expiration_date = dae;
+
+                        wzupdate.push(layerjson);
+                    }
+                }
+            });
         }
     });
 });
