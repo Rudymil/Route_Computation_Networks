@@ -9,7 +9,7 @@ Le mode **DEBUG** est activable en ajoutant la variable DEBUG dans l'URL sans va
 
 Les différents paramètres de l'API sont :
 
-- **DEBUG** : permet d'activer le mode debug,
+- **DEBUG** : permet d'activer le mode debug et d'obtenir des informations supplémentaires telles que la requête SQL, le nombre d'entités, le retour de la requête,
 - **type** : spécifie le type d'objet demandé, au choix parmi : {warning_zone|anomaly_zone|risk_type|anomaly_type|country|poi}
 - **warning_zone**
 - **anomaly_zone**
@@ -28,7 +28,7 @@ Les données disponibles via l'API ainsi que leur méthode et format d'envoi et/
 |---|---|---|
 |country|GeoJSON|#NA|
 |waypoint|GeoJSON|#NA|
-|poi|#NA|GeoJSON|
+|poi|GeoJSON|#NA|
 |risk|JSON|#NA|
 |anomaly_type|JSON|#NA|
 |warning_zone|GeoJSON|GeoJSON|
