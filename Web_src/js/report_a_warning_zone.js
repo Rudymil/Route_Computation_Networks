@@ -21,7 +21,6 @@ function datem() {
         mm = '0' + mm
     }
     return yyyy + '/' + mm + '/' + dd;
-
 }
 
 /**

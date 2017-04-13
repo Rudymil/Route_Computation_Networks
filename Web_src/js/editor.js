@@ -1,5 +1,13 @@
-//var warning_zones = new Array(); // liste des warning zones
-//var anomaly_zones = new Array(); // liste des anomaly zones
+/**
+ * hmtlcwe
+ * @param  {string} description
+ * @param  {string} name
+ * @param  {int} intensity
+ * @param  {date} validationDate
+ * @param  {date} expirationDate
+ * @param  {int} id
+ * @return {html}
+ */
 function hmtlcwe(description, name, intensity, validationDate, expirationDate, id) {
     var nw = types_warning_zones.length;
     var string1 = "<div class='form-group'>\
