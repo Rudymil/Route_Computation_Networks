@@ -1,5 +1,6 @@
 featureLayera = new L.FeatureGroup();
-map.addLayer(featureLayera);
+//map.addLayer(featureLayera);
+
 drawControla = new L.Control.Draw({
     edit: {
         featureGroup: featureLayera,
@@ -14,7 +15,10 @@ drawControla = new L.Control.Draw({
         marker: false
     }
 }).addTo(map);
+
 featureLayerw = new L.FeatureGroup();
+//map.addLayer(featureLayerw);
+
 drawControlw = new L.Control.Draw({
     edit: {
         featureGroup: featureLayerw,
@@ -28,11 +32,17 @@ drawControlw = new L.Control.Draw({
         circle: false,
         marker: false
     }
+
 }).addTo(map);
+
+
 /**
  * Notify using Bootstrap Notify that the area targeted or viewed not contains "anomaly zones".
  */
 function notify_anomaly_zones_none() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_anomaly_zones_none");
+    }
     $.notify({
         title: "<strong>Anomaly zones request</strong>",
         message: "none"
@@ -44,49 +54,43 @@ function notify_anomaly_zones_none() {
         }
     });
 }
-/**
- * Removed from the map all "anomaly zones" displayed.
- */
-function remove_anomaly_zones() {
-    for (element in anomaly_zones) { // pour chaque anomalies zones
-        if (DEBUG) {
-            console.log("element :", element);
-            console.log("anomaly_zones[element] :", anomaly_zones[element]);
-        }
-        anomaly_zones[element].removeFrom(map); // on enleve les anomalies zones de la map
-    }
-    anomaly_zones = new Array(); // on vide les anomalies zones
-    delete overlayMaps["Anomaly zones"];
-    if (Lcontrollayers != undefined || Lcontrollayers != null) {
-        Lcontrollayers.remove();
-    }
-    //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
-}
+
 /**
  * Build the html content for the layers extracted from the database.
+ * @param {layer} couche - leaflet layer
  * @return {string} - Of informations about the layer in hmtl form.
  */
 function getPopupContentmenu_anomaly(couche) {
+    if (DEBUG) {
+        console.log("FUNCTION : getPopupContentmenu_anomaly");
+    }
+    var type = undefined;
+    for (element in types_anomalies) {
+        if (couche.properties.anomaly_type == types_anomalies[element]["id"]) {
+            type = types_anomalies[element]["name"];
+        }
+    }
     var html = '<table>\
         <tr>\
-            <td>Anomaly type: </td>\
-            <td>' + couche.properties.anomaly_type + '</td>\
+            <td>ID : </td>\
+            <td>' + couche.properties.id + '</td>\
         </tr>\
         <tr>\
-            <td>Description: </td>\
+            <td>Anomaly type : </td>\
+            <td>' + type + '</td>\
+        </tr>\
+        <tr>\
+            <td>Description : </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>Expiration date: </td>\
+            <td>Expiration date : </td>\
             <td>' + couche.properties.expiration_date + '</td>\
-        </tr>\
-        <tr>\
-            <td>ID: </td>\
-            <td>' + couche.properties.id + '</td>\
         </tr>\
     </table>'
     return html;
 }
+
 /**
  * Ajax request asking all the anomaly zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
@@ -136,16 +140,6 @@ function add_anomaly_zones(url, bbox) {
                     if (DEBUG) {
                         console.log("add_anomaly_zones json :", json);
                     }
-                    if (anomaly_zones.length > 0) {
-                        for (element in anomaly_zones) { // pour chaque anomaly zones
-                            if (DEBUG) {
-                                console.log("element :", element);
-                                console.log("anomaly_zones[element] :", anomaly_zones[element]);
-                            }
-                            anomaly_zones[element].removeFrom(map); // on enleve les anomaly zones de la map
-                        }
-                    }
-                    anomaly_zones = new Array(); // on vide les anomaly zones
                     if (json["features"].length > 0) {
                         for (element in json["features"]) { // pour chaque object du geojson
                             if (DEBUG) {
@@ -159,28 +153,31 @@ function add_anomaly_zones(url, bbox) {
                                 fillColor: 'blue',
                                 color: 'blue'
                             });
-
                             featureLayera.addLayer(shape);
+
                             anomaly_zones.push(shape); // remplir la anomaly zone
                         }
                         layer_group_anomaly_zones = L.layerGroup(anomaly_zones); // groupe des couches anomaly zones
-                        overlayMaps["Anomaly zones"] = layer_group_anomaly_zones; // menu
-
-
-                        if (Lcontrollayers != undefined) {
+                        layer_group_anomaly_zonestemp = L.layerGroup(anomaly_zones);
+                        map.addLayer(layer_group_anomaly_zones);
+                        if (DEBUG) {
+                            console.log("add_anomaly_zones layer_group_anomaly_zones :", layer_group_anomaly_zones);
+                        }
+                        overlayMaps["Anomaly zones"] = layer_group_anomaly_zones; // menuif (Lcontrollayers != undefined) {
+                        if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
                         }
-                        Lcontrollayers = L.control.layers(null, overlayMaps, {
+                        Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
                             position: 'topleft'
-                        }).addTo(map); // ne pas oublier le null
+                        }).addTo(map);
                     }
-                } else {
-                    if (DEBUG) {
-                        console.log("add_anomaly_zones json :", json);
-                    }
-                    if (anomaly_zones.length > 0) {
-                        remove_anomaly_zones();
-                    }
+                }
+            } else {
+                if (DEBUG) {
+                    console.log("add_anomaly_zones json :", json);
+                }
+                if (anomaly_zones.length > 0) {
+                    remove_anomaly_zones();
                 }
             }
         }
@@ -191,6 +188,9 @@ function add_anomaly_zones(url, bbox) {
  * Notify using Bootstrap Notify that the area targeted or viewed not contains "warning zones".
  */
 function notify_warning_zones_none() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_warning_zones_none");
+    }
     $.notify({
         title: "<strong>Warning zones request</strong>",
         message: "none"
@@ -204,59 +204,48 @@ function notify_warning_zones_none() {
 }
 
 /**
- * Removed from the map all "warning zones" displayed.
- */
-function remove_warning_zones() {
-    for (element in warning_zones) { // pour chaque warning zones
-        if (DEBUG) {
-            console.log("element :", element);
-            console.log("warning_zones[element] :", warning_zones[element]);
-        }
-        warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
-    }
-    warning_zones = new Array(); // on vide les warning zones
-    delete overlayMaps["Warning zones"];
-    if (Lcontrollayers != undefined || Lcontrollayers != null) {
-        Lcontrollayers.remove();
-    }
-    if (legend != undefined || legend != null) {
-        legend.remove();
-    }
-}
-
-/**
  * Build the html content for the layers extracted from the database.
  * @return {string} - Of informations about the layer in hmtl form.
  */
 function getPopupContentmenu(couche) {
+    if (DEBUG) {
+        console.log("FUNCTION : getPopupContentmenu");
+    }
+    var type = undefined;
+    for (element in types_warning_zones) {
+        if (couche.properties.risk_type == types_warning_zones[element]["id"]) {
+            type = types_warning_zones[element]["name"];
+        }
+    }
     var html = '<table>\
         <tr>\
-            <td>Description: </td>\
-            <td>' + couche.properties.description + '</td>\
-        </tr>\
-        <tr>\
-            <td>Expiration Date: </td>\
-            <td>' + couche.properties.expiration_date + '</td>\
-        </tr>\
-        <tr>\
-            <td>ID: </td>\
+            <td>ID : </td>\
             <td>' + couche.properties.id + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity: </td>\
+            <td>Risk type : </td>\
+            <td>' + type + '</td>\
+        </tr>\
+        <tr>\
+            <td>Description : </td>\
+            <td>' + couche.properties.description + '</td>\
+        </tr>\
+        <tr>\
+            <td>Intensity : </td>\
             <td>' + couche.properties.intensity + '</td>\
         </tr>\
         <tr>\
-            <td>Risk type: </td>\
-            <td>' + couche.properties.risk_type + '</td>\
+            <td>Expiration Date : </td>\
+            <td>' + couche.properties.expiration_date + '</td>\
         </tr>\
         <tr>\
-            <td>Validation date: </td>\
+            <td>Validation date : </td>\
             <td>' + couche.properties.validation_date + '</td>\
         </tr>\
     </table>'
     return html;
 }
+
 /**
  * Ajax request asking all the warning zones from the BD and contained into the bounding box of the map.
  * @param {string} url - Url to the Web API.
@@ -321,17 +310,22 @@ function add_warning_zones(url, bbox) {
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
-                            shape.addTo(map); // ajout a la map
+                            //shape.addTo(map); // ajout a la map
                             warning_zones.push(shape); // remplir la warning zone
                         }
+                        if (DEBUG) {
+                            console.log("add_warning_zones layer_group_warning_zones :", layer_group_warning_zones);
+                        }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
+                        layer_group_warning_zonestemp = L.layerGroup(warning_zones);
+                        map.addLayer(layer_group_warning_zones);
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
                         if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
                         }
-                        Lcontrollayers = L.control.layers(null, overlayMaps, {
+                        Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
                             position: 'topleft'
-                        }).addTo(map); // ne pas oublier le null
+                        }).addTo(map);
                         if (legend != undefined || legend != null) {
                             legend.remove();
                         }
@@ -416,17 +410,21 @@ function add_warning_zones(url, bbox) {
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
                             featureLayerw.addLayer(shape);
-                            shape.addTo(map); // ajout a la map
                             warning_nonchecked.push(shape); // remplir la warning zone
                         }
                         layer_group_warning_nonchecked = L.layerGroup(warning_nonchecked); // groupe des couches warning zones
+                        layer_group_warning_noncheckedtemp = L.layerGroup(warning_nonchecked);
+                        if (DEBUG) {
+                            console.log("add_anomaly_zones layer_group_warning_nonchecked :", layer_group_warning_nonchecked);
+                        }
+                        map.addLayer(layer_group_warning_nonchecked);
                         overlayMaps["Warning zones to check"] = layer_group_warning_nonchecked; // menu
                         if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
                         }
-                        Lcontrollayers = L.control.layers(null, overlayMaps, {
+                        Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
                             position: 'topleft'
-                        }).addTo(map); // ne pas oublier le null
+                        }).addTo(map);
                     }
                 } else {
                     if (DEBUG) {
@@ -440,6 +438,7 @@ function add_warning_zones(url, bbox) {
         }
     });
 }
+
 /**
  * Send to the DB all the update for one type.
  * @param {string} type - Type of the GeoJSON to update.
@@ -448,7 +447,7 @@ function add_warning_zones(url, bbox) {
  */
 function send_ajax_update(type) {
     if (DEBUG) {
-        console.log("send_ajax_update");
+        console.log("FUNCTION : send_ajax_update");
         console.log("send_ajax_update type :", type);
     }
     geojson["type"] = "FeatureCollection";
@@ -469,6 +468,7 @@ function send_ajax_update(type) {
                 console.log("send_ajax_update code_json : ", code);
                 console.log("send_ajax_update statut : ", statut);
             }
+            //notify_ajax_sending_areas_success(statut);
         },
         error: function(resultat, statut, erreur) {
             if (DEBUG) {
@@ -506,7 +506,7 @@ function send_ajax_update(type) {
  */
 function send_ajax_delete(id, type) {
     if (DEBUG) {
-        console.log("send_ajax_delete");
+        console.log("FUNCTION : send_ajax_delete");
         console.log("send_ajax_delete id :", id);
         console.log("send_ajax_delete type :", type);
     }
@@ -547,12 +547,16 @@ function send_ajax_delete(id, type) {
         }
     });
 }
+
 /**
  * Show the number of zones modified.
  * @param {number} nb_MAJ - Number of zones modified.
  * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_MAJ(nb_MAJ, nb_sent) {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_nb_MAJ");
+    }
     if (nb_MAJ != NaN && nb_MAJ == nb_sent) { // si egalite
         $.notify({
             title: "<strong>Number of zones modified</strong>",
@@ -588,6 +592,7 @@ function notify_nb_MAJ(nb_MAJ, nb_sent) {
         });
     }
 }
+
 /**
  * Executed for sending all the updates and deletes.
  */
@@ -651,4 +656,140 @@ $("#submit3").click(function() {
         azdelete = new Array();
     }
     notify_nb_MAJ(nb_MAJ, nb_sent);
+});
+
+/**
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
+ */
+function getPopupContentmenuPOI(couche) {
+    if (DEBUG) {
+        console.log("FUNCTION : getPopupContentmenuPOI");
+    }
+    var html = '<table>\
+        <tr>\
+            <td>ID : </td>\
+            <td>' + couche.properties.id + '</td>\
+        </tr>\
+        <tr>\
+            <td>Name : </td>\
+            <td>' + couche.properties.name + '</td>\
+        </tr>\
+        <tr>\
+            <td>Type : </td>\
+            <td>' + couche.properties.type + '</td>\
+        </tr>\
+    </table>'
+    return html;
+}
+
+/**
+ * Removed from the map all "anomaly zones" displayed.
+ */
+function remove_anomaly_zones() {
+    if (DEBUG) {
+        console.log("FUNCTION : remove_anomaly_zones");
+    }
+    map.removeLayer(layer_group_anomaly_zones);
+    anomaly_zones = new Array(); // on vide les anomalies zones
+    delete overlayMaps["Anomaly zones"];
+    if (Lcontrollayers != undefined || Lcontrollayers != null) {
+        Lcontrollayers.remove();
+    }
+    Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
+        position: 'topleft'
+    }).addTo(map);
+}
+
+/**
+ * Removed from the map all "warning zones" displayed.
+ */
+function remove_warning_zones() {
+    if (DEBUG) {
+        console.log("FUNCTION : remove_warning_zones");
+    }
+    map.removeLayer(layer_group_warning_zones);
+    map.removeLayer(layer_group_warning_nonchecked);
+    warning_zones = new Array(); // on vide les warning zones
+    warning_nonchecked = new Array(); // on vide les warning zones
+    delete overlayMaps["Warning zones"];
+    delete overlayMaps["Warning zones to check"];
+    if (Lcontrollayers != undefined || Lcontrollayers != null) {
+        Lcontrollayers.remove();
+    }
+    if (legend != undefined || legend != null) {
+        legend.remove();
+    }
+    Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
+        position: 'topleft'
+    }).addTo(map);
+}
+
+/*
+ * Execute when POI is changed
+ */
+$('#POI').change(function() {
+    if (DEBUG) {
+        console.log("EVENT : $('#POI').change")
+    }
+    if ($('#POI').is(':checked')) {
+        checkbox_POI = true;
+        if (DEBUG) {
+            console.log("$('#POI').change checkbox_POI :", checkbox_POI);
+        }
+        bbox = map.getBounds().toBBoxString();
+        ajax_POI(url, bbox);
+    } else {
+        checkbox_POI = false;
+        if (DEBUG) {
+            console.log("$('#POI').change checkbox_POI :", checkbox_POI);
+        }
+        remove_POI();
+    }
+});
+
+/*
+ * Execute when Anomaly zones is changed
+ */
+$('#Anomaly_zones').change(function() {
+    if (DEBUG) {
+        console.log("EVENT : $(':checkbox').change")
+    }
+    if ($('#Anomaly_zones').is(':checked')) {
+        checkbox_Anomaly_zones = true;
+        if (DEBUG) {
+            console.log("$('#Anomaly_zones').change checkbox_Anomaly_zones :", checkbox_Anomaly_zones);
+        }
+        bbox = map.getBounds().toBBoxString();
+        add_anomaly_zones(url, bbox);
+    } else {
+        checkbox_Anomaly_zones = false;
+        if (DEBUG) {
+            console.log("$('#Anomaly_zones').change checkbox_Anomaly_zones :", checkbox_Anomaly_zones);
+        }
+        remove_anomaly_zones();
+    }
+});
+
+/*
+ * Execute when Warning zones is changed
+ */
+$('#Warning_zones').change(function() {
+    if (DEBUG) {
+        console.log("EVENT : $('#Warning_zones').change")
+    }
+    if ($('#Warning_zones').is(':checked')) {
+        checkbox_Warning_zones = true;
+        if (DEBUG) {
+            console.log("$('#Warning_zones').change checkbox_Warning_zones :", checkbox_Warning_zones);
+        }
+        bbox = map.getBounds().toBBoxString();
+        add_warning_zones(url, bbox);
+    } else {
+        checkbox_Warning_zones = false;
+        if (DEBUG) {
+            console.log("$('#Warning_zones').change checkbox_Warning_zones :", checkbox_Warning_zones);
+        }
+        remove_warning_zones();
+    }
 });

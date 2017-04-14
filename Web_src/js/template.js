@@ -2,17 +2,6 @@ var map, featureList, boroughSearch = [],
     theaterSearch = [],
     museumSearch = [];
 
-/**
- * animateSidebar
- */
-function animateSidebar() {
-    $("#sidebar").animate({
-        width: "toggle"
-    }, 350, function() {
-        map.invalidateSize();
-    });
-}
-
 $("#list-btn").click(function() {
     animateSidebar();
     return false;
@@ -28,15 +17,21 @@ $("#sidebar-hide-btn").click(function() {
     return false;
 });
 
+function animateSidebar() {
+    $("#sidebar").animate({
+        width: "toggle"
+    }, 350, function() {
+        map.invalidateSize();
+    });
+}
+
 map = new L.Map('map');
 
 $("#map").ready(function() {
-    osm = new L.TileLayer(url_tiles_Angola, {
-        minZoom: 1,
-        maxZoom: 18,
-        attribution: Attrib,
-        id: "osm-bright" // "klokantech-basic"
-    });
-    map.addLayer(osm);
+    current_country = "Angola";
+    map.addLayer(baseMaps["osm-bright"]);
     map.setView([15.0, 10.0], 2);
+    Lcontrollayers = L.control.layers(baseMaps, null, {
+        position: 'topleft'
+    }).addTo(map);
 });

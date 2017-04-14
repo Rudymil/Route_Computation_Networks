@@ -10,17 +10,17 @@
 		<meta name="description" content=""/>
 		<meta name="author" content=""/>
 		<title>Route calculation</title>
-		<link rel="stylesheet" href="css/css-lib/leaflet.css" /> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.css-->
-		<link rel="stylesheet" href="css/css-lib/bootstrap.min.css"/> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css-->
-		<link rel="stylesheet" href="css/css-lib/font-awesome.min.css"/> <!--https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css-->
-		<link rel="stylesheet" href="css/css-lib/MarkerCluster.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css-->
-		<link rel="stylesheet" href="css/css-lib/MarkerCluster.Default.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css-->
-		<link rel="stylesheet" href="css/css-lib/easy-button.css"> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css-->
-		<link rel="stylesheet" href="css/css-lib/leaflet.draw.css"/> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css-->
-		<link rel="stylesheet" href="css/css-lib/leaflet-routing-machine.css" /> <!--LRM-->
+		<link rel="stylesheet" href="css/css/leaflet.css" /> <!--LEAFLET--> <!--https://unpkg.com/leaflet@1.0.3/dist/leaflet.css-->
+		<link rel="stylesheet" href="css/css/bootstrap.min.css"/> <!--BOOTSTRAP--> <!--https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css-->
+		<link rel="stylesheet" href="css/css/font-awesome.min.css"/> <!--https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css-->
+		<link rel="stylesheet" href="css/css/MarkerCluster.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.4/MarkerCluster.css-->
+		<link rel="stylesheet" href="css/css/MarkerCluster.Default.css"/> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.4/MarkerCluster.css-->
+		<link rel="stylesheet" href="css/css/easy-button.css"> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css-->
+		<link rel="stylesheet" href="css/css/leaflet.draw.css"/> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css-->
+		<link rel="stylesheet" href="css/css/leaflet-routing-machine.css" /> <!--LRM-->
 		<link rel="stylesheet" href="css/template.css"/> <!--TEMPLATE-->
 		<link rel="stylesheet" href="css/context_menu1.css"/>
-		<link rel="stylesheet" href="css/css-lib/jquery-ui.css"><!-- calendar -->
+		<link rel="stylesheet" href="css/css/jquery-ui.css"><!-- calendar -->
 		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon-76.png"/>
 		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon-120.png"/>
 		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon-152.png"/>
@@ -62,16 +62,39 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
+						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204611">
+							<center>Layers</center>
+						</a>
+					</div>
+					<div id="panel-element-204611" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+									<input type="checkbox" id="Warning_zones" value="true">
+									<label for="Warning_zones">Warning zones</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
+									<input type="checkbox" id="POI" value="true">
+									<label for="POI">POI</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
 						<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-785037" href="#panel-element-204613">
-							<center>Set the route</center>
+							<center>Itinerary</center>
 						</a>
 					</div>
 					<div id="panel-element-204613" class="panel-collapse collapse">
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
-									<input type="radio" class="radio_button" id="Navigate" name="draw" value="set_the_route" checked>
-									<label for="set_the_route">Set the route</label>
+									<input type="radio" class="radio_button" id="Navigate" name="draw" value="Itinerary" checked>
+									<label for="Itinerary">Itinerary</label>
 								</div>
 							</div>
 						</div>
@@ -84,7 +107,7 @@
 					<div id="panel-element-874535" class="panel-collapse collapse">
 						<div class="panel-body">
 							<div class="panel-body">
-								<div class="row test">
+								<div class="row test hide">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
 										<input type="radio" class="radio_button" id="Circle1" name="draw" value="Circle1">
 										<label for="Circle">Circle</label>
@@ -120,7 +143,7 @@
 					<div id="panel-element-874536" class="panel-collapse collapse">
 						<div class="panel-body">
 							<div class="panel-body">
-								<div class="row test">
+								<div class="row test hide">
 									<div class="col-xs-offset-3 col-xs-9"> <!-- -3 +9 -->
 										<input type="radio" class="radio_button" id="Circle2" name="draw" value="Circle2">
 										<label for="Circle">Circle</label>
@@ -165,12 +188,13 @@
 		<script src="js/lib/typeahead.bundle.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/lib/typeahead.bundle.min.js-->
 		<script src="js/lib/handlebars.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/lib/handlebars.min.js-->
 		<script src="js/lib/list.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/lib/list.min.js-->
-		<script src="js/lib/leaflet.markercluster.js"></script> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/lib/leaflet.markercluster.js-->
+		<script src="js/lib/leaflet.markercluster-src.js"></script> <!--https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.4/lib/leaflet.markercluster.js-->
 		<script src="js/easy-button.js"></script> <!--https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js-->
 		<script src="js/lib/leaflet.draw.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/lib/leaflet.draw.js-->
 		<script src="js/lib/bootbox.min.js"></script> <!--https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/lib/bootbox.min.js-->
 		<script src="js/lib/leaflet.circle.topolygon-min.js"></script> <!--http://rawgit.com/w8r/Leaflet.Circle.toPolygon/master/lib/leaflet.circle.topolygon-min.js-->
 		<script src="js/lib/jquery-ui.js"></script> <!-- calendar -->
+		<script src="js/lib/leaflet.markercluster.layersupport.js"></script> <!--v1.0.3-->
 		<!--VARIABLES GLOBALES-->
 		<script type="text/javascript">
 			var circle = new Array(); // warning zones
@@ -182,18 +206,33 @@
 			var string_circles = "Circles"; // notify
 			var string_boxes = "Boxes"; // notify
 			var string_polygons = "Polygons"; // notify
-			var url = 'https://172.31.56.223/api/server.php'; // url vers l API
+			var url = 'http://172.31.57.114/php/server.php'; // url vers l API
     		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     		var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     		var Attrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' + '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imagery © <a href="http://mapbox.com">Mapbox</a>'
 			var url_tiles_Angola = 'http://151.80.44.195/MKAngola/styles/{id}/rendered/{z}/{x}/{y}.png';
 			var url_tiles_Nigeria = 'http://151.80.44.195/MKNigeria/styles/{id}/rendered/{z}/{x}/{y}.png';
 			var liste_url = {"Angola":url_tiles_Angola,"Nigeria":url_tiles_Nigeria}; // liste des url
-			var osm; // couche des tuiles
-			var current_country; // pays choisi
+			var id_tiles = "osm-bright";
+			var current_country = "Angola"; // pays choisi
 			var warning_zones = new Array(); // liste des warning zones
-			var layer_group_warning_zones; // L.layerGroup
+			var layer_group_warning_zones = new L.layerGroup(); // L.layerGroup
+            var POI = new L.markerClusterGroup.layerSupport(); // markerclusterlayersupport for POI
 			var overlayMaps = new Array(); // composant de la couche
+			var baseMaps = {
+			    "osm-bright": L.tileLayer(liste_url[current_country], {
+			        minZoom: 1,
+			        maxZoom: 18,
+			        attribution: Attrib,
+			        id: "osm-bright"
+			    }),
+			    "klokantech-basic": L.tileLayer(liste_url[current_country], {
+			        minZoom: 1,
+			        maxZoom: 18,
+			        attribution: Attrib,
+			        id: "klokantech-basic"
+			    })
+			}; // composant de la couche
 			var Lcontrollayers; // couche de la map
 			var legend; // legende d intensite des warning zones
 			var types_warning_zones = new Array(); // types a recevoir
@@ -203,7 +242,7 @@
 			var string_risk_type = "risk_type"; // parametre
 			var string_anomaly_type = "anomaly_type"; // parametre
 			var bbox; // bounding box de la map
-			var DEBUG = true; // console.log
+			var DEBUG = false; // console.log
 			var zoom = 12; // set view
 			var geojson = new Object(); // a envoyer
 			var json_countries = new Array(); // a recuperer
@@ -215,12 +254,15 @@
 			var position;
 			var spanstart; //Span delete start point
 			var spanend; //Span delete end point
+			var latlngmark;
+			var checkbox_Warning_zones = false;
+			var checkbox_POI = false;
 		</script>
 		<script src="js/leaflet-routing-machine.js"></script>
 		<script src="js/Control.Geocoder.js"></script>
 		<script src="js/Control.OSMGeocoder.js"></script>
 		<script src="js/template.js"></script>
-		<script src="js/set_the_route.js"></script>
+		<script src="js/Itinerary.js"></script>
 		<script src="js/menu_user.js"></script>
 		<script src="js/menu.js"></script>
 		<script>
@@ -239,9 +281,24 @@
 			            console.log("dragend zoom :", map.getZoom())
 			        }
 			        if (map.getZoom() > zoom) {
-			            bbox = map.getBounds().toBBoxString();
-			            add_warning_zones(url, bbox);
+				        if (DEBUG) {
+					        console.log("EVENT : $('#map').ready checkbox_Warning_zones :",checkbox_Warning_zones);
+					    }
+			            remove_warning_zones();
+			            if (checkbox_Warning_zones) {
+			                bbox = map.getBounds().toBBoxString();
+			                add_warning_zones(url, bbox);
+			            }
+				        if (DEBUG) {
+					        console.log("EVENT : $('#map').ready checkbox_POI :",checkbox_POI);
+					    }
+			            remove_POI();
+			            if (checkbox_POI) {
+			                bbox = map.getBounds().toBBoxString();
+    						ajax_POI(url, bbox);
+			            }
 			        } else {
+			            remove_POI();
 			            remove_warning_zones();
 			        }
 			    });
@@ -253,9 +310,24 @@
 			            console.log("zoomend zoom :", map.getZoom())
 			        }
 			        if (map.getZoom() > zoom) {
-			            bbox = map.getBounds().toBBoxString();
-			            add_warning_zones(url, bbox);
+				        if (DEBUG) {
+					        console.log("EVENT : $('#map').ready checkbox_Warning_zones :",checkbox_Warning_zones);
+					    }
+			            remove_warning_zones();
+			            if (checkbox_Warning_zones) {
+			                bbox = map.getBounds().toBBoxString();
+			                add_warning_zones(url, bbox);
+			            }
+				        if (DEBUG) {
+					        console.log("EVENT : $('#map').ready checkbox_POI :",checkbox_POI);
+					    }
+			            remove_POI();
+			            if (checkbox_POI) {
+			                bbox = map.getBounds().toBBoxString();
+    						ajax_POI(url, bbox);
+			            }
 			        } else {
+			            remove_POI();
 			            remove_warning_zones();
 			        }
 			    });

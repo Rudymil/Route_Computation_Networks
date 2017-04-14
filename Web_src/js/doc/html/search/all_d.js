@@ -1,13 +1,12 @@
 var searchData=
 [
-  ['l',['l',['../jquery_8min_8js.html#ae5e71a2600e8891c54854be157cc6626',1,'l():&#160;jquery.min.js'],['../_control_8_geocoder_8js.html#a38ee4c0b5f4fe2a18d0c783af540d253',1,'L():&#160;Control.Geocoder.js']]],
-  ['leaflet_2drouting_2dmachine_2ejs',['leaflet-routing-machine.js',['../leaflet-routing-machine_8js.html',1,'']]],
-  ['leaflet_2ecircle_2etopolygon_2dmin_2ejs',['leaflet.circle.topolygon-min.js',['../leaflet_8circle_8topolygon-min_8js.html',1,'']]],
-  ['leaflet_2edraw_2ejs',['leaflet.draw.js',['../leaflet_8draw_8js.html',1,'']]],
-  ['leaflet_2ejs',['leaflet.js',['../leaflet_8js.html',1,'']]],
-  ['leaflet_2emarkercluster_2ejs',['leaflet.markercluster.js',['../leaflet_8markercluster_8js.html',1,'']]],
-  ['leditablelayers',['leditableLayers',['../report__an__anomaly_8js.html#ae5afadf08d1e029e55e312f8cceddf54',1,'report_an_anomaly.js']]],
-  ['left',['Left',['../jquery-1_810_82_8js.html#abef68bf244a1159a49fe3a2c153a65d2',1,'jquery-1.10.2.js']]],
-  ['list_2emin_2ejs',['list.min.js',['../list_8min_8js.html',1,'']]],
-  ['load',['load',['../jquery-1_810_82_8js.html#a8d0b9ec82c308161432f1c387d2fc2a7',1,'jquery-1.10.2.js']]]
+  ['m',['m',['../jquery_8min_8js.html#a9e77e016b2928d7dcb493b89a0c9dc32',1,'jquery.min.js']]],
+  ['makeicon',['makeIcon',['../set__the__route_8js.html#ac73ac967e6ad265ce11b98616fc02459',1,'set_the_route.js']]],
+  ['map',['map',['../template_8js.html#a9ec9dda576db2a36c42c1c3af155d07c',1,'template.js']]],
+  ['mapbox',['Mapbox',['../_control_8_geocoder_8js.html#a777c43770020161a14aeb6d3d7c7a3eb',1,'Mapbox():&#160;Control.Geocoder.js'],['../_control_8_geocoder_8js.html#abee96ae5072658c6ea23644a5fc3b854',1,'mapbox():&#160;Control.Geocoder.js']]],
+  ['mapquest',['MapQuest',['../_control_8_geocoder_8js.html#aaba536a116ea78395ce88b627a3d2bfc',1,'MapQuest():&#160;Control.Geocoder.js'],['../_control_8_geocoder_8js.html#aeefee5cb6f559737102d7d578dfa236e',1,'mapQuest():&#160;Control.Geocoder.js']]],
+  ['menu_2ejs',['menu.js',['../menu_8js.html',1,'']]],
+  ['menu_5feditor_2ejs',['menu_editor.js',['../menu__editor_8js.html',1,'']]],
+  ['menu_5fuser_2ejs',['menu_user.js',['../menu__user_8js.html',1,'']]],
+  ['museumsearch',['museumSearch',['../template_8js.html#ac5b993925c9303f814c6a58d965825aa',1,'template.js']]]
 ];

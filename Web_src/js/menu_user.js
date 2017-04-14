@@ -2,6 +2,9 @@
  * Notify using Bootstrap Notify that the area targeted or viewed not contains "warning zones".
  */
 function notify_warning_zones_none() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_warning_zones_none");
+    }
     $.notify({
         title: "<strong>Warning zones request</strong>",
         message: "none"
@@ -14,47 +17,36 @@ function notify_warning_zones_none() {
     });
 }
 
-
 /**
- * Removed from the map all "warning zones" displayed.
- */
-function remove_warning_zones() {
-    for (element in warning_zones) { // pour chaque warning zones
-        if (DEBUG) {
-            console.log("element :", element);
-            console.log("warning_zones[element] :", warning_zones[element]);
-        }
-        warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
-    }
-    warning_zones = new Array(); // on vide les warning zones
-    delete overlayMaps["Warning zones"];
-    if (Lcontrollayers != undefined || Lcontrollayers != null) {
-        Lcontrollayers.remove();
-    }
-    if (legend != undefined || legend != null) {
-        legend.remove();
-    }
-    //Lcontrollayers = L.control.layers(null,overlayMaps).addTo(map); // ne pas oublier le null
-}
-
-
-/**
- * Build the html content for the layers extracted from the database.
+ * builds html popup content for layers extracted from the database.
  * @return {string} - Of informations about the layer in hmtl form.
  */
 function getPopupContentmenu(couche) {
+    if (DEBUG) {
+        console.log("FUNCTION : getPopupContentmenu");
+    }
+    var type = undefined;
+    for (element in types_warning_zones) {
+        if (couche.properties.risk_type == types_warning_zones[element]["id"]) {
+            type = types_warning_zones[element]["name"];
+        }
+    }
     var html = '<table>\
         <tr>\
-            <td>Description: </td>\
+            <td>Risk type : </td>\
+            <td>' + type + '</td>\
+        </tr>\
+        <tr>\
+            <td>Description : </td>\
             <td>' + couche.properties.description + '</td>\
         </tr>\
         <tr>\
-            <td>ID: </td>\
-            <td>' + couche.properties.id + '</td>\
+            <td>Intensity : </td>\
+            <td>' + couche.properties.intensity + '</td>\
         </tr>\
         <tr>\
-            <td>Intensity: </td>\
-            <td>' + couche.properties.intensity + '</td>\
+            <td>Expiration date : </td>\
+            <td>' + couche.properties.expiration_date + '</td>\
         </tr>\
     </table>'
     return html;
@@ -109,16 +101,6 @@ function add_warning_zones(url, bbox) {
                     if (DEBUG) {
                         console.log("add_warning_zones json :", json);
                     }
-                    if (warning_zones.length > 0) {
-                        for (element in warning_zones) { // pour chaque warning zones
-                            if (DEBUG) {
-                                console.log("element :", element);
-                                console.log("warning_zones[element] :", warning_zones[element]);
-                            }
-                            warning_zones[element].removeFrom(map); // on enleve les warning zones de la map
-                        }
-                    }
-                    warning_zones = new Array(); // on vide les warning zones
                     if (json["features"].length > 0) {
                         for (element in json["features"]) { // pour chaque object du geojson
                             if (DEBUG) {
@@ -133,17 +115,20 @@ function add_warning_zones(url, bbox) {
                                 color: colorZone
                             });
                             shape.bindPopup(getPopupContentmenu(json["features"][element]));
-                            shape.addTo(map); // ajout a la map
                             warning_zones.push(shape); // remplir la warning zone
                         }
+                        if (DEBUG) {
+                            console.log("add_warning_zones layer_group_warning_zones :", layer_group_warning_zones);
+                        }
                         layer_group_warning_zones = L.layerGroup(warning_zones); // groupe des couches warning zones
+                        map.addLayer(layer_group_warning_zones);
                         overlayMaps["Warning zones"] = layer_group_warning_zones; // menu
                         if (Lcontrollayers != undefined || Lcontrollayers != null) {
                             Lcontrollayers.remove();
                         }
-                        Lcontrollayers = L.control.layers(null, overlayMaps, {
+                        Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
                             position: 'topleft'
-                        }).addTo(map); // ne pas oublier le null
+                        }).addTo(map);
                         if (legend != undefined || legend != null) {
                             legend.remove();
                         }
@@ -177,3 +162,95 @@ function add_warning_zones(url, bbox) {
         }
     });
 }
+
+/**
+ * Build the html content for the layers extracted from the database.
+ * @return {string} - Of informations about the layer in hmtl form.
+ */
+function getPopupContentmenuPOI(couche) {
+    if (DEBUG) {
+        console.log("FUNCTION : getPopupContentmenuPOI");
+    }
+    var html = '<table>\
+    	<tr>\
+            <td>Name : </td>\
+            <td>' + couche.properties.name + '</td>\
+        </tr>\
+        <tr>\
+            <td>Type : </td>\
+            <td>' + couche.properties.type + '</td>\
+        </tr>\
+    </table>'
+    return html;
+}
+
+/**
+ * Removed from the map all "warning zones" displayed.
+ */
+function remove_warning_zones() {
+    if (DEBUG) {
+        console.log("FUNCTION : remove_warning_zones");
+    }
+    map.removeLayer(layer_group_warning_zones);
+    warning_zones = new Array(); // on vide les warning zones
+    delete overlayMaps["Warning zones"];
+    if (Lcontrollayers != undefined || Lcontrollayers != null) {
+        Lcontrollayers.remove();
+    }
+    if (legend != undefined || legend != null) {
+        legend.remove();
+    }
+    Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
+        position: 'topleft'
+    }).addTo(map);
+}
+
+/*
+ * Execute when Warning zones is changed
+ */
+$('#Warning_zones').change(function() {
+    if (DEBUG) {
+        console.log("EVENT : $('#Warning_zones').change")
+    }
+    if ($('#Warning_zones').is(':checked')) {
+        checkbox_Warning_zones = true;
+        if (DEBUG) {
+            console.log("$('#Warning_zones').change checkbox_Warning_zones :", checkbox_Warning_zones);
+        }
+        if (map.getZoom() > zoom) {
+            bbox = map.getBounds().toBBoxString();
+            add_warning_zones(url, bbox);
+        }
+    } else {
+        checkbox_Warning_zones = false;
+        if (DEBUG) {
+            console.log("$('#Warning_zones').change checkbox_Warning_zones :", checkbox_Warning_zones);
+        }
+        remove_warning_zones();
+    }
+});
+
+/*
+ * Execute when POI is changed
+ */
+$('#POI').change(function() {
+    if (DEBUG) {
+        console.log("EVENT : $('#POI').change")
+    }
+    if ($('#POI').is(':checked')) {
+        checkbox_POI = true;
+        if (DEBUG) {
+            console.log("$('#POI').change checkbox_POI :", checkbox_POI);
+        }
+        if (map.getZoom() > zoom) {
+            bbox = map.getBounds().toBBoxString();
+            ajax_POI(url, bbox);
+        }
+    } else {
+        checkbox_POI = false;
+        if (DEBUG) {
+            console.log("$('#POI').change checkbox_POI :", checkbox_POI);
+        }
+        remove_POI();
+    }
+});
