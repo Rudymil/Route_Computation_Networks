@@ -79,7 +79,7 @@ elseif (isset($_GET["type"]) && $_GET["type"] == "poi") {
     $bBox = explode(",", $_GET["bbox"]); //southWest lng/lat / northEast lng/lat
     $filterSQL .= " AND ST_Contains(ST_SetSRID(ST_MakeBox2D(ST_Point($bBox[0], $bBox[1]), ST_Point($bBox[2], $bBox[3])),4326), poi.geom)";
   }
-  $types_list = "SELECT poi.id, ST_asGeoJSON(poi.geom) AS geojson, poi.name, t.name AS type FROM poi, poi_type t WHERE poi.poi_type_id = t.id $filterSQL ORDER BY t.name, poi.name;";
+  $types_list = "SELECT poi.id, ST_asGeoJSON(poi.geom) AS geojson, poi.name, t.name AS type, t.category FROM poi, poi_type t WHERE poi.poi_type_id = t.id $filterSQL ORDER BY t.name, poi.name;";
   print(selectGeoJSONQuery($types_list));
 }
 
