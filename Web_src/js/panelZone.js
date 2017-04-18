@@ -15,10 +15,9 @@ $(document).ready(function() {
     $(".leaflet-routing-geocoders ").after("<div id='anomaly_zone_info' class='zone_info pull-right'></div>");
     $(".radio_button").change(function(e) {
         if ($("#anomaly").is(":checked")) {
-          triggerParser("#anomaly", "#anomaly_zone_info", "#warning_zone_info", "#Anomaly_zones", anomaly_zones, "<p>No anomaly zones</p>", printInfoAnomalyZone);
+            triggerParser("#anomaly", "#anomaly_zone_info", "#warning_zone_info", "#Anomaly_zones", anomaly_zones, "<p>No anomaly zones</p>", printInfoAnomalyZone);
         } else if ($("#warning").is(":checked")) {
-          console.log(warning_nonchecked);
-          triggerParser("#warning", "#warning_zone_info", "#anomaly_zone_info", "#Warning_zones", warning_nonchecked, "<p>No warning zone to validate.</p>", printInfoWarningZone);
+            triggerParser("#warning", "#warning_zone_info", "#anomaly_zone_info", "#Warning_zones", warning_nonchecked, "<p>No warning zone to validate.</p>", printInfoWarningZone);
         } else {
             clearZoneInfo("#anomaly_zone_info");
             clearZoneInfo("#warning_zone_info");
@@ -28,36 +27,33 @@ $(document).ready(function() {
 });
 
 
-function triggerParser(tagRadioButton, tagInfoZone, tagInfoZoneToRemove, layerRadioButton, zonesArray, outputIfZoneArrayEmpty, callbackPrinter){
-  zone_ui_activation(tagRadioButton, layerRadioButton);
-  // Wait for ajax request fills zone object
-  setTimeout(function(){
-    zone_ui_deactivation(tagInfoZone, tagInfoZoneToRemove);
-    console.log(zonesArray);
-    parseZones(zonesArray, tagInfoZone, outputIfZoneArrayEmpty, callbackPrinter);
-  }, 2000);
+function triggerParser(tagRadioButton, tagInfoZone, tagInfoZoneToRemove, layerRadioButton, zonesArray, outputIfZoneArrayEmpty, callbackPrinter) {
+    zone_ui_activation(tagRadioButton, layerRadioButton);
+    // Wait for ajax request fills zone object
+    setTimeout(function() {
+        zone_ui_deactivation(tagInfoZone, tagInfoZoneToRemove);
+        parseZones(zonesArray, tagInfoZone, outputIfZoneArrayEmpty, callbackPrinter);
+    }, 2000);
 }
 
 
-function zone_ui_activation(tagRadioButton, layerRadioButton){
-  $("#Navigate").click();
-  // $("#Navigate").prop("checked", !$("#Navigate").prop("checked"));
-  console.log('i clicked on Navigate ID');
-  if (!$(tagRadioButton).is(":checked")){
-    $(tagRadioButton).prop("checked", !$(tagRadioButton).prop("checked"));
-  }
-  if (!$(layerRadioButton).is(":checked")){
-    $(layerRadioButton).click();
-  }
-  map.spin(true);
+function zone_ui_activation(tagRadioButton, layerRadioButton) {
+    $("#Navigate").click();
+    if (!$(tagRadioButton).is(":checked")) {
+        $(tagRadioButton).prop("checked", !$(tagRadioButton).prop("checked"));
+    }
+    if (!$(layerRadioButton).is(":checked")) {
+        $(layerRadioButton).click();
+    }
+    map.spin(true);
 }
 
 
-function zone_ui_deactivation(tagInfoZone, tagInfoZoneToRemove){
-  clearZoneInfo(tagInfoZoneToRemove);
-  clearLeafletRoutingGeocoders();
-  map.spin(false);
-  $(tagInfoZone).show();
+function zone_ui_deactivation(tagInfoZone, tagInfoZoneToRemove) {
+    clearZoneInfo(tagInfoZoneToRemove);
+    clearLeafletRoutingGeocoders();
+    map.spin(false);
+    $(tagInfoZone).show();
 }
 
 
@@ -75,41 +71,41 @@ function clearZoneInfo(tagInfoZoneToRemove) {
 }
 
 
-function parseZones(zonesArray, tagInfoZone, outputIfZoneArrayEmpty, callbackPrinter){
-  var output = "";
-  if (zonesArray.length > 0) {
-      output += "<div class='panel-group'>";
-      for (var zoneIndex in zonesArray) {
-          var zone = zonesArray[zoneIndex];
-          output += callbackPrinter(zone);
-      }
-      output += "</div>";
-  } else {
-      output += outputIfZoneArrayEmpty;
-  }
-  $(tagInfoZone).html(output);
+function parseZones(zonesArray, tagInfoZone, outputIfZoneArrayEmpty, callbackPrinter) {
+    var output = "";
+    if (zonesArray.length > 0) {
+        output += "<div class='panel-group'>";
+        for (var zoneIndex in zonesArray) {
+            var zone = zonesArray[zoneIndex];
+            output += callbackPrinter(zone);
+        }
+        output += "</div>";
+    } else {
+        output += outputIfZoneArrayEmpty;
+    }
+    $(tagInfoZone).html(output);
 }
 
 
 function centering(center) {
-   map.flyTo(center, 15, {
-       duration: 0.8
-   });
+    map.flyTo(center, 15, {
+        duration: 0.8
+    });
 }
 
 function computeOnClick(object) {
-  if (object.typeZone == 'anomaly'){
-    if (!$("#Anomaly_zones").is(":checked")){
-      $("#Anomaly_zones").trigger('click');
+    if (object.typeZone == 'anomaly') {
+        if (!$("#Anomaly_zones").is(":checked")) {
+            $("#Anomaly_zones").trigger('click');
+        }
+    } else if (object.typeZone == 'warning') {
+        if (!$("#Warning_zones").is(":checked")) {
+            $("#Warning_zones").trigger('click');
+        }
     }
-  } else if (object.typeZone == 'warning') {
-    if (!$("#Warning_zones").is(":checked")){
-      $("#Warning_zones").trigger('click');
-    }
-  }
-  map.flyTo(object.center, 15, {
-    duration: 0.8
-  });
+    map.flyTo(object.center, 15, {
+        duration: 0.8
+    });
 }
 
 
@@ -123,7 +119,10 @@ function printInfoAnomalyZone(zone) {
     if (zone.hasOwnProperty("feature")) {
         if (zone.feature.hasOwnProperty("properties")) {
             output += "<div class='panel panel-primary'>";
-            output += "<div class='panel-heading panel-collapsed' onclick=computeOnClick(" + JSON.stringify({center : zone.getBounds().getCenter(), typeZone:'anomaly'}) + ")>";
+            output += "<div class='panel-heading panel-collapsed' onclick=computeOnClick(" + JSON.stringify({
+                center: zone.getBounds().getCenter(),
+                typeZone: 'anomaly'
+            }) + ")>";
             output += "<div>";
             output += "<h3 class='panel-title'>";
             output += zone.feature.properties.name;
@@ -149,15 +148,15 @@ function printInfoAnomalyZone(zone) {
     return output;
 }
 
-function addDlItem(label, data){
-  var output;
-  output += "<dt>";
-  output +=   label;
-  output += "</dt>";
-  output += "<dd>";
-  output +=   data;
-  output += "</dd>";
-  return output;
+function addDlItem(label, data) {
+    var output;
+    output += "<dt>";
+    output += label;
+    output += "</dt>";
+    output += "<dd>";
+    output += data;
+    output += "</dd>";
+    return output;
 }
 
 /**
@@ -170,7 +169,10 @@ function printInfoWarningZone(zone) {
     if (zone.hasOwnProperty("feature")) {
         if (zone.feature.hasOwnProperty("properties")) {
             output += "<div class='panel panel-primary'>";
-            output += "<div class='panel-heading panel-collapsed' onclick=computeOnClick(" + JSON.stringify({center : zone.getBounds().getCenter(), typeZone:'warning'}) + ")>";
+            output += "<div class='panel-heading panel-collapsed' onclick=computeOnClick(" + JSON.stringify({
+                center: zone.getBounds().getCenter(),
+                typeZone: 'warning'
+            }) + ")>";
             output += "<div>";
             output += "<h3 class='panel-title'>";
             output += zone.feature.properties.name;

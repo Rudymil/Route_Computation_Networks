@@ -162,8 +162,11 @@ $(".radio_button").change(function(e) {
  */
 map.on('draw:editstart', function(e) {
     console.log(e);
-    console.log(featureLayerw);
-    featureLayerw.on('dblclick', function(e) {
+    if ( featureLayerw.hasEventListeners()==true ) {
+		featureLayerw.removeEventListener();
+	}
+    
+    featureLayerw.on('click', function(e) {
         if ($("#warning").is(":checked")) {
             console.log(e);
             e.layer.closePopup();
@@ -218,7 +221,11 @@ map.on('draw:editstart', function(e) {
                         delete layerjson.properties.validation_date;
                         wzupdate.push(layerjson);
                     }
+                    featureLayerw.removeEventListener();
                 }
+                else {
+					featureLayerw.removeEventListener();
+				}
             });
         }
     });
