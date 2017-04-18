@@ -204,6 +204,7 @@ function updateGeoJSONQuery($datajson){
       if($data->zone_type == "warning_zone") {
         $risk_type = $properties->risk_type;
         $intensity = $properties->intensity;
+        if(!is_numeric($intensity) || $intensity < 0 || $intensity > 100){error(400, "Incorrect Data !");}
         $sqlRequest .= ", risk_type = " . $risk_type;
         $sqlRequest .= ", risk_intensity = " . $intensity;
         if (isset($properties->validated)) {
