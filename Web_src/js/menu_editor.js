@@ -1,5 +1,5 @@
 featureLayera = new L.FeatureGroup();
-//map.addLayer(featureLayera);
+map.addLayer(featureLayera);
 
 drawControla = new L.Control.Draw({
     edit: {
@@ -17,7 +17,7 @@ drawControla = new L.Control.Draw({
 }).addTo(map);
 
 featureLayerw = new L.FeatureGroup();
-//map.addLayer(featureLayerw);
+map.addLayer(featureLayerw);
 
 drawControlw = new L.Control.Draw({
     edit: {
