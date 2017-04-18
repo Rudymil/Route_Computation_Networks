@@ -1,14 +1,14 @@
-#warning_zone_info {
+.zone_info {
   width:100%;
 }
 
-#warning_zone_info .panel-heading{
+.zone_info .panel-heading{
   width:100%;
-  
+
   cursor: pointer;
 }
 
-#warning_zone_info .panel-heading span {
+.zone_info .panel-heading span {
 	margin-top: -20px;
 
 	font-size: 15px;
