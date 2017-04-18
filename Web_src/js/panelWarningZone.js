@@ -29,7 +29,7 @@ $(document).ready(function() {
 function clearLeafletRoutingGeocoders() {
     $(".leaflet-routing-geocoders ").hide();
     $(".warning_zone_info").html("");
-    $( ".leaflet-routing-container" ).addClass( "changedStyle" );
+    $(".leaflet-routing-container").addClass("changedStyle");
     $("#warning_zone_info").show();
 }
 
@@ -39,7 +39,7 @@ function clearLeafletRoutingGeocoders() {
  */
 function clearWarningZoneInfo() {
     $("#warning_zone_info").hide();
-    $( ".leaflet-routing-container" ).removeClass( "changedStyle" );
+    $(".leaflet-routing-container").removeClass("changedStyle");
     $(".leaflet-routing-geocoders ").show();
 }
 
@@ -93,7 +93,7 @@ function printInfoWarningZone(warning_zone) {
             output += "</h3>";
             output += "<span class='pull-right'>";
             if (warning_zone.feature.properties.expiration_date != null) {
-              output += warning_zone.feature.properties.expiration_date;
+                output += warning_zone.feature.properties.expiration_date;
             }
             output += "</span>";
             output += "</div>";

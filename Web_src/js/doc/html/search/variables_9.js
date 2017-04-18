@@ -11,6 +11,5 @@ var searchData=
   ['initialized',['initialized',['../jquery-ui_8js.html#a52a3e9da74f8a3867dc8bd19bdcb22e0',1,'jquery-ui.js']]],
   ['innerhtml',['innerHTML',['../jquery-ui_8js.html#a87f73c4f0391c1cf9fe60374a76d9a7b',1,'jquery-ui.js']]],
   ['instactive',['instActive',['../jquery-ui_8js.html#a26098e876340ad46f9eb178ff1948227',1,'jquery-ui.js']]],
-  ['intersect',['intersect',['../jquery-ui_8js.html#a6fd9407dbfc036f5f1704537266e25f4',1,'jquery-ui.js']]],
-  ['interval',['interval',['../jquery-1_810_82_8js.html#a22f2d1dcf51c862e922248df75aaa9f7',1,'jquery-1.10.2.js']]]
+  ['intersect',['intersect',['../jquery-ui_8js.html#a6fd9407dbfc036f5f1704537266e25f4',1,'jquery-ui.js']]]
 ];

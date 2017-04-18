@@ -11,7 +11,5 @@ var searchData=
   ['focusable',['focusable',['../jquery-ui_8js.html#a73c44526962043c196427080336ec057',1,'jquery-ui.js']]],
   ['for',['for',['../jquery-ui_8js.html#a928cd4ad63f094c936b4227e80c806bf',1,'jquery-ui.js']]],
   ['format',['format',['../bootstrap-notify_8min_8js.html#affb8d1146fcce1177d96e62bd80c5d89',1,'bootstrap-notify.min.js']]],
-  ['from',['from',['../jquery-ui_8js.html#ace03b192fd101a1c5648340bc09b7229',1,'jquery-ui.js']]],
-  ['fx',['fx',['../jquery-1_810_82_8js.html#afbcf56cb9545c8bc885722b4fe4253ce',1,'jquery-1.10.2.js']]],
-  ['fxnow',['fxNow',['../jquery-1_810_82_8js.html#a008b3271e2f410e89917bc6d96096296',1,'jquery-1.10.2.js']]]
+  ['from',['from',['../jquery-ui_8js.html#ace03b192fd101a1c5648340bc09b7229',1,'jquery-ui.js']]]
 ];

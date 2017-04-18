@@ -1,0 +1,12 @@
+<map id="addTo" name="addTo">
+<area shape="rect" id="node2" href="$leaflet_8js.html#a48cd5fa8d5fe96257811d38b0a1fb90f" title="!function" alt="" coords="157,5,229,32"/>
+<area shape="rect" id="node3" href="$menu_8js.html#a0f51a486013c504a72b7b6c93761f271" title="ajax_POI" alt="" coords="155,56,231,83"/>
+<area shape="rect" id="node5" href="$menu__user_8js.html#aeb42a284e16aebbc0c9e48b7d5347865" title="remove_POI" alt="" coords="146,107,241,133"/>
+<area shape="rect" id="node6" href="$menu__editor_8js.html#a3f3f587e3257a709b4865b0b1032838a" title="add_anomaly_zones" alt="" coords="323,183,464,209"/>
+<area shape="rect" id="node8" href="$menu__editor_8js.html#a3e1a182f3a3738be5e9bf30b96527a89" title="add_warning_zones" alt="" coords="325,284,462,311"/>
+<area shape="rect" id="node10" href="$menu__editor_8js.html#a6651401c941e10ebd15d155c334b3977" title="remove_anomaly_zones" alt="" coords="112,208,275,235"/>
+<area shape="rect" id="node11" href="$menu__editor_8js.html#a7a94f7107b0f7a0eccb843205fe64029" title="remove_warning_zones" alt="" coords="114,309,273,336"/>
+<area shape="rect" id="node4" href="$menu__editor_8js.html#a043fac797976a65e774ad37a2133a8ea" title="if" alt="" coords="374,56,413,83"/>
+<area shape="rect" id="node7" href="$menu__editor_8js.html#a62ae81d192af528259784372b4faf9cd" title="if" alt="" coords="512,183,551,209"/>
+<area shape="rect" id="node9" href="$menu__editor_8js.html#a8e0603d2f125eeaa951aa7b4de77ba97" title="if" alt="" coords="512,284,551,311"/>
+</map>

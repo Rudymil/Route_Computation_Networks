@@ -113,7 +113,9 @@ Functions</h2></td></tr>
 <tr class="separator:a08ee4a14e90168d356d098f09df227d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b4e09f6ab2b26087ece07214ccff2b6"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6">ajax_countries</a> (url)</td></tr>
 <tr class="separator:a8b4e09f6ab2b26087ece07214ccff2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8597c65429c1b0b65fa4409a1a58fb7a"><td class="memItemLeft" align="right" valign="top">body&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a8597c65429c1b0b65fa4409a1a58fb7a">ready</a> (function(){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(DEBUG){console.log(&quot;EVENT : $('body').ready&quot;);}ajax_types(url, string_risk_type);<a class="el" href="menu_8js.html#a08ee4a14e90168d356d098f09df227d1">ajax_types</a>(url, string_anomaly_type);<a class="el" href="menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6">ajax_countries</a>(url);})</td></tr>
+<tr class="memitem:a0f51a486013c504a72b7b6c93761f271"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a0f51a486013c504a72b7b6c93761f271">ajax_POI</a> (url, bbox)</td></tr>
+<tr class="separator:a0f51a486013c504a72b7b6c93761f271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8597c65429c1b0b65fa4409a1a58fb7a"><td class="memItemLeft" align="right" valign="top">body&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a8597c65429c1b0b65fa4409a1a58fb7a">ready</a> (function(){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(DEBUG){console.log(&quot;EVENT : $('body').ready&quot;);}ajax_types(url, string_risk_type);<a class="el" href="menu_8js.html#a08ee4a14e90168d356d098f09df227d1">ajax_types</a>(url, string_anomaly_type);<a class="el" href="menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6">ajax_countries</a>(url);})</td></tr>
 <tr class="separator:a8597c65429c1b0b65fa4409a1a58fb7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c79493974b05df5eab192d1cfa681f0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a7c79493974b05df5eab192d1cfa681f0">notify_shape_empty</a> (element)</td></tr>
 <tr class="separator:a7c79493974b05df5eab192d1cfa681f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,12 +147,14 @@ Functions</h2></td></tr>
 <tr class="separator:a4e01a9802afd340196771eaadba4360f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d7713fb6116f63c96376f26635ac25d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a1d7713fb6116f63c96376f26635ac25d">notify_nb_add</a> (nb_add, <a class="el" href="menu__editor_8js.html#ae4bc3ed492fb805f4c89ffdff4f0a1fd">nb_sent</a>)</td></tr>
 <tr class="separator:a1d7713fb6116f63c96376f26635ac25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fcb0db3ae80ef6b24ce5faa3631dd35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="report__a__warning__zone_8js.html#a2751911434f8181e0e7c766f9bc584f1">editableLayers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a8fcb0db3ae80ef6b24ce5faa3631dd35">eachLayer</a> (function(layer){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(layer instanceof L.Circle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosc.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(<a class="el" href="report__a__warning__zone_8js.html#a2cf48aed8f292501c80046731f9f03d3">infosc</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp={&quot;type&quot;:&quot;Feature&quot;,&quot;properties&quot;:{&quot;risk_type&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]},&quot;geometry&quot;:{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[geojsoncircle(layer.toPolygon())]}};circle.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(layer instanceof L.Rectangle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosb.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ad8faaafeff3990a21ba3695de86f84ed">infosb</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};box.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(layer instanceof L.Polygon){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosp.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ab553689d277e11b508814c0315cf6eb2">infosp</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};polygon.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}})</td></tr>
+<tr class="memitem:a8fcb0db3ae80ef6b24ce5faa3631dd35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="report__a__warning__zone_8js.html#a2751911434f8181e0e7c766f9bc584f1">editableLayers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a8fcb0db3ae80ef6b24ce5faa3631dd35">eachLayer</a> (function(layer){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(layer instanceof L.Circle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosc.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(<a class="el" href="report__a__warning__zone_8js.html#a2cf48aed8f292501c80046731f9f03d3">infosc</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp={&quot;type&quot;:&quot;Feature&quot;,&quot;properties&quot;:{&quot;risk_type&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]},&quot;geometry&quot;:{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[geojsoncircle(layer.toPolygon())]}};circle.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(layer instanceof L.Rectangle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosb.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ad8faaafeff3990a21ba3695de86f84ed">infosb</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};box.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(layer instanceof L.Polygon){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosp.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ab553689d277e11b508814c0315cf6eb2">infosp</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};polygon.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}})</td></tr>
 <tr class="separator:a8fcb0db3ae80ef6b24ce5faa3631dd35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6efad01f39c8299b206ff474db1a1a9e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a> (DEBUG)</td></tr>
 <tr class="separator:a6efad01f39c8299b206ff474db1a1a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73636ff5801d8bc3d1c7dc65d2594829"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#a73636ff5801d8bc3d1c7dc65d2594829">send_ajax_point</a> (point)</td></tr>
 <tr class="separator:a73636ff5801d8bc3d1c7dc65d2594829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0e8ee17785ee7d1827335cfd8e4977b"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8js.html#ab0e8ee17785ee7d1827335cfd8e4977b">remove_POI</a> ()</td></tr>
+<tr class="separator:ab0e8ee17785ee7d1827335cfd8e4977b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -177,6 +181,57 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a0f51a486013c504a72b7b6c93761f271"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ajax_POI </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>bbox</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Ajax request asking all the POI contained by the BD. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>url - Url to the Web API. </td></tr>
+    <tr><td class="paramname">{string}</td><td>bbox - Bounding box of the map. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="menu_8js_a0f51a486013c504a72b7b6c93761f271_cgraph.png" border="0" usemap="#menu_8js_a0f51a486013c504a72b7b6c93761f271_cgraph" alt=""/></div>
+<map name="menu_8js_a0f51a486013c504a72b7b6c93761f271_cgraph" id="menu_8js_a0f51a486013c504a72b7b6c93761f271_cgraph">
+<area shape="rect" id="node2" href="menu__editor_8js.html#aa535a352e83c00d4a2a4af1642f518f0" title="getPopupContentmenuPOI" alt="" coords="129,5,308,32"/><area shape="rect" id="node3" href="_itinerary_8js.html#afe83f1d3c6dc3e21f0c00835dd9ee003" title="addTo" alt="" coords="189,56,248,83"/></map>
+</div>
+</p>
+
+<p><div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="menu_8js_a0f51a486013c504a72b7b6c93761f271_icgraph.png" border="0" usemap="#menu_8js_a0f51a486013c504a72b7b6c93761f271_icgraph" alt=""/></div>
+<map name="menu_8js_a0f51a486013c504a72b7b6c93761f271_icgraph" id="menu_8js_a0f51a486013c504a72b7b6c93761f271_icgraph">
+<area shape="rect" id="node2" href="menu__editor_8js.html#a043fac797976a65e774ad37a2133a8ea" title="if" alt="" coords="129,5,168,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
@@ -220,7 +275,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="report__an__anomaly_8js.html#ae5afadf08d1e029e55e312f8cceddf54">leditableLayers</a> eachLayer </td>
           <td>(</td>
-          <td class="paramtype">function(layer){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(layer instanceof L.Circle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosc.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(<a class="el" href="report__a__warning__zone_8js.html#a2cf48aed8f292501c80046731f9f03d3">infosc</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp={&quot;type&quot;:&quot;Feature&quot;,&quot;properties&quot;:{&quot;risk_type&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]},&quot;geometry&quot;:{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[geojsoncircle(layer.toPolygon())]}};circle.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(layer instanceof L.Rectangle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosb.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ad8faaafeff3990a21ba3695de86f84ed">infosb</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};box.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(layer instanceof L.Polygon){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosp.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ab553689d277e11b508814c0315cf6eb2">infosp</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};polygon.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}}&#160;</td>
+          <td class="paramtype">function(layer){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(layer instanceof L.Circle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosc.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(<a class="el" href="report__a__warning__zone_8js.html#a2cf48aed8f292501c80046731f9f03d3">infosc</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp={&quot;type&quot;:&quot;Feature&quot;,&quot;properties&quot;:{&quot;risk_type&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosc[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]},&quot;geometry&quot;:{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[geojsoncircle(layer.toPolygon())]}};circle.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(layer instanceof L.Rectangle){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosb.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ad8faaafeff3990a21ba3695de86f84ed">infosb</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosb[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};box.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(layer instanceof L.Polygon){var <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>=infosp.length;var <a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>=0;while(<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>&lt; <a class="el" href="jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8">n</a>){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(<a class="el" href="report__a__warning__zone_8js.html#ab553689d277e11b508814c0315cf6eb2">infosp</a>[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][2]==layer._leaflet_id){var temp=layer.toGeoJSON();temp.properties={&quot;risk_type&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][1],&quot;description&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][0],&quot;expiration_date&quot;:infosp[<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>][3]};polygon.push(temp);}<a class="el" href="jquery_8min_8js.html#a5e25b1d1bed9ab5f3174b76d6a722180">i</a>++;}}}&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -327,7 +382,7 @@ Here is the call graph for this function:</div>
           <td class="memname">if </td>
           <td>(</td>
           <td class="paramtype">&quot;undefined&quot;&#160;</td>
-          <td class="paramname"> = <code>=typeof&#160;<a class="el" href="jquery-1_810_82_8js.html#a5e01048fbd3a30b44e8d491d8945c457">jQuery</a></code></td><td>)</td>
+          <td class="paramname"> = <code>=typeof&#160;<a class="el" href="typeahead_8bundle_8min_8js.html#add5237586d970a38a81f990e8eb28c6c">jQuery</a></code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -609,13 +664,38 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">body ready </td>
           <td>(</td>
-          <td class="paramtype">function(){<a class="el" href="menu__editor_8js.html#a6efad01f39c8299b206ff474db1a1a9e">if</a>(DEBUG){console.log(&quot;EVENT : $('body').ready&quot;);}ajax_types(url, string_risk_type);<a class="el" href="menu_8js.html#a08ee4a14e90168d356d098f09df227d1">ajax_types</a>(url, string_anomaly_type);<a class="el" href="menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6">ajax_countries</a>(url);}&#160;</td>
+          <td class="paramtype">function(){<a class="el" href="menu__user_8js.html#a043fac797976a65e774ad37a2133a8ea">if</a>(DEBUG){console.log(&quot;EVENT : $('body').ready&quot;);}ajax_types(url, string_risk_type);<a class="el" href="menu_8js.html#a08ee4a14e90168d356d098f09df227d1">ajax_types</a>(url, string_anomaly_type);<a class="el" href="menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6">ajax_countries</a>(url);}&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Executed when the body DOM is ready. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab0e8ee17785ee7d1827335cfd8e4977b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function remove_POI </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Removed from the map all "warning zones" displayed. </p>
+
+<p><div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="menu_8js_ab0e8ee17785ee7d1827335cfd8e4977b_cgraph.png" border="0" usemap="#menu_8js_ab0e8ee17785ee7d1827335cfd8e4977b_cgraph" alt=""/></div>
+<map name="menu_8js_ab0e8ee17785ee7d1827335cfd8e4977b_cgraph" id="menu_8js_ab0e8ee17785ee7d1827335cfd8e4977b_cgraph">
+<area shape="rect" id="node2" href="_itinerary_8js.html#afe83f1d3c6dc3e21f0c00835dd9ee003" title="addTo" alt="" coords="148,5,207,32"/></map>
+</div>
+</p>
 
 </div>
 </div>

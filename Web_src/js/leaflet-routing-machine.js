@@ -5113,13 +5113,23 @@
                                 }
                             }, this)
                             .on('geocoded', function(e) {
-                                this._updateMarkers();
+                                latlngmark = [this._waypoints[i].latLng.lat, this._waypoints[i].latLng.lng, pos(i, controlPenalty.getWaypoints().length)];
+                                position = this._waypoints[i].latLng;
+                                send_ajax_point(latlngmark);
+
+                                // this._updateMarkers();
                                 this._fireChanged();
                                 this._focusGeocoder(i + 1);
                                 this.fire('waypointgeocoded', {
                                     waypointIndex: i,
                                     waypoint: e.waypoint
                                 });
+                                this.spliceWaypoints(i, 1, new Waypoint());
+                                spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
+                                spanstart.addClass("start");
+                                spanend = $(".leaflet-routing-geocoder").last().find("span");
+                                spanend.addClass("end");
+
                             }, this)
                             .on('reversegeocoded', function(e) {
                                 this.fire('waypointgeocoded', {

@@ -1,12 +1,12 @@
 /**
- * hmtlcwe
- * @param  {string} description
- * @param  {string} name
- * @param  {int} intensity
- * @param  {date} validationDate
- * @param  {date} expirationDate
- * @param  {int} id
- * @return {html}
+ * hmtlcwe builds html popup content  for layers
+ * @param  {string} description - from geojson layer
+ * @param  {string} name - from geojson layer
+ * @param  {int} intensity - from geojson layer
+ * @param  {date} validationDate - from geojson layer
+ * @param  {date} expirationDate - from geojson layer
+ * @param  {int} id - from geojson layer
+ * @return {html} string1 + options + string2 + string3 + string4 - html text
  */
 function hmtlcwe(description, name, intensity, validationDate, expirationDate, id) {
     var nw = types_warning_zones.length;
@@ -22,21 +22,31 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 				<div class='form-group'>\
   				<label for='usr'>Intensity :</label>\
   				<input type='number' step='5' min='0' max='100' class='form-control' id='intensity' value='" + intensity + "'>\
-				</div>\
-				<div class='form-group'>\
+				</div>";
+    if (expirationDate == null) {
+        var string2bis = "<div class='form-group'>\
+  				<label for='usr'>Expiration date :</label>\
+  				<input type='text' id='datee' value=false >\
+				</div>"
+    } else {
+        var string2bis = "<div class='form-group'>\
   				<label for='usr'>Expiration date :</label>\
   				<input type='text' id='datee' value='" + expirationDate + "'>\
 				</div>";
+    }
     if (isNaN(validationDate)) {
         var string3 = "<div class='form-group'>\
-						<label for='text'>Validation date :</label>\
+						<label for='text'>Validation :</label>\
 						<input type='text' id='datev' value=" + validationDate + " readonly>\
 					</div>";
     } else {
-        var string3 = " <div class='form-group'>\
-						<label for='usr'>Expiration date :</label>\
-						<input type='text' id='datev' value='" + validationDate + "' readonly>\
-					</select>";
+        var string3 = "<div class='form-group'>\
+						<label for='usr'>Validation :</label>\
+						<select class='form-control' id='datev'>\
+								<option value=true >true</option>\
+								<option value=false selected>false</option>\
+						</select>\
+					</div>";
     }
     var string4 = "</div>\
 				<script>\
@@ -44,10 +54,6 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 					if ( $('#ui-datepicker-div').length ) {\
 						$('#ui-datepicker-div').remove();\
 					}\
-					$( '#datev' ).datepicker({inline: true,\
-							showOtherMonths: true,\
-							dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
-							dateFormat: 'yy-mm-dd'});\
 					$( '#datee' ).datepicker({inline: true,\
 							showOtherMonths: true,\
 							dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
@@ -67,18 +73,28 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
             options = options + "<option value=" + types_warning_zones[i].id + " >" + types_warning_zones[i].name + "</option>";
         }
     }
-    return string1 + options + string2 + string3 + string4;
+    return string1 + options + string2 + string2bis + string3 + string4;
 }
-
+/**
+ * event listener on radio button, we have two case 
+ * -warning is checked, we add toolbar for editing and removing layers
+ * -anomaly is checked, we add toolbar for removing only
+ * -otherwise we remove all toolbars 
+ */
 $(".radio_button").change(function(e) {
-    if (drawControla != null) {
-        map.removeControl(drawControla);
-    }
-    if (drawControlw != null) {
-        map.removeControl(drawControlw);
-    }
-    // WARNING
     if ($("#warning").is(":checked")) {
+
+
+        //map.removeLayer(layer_group_warning_zones);
+        //map.removeLayer(layer_group_anomaly_zones);
+        //map.removeLayer(layer_group_warning_nonchecked);
+
+        if (drawControla != null) {
+            map.removeControl(drawControla);
+        }
+        if (drawControlw != null) {
+            map.removeControl(drawControlw);
+        }
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
@@ -96,8 +112,21 @@ $(".radio_button").change(function(e) {
                 marker: false
             }
         }).addTo(map);
-        // ANOMALY
+
     } else if ($("#anomaly").is(":checked")) {
+
+
+
+        //map.removeLayer(layer_group_warning_zones);
+        //map.removeLayer(layer_group_anomaly_zones);
+        //map.removeLayer(layer_group_warning_nonchecked);
+
+        if (drawControla != null) {
+            map.removeControl(drawControla);
+        }
+        if (drawControlw != null) {
+            map.removeControl(drawControlw);
+        }
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
@@ -115,12 +144,26 @@ $(".radio_button").change(function(e) {
                 marker: false
             }
         }).addTo(map);
+
+    } else {
+
+        if (drawControla != null) {
+            map.removeControl(drawControla);
+        }
+        if (drawControlw != null) {
+            map.removeControl(drawControlw);
+        }
     }
 });
-
+/**
+ * event listener when we start editing layer.
+ * When event is fired, we propose to edit the informations of a layer by editing
+ * a form.
+ */
 map.on('draw:editstart', function(e) {
     console.log(e);
-    featureLayerw.on('click', function(e) {
+    console.log(featureLayerw);
+    featureLayerw.on('dblclick', function(e) {
         if ($("#warning").is(":checked")) {
             console.log(e);
             e.layer.closePopup();
@@ -131,6 +174,7 @@ map.on('draw:editstart', function(e) {
                 layerjson.properties.intensity, layerjson.properties.validation_date,
                 layerjson.properties.expiration_date, layerjson.properties.risk_type), function(result) {
                 if (result) {
+                    //console.log("inside");
                     var des = $('#description').val();
                     var risk = $('#risk').val();
                     var dae = $('#datee').val();
@@ -138,28 +182,27 @@ map.on('draw:editstart', function(e) {
                     var name = $('#name').val();
                     var inte = $('#intensity').val();
 
+                    if (dav == "true") {
+                        dav = true;
+                        console.log(dav);
+                    } else if (dav == "false") {
+                        dav = false;
+                        console.log(dav);
+                    }
+                    if (dae = "false") {
+                        dae = false
+                    }
                     if (des == "") {
                         return false;
                     }
-                    var timestamp = Date.parse(dav)
-                    if (isNaN(timestamp)) {
-                        return false;
-                    }
-                    if (name == "") {
-                        return false;
-                    }
-                    if (isNaN(parseFloat(inte)) || !isFinite(inte) || inte < 0) {
-                        return false;
-                    }
+
                     console.log(dae + ' != ' + layerjson.properties.expiration_date);
                     console.log(layerjson.properties.description + ' != ' + des);
-                    console.log(layerjson.properties.name + ' != ' + name);
                     console.log(layerjson.properties.intensity + ' != ' + inte);
                     console.log(layerjson.properties.risk_type + ' != ' + risk);
                     console.log(layerjson.properties.validation_date + ' != ' + dav);
 
                     if (layerjson.properties.description != des ||
-                        layerjson.properties.name != name ||
                         layerjson.properties.intensity != inte ||
                         layerjson.properties.risk_type != risk ||
                         layerjson.properties.validation_date != dav ||
@@ -170,9 +213,9 @@ map.on('draw:editstart', function(e) {
                         layerjson.properties.name = name;
                         layerjson.properties.intensity = inte;
                         layerjson.properties.risk_type = risk;
-                        layerjson.properties.validation_date = dav;
+                        layerjson.properties['validated'] = dav;
                         layerjson.properties.expiration_date = dae;
-
+                        delete layerjson.properties.validation_date;
                         wzupdate.push(layerjson);
                     }
                 }
@@ -181,11 +224,15 @@ map.on('draw:editstart', function(e) {
     });
 });
 
-
+/**
+ * event listener when the editing is finished.
+ * When event is fired, we store the new layer with the new informations 
+ * in a variable, the variable will send to update 
+ * the database.
+ */
 map.on('draw:edited', function(e) {
     var type = e.layerType;
     var layers = e.layers;
-    // WARNING
     if ($("#warning").is(":checked")) {
         layers.eachLayer(function(layer) {
             var b = false;
@@ -204,16 +251,23 @@ map.on('draw:edited', function(e) {
                 wzupdate[j].geometry = temp.geometry;
             }
         });
-        // ANOMALY
     } else if ($("#anomaly").is(":checked")) {
-        layers.eachLayer(function(layer) {});
+        layers.eachLayer(function(layer) {
+            //console.log(layer);
+            //var temp = layer.toGeoJSON();
+            //console.log(JSON.stringify(temp));
+            //azupdate.push(temp);
+        });
     }
 });
-
+/**
+ * event listener when the deleting event is finished.
+ * When event is fired, we store the id of layers deleted and the variable 
+ * will be send to server in order to be removed from the database
+ */
 map.on('draw:deleted', function(e) {
     var type = e.layerType;
     var layers = e.layers;
-    // WARNING
     if ($("#warning").is(":checked")) {
         layers.eachLayer(function(layer) {
             map.removeLayer(layer);
@@ -221,7 +275,6 @@ map.on('draw:deleted', function(e) {
             console.log(JSON.stringify(temp));
             wzdelete.push(temp.properties.id);
         });
-        // ANOMALY
     } else if ($("#anomaly").is(":checked")) {
         layers.eachLayer(function(layer) {
             map.removeLayer(layer);

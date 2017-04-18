@@ -8,7 +8,5 @@ var searchData=
   ['featurelist',['featureList',['../template_8js.html#acfe5caed669f8187b2b6573551a1f097',1,'template.js']]],
   ['fn',['fn',['../jquery-ui_8js.html#a83f3b7c3c34f0779122b040056625b21',1,'fn():&#160;jquery-ui.js'],['../jquery_8min_8js.html#abf890a0227732ad023a253e8c19e0660',1,'fn():&#160;jquery.min.js']]],
   ['format',['format',['../bootstrap-notify_8min_8js.html#affb8d1146fcce1177d96e62bd80c5d89',1,'bootstrap-notify.min.js']]],
-  ['from',['from',['../jquery-ui_8js.html#ace03b192fd101a1c5648340bc09b7229',1,'jquery-ui.js']]],
-  ['fx',['fx',['../jquery-1_810_82_8js.html#afbcf56cb9545c8bc885722b4fe4253ce',1,'jquery-1.10.2.js']]],
-  ['fxnow',['fxNow',['../jquery-1_810_82_8js.html#a008b3271e2f410e89917bc6d96096296',1,'jquery-1.10.2.js']]]
+  ['from',['from',['../jquery-ui_8js.html#ace03b192fd101a1c5648340bc09b7229',1,'jquery-ui.js']]]
 ];

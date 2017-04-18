@@ -1,4 +1,6 @@
 <map id="each" name="each">
-<area shape="rect" id="node2" href="$jquery-ui_8js.html#a3c7313f2682461f50cc4df8948e129a1" title="if" alt="" coords="129,5,167,32"/>
-<area shape="rect" id="node3" href="$jquery-ui_8js.html#ab568518275b731bafcd22ba2afe7eaf1" title="stringParse" alt="" coords="104,56,192,83"/>
+<area shape="rect" id="node2" href="$bootstrap_8min_8js.html#a398bb8542498d1b14178b02b99df309b" title="b" alt="" coords="129,5,167,32"/>
+<area shape="rect" id="node3" href="$jquery-ui_8js.html#a3c7313f2682461f50cc4df8948e129a1" title="if" alt="" coords="129,56,167,83"/>
+<area shape="rect" id="node4" href="$jquery-ui_8js.html#ab568518275b731bafcd22ba2afe7eaf1" title="stringParse" alt="" coords="104,107,192,133"/>
+<area shape="rect" id="node5" href="$typeahead_8bundle_8min_8js.html#afaeef3a1a07af568051b656bbbffec25" title="!function" alt="" coords="112,157,184,184"/>
 </map>

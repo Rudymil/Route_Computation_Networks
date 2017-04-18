@@ -1,6 +1,7 @@
 var menu_8js =
 [
     [ "ajax_countries", "menu_8js.html#a8b4e09f6ab2b26087ece07214ccff2b6", null ],
+    [ "ajax_POI", "menu_8js.html#a0f51a486013c504a72b7b6c93761f271", null ],
     [ "ajax_types", "menu_8js.html#a08ee4a14e90168d356d098f09df227d1", null ],
     [ "eachLayer", "menu_8js.html#a8fcb0db3ae80ef6b24ce5faa3631dd35", null ],
     [ "fill_geojson", "menu_8js.html#a086cf485479113ccad1519a40de55f89", null ],
@@ -17,6 +18,7 @@ var menu_8js =
     [ "notify_risk_type_wrong", "menu_8js.html#a56c8216af45a64234951daa5e6710384", null ],
     [ "notify_shape_empty", "menu_8js.html#a7c79493974b05df5eab192d1cfa681f0", null ],
     [ "ready", "menu_8js.html#a8597c65429c1b0b65fa4409a1a58fb7a", null ],
+    [ "remove_POI", "menu_8js.html#ab0e8ee17785ee7d1827335cfd8e4977b", null ],
     [ "send_ajax_geojson", "menu_8js.html#ac7b1cb56a49b0e77e867984b1f02c588", null ],
     [ "send_ajax_point", "menu_8js.html#a73636ff5801d8bc3d1c7dc65d2594829", null ],
     [ "style_layer", "menu_8js.html#ae4b209abbc8e0960d6c53230428a9a9d", null ],

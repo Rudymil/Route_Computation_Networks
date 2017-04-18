@@ -10,7 +10,6 @@ function codeColorRed(value) {
     return color = "rgb(" + r + " ," + g + "," + b + ")";
 }
 
-
 /**
  * heatMapColorforValue : hsl
  * @param  {float} value
@@ -26,7 +25,6 @@ function heatMapColorforValue(value) {
  * @param  {int} value
  * @return {int}    [value between 0 and 100]
  */
-// value between 0 and 100
 function getColor(value) {
     return value > 90 ? '#4d1f00' :
         value > 80 ? '#b34700' :

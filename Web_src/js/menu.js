@@ -64,13 +64,13 @@ function ajax_types(url, type) {
     });
 }
 
-
 /**
  * Ajax request asking all the countries contained by the BD.
  * @param {string} url - Url to the Web API.
  */
 function ajax_countries(url) {
     if (DEBUG) {
+        console.log("FUNCTION : ajax_countries");
         console.log("ajax_countries url : ", url);
     }
     $.ajax({
@@ -127,15 +127,27 @@ function ajax_countries(url) {
                                     console.log("ajax_countries json_countries[event.target.id]['geometry']['coordinates'][1] : ", json_countries[event.target.id]['geometry']['coordinates'][1]);
                                     console.log("ajax_countries liste_url[json_countries[event.target.id]['properties']['name']] : ", liste_url[json_countries[event.target.id]['properties']['name']]);
                                 }
-                                map.removeLayer(osm);
                                 current_country = json_countries[event.target.id]['properties']['name']; // pays actuel choisi
-                                osm = new L.TileLayer(liste_url[json_countries[event.target.id]['properties']['name']], {
-                                    minZoom: 1,
-                                    maxZoom: 18,
-                                    attribution: Attrib,
-                                    id: "osm-bright" // "klokantech-basic"
-                                });
-                                map.addLayer(osm);
+                                baseMaps = {
+                                    "osm-bright": L.tileLayer(liste_url[current_country], {
+                                        minZoom: 1,
+                                        maxZoom: 18,
+                                        attribution: Attrib,
+                                        id: "osm-bright"
+                                    }),
+                                    "klokantech-basic": L.tileLayer(liste_url[current_country], {
+                                        minZoom: 1,
+                                        maxZoom: 18,
+                                        attribution: Attrib,
+                                        id: "klokantech-basic"
+                                    })
+                                }; // composant de la couche
+                                if (DEBUG) {
+                                    console.log("ajax_countries current_country : ", current_country);
+                                    console.log("ajax_countries liste_url[current_country] : ", liste_url[current_country]);
+                                    console.log("ajax_countries baseMaps['osm-bright'] : ", baseMaps["osm-bright"]);
+                                }
+                                map.addLayer(baseMaps["osm-bright"]);
                                 map.setView([json_countries[event.target.id]['geometry']['coordinates'][1], json_countries[event.target.id]['geometry']['coordinates'][0]], 6);
                                 spanstart = $(".leaflet-routing-geocoder").eq(0).find("span");
                                 spanstart.addClass("start");
@@ -143,6 +155,83 @@ function ajax_countries(url) {
                                 spanend.addClass("end");
                             });
                         }
+                    }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Ajax request asking all the POI contained by the BD.
+ * @param {string} url - Url to the Web API.
+ * @param {string} bbox - Bounding box of the map.
+ */
+function ajax_POI(url, bbox) {
+    if (DEBUG) {
+        console.log("FUNCTION : ajax_POI");
+        console.log("ajax_POI url : ", url);
+    }
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: 'type=poi' + '&bbox=' + bbox,
+        dataType: 'json',
+        success: function(code_json, statut) {
+            if (DEBUG) {
+                console.log("ajax_POI code_json : ", code_json);
+                console.log("ajax_POI statut : ", statut);
+            }
+        },
+        error: function(resultat, statut, erreur) {
+            if (DEBUG) {
+                console.log("ajax_POI resultat : ", resultat);
+                console.log("ajax_POI statut : ", statut);
+                console.log("ajax_POI erreur : ", erreur);
+            }
+            $.notify({
+                title: "<strong>POI request</strong>",
+                message: resultat.responseText
+            }, {
+                type: "danger",
+                placement: {
+                    from: "bottom",
+                    align: "center"
+                }
+            });
+        },
+        complete: function(resultat, statut) {
+            if (DEBUG) {
+                console.log("ajax_POI resultat.status :", resultat.status);
+                console.log("ajax_POI resultat.responseJSON :", resultat.responseJSON);
+            }
+            if (resultat.status == '200') {
+                var json = resultat.responseJSON;
+                if (!$.isEmptyObject(json)) { // si le resultat json n est pas vide
+                    if (json["features"].length > 0) {
+                        for (elem in json['features']) {
+                            if (DEBUG) {
+                                console.log("ajax_POI elem :", elem);
+                                console.log("ajax_POI json['features'][elem] :", json['features'][elem]);
+                            }
+                            var marker = L.marker([json['features'][elem]["geometry"]["coordinates"][1], json['features'][elem]["geometry"]["coordinates"][0]]);
+                            if (DEBUG) {
+                                console.log("ajax_POI marker :", marker);
+                            }
+                            marker.bindPopup(getPopupContentmenuPOI(json["features"][elem]));
+                            POI.addLayer(marker);
+                            if (DEBUG) {
+                                console.log("ajax_POI POI :", POI);
+                            }
+                        }
+                        POI.addTo(map);
+                        overlayMaps["POI"] = POI; // menu
+                        if (Lcontrollayers != undefined || Lcontrollayers != null) {
+                            Lcontrollayers.remove();
+                        }
+                        Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
+                            position: 'topleft'
+                        }).addTo(map);
                     }
                 }
             }
@@ -161,8 +250,6 @@ $("body").ready(function() {
     ajax_types(url, string_anomaly_type); // recupere les types des anomalies zones
     ajax_countries(url); // recupere la liste des pays
 });
-
-
 /**
  * Notify using Bootstrap Notify that the leaflet vector layer is empty.
  * @param {string} element - Type of leaflet vector layer.
@@ -183,7 +270,6 @@ function notify_shape_empty(element) {
         }
     });
 }
-
 
 /**
  * Notify using Bootstrap Notify that the array of leaflet vector layers is empty.
@@ -206,7 +292,6 @@ function notify_none(collection) {
     });
 }
 
-
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB succeeded.
  * @param {object.statut} statut - Network code.
@@ -227,7 +312,6 @@ function notify_ajax_sending_areas_success(statut) {
         }
     });
 }
-
 
 /**
  * Notify using Bootstrap Notify that the zones sending to the DB failed.
@@ -250,11 +334,13 @@ function notify_ajax_sending_areas_error(resultat) {
     });
 }
 
-
 /**
  * Notify using Bootstrap Notify that the "risk_type" into the "properties" is not correct.
  */
 function notify_risk_type_wrong() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_risk_type_wrong");
+    }
     $.notify({
         title: "<strong>risk_type</strong>",
         message: 'wrong',
@@ -267,11 +353,13 @@ function notify_risk_type_wrong() {
     });
 }
 
-
 /**
  * Notify using Bootstrap Notify that the "anomaly_type" into the "properties" is not correct.
  */
 function notify_anomaly_type_wrong() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_anomaly_type_wrong");
+    }
     $.notify({
         title: "<strong>anomaly_type</strong>",
         message: 'wrong',
@@ -284,11 +372,13 @@ function notify_anomaly_type_wrong() {
     });
 }
 
-
 /**
  * Notify using Bootstrap Notify that the "description" into the "properties" is not correct.
  */
 function notify_description_wrong() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_description_wrong");
+    }
     $.notify({
         title: "<strong>description</strong>",
         message: 'wrong',
@@ -301,11 +391,13 @@ function notify_description_wrong() {
     });
 }
 
-
 /**
  * Notify using Bootstrap Notify that the "properties" is not correct.
  */
 function notify_properties_wrong() {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_properties_wrong");
+    }
     $.notify({
         title: "<strong>properties</strong>",
         message: 'wrong',
@@ -318,7 +410,6 @@ function notify_properties_wrong() {
     });
 }
 
-
 /**
  * Check that the "properties" of the shape is correctly written in function of the type.
  * @param {vector layer} shape - Leaflet vector layer.
@@ -326,6 +417,9 @@ function notify_properties_wrong() {
  * @return {number} -1 - If the verification reveals an error.
  */
 function verification(shape, type) {
+    if (DEBUG) {
+        console.log("FUNCTION : verification");
+    }
     if (shape["properties"] != null) { // si y a des properties
         if (type == string_warning_zone) {
             if (shape["properties"]["risk_type"] == null || shape["properties"]["risk_type"] == undefined) { // si pas de risque
@@ -360,7 +454,6 @@ function verification(shape, type) {
         return -1;
     }
 }
-
 
 /**
  * Check that the "properties" of the shape is correctly written in function of the type.
@@ -449,7 +542,6 @@ function fill_geojson(circle, box, polygon, type) {
     return 0;
 }
 
-
 /**
  * Ajax request sending all the zones to the BD by specifying the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
@@ -522,7 +614,6 @@ function send_ajax_geojson(type, url) {
     });
 }
 
-
 /**
  * Change the inner color in black of all the leaflet vector layers corresponding to the type.
  * @param {string} type - Type of leaflet vector layer (warning or anomaly).
@@ -578,7 +669,6 @@ function style_layer(type) {
     }
 }
 
-
 /**
  * Convert a leaflet circle object to a polygon geojson form.
  * @return {array} - Of latitude longitude for circle in polygon form.
@@ -594,7 +684,6 @@ function geojsoncircle(ci) {
     circlejson.push([ci[n - 1].lat, ci[n - 1].lng]);
     return circlejson;
 }
-
 
 /**
  * Show the number of zones sent.
@@ -637,13 +726,15 @@ function notify_nb_sent(nb_sent) {
     }
 }
 
-
 /**
  * Show the number of zones added.
  * @param {number} nb_add - Number of zones added.
  * @param {number} nb_sent - Number of zones sent.
  */
 function notify_nb_add(nb_add, nb_sent) {
+    if (DEBUG) {
+        console.log("FUNCTION : notify_nb_add");
+    }
     if (nb_add != NaN && nb_add == nb_sent) { // si egalite
         $.notify({
             title: "<strong>Number of zones added</strong>",
@@ -679,7 +770,6 @@ function notify_nb_add(nb_add, nb_sent) {
         });
     }
 }
-
 
 /**
  * Executed for sending all the "warning zones".
@@ -772,7 +862,6 @@ $("#submit1").click(function() {
     }
 });
 
-
 /**
  * Executed for sending all the "anomaly zones".
  */
@@ -864,12 +953,14 @@ $("#submit2").click(function() {
     }
 });
 
-
 /**
  * Ajax request sending one point ("start"|"step"|"end").
  * @param {array(3)} point - Array containing lat, lng and type ("start"|"step"|"end").
  */
 function send_ajax_point(point) {
+    if (DEBUG) {
+        console.log("FUNCTION : send_ajax_point");
+    }
     if (point.length == 3 && point[0] != null && point[0] != undefined && point[1] != null && point[1] != undefined && point[2] != null && point[2] != undefined) {
         var json = new Object();
         if (DEBUG) {
@@ -1046,4 +1137,25 @@ function send_ajax_point(point) {
             }
         });
     }
+}
+
+/**
+ * Removed from the map all "warning zones" displayed.
+ */
+function remove_POI() {
+    if (DEBUG) {
+        console.log("FUNCTION : remove_POI");
+    }
+    map.removeLayer(POI);
+    POI = new L.markerClusterGroup.layerSupport(); // markerclusterlayersupport for POI
+    delete overlayMaps["POI"];
+    if (Lcontrollayers != undefined || Lcontrollayers != null) {
+        Lcontrollayers.remove();
+    }
+    if (legend != undefined || legend != null) {
+        legend.remove();
+    }
+    Lcontrollayers = new L.control.layers(baseMaps, overlayMaps, {
+        position: 'topleft'
+    }).addTo(map);
 }

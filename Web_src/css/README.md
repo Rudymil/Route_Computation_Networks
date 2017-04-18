@@ -1,6 +1,6 @@
 # Architecture
-* [css-lib](css)
-  * [font-awesome.min.css](css-lib/font-awesome.min.css)
+* [css](css)
+  * [font-awesome.min.css](css/font-awesome.min.css)
   * [bootstrap.min.css](bootstrap.min.css)
   * [Control.OSMGeocoder.css](Control.OSMGeocoder.css)
   * [easy-button.css](easy-button.css)
@@ -8,8 +8,8 @@
   * [leaflet.css](leaflet.css)
   * [leaflet.draw.css](leaflet.draw.css)
   * [leaflet-routing-machine.css](leaflet-routing-machine.css)
-  * [MarkerCluster.css](MarkerCluster.css)
   * [MarkerCluster.Default.css](MarkerCluster.Default.css)
+  * [MarkerCluster.css](MarkerCluster.css)
 * [fonts](fonts)
   * [fontawesome-webfont.svg](fonts/fontawesome-webfont.svg)
   * [FontAwesome.otf](fonts/FontAwesome.otf)
@@ -47,7 +47,6 @@
   * [_stacked.scss](scss/_stacked.scss)
   * [_variables.scss](scss/_variables.scss)
   * [font-awesome.scss](scss/font-awesome.scss)
-
 * [context_menu1.css](context_menu1.css)
 * [panelWarningZone.css](panelWarningZone.css)
 * [template.css](template.css) (*Basic CSS of the model*)

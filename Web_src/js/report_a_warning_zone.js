@@ -4,29 +4,36 @@ var editableLayers = null;
 var infosc = new Array();
 var infosp = new Array();
 var infosb = new Array();
-
 /**
  * Get the current date in yyyy/mm/dd format
  * @return {date} today [yyyy/mm/dd]
  */
+
 function datem() {
+
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
+
     if (dd < 10) {
         dd = '0' + dd
     }
+
     if (mm < 10) {
         mm = '0' + mm
     }
-    return yyyy + '/' + mm + '/' + dd;
-}
 
+    today = yyyy + '/' + mm + '/' + dd;
+    return today;
+
+}
 /**
- * [hmtlcw description]
- * @return {html}
+ * [hmtlca description] builds dynamique html popup content for layers
+ * we use a global variable types_warning_zones to define warning types
+ * @return {html} html text
  */
+
 function hmtlcw() {
     var nw = types_warning_zones.length;
     var debutw = "<div class='form-group'>\
@@ -34,50 +41,81 @@ function hmtlcw() {
 			<select class='form-control' id='level'>\
 				<option value=null disabled selected>Select the warning zone</option>";
     var finw = "</select>\
-                </div>\
-                <div class='form-group'>\
-                	<label for='usr'>Description:</label>\
-                	<input type='text' class='form-control' id='description' placeholder='Description' required >\
-                </div>\
-                <div class='form-group'>\
-                  <label for='usr'>Expiration date: </label> <br>\
-                  <input type='date' name='dateex' id='datee' placeholder='2008-08-29' >\
-                </div>\
-                <script>\
-                $(function() {\
-                	if ( $('#ui-datepicker-div').length ) {\
-                		$('#ui-datepicker-div').remove();\
-                	}\
-                	$( '#datee' ).datepicker({inline: true,\
-                	showOtherMonths: true,\
-                	dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
-                	dateFormat: 'yy-mm-dd'});\
-                	});\
-                </script>";
+			</div>\
+			<div class='form-group'>\
+  				<label for='usr'>Description:</label>\
+  				<input type='text' class='form-control' id='description' placeholder='Description' required >\
+				</div>\
+				<div class='form-group'>\
+				<label for='usr'>Expiration date: </label> <br>\
+				<input type='date' name='dateex' id='datee' placeholder='2008-08-29' >\
+				</div>\
+				<script>\
+				$(function() {\
+					if ( $('#ui-datepicker-div').length ) {\
+						$('#ui-datepicker-div').remove();\
+					}\
+					$( '#datee' ).datepicker({inline: true,\
+					showOtherMonths: true,\
+					dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],\
+					dateFormat: 'yy-mm-dd'});\
+					});\
+				</script>";
 
     for (var i = 0; i < nw; i++) {
+
         debutw = debutw + "<option value=" + types_warning_zones[i].id + " >" + types_warning_zones[i].name + "</option>";
     }
-    return debutw + finw;
+
+    var htmlw = debutw + finw;
+
+    return htmlw;
 }
-
-
 editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
+/**
+ * event listener on radio button, we have two case 
+ * -Navigate is checked, we remove all toolbars
+ * -Circle1 is checked, we add toolbar to draw circle and also a tool to edit and remove the circle
+ * -Box1 is checked,  we add toolbar to draw box and also a tool to edit and remove the box
+ * -Polygon1 is checked,  we add toolbar to draw polygon and also a tool to edit and remove the polygon
+ */
 
 $(".radio_button").change(function() { // choix de dessin
+
+    //console.log("kqsdqsdqs");
+
     if ($("#Navigate").is(":checked")) {
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "visible");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*if( markeraDestination != null && markeraDestination != null ){
+        markerDeparture.dragging.enable();
+        markeraDestination.dragging.enable();	
+        }*/
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
-        // CIRCLE
     } else if ($("#Circle1").is(":checked") == true) {
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*if( markerDeparture != null ) {	
+        markerDeparture.dragging.disable();	
+        }
+        if( markeraDestination != null ) {
+        markeraDestination.dragging.disable();
+        }	
+        */
+
         if (drawControl != null) {
+
             map.removeControl(drawControl);
         }
         // Initialise the FeatureGroup to store editable layers
+
+
+
         var drawPluginOptions = {
             position: 'topleft',
             draw: {
@@ -98,14 +136,30 @@ $(".radio_button").change(function() { // choix de dessin
                 remove: true
             }
         };
+
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-        // BOX
+
     } else if ($("#Box1").is(":checked") == true) {
+
+
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*
+        if( markerDeparture != null ) {	
+        markerDeparture.dragging.disable();	
+        }
+        if( markeraDestination != null ) {
+        markeraDestination.dragging.disable();
+        }	
+        */
+        //editableLayers = new L.FeatureGroup();
+        //map.addLayer(editableLayers);
+
         var drawPluginOptions = {
             position: 'topleft',
             draw: {
@@ -128,12 +182,26 @@ $(".radio_button").change(function() { // choix de dessin
         };
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
-        // POLYGON
     } else if ($("#Polygon1").is(":checked") == true) {
+
+
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "hidden");
+        //$("#dep").prop('disabled', true);
+        //$("#dest").prop('disabled', true);
+        /*if( markerDeparture != null ) {	
+        markerDeparture.dragging.disable();	
+        }
+        if( markeraDestination != null ) {
+        markeraDestination.dragging.disable();
+        }*/
+        // Initialise the FeatureGroup to store editable layers
+
+        //editableLayers = new L.FeatureGroup();
+        //map.addLayer(editableLayers);
+
         var drawPluginOptions = {
             position: 'topleft',
             draw: {
@@ -174,7 +242,17 @@ $(".radio_button").change(function() { // choix de dessin
 
 
 });
+/**
+ * event listener when we create a geometric form.
+ * When event is fired, we fill a form to have informations about the warning,
+ * afler we bind a popup with the informations of the form
+ */
 
+/**
+ * event listener when we create a geometric form.
+ * When event is fired, we fill a form to have informations about the warning,
+ * afler we bind a popup with the informations of the form
+ */
 
 map.on('draw:created', function(e) {
     var type = e.layerType;
@@ -357,6 +435,14 @@ map.on('draw:created', function(e) {
 
 });
 
+/**
+ * [getPopupContentw builds html popup content  for layers]
+ * @param  {[type]} layer       [leaflet layer]
+ * @param  {[type]} level       [textuel type of warning]
+ * @param  {[type]} description [description by user]
+ * @param  {[type]} d           [date of expiration]
+ * @return {[html]}             [html text]
+ */
 
 var getPopupContentw = function(layer, level, description, d) {
 
@@ -432,6 +518,10 @@ var getPopupContentw = function(layer, level, description, d) {
 
 
 
+/**
+ * event listener when we edit a geometric form.
+ * When event is fired, we let leflet fo default procedure
+ */
 
 map.on('draw:edited', function(e) {
 
@@ -439,22 +529,22 @@ map.on('draw:edited', function(e) {
     /*
 		var type = e.layerType;
          var layers = e.layers;
-
+         
          var nc=circle.length;
          var np=polygon.length;
          var nb=box.length;
-
-
-
-
+         
+         
+         
+         
          layers.eachLayer(function (layer) {
          	var ic=0;
          	var ip=0;
          	var ib=0;
-
+         	
           	while ( ic<nc ) {
           		if( layer._leaflet_id == circle[ic].properties.id ) {
-
+       
           				circle[ic].properties.radius=layer._mRadius;
 
           				var tempjson=layer.toGeoJSON();
@@ -462,8 +552,8 @@ map.on('draw:edited', function(e) {
 
           		}
           		ic++;
-          	}
-
+          	} 
+          	
           	while ( ib<nb ) {
           		if( layer._leaflet_id == box[ib].properties.id ) {
 
@@ -474,8 +564,8 @@ map.on('draw:edited', function(e) {
 
           		}
           		ib++;
-          	}
-
+          	} 
+          	
           	while ( ip<np ) {
           		if( layer._leaflet_id == polygon[ip].properties.id ) {
 
@@ -486,21 +576,25 @@ map.on('draw:edited', function(e) {
 
           		}
           		ip++;
-          	}
-
-
-
+          	} 
+          	
+          	
+		
          });
-
+         
          */
 });
 
 
+/**
+ * event listener when we delete a geometric form.
+ * When event is fired, we let leflet fo default procedure
+ */
 
 map.on('draw:deleted', function(e) {
 
 
-    /*
+    /* 
 		var type = e.layerType;
          var layers = e.layers;
 
@@ -512,9 +606,9 @@ map.on('draw:deleted', function(e) {
 			var ic=0;
          	var ip=0;
          	var ib=0;
+         	
 
-
-			while(ic<nc) {
+			while(ic<nc) {	
 
 				if( layer._leaflet_id == circle[ic].properties.id ) {
 
@@ -523,8 +617,8 @@ map.on('draw:deleted', function(e) {
 				}
 				else { ic++; }
 			}
-
-			while(ib<nb) {
+			
+			while(ib<nb) {	
 
 				if( layer._leaflet_id == box[ib].properties.id ) {
 
@@ -533,8 +627,8 @@ map.on('draw:deleted', function(e) {
 				}
 				else { ib++; }
 			}
-
-			while(ip<np) {
+			
+			while(ip<np) {	
 
 				if( layer._leaflet_id == polygon[ip].properties.id ) {
 
@@ -543,31 +637,8 @@ map.on('draw:deleted', function(e) {
 				}
 				else { ip++; }
 			}
-
-
+			
+		
 		}); */
 
 });
-
-
-/* modele precedent
-
-
-  			"<div class='form-group'>\
-			<label for='text'>Type :</label>\
-			<select class='form-control' id='level'>\
-   				<option value=1 selected >Road accident </option>\
-   				<option value=2 >Road degradation</option>\
-    			<option value=3  >Criminal insecurity</option>\
-    			<option value=4 >Massive gathering</option>\
-    			<option value=5 >Natural hazard</option>\
-    			<option value=6 >Traffic jam</option>\
-    			<option value=7 >Road closure</option>\
-			</select>\
-			</div>\
-			<div class='form-group'>\
-  				<label for='usr'>Description:</label>\
-  				<input type='text' class='form-control' id='description' placeholder='Description'>\
-				</div>	"
-
-*/

@@ -6,7 +6,7 @@ var NAVTREE =
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", "globals_vars" ]
+        [ "Variables", "globals_vars.html", null ]
       ] ]
     ] ]
   ] ]
@@ -15,7 +15,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_control_8_geocoder_8js.html",
-"jquery-ui_8js.html#a25df66651470d75f31837c752be3f5f2"
+"leaflet_8circle_8topolygon-min_8js.html#a2c038346d47955cbe2cb91e338edd7e1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
