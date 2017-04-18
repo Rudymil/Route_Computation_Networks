@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['n',['n',['../jquery_8min_8js.html#a3c7365c007156a2a63223e3c9909fbf8',1,'jquery.min.js']]],
-  ['nb_5fmaj',['nb_MAJ',['../menu__editor_8js.html#aa8a187f83c88d21fc22509acd620878e',1,'menu_editor.js']]],
-  ['nb_5fsent',['nb_sent',['../menu_8js.html#ae4bc3ed492fb805f4c89ffdff4f0a1fd',1,'nb_sent():&#160;menu.js'],['../menu__editor_8js.html#ae4bc3ed492fb805f4c89ffdff4f0a1fd',1,'nb_sent():&#160;menu_editor.js']]],
-  ['noconflict',['noConflict',['../bootstrap_8min_8js.html#ac26971afe341e4079ee34fceab395fc2',1,'bootstrap.min.js']]],
-  ['nominatim',['Nominatim',['../_control_8_geocoder_8js.html#a3c2632dfd8da8b50ce7a99587ca36bc4',1,'Nominatim():&#160;Control.Geocoder.js'],['../_control_8_geocoder_8js.html#ae9fe4f68890f8e0ed350ef13463abbe5',1,'nominatim():&#160;Control.Geocoder.js']]],
-  ['notify',['notify',['../bootstrap-notify_8min_8js.html#ac018eec2316136a5f0fc1bce76ac2185',1,'bootstrap-notify.min.js']]],
-  ['notifyclose',['notifyClose',['../bootstrap-notify_8min_8js.html#aae7221ba3abf4dd6243bce1383e9a013',1,'bootstrap-notify.min.js']]],
-  ['notifycloseexcept',['notifyCloseExcept',['../bootstrap-notify_8min_8js.html#adf1c0809d6cd13a68a7756bb3638ed0c',1,'bootstrap-notify.min.js']]],
-  ['notifydefaults',['notifyDefaults',['../bootstrap-notify_8min_8js.html#aa76f7abdf7c031f125d0d4389927ad38',1,'bootstrap-notify.min.js']]]
+  ['m',['m',['../jquery_8min_8js.html#a9e77e016b2928d7dcb493b89a0c9dc32',1,'jquery.min.js']]],
+  ['map',['map',['../template_8js.html#a9ec9dda576db2a36c42c1c3af155d07c',1,'template.js']]],
+  ['mapbox',['Mapbox',['../_control_8_geocoder_8js.html#a777c43770020161a14aeb6d3d7c7a3eb',1,'Mapbox():&#160;Control.Geocoder.js'],['../_control_8_geocoder_8js.html#abee96ae5072658c6ea23644a5fc3b854',1,'mapbox():&#160;Control.Geocoder.js']]],
+  ['mapquest',['MapQuest',['../_control_8_geocoder_8js.html#aaba536a116ea78395ce88b627a3d2bfc',1,'MapQuest():&#160;Control.Geocoder.js'],['../_control_8_geocoder_8js.html#aeefee5cb6f559737102d7d578dfa236e',1,'mapQuest():&#160;Control.Geocoder.js']]],
+  ['markercluster',['MarkerCluster',['../leaflet_8markercluster-src_8js.html#a7b8a7e6887f0f93691ef64d5b15a77ba',1,'leaflet.markercluster-src.js']]],
+  ['markerclustergroup',['markerClusterGroup',['../leaflet_8markercluster-src_8js.html#ae66cbd21c473f8d8d374cf48c081feef',1,'leaflet.markercluster-src.js']]],
+  ['markerclusternonanimated',['MarkerClusterNonAnimated',['../leaflet_8markercluster-src_8js.html#a18bf9b349d0f16585b28ac341e628a4f',1,'leaflet.markercluster-src.js']]],
+  ['max',['max',['../jquery-ui_8js.html#a04fa2ea575d5471ca09e1b344ec4a69e',1,'jquery-ui.js']]],
+  ['museumsearch',['museumSearch',['../template_8js.html#ac5b993925c9303f814c6a58d965825aa',1,'template.js']]]
 ];

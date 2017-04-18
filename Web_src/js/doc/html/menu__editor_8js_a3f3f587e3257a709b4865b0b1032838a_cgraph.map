@@ -1,5 +1,5 @@
 <map id="add_anomaly_zones" name="add_anomaly_zones">
 <area shape="rect" id="node2" href="$menu__editor_8js.html#a119ca3401ab8a541a8561f83d2072068" title="getPopupContentmenu\l_anomaly" alt="" coords="199,5,353,47"/>
-<area shape="rect" id="node3" href="$set__the__route_8js.html#afe83f1d3c6dc3e21f0c00835dd9ee003" title="addTo" alt="" coords="247,71,305,98"/>
-<area shape="rect" id="node4" href="$menu__editor_8js.html#a5265ecef17b00d002643cb6d63f0a140" title="remove_anomaly_zones" alt="" coords="195,122,357,149"/>
+<area shape="rect" id="node3" href="$_itinerary_8js.html#afe83f1d3c6dc3e21f0c00835dd9ee003" title="addTo" alt="" coords="405,97,464,123"/>
+<area shape="rect" id="node4" href="$menu__editor_8js.html#a6651401c941e10ebd15d155c334b3977" title="remove_anomaly_zones" alt="" coords="195,122,357,149"/>
 </map>

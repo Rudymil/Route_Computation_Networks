@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['report_5fa_5fwarning_5fzone_2ejs',['report_a_warning_zone.js',['../report__a__warning__zone_8js.html',1,'']]],
-  ['report_5fan_5fanomaly_2ejs',['report_an_anomaly.js',['../report__an__anomaly_8js.html',1,'']]]
+  ['menu_2ejs',['menu.js',['../menu_8js.html',1,'']]],
+  ['menu_5feditor_2ejs',['menu_editor.js',['../menu__editor_8js.html',1,'']]],
+  ['menu_5fuser_2ejs',['menu_user.js',['../menu__user_8js.html',1,'']]]
 ];

@@ -22,23 +22,29 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 				<div class='form-group'>\
   				<label for='usr'>Intensity :</label>\
   				<input type='number' step='5' min='0' max='100' class='form-control' id='intensity' value='" + intensity + "'>\
-				</div>\
-				<div class='form-group'>\
+				</div>";
+    if (expirationDate == null) {
+        var string2bis = "<div class='form-group'>\
+  				<label for='usr'>Expiration date :</label>\
+  				<input type='text' id='datee' value=false >\
+				</div>"
+    } else {
+        var string2bis = "<div class='form-group'>\
   				<label for='usr'>Expiration date :</label>\
   				<input type='text' id='datee' value='" + expirationDate + "'>\
 				</div>";
+    }
     if (isNaN(validationDate)) {
         var string3 = "<div class='form-group'>\
-						<label for='text'>Validation date :</label>\
+						<label for='text'>Validation :</label>\
 						<input type='text' id='datev' value=" + validationDate + " readonly>\
 					</div>";
     } else {
         var string3 = "<div class='form-group'>\
-						<label for='usr'>Validation date :</label>\
+						<label for='usr'>Validation :</label>\
 						<select class='form-control' id='datev'>\
-								<option value=null disabled selected>" + validationDate + "</option>\
 								<option value=true >true</option>\
-								<option value=false >false</option>\
+								<option value=false selected>false</option>\
 						</select>\
 					</div>";
     }
@@ -67,7 +73,7 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
             options = options + "<option value=" + types_warning_zones[i].id + " >" + types_warning_zones[i].name + "</option>";
         }
     }
-    return string1 + options + string2 + string3 + string4;
+    return string1 + options + string2 + string2bis + string3 + string4;
 }
 /**
  * event listener on radio button, we have two case 
@@ -176,6 +182,16 @@ map.on('draw:editstart', function(e) {
                     var name = $('#name').val();
                     var inte = $('#intensity').val();
 
+                    if (dav == "true") {
+                        dav = true;
+                        console.log(dav);
+                    } else if (dav == "false") {
+                        dav = false;
+                        console.log(dav);
+                    }
+                    if (dae = "false") {
+                        dae = false
+                    }
                     if (des == "") {
                         return false;
                     }
@@ -197,8 +213,9 @@ map.on('draw:editstart', function(e) {
                         layerjson.properties.name = name;
                         layerjson.properties.intensity = inte;
                         layerjson.properties.risk_type = risk;
-                        layerjson.properties.validation_date = dav;
+                        layerjson.properties['validated'] = dav;
                         layerjson.properties.expiration_date = dae;
+                        delete layerjson.properties.validation_date;
                         wzupdate.push(layerjson);
                     }
                 }

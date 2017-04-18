@@ -1,9 +1,12 @@
 <map id="w" name="w">
 <area shape="rect" id="node2" href="$jquery_8min_8js.html#ae314c6c724250fd29b7ca94473145cef" title="p" alt="" coords="111,5,150,32"/>
-<area shape="rect" id="node3" href="$jquery_8min_8js.html#a15d8398b77829795291db9587eaa2e94" title="each" alt="" coords="105,56,156,83"/>
-<area shape="rect" id="node4" href="$_control_8_geocoder_8js.html#a55bf8e12339412d59e0a999214324127" title="if" alt="" coords="111,107,150,133"/>
-<area shape="rect" id="node5" href="$set__the__route_8js.html#aa02a2962e68da34f4d356f6a4b498648" title="pos" alt="" coords="109,157,152,184"/>
-<area shape="rect" id="node6" href="$set__the__route_8js.html#ab431a7269c5bcaee9c0e45449e42768b" title="addClass" alt="" coords="92,208,169,235"/>
-<area shape="rect" id="node7" href="$bootstrap_8min_8js.html#afa9eb56c756985e9715e3820fd044aa3" title="hasClass" alt="" coords="92,259,169,285"/>
-<area shape="rect" id="node8" href="$editor_8js.html#ac8f8f985cfebaf4b21c118cafcc4c5b1" title="on" alt="" coords="111,309,150,336"/>
+<area shape="rect" id="node3" href="$jquery-ui_8js.html#a928cd4ad63f094c936b4227e80c806bf" title="for" alt="" coords="111,56,150,83"/>
+<area shape="rect" id="node4" href="$jquery-ui_8js.html#a58e72319cea2f2d259c0852843e25a70" title="add" alt="" coords="109,107,152,133"/>
+<area shape="rect" id="node5" href="$jquery_8min_8js.html#a15d8398b77829795291db9587eaa2e94" title="each" alt="" coords="105,157,156,184"/>
+<area shape="rect" id="node6" href="$_control_8_geocoder_8js.html#a55bf8e12339412d59e0a999214324127" title="if" alt="" coords="111,208,150,235"/>
+<area shape="rect" id="node7" href="$_itinerary_8js.html#aa02a2962e68da34f4d356f6a4b498648" title="pos" alt="" coords="109,259,152,285"/>
+<area shape="rect" id="node8" href="$_itinerary_8js.html#ab431a7269c5bcaee9c0e45449e42768b" title="addClass" alt="" coords="92,309,169,336"/>
+<area shape="rect" id="node9" href="$bootstrap_8min_8js.html#afa9eb56c756985e9715e3820fd044aa3" title="hasClass" alt="" coords="92,360,169,387"/>
+<area shape="rect" id="node10" href="$editor_8js.html#ae5b41bca0accdaf8366fcc021cde9561" title="on" alt="" coords="111,411,150,437"/>
+<area shape="rect" id="node11" href="$jquery-ui_8js.html#a873439a646f430aebbc2851af783caa7" title="isLocal" alt="" coords="99,461,162,488"/>
 </map>

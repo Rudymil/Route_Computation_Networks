@@ -1,30 +1,28 @@
-# API Web
+# Web API
 
-A des fins de tests et dev, une instance de l'API est disponible à l'adresse suivant (PC fixe Rmaziere) :
-http://172.31.56.223/api/server.php
+A **DEBUG** mode is available to have a verbose and explicit API with the JSON or GeoJSON data, the SQL request, by adding a DEBUG variable with no value, for example :
+http://172.31.56.223/api/server.php?DEBUG&{...}
 
-Le mode **DEBUG** est activable en ajoutant la variable DEBUG dans l'URL sans valeur, exemple : http://172.31.56.223/api/server.php?DEBUG&{...}
+## Parameters
 
-## Les paramètres
+The Web API's availables parameters are:
 
-Les différents paramètres de l'API sont :
-
-- **DEBUG** : permet d'activer le mode debug et d'obtenir des informations supplémentaires telles que la requête SQL, le nombre d'entités, le retour de la requête,
-- **type** : spécifie le type d'objet demandé, au choix parmi : {warning_zone|anomaly_zone|risk_type|anomaly_type|country|poi}
+- **DEBUG** : allows the debug mode to have more informations like the SQL request, number of entities, the request's result, the JSON or GeoJSON data,
+- **type** : to select the object's type within : {warning_zone|anomaly_zone|risk_type|anomaly_type|country|poi}
 - **warning_zone**
 - **anomaly_zone**
 - **waypoint**
-- **bbox** : permet la limitation des zones retournées suivant une bounding box [southWestLng,southWestLat,northEastLng,northEastLat]
+- **bbox** : the bounding box to geographically limit the request [southWestLng,southWestLat,northEastLng,northEastLat]
 - **action**
-- **id** : permet de cibler une entité particulière
+- **id** : to select a specific entity
 - **expired** : {true|false}
 - **validated** : {true|false}
 
 ## Interactions
 
-Les données disponibles via l'API ainsi que leur méthode et format d'envoi et/ou de retour sont :
+The available data, its method and the format to send or receive data are :
 
-|Données|GET|POST|
+|Data|GET|POST|
 |---|---|---|
 |country|GeoJSON|#NA|
 |waypoint|GeoJSON|#NA|
@@ -34,54 +32,54 @@ Les données disponibles via l'API ainsi que leur méthode et format d'envoi et/
 |warning_zone|GeoJSON|GeoJSON|
 |anomaly_zone|GeoJSON|GeoJSON|
 
-*Exemple de lecture concernant les warning_zone :*
+*Reading example for warning_zone :*
 
-- pour récupérer celles en base : faire une requête en GET, les données retournées seront au format GeoJSON,
-- pour en créer en base : faire une requête en POST avec les données au format GeoJSON.
+- to read database data : do a GET HTML request, data will be receive in GeoJSON,
+- to create and save object in database : do a POST request with data in GeoJSON.
 
 ## Insert data
 
-Pour envoyer des données au backend et les stocker en base, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
+To send data into backend and save it in the database, requests must be send in POST, the all available parameters are :
 
 - warning_zone=[GeoJSON]
 - anomaly_zone=[GeoJSON]
 
-**Contrôle :**
-Seules les zones se situant dans un pays présent en base pourront être créées.
+**Check :**
+Before insert an area into database, a check is make and only area in one of the countries in database can be created.
 
-**Retour :**
-La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets créés en base.
+**Return value :**
+The return value is the number of entities affected, here the number of entities created in database.
 
 ## Update data
 
-Pour mettre à jour des entités existantes, les requêtes sont à effectuer en POST, les différents paramètres disponibles sont les suivants :
+To update existing entities, requests must be send in POST, the all available parameters are :
 
 - action=update
 - type={warning_zone|anomaly_zone}
 - {warning_zone|anomaly_zone}=[GeoJSON]
 
-**Contrôle :**
-Seules les zones dont la géométrie se situe dans un pays présent en base pourront être mise à jour.
+**Check :**
+Only area in one of the countries in database can be updated.
 
-**Retour :**
-La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets modifiés en base.
+**Return value :**
+The return value is the number of entities affected, here the number of updated entities.
 
 ## Delete data
 
-Pour supprimer des données stockées en base, les requêtes sont à effectuer en GET, les différents paramètres disponibles sont les suivants :
+To delete data, requests must be send in GET, the all available parameters are :
 
 - action=delete
 - type=[warning_zone|anomaly_zone]
-- id={identifiant de l'objet}
+- id={object id}
 
-**Retour :**
-La valeur retournée par l'API sera le nombre d'entités affectées, ici le nombre d'objets supprimés.
+**Return value :**
+The return value is the number of entities affected, here the number of deleted entities.
 
 ## Formats
 
-Exemples de formats de données JSON & GeoJSON utilisés.
+Examples of JSON and GeoJSON data formats used.
 
-### Retours de l'API (SELECT)
+### Web API returned data (SELECT)
 
 #### JSON
 
@@ -169,7 +167,7 @@ Exemples de formats de données JSON & GeoJSON utilisés.
       },
       "properties": {
         "id": #,
-        "name": "type de risque",
+        "name": "type of risk",
         "risk_type": #,
         "description": "Lorem ipsum dolor sit amet",
         "intensity": #,
@@ -204,7 +202,7 @@ Exemples de formats de données JSON & GeoJSON utilisés.
       },
       "properties": {
         "id":#,
-        "name": "type d'anomalie",
+        "name": "type of anomaly",
         "anomaly_type": #,
         "description": "Lorem ipsum dolor sit amet",
         "expiration_date": {"YYYY-MM-DD"|null}
@@ -215,7 +213,7 @@ Exemples de formats de données JSON & GeoJSON utilisés.
 }
 ```
 
-### GeoJSON en POST (INSERT)
+### GeoJSON in POST (INSERT)
 
 **warning_zone** 
 
@@ -289,7 +287,7 @@ Exemples de formats de données JSON & GeoJSON utilisés.
 }
 ```
 
-### GeoJSON en POST (UPDATE)
+### GeoJSON in POST (UPDATE)
 
 **warning_zone** 
 
@@ -358,26 +356,26 @@ Exemples de formats de données JSON & GeoJSON utilisés.
 }
 ```
 
-## Sécurité & Contrôle
+## Checks and Security
 
-### Code HTML
-Si l'API Web est appelée, mais que les requêtes GET ou POST ne passent pas les paramètres obligatoires, elle retournera une **erreur HTML code 400**.
+### HTML codes
+If Web API doesn't receive right parameters in GET or POST request, it returns an **error 400**.
 
-### Injections SQL
+### SQL Injections
 [PHP Manuel](http://php.net/manual/fr/security.database.sql-injection.php)
 https://www.acunetix.com/websitesecurity/sql-security/
 https://www.acunetix.com/websitesecurity/php-security-1/
 
-## Outils & Aide
+## Tools and help
 
-### Validation en ligne
+### Online Validation
 
-Editeur, validateur, minifieur en ligne JSON - [jsoneditoronline.org](http://www.jsoneditoronline.org/)
+JSON online editor, validator, minify - [jsoneditoronline.org](http://www.jsoneditoronline.org/)
 
-Validateur en ligne GeoJSON - [geojsonlint.com](http://geojsonlint.com/)
+GeoJSON online validator - [geojsonlint.com](http://geojsonlint.com/)
 
-### Divers
-La chaîne des coordonnées de la bounding box est disponible via la fonction javascript :
+### Help
+In Javascript, the bounding box is available with the function :
 
 ```js
 map.getBounds().toBBoxString()

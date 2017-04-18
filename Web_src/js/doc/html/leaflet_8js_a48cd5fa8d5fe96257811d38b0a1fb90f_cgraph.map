@@ -1,14 +1,18 @@
 <map id="!function" name="!function">
-<area shape="rect" id="node2" href="$editor_8js.html#ac8f8f985cfebaf4b21c118cafcc4c5b1" title="on" alt="" coords="275,5,314,32"/>
+<area shape="rect" id="node2" href="$editor_8js.html#ae5b41bca0accdaf8366fcc021cde9561" title="on" alt="" coords="275,5,314,32"/>
 <area shape="rect" id="node3" href="$jquery_8min_8js.html#ae314c6c724250fd29b7ca94473145cef" title="p" alt="" coords="275,56,314,83"/>
-<area shape="rect" id="node4" href="$bootstrap_8min_8js.html#afa9eb56c756985e9715e3820fd044aa3" title="hasClass" alt="" coords="256,259,333,285"/>
-<area shape="rect" id="node5" href="$set__the__route_8js.html#ab431a7269c5bcaee9c0e45449e42768b" title="addClass" alt="" coords="256,309,333,336"/>
-<area shape="rect" id="node6" href="$template_8js.html#a10a5ef5455b9e9a83bed8f53bb9c4389" title="setView" alt="" coords="132,309,201,336"/>
-<area shape="rect" id="node7" href="$jquery_8min_8js.html#a9e7acde64afa4ba72de6fa724a96c17a" title="w" alt="" coords="147,157,186,184"/>
-<area shape="rect" id="node11" href="$set__the__route_8js.html#afe83f1d3c6dc3e21f0c00835dd9ee003" title="addTo" alt="" coords="137,360,196,387"/>
-<area shape="rect" id="node12" href="$menu__editor_8js.html#a0cf6699f75d250cada857c32e9127ceb" title="addLayer" alt="" coords="129,411,204,437"/>
-<area shape="rect" id="node13" href="$menu_8js.html#a8fcb0db3ae80ef6b24ce5faa3631dd35" title="eachLayer" alt="" coords="125,461,208,488"/>
-<area shape="rect" id="node8" href="$jquery_8min_8js.html#a15d8398b77829795291db9587eaa2e94" title="each" alt="" coords="269,107,320,133"/>
-<area shape="rect" id="node9" href="$_control_8_geocoder_8js.html#a55bf8e12339412d59e0a999214324127" title="if" alt="" coords="275,157,314,184"/>
-<area shape="rect" id="node10" href="$set__the__route_8js.html#aa02a2962e68da34f4d356f6a4b498648" title="pos" alt="" coords="273,208,316,235"/>
+<area shape="rect" id="node4" href="$jquery-ui_8js.html#a58e72319cea2f2d259c0852843e25a70" title="add" alt="" coords="273,107,316,133"/>
+<area shape="rect" id="node5" href="$bootstrap_8min_8js.html#afa9eb56c756985e9715e3820fd044aa3" title="hasClass" alt="" coords="256,411,333,437"/>
+<area shape="rect" id="node6" href="$_itinerary_8js.html#ab431a7269c5bcaee9c0e45449e42768b" title="addClass" alt="" coords="256,461,333,488"/>
+<area shape="rect" id="node7" href="$template_8js.html#a6b1f132f783b70fa8f1076df06bdd0de" title="setView" alt="" coords="132,360,201,387"/>
+<area shape="rect" id="node8" href="$jquery_8min_8js.html#a9e7acde64afa4ba72de6fa724a96c17a" title="w" alt="" coords="147,208,186,235"/>
+<area shape="rect" id="node14" href="$_itinerary_8js.html#afe83f1d3c6dc3e21f0c00835dd9ee003" title="addTo" alt="" coords="137,411,196,437"/>
+<area shape="rect" id="node15" href="$report__a__warning__zone_8js.html#a5507ee85edf0b6a072dfeff9e114cbca" title="addLayer" alt="" coords="129,461,204,488"/>
+<area shape="rect" id="node16" href="$menu_8js.html#a8fcb0db3ae80ef6b24ce5faa3631dd35" title="eachLayer" alt="" coords="125,512,208,539"/>
+<area shape="rect" id="node17" href="$jquery-ui_8js.html#a80a041c978d0e433fcd1aa8c4aa91f89" title="mouseup" alt="" coords="129,563,204,589"/>
+<area shape="rect" id="node9" href="$jquery-ui_8js.html#a928cd4ad63f094c936b4227e80c806bf" title="for" alt="" coords="275,157,314,184"/>
+<area shape="rect" id="node10" href="$jquery_8min_8js.html#a15d8398b77829795291db9587eaa2e94" title="each" alt="" coords="269,208,320,235"/>
+<area shape="rect" id="node11" href="$_control_8_geocoder_8js.html#a55bf8e12339412d59e0a999214324127" title="if" alt="" coords="275,259,314,285"/>
+<area shape="rect" id="node12" href="$_itinerary_8js.html#aa02a2962e68da34f4d356f6a4b498648" title="pos" alt="" coords="273,309,316,336"/>
+<area shape="rect" id="node13" href="$jquery-ui_8js.html#a873439a646f430aebbc2851af783caa7" title="isLocal" alt="" coords="263,360,326,387"/>
 </map>
