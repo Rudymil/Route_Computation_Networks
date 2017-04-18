@@ -84,6 +84,17 @@ map.addLayer(editableLayers);
 $(".radio_button").change(function() { // choix de dessin
 
     //console.log("kqsdqsdqs");
+    if ($("#warning").is(":checked") == false) {
+        if (drawControlw != null) {
+            map.removeControl(drawControlw);
+        }
+    }
+    if ($("#anomaly").is(":checked") == false) {
+        if (drawControla != null) {
+            map.removeControl(drawControla);
+        }
+    }
+
 
     if ($("#Navigate").is(":checked")) {
         $(".leaflet-routing-container.leaflet-bar.leaflet-control").css("visibility", "visible");
@@ -107,7 +118,6 @@ $(".radio_button").change(function() { // choix de dessin
         markeraDestination.dragging.disable();
         }	
         */
-
         if (drawControl != null) {
 
             map.removeControl(drawControl);
@@ -141,8 +151,6 @@ $(".radio_button").change(function() { // choix de dessin
         map.addControl(drawControl);
 
     } else if ($("#Box1").is(":checked") == true) {
-
-
         if (drawControl != null) {
             map.removeControl(drawControl);
         }
@@ -183,7 +191,6 @@ $(".radio_button").change(function() { // choix de dessin
         drawControl = new L.Control.Draw(drawPluginOptions);
         map.addControl(drawControl);
     } else if ($("#Polygon1").is(":checked") == true) {
-
 
         if (drawControl != null) {
             map.removeControl(drawControl);
