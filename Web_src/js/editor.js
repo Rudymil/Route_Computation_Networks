@@ -23,17 +23,17 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
   				<label for='usr'>Intensity :</label>\
   				<input type='number' step='5' min='0' max='100' class='form-control' id='intensity' value='" + intensity + "'>\
 				</div>";
-	if (expirationDate==null) {
-		var string2bis ="<div class='form-group'>\
+    if (expirationDate == null) {
+        var string2bis = "<div class='form-group'>\
   				<label for='usr'>Expiration date :</label>\
   				<input type='text' id='datee' value=false >\
 				</div>"
-	}
-	else {			
-		var string2bis = "<div class='form-group'>\
+    } else {
+        var string2bis = "<div class='form-group'>\
   				<label for='usr'>Expiration date :</label>\
   				<input type='text' id='datee' value='" + expirationDate + "'>\
-				</div>"; }
+				</div>";
+    }
     if (isNaN(validationDate)) {
         var string3 = "<div class='form-group'>\
 						<label for='text'>Validation :</label>\
@@ -181,18 +181,17 @@ map.on('draw:editstart', function(e) {
                     var dav = $('#datev').val();
                     var name = $('#name').val();
                     var inte = $('#intensity').val();
-                    
-                    if( dav == "true" )  {
-							dav=true;
-							console.log(dav);
-					}
-					else if ( dav == "false" ) {
-						dav=false;
-						console.log(dav);
-					}
-					if ( dae="false") {
-							dae=false
-					}
+
+                    if (dav == "true") {
+                        dav = true;
+                        console.log(dav);
+                    } else if (dav == "false") {
+                        dav = false;
+                        console.log(dav);
+                    }
+                    if (dae = "false") {
+                        dae = false
+                    }
                     if (des == "") {
                         return false;
                     }
@@ -216,7 +215,7 @@ map.on('draw:editstart', function(e) {
                         layerjson.properties.risk_type = risk;
                         layerjson.properties['validated'] = dav;
                         layerjson.properties.expiration_date = dae;
-                        delete layerjson.properties.validation_date ;
+                        delete layerjson.properties.validation_date;
                         wzupdate.push(layerjson);
                     }
                 }
