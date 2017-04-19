@@ -1,15 +1,3 @@
-# Create Nominatim service
-
-## Configure postgres
-```
-RUN echo "host nominatim  nominatim    127.0.0.1/32  md5" >> /etc/postgresql/9.3/main/pg_hba.conf && \
-    echo "host    all	postgres	127.0.0.1/32	trust" >> /etc/postgresql/9.3/main/pg_hba.conf && \
-    echo "listen_addresses='localhost,127.0.0.1'" >> /etc/postgresql/9.3/main/postgresql.conf
-```
-
-## Dockerfile
-
-```
 FROM ubuntu:trusty
 MAINTAINER Hugo BALTZ <hugobaltz@gmail.com>
 
@@ -18,7 +6,7 @@ ENV LANG C.UTF-8
 RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
 
-# ENSG's Proxy
+# Pour le apt-get
 ENV http_proxy http://10.0.4.2:3128
 ENV https_proxy https://10.0.4.2:3128
 
@@ -39,29 +27,18 @@ WORKDIR /app
 
 # Nominatim install
 ENV NOMINATIM_VERSION v.2.5.0
-RUN mkdir -p src/Nominatim/
 RUN cd ./src && \
-        wget --quiet http://www.nominatim.org/release/Nominatim-2.5.1.tar.bz2 && \
-        tar xvf Nominatim-2.5.1.tar.bz2 && \
-        cd ./Nominatim-2.5.1/ && \
-        sed -i 's/pgsql:\/\/@\/nominatim/pgsql:\/\/docker:docker@127.0.0.1:5432\/nominatim/g' ./settings/settings.php
-RUN cd /app/src/Nominatim-2.5.1/ && \
-        ./configure
-RUN cd /app/src/Nominatim-2.5.1/ && \
-        make
+	wget wget http://www.nominatim.org/release/Nominatim-2.5.1.tar.bz2 && \
+	tar xvf Nominatim-2.5.1.tar.bz2 && \
+	cd ./Nominatim-2.5.1/
+RUN sed -i 's/pgsql:\/\/@\/nominatim/pgsql:\/\/docker:docker@127.0.0.1:5432\/nominatim/g' ./settings/settings.php
+RUN ./configure && make
 
 # Nominatim create site
-COPY local.php /app/src/Nominatim-2.5.1/settings/local.php
-RUN rm -rf /var/www/html/* && /app/src/Nominatim-2.5.1/utils/setup.php --create-website /var/www/html
+COPY local.php ./settings/local.php
+RUN rm -rf /var/www/html/* && ./utils/setup.php --create-website /var/www/html
 
 # Apache configure
 COPY nominatim.conf /etc/apache2/sites-enabled/000-default.conf
 
 EXPOSE 8080
-```
-
-## Image building
-
-```bash
-docker build -t img_nominatim ./
-```

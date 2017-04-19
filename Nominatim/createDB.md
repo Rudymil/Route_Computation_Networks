@@ -1,7 +1,7 @@
 # Create Nominatim database and Import first data
 
 ```
-FROM hbaltz/nominatim
+FROM img_nominatim
 MAINTAINER Hugo BALTZ <hugobaltz@gmail.com>
 
 # Load initial data
@@ -15,10 +15,7 @@ RUN sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='n
     chown -R nominatim:nominatim ./src
     
 #Create the databases nominatim if not exists
-RUN sudo -u postgres psql postgres --host=[hostname] -tAc "SELECT 1 FROM pg_database WHERE datname = 'nominatim'" | grep -q 1 || sudo -u postgres -c "CREATE DATABASE nominatim" && \
+RUN sudo -u postgres psql postgres --host=127.0.0.1 -tAc "SELECT 1 FROM pg_database WHERE datname = 'nominatim'" | grep -q 1 || sudo -u postgres -c "CREATE DATABASE nominatim" && \
         
-    sudo -u nominatim ./src/utils/setup.php --osm-file /app/src/global-latest.osm.pbf --all --threads 2
-    
-COPY start.sh /app/start.sh
-CMD /app/start.sh
+    sudo -u nominatim /app/src/utils/setup.php --osm-file /app/src/global-latest.osm.pbf --all --threads 2
 ```
