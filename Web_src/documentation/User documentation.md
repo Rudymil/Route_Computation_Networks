@@ -2,43 +2,65 @@
 ## Architecture
 ### Navigation bar
 The navigation bar at the top is called **Navigation bar**. It is composed by on button named **menu** which allows to display or hidden the menu section.
+![User documentation (1)](img/User documentation 1.jpg)
 In function if you use a small screen like smartphone or tablet, the menu section is automatically hidden.
+![User documentation (2)](img/User documentation 2.jpg)
+![User documentation (3)](img/User documentation 3.jpg)
 ### Map
 Basicly, the map contains several features at the top left.
 #### Zoom
 The **zoom** is set at **1** and you may move until **18**.
+![User documentation (3.1)](img/User documentation 3.1.jpg)
 #### Geolocalisation
-The application propose to you to locate you. If you use this feature, a departure green marker will be add to the map if you are located in a country containing data necessary for calculating itinerary.
+The application propose to you to locate you.
+![User documentation (3.2)](img/User documentation 3.2.jpg)
+If you use this feature, a departure green marker will be add to the map if you are located in a country containing data necessary for calculating itinerary.
 #### Control Layers
 It is possible to choose 2 different background map, the style **osm-bright** is selected by default.
+![User documentation (4)](img/User documentation 4.jpg)
 ### Menu
 This section propose you with application-specific functionality.
 #### Selection of the area
 You may find here, the **list of countries** contained into the Database.
+![User documentation (5)](img/User documentation 5.jpg)
 For each button, you set the view of the map on the country corresponding.
 Furthermore, you display at the screen the tiles set specific to the same country.
 Basicly, the **set view of the map** is focus on the **whole world**.
 It is thus necessary to choose the right country before to move inside.
+![User documentation (6)](img/User documentation 6.jpg)
+![User documentation (7)](img/User documentation 7.jpg)
 #### Layers
 This sub menu, propose you all data available from the Database.
+![User documentation (8)](img/User documentation 8.jpg)
 In order to request data from the Database, select the checkbox.
 As it happens, you can choose to request all **warning zones verified** and/or all **point of interest**.
 However, despite the fact the checkbox is checked, it's not sufficient to display data.
 Indeed, you are allow to display data only from the **zoom 12**.
+![User documentation (9)](img/User documentation 9.jpg)
 If Warning Zones are display, the map propose you a **legend** of the intensity of this zones.
 Furthermore, the **Control Layers** give you the possibility to display or not the layers downloaded from the Database.
+![User documentation (10)](img/User documentation 10.jpg)
 The Points of Interest are grouped together into **clusters** to facilitate the display.
 You may click on one cluster in order to display the markers inside.
+![User documentation (11)](img/User documentation 11.jpg)
 Concerning Zones like for markers, you may click on to display theirs properties thank to a **popup**.
+![User documentation (12)](img/User documentation 12.jpg)
+![User documentation (13)](img/User documentation 13.jpg)
 #### Itinerary
 The itinerary mod is the basic state of the application.
 It is selected by default when the application is loaded.
 In this mod, you may choose by click on the map, your departure or arrival point.
+![User documentation (14)](img/User documentation 14.jpg)
 **Warning**. Some rules exist about itinerary markers.
 You cannot place markers into a country which doesn't contain **graph for the itinerary**.
+![User documentation (15)](img/User documentation 15.jpg)
 You cannot place markers into **2 different countries**.
+![User documentation (16)](img/User documentation 16.jpg)
 When the two types of markers are set, one itinerary appears between them, avoiding warning zones, and the **detail of the itinerary** is written in the windows at the top right of the map.
+![User documentation (17)](img/User documentation 17.jpg)
 Thank to this windows you may add **intermediary points** to the itinerary and click on intersection to see its position on the map.
+This same window has the possibility of reducing itself when using a small screen, thanks to the cross in the top right.
+![User documentation (18)](img/User documentation 18.jpg)
 #### Report a warning zone
 As a user, you are invited to report a warning zone.
 For this purpose, you have the choice between draw boxes or polygons.
@@ -62,4 +84,4 @@ If the shapes are correctly sent, they are grayed out.
 Drawing boxes is only available for large screens.
 #### Report an anomaly
 The process is exactly the same that for warning zones.
-The only differences are the color of the button **Submit** and shapes : *red* for warning and *blue* for anomaly. 
+The only differences are the color of the button **Submit** and shapes : *red* for warning and *blue* for anomaly.

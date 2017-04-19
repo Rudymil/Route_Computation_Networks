@@ -87,9 +87,11 @@ $(".radio_button_edit").change(function(e) {
     console.log("warning :", $("#warning").is(":checked"));
     console.log("anomaly :", $("#anomaly").is(":checked"));
     console.log("Navigate :", $("#Navigate").is(":checked"));
+
+
     if ($("#warning").is(":checked") == true) {
         console.log("warning inside");
-
+        triggerParser("#warning", "#warning_zone_info", "#anomaly_zone_info", "#Warning_zones", warning_nonchecked, "<p>No warning zone to validate.</p>", printInfoWarningZone);
         //map.removeLayer(layer_group_warning_zones);
         //map.removeLayer(layer_group_anomaly_zones);
         //map.removeLayer(layer_group_warning_nonchecked);
@@ -119,10 +121,10 @@ $(".radio_button_edit").change(function(e) {
 
         }).addTo(map);
 
-
     } else if ($("#anomaly").is(":checked") == true) {
 
         console.log("anoamly inside");
+        triggerParser("#anomaly", "#anomaly_zone_info", "#warning_zone_info", "#Anomaly_zones", anomaly_zones, "<p>No anomaly zones</p>", printInfoAnomalyZone);
 
         //map.removeLayer(layer_group_warning_zones);
         //map.removeLayer(layer_group_anomaly_zones);
@@ -161,10 +163,13 @@ $(".radio_button_edit").change(function(e) {
             map.removeControl(drawControlw);
         }
 
+        clearZoneInfo("#anomaly_zone_info");
+        clearZoneInfo("#warning_zone_info");
+        $(".leaflet-routing-geocoders").show();
 
     }
     console.log("prevent");
-    e.preventDefault();
+    //e.preventDefault();
 });
 /**
  * event listener when we start editing layer.
@@ -173,12 +178,14 @@ $(".radio_button_edit").change(function(e) {
  */
 map.on('draw:editstart', function(e) {
     console.log(e);
-    if (featureLayerw.hasEventListeners() == true) {
-        featureLayerw.removeEventListener();
-    }
+    /*if (featureLayerw.hasEventListeners() == true) {
+        
+        console.log( " removed " );
+    }*/
+    if ($("#warning").is(":checked")) {
 
-    featureLayerw.on('click', function(e) {
-        if ($("#warning").is(":checked")) {
+        featureLayerw.removeEventListener();
+        featureLayerw.on('click', function(e) {
             console.log(e);
             e.layer.closePopup();
             var layer = e.layer;
@@ -232,13 +239,14 @@ map.on('draw:editstart', function(e) {
                         delete layerjson.properties.validation_date;
                         wzupdate.push(layerjson);
                     }
-                    featureLayerw.removeEventListener();
+                    //featureLayerw.removeEventListener();
                 } else {
-                    featureLayerw.removeEventListener();
+                    //featureLayerw.removeEventListener();
                 }
             });
-        }
-    });
+
+        });
+    }
 });
 
 /**

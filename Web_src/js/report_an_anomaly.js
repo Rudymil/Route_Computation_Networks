@@ -78,6 +78,17 @@ map.addLayer(leditableLayers);
  */
 $(".radio_button").change(function() { // choix de dessin
 
+    if ($("#warning").is(":checked") == false) {
+        if (typeof drawControlw !== 'undefined') {
+            map.removeControl(drawControlw);
+        }
+    }
+    if ($("#anomaly").is(":checked") == false) {
+        if (typeof drawControla !== 'undefined') {
+            map.removeControl(drawControla);
+        }
+    }
+
     if ($("#Navigate").is(":checked")) {
         if (drawControl != null) {
             map.removeControl(drawControl);
