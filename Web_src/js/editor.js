@@ -8,6 +8,7 @@
  * @param  {int} id - from geojson layer
  * @return {html} string1 + options + string2 + string3 + string4 - html text
  */
+
 function hmtlcwe(description, name, intensity, validationDate, expirationDate, id) {
     var nw = types_warning_zones.length;
     var string1 = "<div class='form-group'>\
@@ -81,9 +82,13 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
  * -anomaly is checked, we add toolbar for removing only
  * -otherwise we remove all toolbars 
  */
-$(".radio_button").change(function(e) {
-    if ($("#warning").is(":checked")) {
-
+$(".radio_button_edit").change(function(e) {
+    console.log("nombre");
+    console.log("warning :", $("#warning").is(":checked"));
+    console.log("anomaly :", $("#anomaly").is(":checked"));
+    console.log("Navigate :", $("#Navigate").is(":checked"));
+    if ($("#warning").is(":checked") == true) {
+        console.log("warning inside");
 
         //map.removeLayer(layer_group_warning_zones);
         //map.removeLayer(layer_group_anomaly_zones);
@@ -111,11 +116,13 @@ $(".radio_button").change(function(e) {
                 circle: false,
                 marker: false
             }
+
         }).addTo(map);
 
-    } else if ($("#anomaly").is(":checked")) {
 
+    } else if ($("#anomaly").is(":checked") == true) {
 
+        console.log("anoamly inside");
 
         //map.removeLayer(layer_group_warning_zones);
         //map.removeLayer(layer_group_anomaly_zones);
@@ -144,16 +151,20 @@ $(".radio_button").change(function(e) {
                 marker: false
             }
         }).addTo(map);
-
     } else {
 
+        console.log("else inside");
         if (drawControla != null) {
             map.removeControl(drawControla);
         }
         if (drawControlw != null) {
             map.removeControl(drawControlw);
         }
+
+
     }
+    console.log("prevent");
+    e.preventDefault();
 });
 /**
  * event listener when we start editing layer.
@@ -162,8 +173,11 @@ $(".radio_button").change(function(e) {
  */
 map.on('draw:editstart', function(e) {
     console.log(e);
-    console.log(featureLayerw);
-    featureLayerw.on('dblclick', function(e) {
+    if (featureLayerw.hasEventListeners() == true) {
+        featureLayerw.removeEventListener();
+    }
+
+    featureLayerw.on('click', function(e) {
         if ($("#warning").is(":checked")) {
             console.log(e);
             e.layer.closePopup();
@@ -218,6 +232,9 @@ map.on('draw:editstart', function(e) {
                         delete layerjson.properties.validation_date;
                         wzupdate.push(layerjson);
                     }
+                    featureLayerw.removeEventListener();
+                } else {
+                    featureLayerw.removeEventListener();
                 }
             });
         }
