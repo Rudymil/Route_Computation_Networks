@@ -254,3 +254,34 @@ $('#POI').change(function() {
         remove_POI();
     }
 });
+
+/*
+ * Refresh layers on the map
+ */
+function refresh() {
+    if (DEBUG) {
+        console.log("refresh");
+        console.log("refresh zoom :", map.getZoom())
+    }
+    if (map.getZoom() > zoom) {
+        if (DEBUG) {
+            console.log("refresh checkbox_Warning_zones :", checkbox_Warning_zones);
+        }
+        remove_warning_zones();
+        if (checkbox_Warning_zones) {
+            bbox = map.getBounds().toBBoxString();
+            add_warning_zones(url, bbox);
+        }
+        if (DEBUG) {
+            console.log("refresh checkbox_POI :", checkbox_POI);
+        }
+        remove_POI();
+        if (checkbox_POI) {
+            bbox = map.getBounds().toBBoxString();
+            ajax_POI(url, bbox);
+        }
+    } else {
+        remove_POI();
+        remove_warning_zones();
+    }
+}

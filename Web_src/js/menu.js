@@ -153,6 +153,7 @@ function ajax_countries(url) {
                                 spanstart.addClass("start");
                                 spanend = $(".leaflet-routing-geocoder").last().find("span");
                                 spanend.addClass("end");
+                                refresh();
                             });
                         }
                     }
@@ -215,16 +216,19 @@ function ajax_POI(url, bbox) {
                                 console.log("ajax_POI json['features'][elem] :", json['features'][elem]);
                             }
                             var icon_poi = L.icon({
-                                iconUrl: 'img/icon_poi/' + json['features'][elem]["properties"]["category"] + '.png',
-                                iconSize: [20, 30],
-                                iconAnchor: [22, 94],
-                                popupAnchor: [-3, -76],
-                                shadowSize: [68, 95],
-                                shadowAnchor: [22, 94]
-                            });
+
+							    iconUrl: 'img/icon_poi/'+json['features'][elem]["properties"]["category"]+'.svg',
+							    iconSize: [30, 30],
+							    iconAnchor: [22, 94],
+							    popupAnchor: [-3, -76],
+							    shadowSize: [68, 95],
+							    shadowAnchor: [22, 94]
+							});
+
                             var marker = L.marker([json['features'][elem]["geometry"]["coordinates"][1], json['features'][elem]["geometry"]["coordinates"][0]], {
                                 icon: icon_poi
                             });
+
                             if (DEBUG) {
                                 console.log("ajax_POI marker :", marker);
                             }

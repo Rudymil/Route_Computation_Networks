@@ -1,44 +1,57 @@
 .marker-cluster-small {
 	background-color: rgba(181, 226, 140, 0.6);
+	border-radius: 10;
 	}
 .marker-cluster-small div {
 	background-color: rgba(110, 204, 57, 0.6);
+	border-radius: 10;
 	}
 
 .marker-cluster-medium {
 	background-color: rgba(241, 211, 87, 0.6);
+	border-radius: 20;
 	}
 .marker-cluster-medium div {
 	background-color: rgba(240, 194, 12, 0.6);
+	border-radius: 20;
 	}
 
 .marker-cluster-large {
 	background-color: rgba(253, 156, 115, 0.6);
+	border-radius: 30;
 	}
 .marker-cluster-large div {
 	background-color: rgba(241, 128, 23, 0.6);
+	border-radius: 30;
 	}
 
 	/* IE 6-8 fallback colors */
 .leaflet-oldie .marker-cluster-small {
 	background-color: rgb(181, 226, 140);
+	border-radius: 10;
 	}
 .leaflet-oldie .marker-cluster-small div {
 	background-color: rgb(110, 204, 57);
+	border-radius: 10;
 	}
 
 .leaflet-oldie .marker-cluster-medium {
 	background-color: rgb(241, 211, 87);
+	border-radius: 20;
 	}
 .leaflet-oldie .marker-cluster-medium div {
 	background-color: rgb(240, 194, 12);
+	border-radius: 20;
 	}
 
 .leaflet-oldie .marker-cluster-large {
 	background-color: rgb(253, 156, 115);
+	border-radius: 30;
 	}
 .leaflet-oldie .marker-cluster-large div {
 	background-color: rgb(241, 128, 23);
+	border-radius: 30;
+	 
 }
 
 .marker-cluster {

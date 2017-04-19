@@ -78,8 +78,13 @@ map.addLayer(leditableLayers);
  */
 $(".radio_button").change(function() { // choix de dessin
 
-    if ($("#warning").is(":checked") == false) {
-        if (typeof drawControlw !== 'undefined') {
+	
+	clearZoneInfo("#anomaly_zone_info");
+    clearZoneInfo("#warning_zone_info");
+    $(".leaflet-routing-geocoders").show();
+	
+	if( $("#warning").is(":checked")== false ) {
+		if ( typeof drawControlw !== 'undefined' ) {
             map.removeControl(drawControlw);
         }
     }
