@@ -1,41 +1,42 @@
 # DataBase
 
-## Prérequis 
+## Prerequisite 
 
-Il faut préalablement créer la base de données, par exemple via psql :
+To begin, it is necessary to create the database, for example via psql :
 ```sql
 CREATE DATABASE dbName;
 ```
-
-et ensuite, ajouter l'extension Postgis
+and after that, we have to add PostGis extension :
 
 ```sql
 CREATE EXTENSION postgis;
 ```
+Now, we just have to use the SQL files to create all tables and import data via psql.
 
-Pour le reste de la chaîne de déploiement, il suffit de jouer les fichiers SQL via psql.
+## Structure creation using psql
 
-## Import des données en base via psql
-
+For example :
 ```bash
-psql -h host -d dbName -U user -f file
+psql -h host -d dbName -U user -f databaseModel.sql
 ```
 
-**Exemple :**
+## Data importation using psql
+
+For example :
 ```bash
-psql -h localhost -d database -U api -f ./dataInsertion.sql
+psql -h host -d dbName -U user -f dataInsertion.sql
 ```
 
-## Fichiers 
+## Files 
 
 ### databaseModel.sql
 
-Ce fichier contient les instructions permettant de créer la structure de la base, l'utilisateur, et d'affecter les droits.
+This file contains the instructions to create the database stucture, the user, and affects rigths.
 
 ### dataInsertion.sql
 
-Ce fichier contient les données types et le contour des pays concernés.
+This file contains type data and the defaults countries.
 
 ### dataTest.sql
 
-Ce fichier contient un jeu de données de test.
+This file contains the data test.
