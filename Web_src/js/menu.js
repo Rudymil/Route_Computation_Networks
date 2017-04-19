@@ -214,7 +214,17 @@ function ajax_POI(url, bbox) {
                                 console.log("ajax_POI elem :", elem);
                                 console.log("ajax_POI json['features'][elem] :", json['features'][elem]);
                             }
-                            var marker = L.marker([json['features'][elem]["geometry"]["coordinates"][1], json['features'][elem]["geometry"]["coordinates"][0]]);
+                            var icon_poi = L.icon({
+                                iconUrl: 'img/icon_poi/' + json['features'][elem]["properties"]["category"] + '.png',
+                                iconSize: [20, 30],
+                                iconAnchor: [22, 94],
+                                popupAnchor: [-3, -76],
+                                shadowSize: [68, 95],
+                                shadowAnchor: [22, 94]
+                            });
+                            var marker = L.marker([json['features'][elem]["geometry"]["coordinates"][1], json['features'][elem]["geometry"]["coordinates"][0]], {
+                                icon: icon_poi
+                            });
                             if (DEBUG) {
                                 console.log("ajax_POI marker :", marker);
                             }

@@ -85,12 +85,12 @@ $(".radio_button").change(function() { // choix de dessin
 
     //console.log("kqsdqsdqs");
     if ($("#warning").is(":checked") == false) {
-        if (drawControlw != null) {
+        if (typeof drawControlw !== 'undefined') {
             map.removeControl(drawControlw);
         }
     }
     if ($("#anomaly").is(":checked") == false) {
-        if (drawControla != null) {
+        if (typeof drawControla !== 'undefined') {
             map.removeControl(drawControla);
         }
     }

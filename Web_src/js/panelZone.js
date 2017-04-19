@@ -13,7 +13,7 @@ $(document).on('click', '.zone_info .panel-heading', function(e) {
 $(document).ready(function() {
     $(".leaflet-routing-geocoders ").after("<div id='warning_zone_info' class='zone_info pull-right'></div>");
     $(".leaflet-routing-geocoders ").after("<div id='anomaly_zone_info' class='zone_info pull-right'></div>");
-    $(".radio_button").change(function(e) {
+    /*$(".radio_button_edit").change(function(e) {
         if ($("#anomaly").is(":checked")) {
             triggerParser("#anomaly", "#anomaly_zone_info", "#warning_zone_info", "#Anomaly_zones", anomaly_zones, "<p>No anomaly zones</p>", printInfoAnomalyZone);
         } else if ($("#warning").is(":checked")) {
@@ -23,7 +23,7 @@ $(document).ready(function() {
             clearZoneInfo("#warning_zone_info");
             $(".leaflet-routing-geocoders").show();
         }
-    });
+    });*/
 });
 
 
