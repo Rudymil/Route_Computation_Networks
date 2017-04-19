@@ -81,7 +81,7 @@ CREATE TABLE public.anomaly_zone(
 CREATE TABLE public.poi_type (
     id serial,
     name text NOT NULL,
-    category character varying(50) NOT NULL,
+    category character varying(50),
     created_at timestamp without time zone DEFAULT now(),
     updated_at timestamp without time zone DEFAULT NULL,
     CONSTRAINT poi_type_pk PRIMARY KEY (id),
