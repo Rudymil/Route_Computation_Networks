@@ -82,6 +82,11 @@ map.addLayer(editableLayers);
  */
 
 $(".radio_button").change(function() { // choix de dessin
+	
+	
+	clearZoneInfo("#anomaly_zone_info");
+    clearZoneInfo("#warning_zone_info");
+    $(".leaflet-routing-geocoders").show();
 
     //console.log("kqsdqsdqs");
     if ($("#warning").is(":checked") == false) {

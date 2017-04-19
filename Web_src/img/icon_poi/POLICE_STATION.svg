@@ -1,0 +1,13 @@
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+ <metadata id="metadata8">image/svg+xml</metadata>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect fill="none" id="canvas" y="0" x="0" height="16" width="16"/>
+  <path fill="#000000" id="police" d="m6,1l-1,1l0,1l6,0l0,-1l-1,-1l-4,0zm-1,3c-0.0333,0.168726 0,0.339526 0,0.518519c0,1.431837 1.61931,2.481481 3,2.481481c1.38069,0 3,-1.049644 3,-2.481481c0,-0.178993 0,-0.518519 0,-0.518519l-6,0zm0,4c-1.418906,0 -1.98585,1.876578 -2,3l0,4l1.53125,0l5.46875,-7l-5,0zm6.5,0l-5.46875,7l6.96875,0l0,-4c0,-1.123526 -0.272842,-3 -1.5,-3z"/>
+ </g>
+</svg>

@@ -793,3 +793,34 @@ $('#Warning_zones').change(function() {
         remove_warning_zones();
     }
 });
+
+/*
+ * Refresh layers on the map
+ */
+function refresh() {
+    if (DEBUG) {
+        console.log("refresh");
+        console.log("refresh checkbox_Anomaly_zones :", checkbox_Anomaly_zones);
+    }
+    remove_anomaly_zones();
+    if (checkbox_Anomaly_zones) {
+        bbox = map.getBounds().toBBoxString();
+        add_anomaly_zones(url, bbox);
+    }
+    if (DEBUG) {
+        console.log("refresh checkbox_Warning_zones :", checkbox_Warning_zones);
+    }
+    remove_warning_zones();
+    if (checkbox_Warning_zones) {
+        bbox = map.getBounds().toBBoxString();
+        add_warning_zones(url, bbox);
+    }
+    if (DEBUG) {
+        console.log("refresh checkbox_POI :", checkbox_POI);
+    }
+    remove_POI();
+    if (checkbox_POI) {
+        bbox = map.getBounds().toBBoxString();
+        ajax_POI(url, bbox);
+    }
+}
