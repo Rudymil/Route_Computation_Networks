@@ -1,36 +1,35 @@
-Install  
-python3.6
-> sudo apt-get install python3-pip  
-> sudo -E python3.6 -m pip install networkx  
-> sudo -E python3.6 -m pip install shapely  
-> sudo -E python3.6 -m pip install matplotlib  
-> sudo -E python3.6 -m pip install smopy  
-
-Tests de solutions avec networkx
-> python3.6 -m pip install smopy
-
-> sudo apt-get install libgeos-dev
-> pip3 install shapely
-
-Load the graph and compute the route
-> python3 osmToPython.py
-
-(to merge with addWeight) [Final : Associate a weight to each edge of a graph from a geojson polygon list]
-Currently, check if a point is inside a polygon from geojson  
-> python3.5 fillWeightMatrix.py
-
-![Schema](./Images/routing_via_networkx.png)
+# Networkx routing
+Though some routing APIs exist (OSRM, Google API direction), we decided to create one which is not data-graph-dependant.
 
 
-> python3.5 osm2itinerary.py 43.6026628 3.8776791 43.594988110031814 3.8692045211791997 "length"
+## What is Networkx routing ?
+Networkx routing, based on networkx python library, is a routing api. As a routing api, it provides a web RESTful API.
+The main goal of this API is to fusion input format data (OSM, Google, Tomtom) once the graph has been created. With networkx, we are able to unleash the full potential of geographical data provider.
 
-> cd .. & php -S 127.0.0.1:8082
+Networkx is keeping graph theory simple. That means only one parser feature is required to import a new data format.
 
-Open a web browser :
-> http://127.0.0.1:8082/clientWebMockup/
+Another one powerful feature of Networkx routing is to used valuable graph. That means you can specify blocking|warning zones to avoid them, or reachable|safety zones to go through them.
 
-Exemple of API routing query :
-> http://127.0.0.1:8082/NetworkxExploration/server.php?lonSource=3.8776791&latSource=43.6026628&lonTarget=3.8692045211791997&latTarget=43.594988110031814&weightType="length"
+![Schema](assets/images/networkxRouting_web_example.png)
 
-Connection base :
-> psql --host 172.31.56.223 --dbname api --user api
+## Requirements :
+Networkx routing is keeping the things simple. You only need :
+- a clean python installation
+- the networkx package
+- some data streams :
+  - input data and its relative parser to generate the graph
+  - geojson data provider to valuate the graph
+
+## How does Networkx routing rock ?
+As a picture is worth a thousand words, here is a full-chain example from OSM data :
+![Schema](assets/images/networkxRouting_OSM_usecase.png)
+> Note : this usecase is the first draft we made to meet our needs. Do not focus on exchanged data format which, of course, do not follow geojson-format specifications. 
+
+Networkx routing follows these steps to meet the needs :
+1. Getting the data from OSM data provider <sub><sup>[OSMParser]</sup></sub>.
+   > The graph is generated.
+2. Getting the data from geojson data provider (looks like a postgis database) <sub><sup>[fillWeightMatrix]</sup></sub>
+   > The graph is valued.
+3. Listen requests from the users of the application <sub><sup>[osmToPython]</sup></sub>
+   > The "shortest path" *(depending of your query)* is computed.
+4. Networkx routing makes users happy.
