@@ -94,6 +94,7 @@ When the two types of markers are set, one itinerary appears between them, avoid
 
 Thank to this windows you may add **intermediary points** to the itinerary and click on intersection to see its position on the map.
 This same window has the possibility of reducing itself when using a small screen, thanks to the cross in the top right.
+Also, in order to remove markers, look and click on the cross in the box where are appeared coordinates or address in the itinerary window.
 
 ![User documentation 18](img/User documentation 18.jpg)
 
@@ -189,3 +190,17 @@ If you are on anomaly zones, you may only *Delete zones.* like for warning zones
 ![Editor documentation 24](img/Editor documentation 24.jpg)
 
 Don't forget to click on the *green* button to send your *Update* to Database.
+
+## Edition of data in the OSM database
+
+### Introduction:
+The application allows standard users to report anomalies when they see differences between reality and data.
+Once the anomalies are reported, the application's editors verify their relevance and then modify the data. The update of the application data requests directly the OSM database. That is why it is advantageous for the editors to directly modify the OSM database.
+To edit data in the OSM database, there are several tools.
+
+### Prerequisites:
+To edit data in the OSM database, you must have an OSM account (free registration: [https://www.openstreetmap.org/user/new](https://www.openstreetmap.org/user/new)) and have a publisher of OSM data.
+
+### OSM Data Editors:
+There are several OSM data editors which are software (JOSM) or online (iD or Potlatch 2). For simple and small changes, it is recommended to use an online editor. For regular and complex modifications, it is better to choose an office solution which is more complex to use but with more tools and possible automation. A comparison of the editors (advantages / disadvantages) is available on the following link: [http://wiki.openstreetmap.org/wiki/EN/Comparaison_des_%C3%Aditeurs](http://wiki.openstreetmap.org/wiki/EN/Comparaison_des_%C3%Aditeurs).
+If the editors of the application have to regularly modify data, it is possible to download JOSM ([https://josm.openstreetmap.de/wiki/Download](https://josm.openstreetmap.de/wiki/Download)) for free and to learn how to use it with The beginner's guide ([http://wiki.openstreetmap.org/wiki/FR:JOSM/Guide](http://wiki.openstreetmap.org/wiki/FR:JOSM/Guide)).

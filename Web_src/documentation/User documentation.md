@@ -95,6 +95,7 @@ When the two types of markers are set, one itinerary appears between them, avoid
 
 Thank to this windows you may add **intermediary points** to the itinerary and click on intersection to see its position on the map.
 This same window has the possibility of reducing itself when using a small screen, thanks to the cross in the top right.
+Also, in order to remove markers, look and click on the cross in the box where are appeared coordinates or address in the itinerary window.
 
 ![User documentation 18](img/User documentation 18.jpg)
 
