@@ -149,7 +149,7 @@ function printInfoAnomalyZone(zone) {
 }
 
 function addDlItem(label, data) {
-    var output;
+    var output = "";
     output += "<dt>";
     output += label;
     output += "</dt>";
