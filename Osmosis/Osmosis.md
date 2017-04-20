@@ -51,3 +51,6 @@ Osmosis takes no volume with Docker and to use it, it needs only one command, fo
       farberg/openstreetmap-osmosis-docker
       --read-xml file="planetin.osm"
       --write-xml file="planetout.osm"
+
+## Use
+Find our use of Osmosis with [Osmosis_use.md](./Osmosis_use.md).
