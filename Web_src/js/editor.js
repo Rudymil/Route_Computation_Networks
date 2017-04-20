@@ -22,7 +22,7 @@ function hmtlcwe(description, name, intensity, validationDate, expirationDate, i
 				</div>\
 				<div class='form-group'>\
   				<label for='usr'>Intensity :</label>\
-  				<input type='number' step='5' min='0' max='100' class='form-control' id='intensity' value='" + intensity + "'>\
+  				<input type='number' step='5' min='20' max='100' class='form-control' id='intensity' value='" + intensity + "'>\
 				</div>";
     if (expirationDate == null) {
         var string2bis = "<div class='form-group'>\
